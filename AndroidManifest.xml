@@ -23,10 +23,10 @@
         </activity>
         <activity
                 android:name=".ItemDetailActivity"
-                android:parentActivityName=".activities.MainActivity">
+                android:parentActivityName=".MainActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".activities.MainActivity"/>
+                    android:value=".MainActivity"/>
         </activity>
     </application>
 </manifest>
