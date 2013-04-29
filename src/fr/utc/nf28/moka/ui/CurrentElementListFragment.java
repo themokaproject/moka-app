@@ -15,6 +15,7 @@ import java.util.List;
 
 public class CurrentElementListFragment extends SherlockFragment {
 	private List<CurrentItem> items = new ArrayList<CurrentItem>(10);
+
 	public CurrentElementListFragment() {
 	}
 
@@ -26,8 +27,8 @@ public class CurrentElementListFragment extends SherlockFragment {
 		// Fragment configuration
 		setHasOptionsMenu(true);
 
-		for (int i=0; i<10; i++) {
-			items.add(new CurrentItem("text" + i));
+		for (int i = 0; i < 10; i++) {
+			items.add(new CurrentItem("item " + i));
 		}
 	}
 
