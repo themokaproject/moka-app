@@ -6,6 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.widget.SearchView;
 import fr.utc.nf28.moka.ItemAdapter;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.CurrentItem;
@@ -43,5 +46,14 @@ public class ItemListFragment extends SherlockFragment {
 		gridView.setAdapter(adapter);
 
 		return rootView;
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.fragment_item_list, menu);
+
+		// Set the search hint text
+		((SearchView) menu.findItem(R.id.menu_search).getActionView())
+				.setQueryHint(getSherlockActivity().getString(R.string.search_hint));
 	}
 }
