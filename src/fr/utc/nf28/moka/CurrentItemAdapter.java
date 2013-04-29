@@ -42,7 +42,7 @@ public class CurrentItemAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
-			convertView = mLayoutInflater.inflate(R.layout.current_element, null);
+			convertView = mLayoutInflater.inflate(R.layout.current_item, null);
 		}
 
 		final TextView itemName = ViewHolder.get(convertView, R.id.item_name);

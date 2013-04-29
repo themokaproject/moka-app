@@ -10,10 +10,10 @@ import android.support.v4.view.ViewPager;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import fr.utc.nf28.moka.data.CurrentItem;
-import fr.utc.nf28.moka.ui.CurrentElementListFragment;
-import fr.utc.nf28.moka.ui.ElementListFragment;
+import fr.utc.nf28.moka.ui.CurrentItemListFragment;
+import fr.utc.nf28.moka.ui.ItemListFragment;
 
-public class MainActivity extends SherlockFragmentActivity implements ActionBar.TabListener, CurrentElementListFragment.Callbacks {
+public class MainActivity extends SherlockFragmentActivity implements ActionBar.TabListener, CurrentItemListFragment.Callbacks {
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
@@ -84,9 +84,9 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 			// getItem is called to instantiate the fragment for the given page.
 			switch (position) {
 				case 0:
-					return new ElementListFragment();
+					return new ItemListFragment();
 				default:
-					return new CurrentElementListFragment();
+					return new CurrentItemListFragment();
 			}
 		}
 

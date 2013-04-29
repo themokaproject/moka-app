@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import com.actionbarsherlock.app.SherlockFragment;
 import fr.utc.nf28.moka.R;
 
-public class ElementListFragment extends SherlockFragment {
-	public ElementListFragment() {
+public class ItemListFragment extends SherlockFragment {
+	public ItemListFragment() {
 	}
 
 	// Fragment lifecycle management
@@ -22,6 +22,6 @@ public class ElementListFragment extends SherlockFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_element_list, container, false);
+		return inflater.inflate(R.layout.fragment_item_list, container, false);
 	}
 }

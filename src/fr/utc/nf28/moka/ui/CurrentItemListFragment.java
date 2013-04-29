@@ -15,7 +15,7 @@ import fr.utc.nf28.moka.data.CurrentItem;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CurrentElementListFragment extends SherlockFragment implements AdapterView.OnItemClickListener {
+public class CurrentItemListFragment extends SherlockFragment implements AdapterView.OnItemClickListener {
 	/**
 	 * A dummy implementation of the {@link Callbacks} interface that does
 	 * nothing. Used only when this fragment is not attached to an activity.
@@ -33,7 +33,7 @@ public class CurrentElementListFragment extends SherlockFragment implements Adap
 	 */
 	private Callbacks mCallbacks = sDummyCallbacks;
 
-	public CurrentElementListFragment() {
+	public CurrentItemListFragment() {
 	}
 
 	// Fragment lifecycle management
@@ -64,7 +64,7 @@ public class CurrentElementListFragment extends SherlockFragment implements Adap
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		final View rootView = inflater.inflate(R.layout.fragment_current_element_list, container, false);
+		final View rootView = inflater.inflate(R.layout.fragment_current_item_list, container, false);
 
 		final ListView listView = (ListView) rootView.findViewById(android.R.id.list);
 		listView.setOnItemClickListener(this);
