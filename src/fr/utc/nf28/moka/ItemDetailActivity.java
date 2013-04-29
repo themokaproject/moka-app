@@ -1,8 +1,8 @@
 package fr.utc.nf28.moka;
 
 import android.os.Bundle;
-import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.MenuItem;
 import fr.utc.nf28.moka.data.CurrentItem;
 
 public class ItemDetailActivity extends SherlockFragmentActivity {
@@ -15,6 +15,16 @@ public class ItemDetailActivity extends SherlockFragmentActivity {
 		setContentView(R.layout.detail_activity);
 
 		final CurrentItem item = getIntent().getExtras().getParcelable(ARG_ITEM);
-		Toast.makeText(this, item.getName(), Toast.LENGTH_SHORT).show();
+		getSupportActionBar().setTitle(item.getName());
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case android.R.id.home:
+				finish();
+				return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 }
