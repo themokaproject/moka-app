@@ -4,10 +4,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockFragment;
+import fr.utc.nf28.moka.HistoryItemAdapter;
 import fr.utc.nf28.moka.R;
+import fr.utc.nf28.moka.data.CurrentItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HistoryItemFragment extends SherlockFragment {
+	private List<CurrentItem> items = new ArrayList<CurrentItem>(10);
+
 	public HistoryItemFragment() {
 	}
 
@@ -18,10 +26,21 @@ public class HistoryItemFragment extends SherlockFragment {
 
 		// Fragment configuration
 		setHasOptionsMenu(true);
+
+		for (int i = 0; i < 10; i++) {
+			items.add(new CurrentItem("history " + i));
+		}
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_history_item, container, false);
+		final View rootView = inflater.inflate(R.layout.fragment_history_item_list, container, false);
+
+		final ListView listView = (ListView) rootView.findViewById(android.R.id.list);
+		final HistoryItemAdapter adapter = new HistoryItemAdapter(getSherlockActivity());
+		adapter.updateHistoryItems(items);
+		listView.setAdapter(adapter);
+
+		return rootView;
 	}
 }
