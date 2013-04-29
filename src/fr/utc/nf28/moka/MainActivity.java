@@ -1,5 +1,6 @@
 package fr.utc.nf28.moka;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,10 +9,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import fr.utc.nf28.moka.data.CurrentItem;
 import fr.utc.nf28.moka.ui.CurrentElementListFragment;
 import fr.utc.nf28.moka.ui.ElementListFragment;
 
-public class MainActivity extends SherlockFragmentActivity implements ActionBar.TabListener {
+public class MainActivity extends SherlockFragmentActivity implements ActionBar.TabListener, CurrentElementListFragment.Callbacks {
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
@@ -59,6 +61,13 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 
 	@Override
 	public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+	}
+
+	@Override
+	public void onItemSelected(CurrentItem currentItem) {
+		final Intent detailIntent = new Intent(this, ItemDetailActivity.class);
+		detailIntent.putExtra(ItemDetailActivity.ARG_ITEM, currentItem);
+		startActivity(detailIntent);
 	}
 
 	/**
