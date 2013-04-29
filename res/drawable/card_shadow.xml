@@ -9,10 +9,10 @@
         </shape>
     </item>
 
-    <!-- White top color -->
+    <!-- Grey top color -->
     <item android:bottom="1dp">
         <shape android:shape="rectangle">
-            <solid android:color="@color/abs__background_holo_light"/>
+            <solid android:color="#e6e6e6"/>
         </shape>
     </item>
 
