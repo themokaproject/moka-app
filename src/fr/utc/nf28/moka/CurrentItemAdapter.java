@@ -45,9 +45,9 @@ public class CurrentItemAdapter extends BaseAdapter {
 			convertView = mLayoutInflater.inflate(R.layout.current_element, null);
 		}
 
-		final TextView userIdView = ViewHolder.get(convertView, R.id.item_name);
+		final TextView itemName = ViewHolder.get(convertView, R.id.item_name);
 		final CurrentItem item = getItem(position);
-		userIdView.setText(item.getName());
+		itemName.setText(item.getName());
 
 		return convertView;
 	}
