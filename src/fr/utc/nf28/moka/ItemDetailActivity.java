@@ -6,8 +6,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.widget.Toast;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import fr.utc.nf28.moka.data.CurrentItem;
 import fr.utc.nf28.moka.ui.EditItemFragment;
@@ -48,10 +50,19 @@ public class ItemDetailActivity extends SherlockFragmentActivity implements Acti
 	}
 
 	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getSupportMenuInflater().inflate(R.menu.activity_item_detail, menu);
+		return true;
+	}
+
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case android.R.id.home:
 				finish();
+				return true;
+			case R.id.menu_delete:
+				Toast.makeText(this, "TODO: implement", Toast.LENGTH_SHORT).show();
 				return true;
 		}
 		return super.onOptionsItemSelected(item);

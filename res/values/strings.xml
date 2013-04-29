@@ -7,4 +7,7 @@
     <string name="tab_title_current">En cours</string>
     <string name="tab_title_edit">Éditer</string>
     <string name="tab_title_history">Historique</string>
+
+    <!-- MenuItems -->
+    <string name="delete">Supprimer</string>
 </resources>
