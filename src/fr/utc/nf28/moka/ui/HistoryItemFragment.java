@@ -28,7 +28,7 @@ public class HistoryItemFragment extends SherlockFragment {
 		setHasOptionsMenu(true);
 
 		for (int i = 0; i < 10; i++) {
-			items.add(new CurrentItem("history " + i));
+			items.add(new CurrentItem("history " + String.valueOf(10 - i)));
 		}
 	}
 

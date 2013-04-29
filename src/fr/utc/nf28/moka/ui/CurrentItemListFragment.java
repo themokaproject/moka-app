@@ -57,7 +57,7 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 		// Fragment configuration
 		setHasOptionsMenu(true);
 
-		for (int i = 0; i < 10; i++) {
+		for (int i = 1; i <= 10; i++) {
 			items.add(new CurrentItem("item " + i));
 		}
 	}
