@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Moka</string>
+
+    <!-- Tabs -->
+    <string name="tab_title_create">Créer</string>
+    <string name="tab_title_current">En cours</string>
 </resources>
