@@ -75,7 +75,6 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 	 * one of the sections/tabs/pages.
 	 */
 	private static class SectionsPagerAdapter extends FragmentPagerAdapter {
-
 		public SectionsPagerAdapter(FragmentManager fm) {
 			super(fm);
 		}
