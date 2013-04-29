@@ -5,10 +5,17 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/tab_title_create"
-            android:layout_gravity="center"
-            android:gravity="center"/>
+    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/grid"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="16dp"
+              android:columnWidth="120dp"
+              android:numColumns="auto_fit"
+              android:verticalSpacing="20dp"
+              android:horizontalSpacing="20dp"
+              android:stretchMode="columnWidth"
+              android:clipToPadding="false"
+              android:scrollbars="none"
+              android:gravity="center"/>
 </LinearLayout>
