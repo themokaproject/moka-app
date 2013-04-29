@@ -26,7 +26,6 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		// ActionBar setup
 		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setHomeButtonEnabled(false);
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
 		// ViewPager setup
 		mViewPager = (ViewPager) findViewById(R.id.pager);
