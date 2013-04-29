@@ -1,9 +1,11 @@
 package fr.utc.nf28.moka.ui;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
@@ -16,13 +18,37 @@ import fr.utc.nf28.moka.data.CurrentItem;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemListFragment extends SherlockFragment {
+public class ItemListFragment extends SherlockFragment implements AdapterView.OnItemClickListener {
+	/**
+	 * A dummy implementation of the {@link Callbacks} interface that does
+	 * nothing. Used only when this fragment is not attached to an activity.
+	 */
+	private static final Callbacks sDummyCallbacks = new Callbacks() {
+		@Override
+		public void onItemSelected(CurrentItem item) {
+		}
+	};
 	private List<CurrentItem> items = new ArrayList<CurrentItem>(10);
+	private ItemAdapter mAdapter;
+	private Callbacks mCallbacks = sDummyCallbacks;
 
 	public ItemListFragment() {
 	}
 
 	// Fragment lifecycle management
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+
+		// Activities containing this fragment must implement its callbacks.
+		if (!(activity instanceof Callbacks)) {
+			throw new IllegalStateException(
+					"Activity must implement fragment's callbacks.");
+		}
+
+		mCallbacks = (Callbacks) activity;
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,12 +66,26 @@ public class ItemListFragment extends SherlockFragment {
 		final View rootView = inflater.inflate(R.layout.fragment_item_list, container, false);
 
 		final GridView gridView = (GridView) rootView.findViewById(R.id.grid);
-		final ItemAdapter adapter = new ItemAdapter(getSherlockActivity());
-		adapter.updateItems(items);
+		gridView.setOnItemClickListener(this);
+		mAdapter = new ItemAdapter(getSherlockActivity());
+		mAdapter.updateItems(items);
 
-		gridView.setAdapter(adapter);
+		gridView.setAdapter(mAdapter);
 
 		return rootView;
+	}
+
+	@Override
+	public void onDetach() {
+		// Reset the active callbacks interface to the dummy implementation.
+		mCallbacks = sDummyCallbacks;
+
+		super.onDetach();
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+		mCallbacks.onItemSelected(mAdapter.getItem(position));
 	}
 
 	@Override
@@ -55,5 +95,17 @@ public class ItemListFragment extends SherlockFragment {
 		// Set the search hint text
 		((SearchView) menu.findItem(R.id.menu_search).getActionView())
 				.setQueryHint(getSherlockActivity().getString(R.string.search_hint));
+	}
+
+	/**
+	 * A callback interface that all activities containing this fragment must
+	 * implement. This mechanism allows activities to be notified of item
+	 * selections.
+	 */
+	public interface Callbacks {
+		/**
+		 * Callback for when an item has been selected.
+		 */
+		public void onItemSelected(CurrentItem item);
 	}
 }

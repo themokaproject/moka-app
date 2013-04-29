@@ -1,5 +1,6 @@
 package fr.utc.nf28.moka;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,7 +14,8 @@ import fr.utc.nf28.moka.data.CurrentItem;
 import fr.utc.nf28.moka.ui.CurrentItemListFragment;
 import fr.utc.nf28.moka.ui.ItemListFragment;
 
-public class MainActivity extends SherlockFragmentActivity implements ActionBar.TabListener, CurrentItemListFragment.Callbacks {
+public class MainActivity extends SherlockFragmentActivity implements ActionBar.TabListener,
+		ItemListFragment.Callbacks, CurrentItemListFragment.Callbacks {
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
@@ -64,7 +66,15 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 	}
 
 	@Override
-	public void onItemSelected(CurrentItem currentItem) {
+	public void onItemSelected(CurrentItem item) {
+		new AlertDialog.Builder(this)
+				.setTitle(item.getName())
+				.setMessage("Plus de détails")
+				.show();
+	}
+
+	@Override
+	public void onCurrentItemSelected(CurrentItem currentItem) {
 		final Intent detailIntent = new Intent(this, ItemDetailActivity.class);
 		detailIntent.putExtra(ItemDetailActivity.ARG_ITEM, currentItem);
 		startActivity(detailIntent);

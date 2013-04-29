@@ -22,7 +22,7 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 	 */
 	private static final Callbacks sDummyCallbacks = new Callbacks() {
 		@Override
-		public void onItemSelected(CurrentItem currentItem) {
+		public void onCurrentItemSelected(CurrentItem currentItem) {
 		}
 	};
 	private List<CurrentItem> items = new ArrayList<CurrentItem>(10);
@@ -85,7 +85,7 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-		mCallbacks.onItemSelected(mAdapter.getItem(position));
+		mCallbacks.onCurrentItemSelected(mAdapter.getItem(position));
 	}
 
 	/**
@@ -97,6 +97,6 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 		/**
 		 * Callback for when an item has been selected.
 		 */
-		public void onItemSelected(CurrentItem currentItem);
+		public void onCurrentItemSelected(CurrentItem currentItem);
 	}
 }
