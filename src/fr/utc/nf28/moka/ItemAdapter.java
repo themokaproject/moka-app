@@ -1,22 +1,19 @@
 package fr.utc.nf28.moka;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 import fr.utc.nf28.moka.data.CurrentItem;
 
 import java.util.Collections;
 import java.util.List;
 
-public class ItemAdapter extends BaseAdapter {
-	private final LayoutInflater mLayoutInflater;
+public class ItemAdapter extends BaseMokaAdapter {
 	private List<CurrentItem> mCurrentItems = Collections.emptyList();
 
 	public ItemAdapter(Context context) {
-		mLayoutInflater = LayoutInflater.from(context);
+		super(context);
 	}
 
 	public void updateItems(List<CurrentItem> currentItems) {
@@ -32,11 +29,6 @@ public class ItemAdapter extends BaseAdapter {
 	@Override
 	public CurrentItem getItem(int position) {
 		return mCurrentItems.get(position);
-	}
-
-	@Override
-	public long getItemId(int position) {
-		return position;
 	}
 
 	@Override
