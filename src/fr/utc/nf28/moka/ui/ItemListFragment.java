@@ -72,6 +72,7 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 
 		final GridView gridView = (GridView) rootView.findViewById(R.id.grid);
 		gridView.setOnItemClickListener(this);
+		gridView.setEmptyView(rootView.findViewById(android.R.id.empty));
 		mAdapter = new ItemAdapter(getSherlockActivity());
 		mAdapter.updateItems(items);
 

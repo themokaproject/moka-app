@@ -14,4 +14,7 @@
     <string name="licenses">Licences open source</string>
 
     <string name="search_hint">Rechercher un élément</string>
+
+    <!-- Empty views -->
+    <string name="item_list_empty_text">Aucun élément ne correspond à votre saisie</string>
 </resources>

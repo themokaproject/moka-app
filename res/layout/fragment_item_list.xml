@@ -18,4 +18,16 @@
               android:clipToPadding="false"
               android:scrollbars="none"
               android:gravity="center"/>
+
+    <TextView
+            android:id="@android:id/empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/item_list_empty_text"/>
 </LinearLayout>
