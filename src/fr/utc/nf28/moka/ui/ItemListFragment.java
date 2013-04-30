@@ -20,7 +20,8 @@ import java.util.List;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
-public class ItemListFragment extends SherlockFragment implements AdapterView.OnItemClickListener {
+public class ItemListFragment extends SherlockFragment implements AdapterView.OnItemClickListener,
+		SearchView.OnQueryTextListener {
 	private static final String TAG = makeLogTag(ItemListFragment.class);
 	/**
 	 * A dummy implementation of the {@link Callbacks} interface that does
@@ -96,8 +97,20 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 		inflater.inflate(R.menu.fragment_item_list, menu);
 
 		// Set the search hint text
-		((SearchView) menu.findItem(R.id.menu_search).getActionView())
-				.setQueryHint(getSherlockActivity().getString(R.string.search_hint));
+		final SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+		searchView.setQueryHint(getSherlockActivity().getString(R.string.search_hint));
+		searchView.setOnQueryTextListener(this);
+	}
+
+	@Override
+	public boolean onQueryTextSubmit(String query) {
+		return false;
+	}
+
+	@Override
+	public boolean onQueryTextChange(String newText) {
+		mAdapter.getFilter().filter(newText);
+		return true;
 	}
 
 	/**
