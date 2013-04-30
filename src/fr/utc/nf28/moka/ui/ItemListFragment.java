@@ -33,7 +33,7 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 		public void onItemSelected(CurrentItem item) {
 		}
 	};
-	private List<CurrentItem> items = new ArrayList<CurrentItem>(10);
+	private final List<CurrentItem> items = new ArrayList<CurrentItem>(10);
 	private ItemAdapter mAdapter;
 	private Callbacks mCallbacks = sDummyCallbacks;
 
@@ -97,7 +97,7 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.fragment_item_list, menu);
 
-		// Set the search hint text
+		// Setup searchMenuItem and searchView
 		final MenuItem searchMenuItem = menu.findItem(R.id.menu_search);
 		searchMenuItem.setOnActionExpandListener(this);
 		final SearchView searchView = (SearchView) searchMenuItem.getActionView();

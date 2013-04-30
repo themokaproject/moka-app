@@ -28,7 +28,7 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 		public void onCurrentItemSelected(CurrentItem currentItem) {
 		}
 	};
-	private List<CurrentItem> items = new ArrayList<CurrentItem>(10);
+	private final List<CurrentItem> items = new ArrayList<CurrentItem>(10);
 	private CurrentItemAdapter mAdapter;
 	/**
 	 * The fragment's current callback object, which is notified of list item
