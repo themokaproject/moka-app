@@ -30,6 +30,7 @@ public class ItemDetailActivity extends SherlockFragmentActivity implements Acti
 
 		final CurrentItem item = getIntent().getExtras().getParcelable(ARG_ITEM);
 		final ActionBar actionBar = getSupportActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setTitle(item.getName());
 
 		// ViewPager setup
