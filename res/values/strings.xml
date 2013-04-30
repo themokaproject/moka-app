@@ -11,6 +11,7 @@
     <!-- MenuItems -->
     <string name="search">Rechercher</string>
     <string name="delete">Supprimer</string>
+    <string name="licenses">Licences open source</string>
 
     <string name="search_hint">Rechercher un élément</string>
 </resources>

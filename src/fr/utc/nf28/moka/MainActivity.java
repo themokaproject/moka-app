@@ -10,6 +10,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import fr.utc.nf28.moka.data.CurrentItem;
 import fr.utc.nf28.moka.ui.CurrentItemListFragment;
 import fr.utc.nf28.moka.ui.ItemListFragment;
@@ -53,6 +55,22 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 				.setText(getString(R.string.tab_title_current))
 				.setTabListener(this));
 
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getSupportMenuInflater().inflate(R.menu.activity_main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.menu_licenses:
+				startActivity(new Intent(this, LicensesActivity.class));
+				return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
