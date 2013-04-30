@@ -104,6 +104,9 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 		final SearchView searchView = (SearchView) searchMenuItem.getActionView();
 		searchView.setQueryHint(getSherlockActivity().getString(R.string.search_hint));
 		searchView.setOnQueryTextListener(this);
+
+		mAdapter.getFilter().filter(null); // Workaround for the bug that occurs when changing tab while in search mode.
+		// There might be a better solution.
 	}
 
 	@Override
