@@ -27,7 +27,7 @@ public class ItemAdapter extends BaseMokaAdapter implements Filterable {
 		updateItems(items, false);
 	}
 
-	public void updateItems(List<CurrentItem> items, boolean dueToFilterOperation) {
+	private void updateItems(List<CurrentItem> items, boolean dueToFilterOperation) {
 		mCurrentItems = items;
 		notifyDataSetChanged();
 
@@ -57,6 +57,10 @@ public class ItemAdapter extends BaseMokaAdapter implements Filterable {
 		itemName.setText(item.getName());
 
 		return convertView;
+	}
+
+	public boolean hasItems() {
+		return mSavedItems != null && !mSavedItems.isEmpty();
 	}
 
 	@Override
