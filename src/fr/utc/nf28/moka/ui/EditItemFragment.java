@@ -7,7 +7,11 @@ import android.view.ViewGroup;
 import com.actionbarsherlock.app.SherlockFragment;
 import fr.utc.nf28.moka.R;
 
+import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
+
 public class EditItemFragment extends SherlockFragment {
+	private static final String TAG = makeLogTag(EditItemFragment.class);
+
 	public EditItemFragment() {
 	}
 

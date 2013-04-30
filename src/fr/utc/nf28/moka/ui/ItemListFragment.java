@@ -18,7 +18,10 @@ import fr.utc.nf28.moka.data.CurrentItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
+
 public class ItemListFragment extends SherlockFragment implements AdapterView.OnItemClickListener {
+	private static final String TAG = makeLogTag(ItemListFragment.class);
 	/**
 	 * A dummy implementation of the {@link Callbacks} interface that does
 	 * nothing. Used only when this fragment is not attached to an activity.

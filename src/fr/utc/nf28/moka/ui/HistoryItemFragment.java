@@ -13,7 +13,10 @@ import fr.utc.nf28.moka.data.CurrentItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
+
 public class HistoryItemFragment extends SherlockFragment {
+	private static final String TAG = makeLogTag(HistoryItemFragment.class);
 	private List<CurrentItem> items = new ArrayList<CurrentItem>(10);
 
 	public HistoryItemFragment() {

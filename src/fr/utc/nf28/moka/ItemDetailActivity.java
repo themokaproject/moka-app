@@ -15,8 +15,11 @@ import fr.utc.nf28.moka.data.CurrentItem;
 import fr.utc.nf28.moka.ui.EditItemFragment;
 import fr.utc.nf28.moka.ui.HistoryItemFragment;
 
+import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
+
 public class ItemDetailActivity extends SherlockFragmentActivity implements ActionBar.TabListener {
 	public static final String ARG_ITEM = "arg_item";
+	private static final String TAG = makeLogTag(ItemDetailActivity.class);
 	private ViewPager mViewPager;
 
 	@Override

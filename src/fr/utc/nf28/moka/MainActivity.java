@@ -14,8 +14,11 @@ import fr.utc.nf28.moka.data.CurrentItem;
 import fr.utc.nf28.moka.ui.CurrentItemListFragment;
 import fr.utc.nf28.moka.ui.ItemListFragment;
 
+import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
+
 public class MainActivity extends SherlockFragmentActivity implements ActionBar.TabListener,
 		ItemListFragment.Callbacks, CurrentItemListFragment.Callbacks {
+	private static final String TAG = makeLogTag(MainActivity.class);
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
