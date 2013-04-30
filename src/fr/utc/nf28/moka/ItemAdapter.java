@@ -12,7 +12,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
+
 public class ItemAdapter extends BaseMokaAdapter implements Filterable {
+	private static final String TAG = makeLogTag(ItemAdapter.class);
 	private List<CurrentItem> mCurrentItems = Collections.emptyList();
 	private List<CurrentItem> mSavedItems = Collections.emptyList();
 

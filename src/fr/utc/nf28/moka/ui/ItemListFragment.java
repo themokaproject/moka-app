@@ -10,6 +10,7 @@ import android.widget.GridView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.widget.SearchView;
 import fr.utc.nf28.moka.ItemAdapter;
 import fr.utc.nf28.moka.R;
@@ -21,7 +22,7 @@ import java.util.List;
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class ItemListFragment extends SherlockFragment implements AdapterView.OnItemClickListener,
-		SearchView.OnQueryTextListener {
+		SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener {
 	private static final String TAG = makeLogTag(ItemListFragment.class);
 	/**
 	 * A dummy implementation of the {@link Callbacks} interface that does
@@ -97,7 +98,9 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 		inflater.inflate(R.menu.fragment_item_list, menu);
 
 		// Set the search hint text
-		final SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+		final MenuItem searchMenuItem = menu.findItem(R.id.menu_search);
+		searchMenuItem.setOnActionExpandListener(this);
+		final SearchView searchView = (SearchView) searchMenuItem.getActionView();
 		searchView.setQueryHint(getSherlockActivity().getString(R.string.search_hint));
 		searchView.setOnQueryTextListener(this);
 	}
@@ -110,6 +113,17 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 	@Override
 	public boolean onQueryTextChange(String newText) {
 		mAdapter.getFilter().filter(newText);
+		return true;
+	}
+
+	@Override
+	public boolean onMenuItemActionExpand(MenuItem item) {
+		return true;
+	}
+
+	@Override
+	public boolean onMenuItemActionCollapse(MenuItem item) {
+		mAdapter.getFilter().filter(null);
 		return true;
 	}
 
