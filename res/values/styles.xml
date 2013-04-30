@@ -39,7 +39,7 @@
 
     <style name="ActionBar.TabText.UVweb" parent="@style/Widget.Sherlock.Light.ActionBar.TabText">
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/tab_text_size</item>
     </style>
 
 </resources>
