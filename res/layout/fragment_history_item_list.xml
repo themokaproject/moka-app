@@ -18,10 +18,4 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"/>
 
-    <TextView
-            android:id="@android:id/empty"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"/>
-
 </LinearLayout>
