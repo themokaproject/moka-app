@@ -17,4 +17,5 @@
 
     <!-- Empty views -->
     <string name="item_list_empty_text">Aucun élément ne correspond à votre saisie</string>
+    <string name="current_item_list_empty_text">Vous n\'avez pas encore ajouté d\'éléments</string>
 </resources>

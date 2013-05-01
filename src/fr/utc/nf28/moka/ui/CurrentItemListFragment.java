@@ -71,8 +71,9 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 
 		final ListView listView = (ListView) rootView.findViewById(android.R.id.list);
 		listView.setOnItemClickListener(this);
+		listView.setEmptyView(rootView.findViewById(android.R.id.empty));
 		mAdapter = new CurrentItemAdapter(getSherlockActivity());
-		mAdapter.updateCurrentItems(items);
+		//mAdapter.updateCurrentItems(items);
 		listView.setAdapter(mAdapter);
 
 		return rootView;
