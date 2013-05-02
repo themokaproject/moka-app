@@ -18,4 +18,9 @@
     <!-- Empty views -->
     <string name="item_list_empty_text">Aucun élément ne correspond à votre saisie</string>
     <string name="current_item_list_empty_text">Vous n\'avez pas encore ajouté d\'éléments</string>
+
+    <string name="delete_confirmation_title">Confirmation</string>
+    <string name="delete_confirmation_message">Êtes-vous sûr(e) de vouloir supprimer</string>
+    <string name="delete_confirmation_ok">OK</string>
+    <string name="delete_confirmation_cancel">Annuler</string>
 </resources>

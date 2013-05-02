@@ -1,12 +1,14 @@
 package fr.utc.nf28.moka;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.widget.Toast;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -21,6 +23,7 @@ public class ItemDetailActivity extends SherlockFragmentActivity implements Acti
 	public static final String ARG_ITEM = "arg_item";
 	private static final String TAG = makeLogTag(ItemDetailActivity.class);
 	private ViewPager mViewPager;
+	private CurrentItem mCurrentItem;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -28,10 +31,10 @@ public class ItemDetailActivity extends SherlockFragmentActivity implements Acti
 
 		setContentView(R.layout.detail_activity);
 
-		final CurrentItem item = getIntent().getExtras().getParcelable(ARG_ITEM);
+		mCurrentItem = getIntent().getExtras().getParcelable(ARG_ITEM);
 		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		actionBar.setTitle(item.getName());
+		actionBar.setTitle(mCurrentItem.getName());
 
 		// ViewPager setup
 		mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -66,7 +69,28 @@ public class ItemDetailActivity extends SherlockFragmentActivity implements Acti
 				finish();
 				return true;
 			case R.id.menu_delete:
-				Toast.makeText(this, "TODO: implement", Toast.LENGTH_SHORT).show();
+				final Resources resources = getResources();
+				final StringBuilder sb = new StringBuilder();
+				sb.append(resources.getString(R.string.delete_confirmation_message));
+				sb.append(" ");
+				sb.append(mCurrentItem.getName());
+				sb.append(" ?");
+				new AlertDialog.Builder(this)
+						.setTitle(resources.getString(R.string.delete_confirmation_title))
+						.setMessage(sb.toString())
+						.setPositiveButton(resources.getString(R.string.delete_confirmation_ok), new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialogInterface, int which) {
+								// TODO: call the DeleteAgent
+								finish();
+							}
+						})
+						.setNegativeButton(resources.getString(R.string.delete_confirmation_cancel), new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialogInterface, int which) {
+							}
+						})
+						.show();
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
