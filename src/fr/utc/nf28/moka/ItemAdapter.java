@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+import com.tonicartos.widget.stickygridheaders.StickyGridHeadersSimpleAdapter;
 import fr.utc.nf28.moka.data.BaseItem;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.List;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
-public class ItemAdapter extends BaseMokaAdapter implements Filterable {
+public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSimpleAdapter, Filterable {
 	private static final String TAG = makeLogTag(ItemAdapter.class);
 	private List<BaseItem> mItems = Collections.emptyList();
 	private List<BaseItem> mSavedItems = Collections.emptyList();
@@ -94,5 +95,19 @@ public class ItemAdapter extends BaseMokaAdapter implements Filterable {
 				updateItems(results, true);
 			}
 		};
+	}
+
+	@Override
+	public long getHeaderId(int position) {
+		return 1;
+	}
+
+	@Override
+	public View getHeaderView(int position, View convertView, ViewGroup parent) {
+		if (convertView == null) {
+			convertView = mLayoutInflater.inflate(R.layout.header_class_grid, null);
+		}
+
+		return convertView;
 	}
 }

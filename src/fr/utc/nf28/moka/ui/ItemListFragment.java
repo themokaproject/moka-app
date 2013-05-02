@@ -8,12 +8,16 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.widget.SearchView;
+import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
 import fr.utc.nf28.moka.ItemAdapter;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.BaseItem;
@@ -82,8 +86,9 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 		adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item_bigger);
 		mSpinner.setAdapter(adapter);
 
-		final GridView gridView = (GridView) rootView.findViewById(R.id.grid);
+		final StickyGridHeadersGridView gridView = (StickyGridHeadersGridView) rootView.findViewById(R.id.grid);
 		gridView.setOnItemClickListener(this);
+		gridView.setAreHeadersSticky(false);
 		gridView.setEmptyView(rootView.findViewById(android.R.id.empty));
 		mAdapter = new ItemAdapter(getSherlockActivity());
 		mAdapter.updateItems(items);
@@ -141,7 +146,6 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 		try {
 			return mPrefs.getInt(PERSISTENT_LAST_CLASS, mSpinner.getCount() - 1);
 		} catch (IllegalArgumentException e) {
-			// Preference is corrupt?
 			return 0;
 		}
 	}
@@ -172,7 +176,7 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 		saveLastClassPreference(position);
 		Toast.makeText(getSherlockActivity(), parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
-		// TODO: apply corresponding filter
+		// TODO: apply corresponding filter, update adapter and adapter's sections
 	}
 
 	@Override

@@ -19,7 +19,7 @@
             android:text="Choisir une catégorie"
             android:gravity="center"
             android:layout_gravity="center"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <Spinner
@@ -30,7 +30,7 @@
 
     </LinearLayout>
 
-    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView
         android:id="@+id/grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -54,4 +54,5 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:text="@string/item_list_empty_text" />
+
 </LinearLayout>
