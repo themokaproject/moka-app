@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
-import fr.utc.nf28.moka.data.CurrentItem;
+import fr.utc.nf28.moka.data.BaseItem;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,34 +16,34 @@ import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class ItemAdapter extends BaseMokaAdapter implements Filterable {
 	private static final String TAG = makeLogTag(ItemAdapter.class);
-	private List<CurrentItem> mCurrentItems = Collections.emptyList();
-	private List<CurrentItem> mSavedItems = Collections.emptyList();
+	private List<BaseItem> mItems = Collections.emptyList();
+	private List<BaseItem> mSavedItems = Collections.emptyList();
 
 	public ItemAdapter(Context context) {
 		super(context);
 	}
 
-	public void updateItems(List<CurrentItem> items) {
+	public void updateItems(List<BaseItem> items) {
 		updateItems(items, false);
 	}
 
-	private void updateItems(List<CurrentItem> items, boolean dueToFilterOperation) {
-		mCurrentItems = items;
+	private void updateItems(List<BaseItem> items, boolean dueToFilterOperation) {
+		mItems = items;
 		notifyDataSetChanged();
 
 		if (!dueToFilterOperation) {
-			mSavedItems = new ArrayList<CurrentItem>(items);
+			mSavedItems = new ArrayList<BaseItem>(items);
 		}
 	}
 
 	@Override
 	public int getCount() {
-		return mCurrentItems.size();
+		return mItems.size();
 	}
 
 	@Override
-	public CurrentItem getItem(int position) {
-		return mCurrentItems.get(position);
+	public BaseItem getItem(int position) {
+		return mItems.get(position);
 	}
 
 	@Override
@@ -53,8 +53,8 @@ public class ItemAdapter extends BaseMokaAdapter implements Filterable {
 		}
 
 		final TextView itemName = ViewHolder.get(convertView, R.id.item_name);
-		final CurrentItem item = getItem(position);
-		itemName.setText(item.getName());
+		final BaseItem item = getItem(position);
+		itemName.setText(item.getClassName());
 
 		return convertView;
 	}
@@ -75,9 +75,9 @@ public class ItemAdapter extends BaseMokaAdapter implements Filterable {
 					return results;
 				}
 
-				final List<CurrentItem> foundItems = new ArrayList<CurrentItem>();
-				for (CurrentItem item : mSavedItems) {
-					if (item.getName().contains(charSequence)) {
+				final List<BaseItem> foundItems = new ArrayList<BaseItem>();
+				for (BaseItem item : mSavedItems) {
+					if (item.getClassName().contains(charSequence)) {
 						foundItems.add(item);
 					}
 				}
@@ -90,7 +90,7 @@ public class ItemAdapter extends BaseMokaAdapter implements Filterable {
 			@Override
 			@SuppressWarnings("unchecked")
 			protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-				final List<CurrentItem> results = (List<CurrentItem>) filterResults.values;
+				final List<BaseItem> results = (List<BaseItem>) filterResults.values;
 				updateItems(results, true);
 			}
 		};

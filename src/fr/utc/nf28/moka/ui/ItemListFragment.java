@@ -14,7 +14,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.widget.SearchView;
 import fr.utc.nf28.moka.ItemAdapter;
 import fr.utc.nf28.moka.R;
-import fr.utc.nf28.moka.data.CurrentItem;
+import fr.utc.nf28.moka.data.BaseItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +30,10 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 	 */
 	private static final Callbacks sDummyCallbacks = new Callbacks() {
 		@Override
-		public void onItemSelected(CurrentItem item) {
+		public void onItemSelected(BaseItem item) {
 		}
 	};
-	private final List<CurrentItem> items = new ArrayList<CurrentItem>(10);
+	private final List<BaseItem> items = new ArrayList<BaseItem>(10);
 	private ItemAdapter mAdapter;
 	private Callbacks mCallbacks = sDummyCallbacks;
 
@@ -62,7 +62,7 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 		setHasOptionsMenu(true);
 
 		for (int i = 1; i <= 10; i++) {
-			items.add(new CurrentItem("item " + i));
+			items.add(new BaseItem("base name " + i, "coucou", 1));
 		}
 	}
 
@@ -140,6 +140,6 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 		/**
 		 * Callback for when an item has been selected.
 		 */
-		public void onItemSelected(CurrentItem item);
+		public void onItemSelected(BaseItem item);
 	}
 }

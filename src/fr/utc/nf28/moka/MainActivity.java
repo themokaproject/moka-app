@@ -12,6 +12,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import fr.utc.nf28.moka.data.BaseItem;
 import fr.utc.nf28.moka.data.CurrentItem;
 import fr.utc.nf28.moka.ui.CurrentItemListFragment;
 import fr.utc.nf28.moka.ui.ItemListFragment;
@@ -87,10 +88,10 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 	}
 
 	@Override
-	public void onItemSelected(CurrentItem item) {
+	public void onItemSelected(BaseItem item) {
 		new AlertDialog.Builder(this)
-				.setTitle(item.getName())
-				.setMessage("Plus de détails")
+				.setTitle(item.getClassName())
+				.setMessage(item.getDescription())
 				.show();
 	}
 
