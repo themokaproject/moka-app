@@ -5,14 +5,14 @@
     <!-- Bottom 1dp shadow -->
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="#cccccc"/>
+            <solid android:color="#cccccc" />
         </shape>
     </item>
 
     <!-- Grey top color -->
     <item android:bottom="1dp">
         <shape android:shape="rectangle">
-            <solid android:color="#e6e6e6"/>
+            <solid android:color="@color/card_grey" />
         </shape>
     </item>
 

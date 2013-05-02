@@ -23,4 +23,12 @@
     <string name="delete_confirmation_message">Êtes-vous sûr(e) de vouloir supprimer</string>
     <string name="delete_confirmation_ok">OK</string>
     <string name="delete_confirmation_cancel">Annuler</string>
+
+    <!-- Spinner content -->
+    <string-array name="item_classes">
+        <item>Texte</item>
+        <item>Média</item>
+        <item>Informatique</item>
+        <item>Tout</item>
+    </string-array>
 </resources>
