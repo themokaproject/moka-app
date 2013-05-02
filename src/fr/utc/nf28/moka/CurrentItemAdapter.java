@@ -43,4 +43,14 @@ public class CurrentItemAdapter extends BaseMokaAdapter {
 
 		return convertView;
 	}
+
+	public void remove(CurrentItem item) {
+		mCurrentItems.remove(item);
+		notifyDataSetChanged();
+	}
+
+	public void remove(int position) {
+		mCurrentItems.remove(position);
+		notifyDataSetChanged();
+	}
 }
