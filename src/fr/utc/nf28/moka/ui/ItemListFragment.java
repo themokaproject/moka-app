@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -135,8 +134,9 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 		searchView.setQueryHint(getSherlockActivity().getString(R.string.search_hint));
 		searchView.setOnQueryTextListener(this);
 
-		mAdapter.getFilter().filter(null); // Workaround for the bug that occurs when changing tab while in search mode.
+		// Workaround for the bug that occurs when changing tab while in search mode.
 		// There might be a better solution.
+		mAdapter.getFilter().filter(null);
 	}
 
 	private void saveLastClassPreference(int position) {
@@ -180,13 +180,12 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 		saveLastClassPreference(position);
-		final String chosenSection = parent.getItemAtPosition(position).toString();
-		if (TextUtils.equals("Tout", chosenSection)) {
+		if (position == mSpinner.getCount() - 1) {
 			mAdapter.getSectionFilter().filter(null);
-		} else {
-			mAdapter.getSectionFilter().filter(chosenSection);
 		}
-		// TODO: apply corresponding filter, update adapter and adapter's sections
+		else {
+			mAdapter.getSectionFilter().filter(parent.getItemAtPosition(position).toString());
+		}
 	}
 
 	@Override

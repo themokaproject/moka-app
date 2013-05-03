@@ -154,7 +154,7 @@ public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 		}
 
 		final TextView sectionName = ViewHolder.get(convertView, R.id.header_text);
-		sectionName.setText(getItem(position).getClassName());
+		sectionName.setText(getItem(position).getClassName().toUpperCase());
 
 		return convertView;
 	}
