@@ -10,7 +10,7 @@ import android.os.Bundle;
  * Time: 08:29
  * To change this template use File | Settings | File Templates.
  */
-public class StartActivity extends Activity {
+public class NfcActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
