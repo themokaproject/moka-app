@@ -10,6 +10,7 @@
 
     <!-- MenuItems -->
     <string name="search">Rechercher</string>
+    <string name="refresh">Actualiser</string>
     <string name="delete">Supprimer</string>
     <string name="licenses">Licences open source</string>
 

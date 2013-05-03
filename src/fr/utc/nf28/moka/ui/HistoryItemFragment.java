@@ -5,7 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import fr.utc.nf28.moka.HistoryItemAdapter;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.CurrentItem;
@@ -45,5 +49,21 @@ public class HistoryItemFragment extends SherlockFragment {
 		listView.setAdapter(adapter);
 
 		return rootView;
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.fragment_history_item_list, menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.menu_refresh:
+				Toast.makeText(getSherlockActivity(), "TODO: refresh action", Toast.LENGTH_SHORT).show();
+				return true;
+			default:
+				return false;
+		}
 	}
 }
