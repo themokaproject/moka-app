@@ -90,7 +90,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 	@Override
 	public void onItemSelected(BaseItem item) {
 		new AlertDialog.Builder(this)
-				.setTitle(item.getClassName())
+				.setTitle(item.getName())
 				.setMessage(item.getDescription())
 				.show();
 	}

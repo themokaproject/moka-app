@@ -3,7 +3,7 @@ package fr.utc.nf28.moka.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class BaseItem implements Parcelable {
+public class BaseItem implements Parcelable, Comparable<BaseItem> {
 	public static final Parcelable.Creator<BaseItem> CREATOR = new Parcelable.Creator<BaseItem>() {
 		public BaseItem createFromParcel(Parcel in) {
 			return new BaseItem(in);
@@ -13,20 +13,31 @@ public class BaseItem implements Parcelable {
 			return new BaseItem[size];
 		}
 	};
+	protected String mName;
 	protected String mClassName;
 	protected String mDescription;
 	protected int mResId;
 
-	public BaseItem(String className, String description, int resId) {
+	public BaseItem(String name, String className, String description, int resId) {
+		mName = name;
 		mClassName = className;
 		mDescription = description;
 		mResId = resId;
 	}
 
 	protected BaseItem(Parcel in) {
+		mName = in.readString();
 		mClassName = in.readString();
 		mDescription = in.readString();
 		mResId = in.readInt();
+	}
+
+	public void setName(String name) {
+		mName = name;
+	}
+
+	public String getName() {
+		return mName;
 	}
 
 	public void setClassName(String className) {
@@ -60,8 +71,14 @@ public class BaseItem implements Parcelable {
 
 	@Override
 	public void writeToParcel(Parcel parcel, int flags) {
+		parcel.writeString(mName);
 		parcel.writeString(mClassName);
 		parcel.writeString(mDescription);
 		parcel.writeInt(mResId);
+	}
+
+	@Override
+	public int compareTo(BaseItem other) {
+		return mClassName.compareTo(other.mClassName);
 	}
 }

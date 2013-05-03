@@ -5,13 +5,13 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -69,10 +69,6 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 
 		// Fragment configuration
 		setHasOptionsMenu(true);
-
-		for (int i = 1; i <= 10; i++) {
-			items.add(new BaseItem("base name " + i, "coucou", 1));
-		}
 	}
 
 	@Override
@@ -91,6 +87,15 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 		gridView.setAreHeadersSticky(false);
 		gridView.setEmptyView(rootView.findViewById(android.R.id.empty));
 		mAdapter = new ItemAdapter(getSherlockActivity());
+
+		for (int i = 1; i <= 10; i++) {
+			items.add(new BaseItem(
+					"base item " + i,
+					adapter.getItem((i - 1) % (mSpinner.getAdapter().getCount() - 1)).toString(),
+					"Une description",
+					1)
+			);
+		}
 		mAdapter.updateItems(items);
 
 		gridView.setAdapter(mAdapter);
@@ -175,7 +180,12 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 		saveLastClassPreference(position);
-		Toast.makeText(getSherlockActivity(), parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
+		final String chosenSection = parent.getItemAtPosition(position).toString();
+		if (TextUtils.equals("Tout", chosenSection)) {
+			mAdapter.getSectionFilter().filter(null);
+		} else {
+			mAdapter.getSectionFilter().filter(chosenSection);
+		}
 		// TODO: apply corresponding filter, update adapter and adapter's sections
 	}
 
