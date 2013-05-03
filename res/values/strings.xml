@@ -32,4 +32,10 @@
         <item>Informatique</item>
         <item>Tout</item>
     </string-array>
+
+    <!-- Start Activity -->
+    <string name="info_nfc_text">Touchez un tag NFC Moka</string>
+    <string name="start_button_manuel">Configuration manuelle</string>
+    <string name="logo_description">Logo de l'application</string>
+
 </resources>
