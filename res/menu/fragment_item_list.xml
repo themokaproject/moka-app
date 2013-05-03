@@ -2,11 +2,10 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-            android:id="@+id/menu_search"
-            android:icon="@drawable/ic_action_search"
-            android:title="@string/search"
-            android:orderInCategory="10"
-            android:actionViewClass="com.actionbarsherlock.widget.SearchView"
-            android:showAsAction="always|collapseActionView">
-    </item>
+        android:id="@+id/menu_search"
+        android:icon="@drawable/ic_action_search"
+        android:title="@string/search"
+        android:orderInCategory="10"
+        android:actionViewClass="com.actionbarsherlock.widget.SearchView"
+        android:showAsAction="always|collapseActionView" />
 </menu>
