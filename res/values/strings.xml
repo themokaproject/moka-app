@@ -25,6 +25,9 @@
     <string name="delete_confirmation_ok">OK</string>
     <string name="delete_confirmation_cancel">Annuler</string>
 
+    <!-- ItemListFragment -->
+    <string name="main_class_spinner_title">Choisir une catégorie</string>
+
     <!-- Spinner content -->
     <string-array name="item_classes">
         <item>Texte</item>

@@ -76,10 +76,6 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 
 		mSpinner = (Spinner) rootView.findViewById(R.id.spinner);
 		mSpinner.setOnItemSelectedListener(this);
-		final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getSherlockActivity(),
-				R.array.item_classes, R.layout.simple_spinner_item_bigger);
-		adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item_bigger);
-		mSpinner.setAdapter(adapter);
 
 		final StickyGridHeadersGridView gridView = (StickyGridHeadersGridView) rootView.findViewById(R.id.grid);
 		gridView.setOnItemClickListener(this);
@@ -90,7 +86,7 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 		for (int i = 1; i <= 10; i++) {
 			items.add(new BaseItem(
 					"base item " + i,
-					adapter.getItem((i - 1) % (mSpinner.getAdapter().getCount() - 1)).toString(),
+					"adapter.getItem((i - 1) % (mSpinner.getAdapter().getCount() - 1)).toString()",
 					"Une description",
 					1)
 			);
@@ -108,6 +104,10 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 
 		mPrefs = PreferenceManager.getDefaultSharedPreferences(getSherlockActivity());
 		mSpinner.setSelection(loadLastClassPreference());
+		final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getSherlockActivity(),
+				R.array.item_classes, R.layout.simple_spinner_item_bigger);
+		adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item_bigger);
+		mSpinner.setAdapter(adapter);
 	}
 
 	@Override

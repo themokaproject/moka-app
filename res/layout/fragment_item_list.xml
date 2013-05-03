@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Choisir une catégorie"
+            android:text="@string/main_class_spinner_title"
             android:gravity="center"
             android:layout_gravity="center"
             android:textSize="16sp"
@@ -36,7 +36,7 @@
         android:layout_height="match_parent"
         android:padding="16dp"
         android:numColumns="2"
-        android:verticalSpacing="32dp"
+        android:verticalSpacing="16dp"
         android:horizontalSpacing="32dp"
         android:stretchMode="columnWidth"
         android:clipToPadding="false"
