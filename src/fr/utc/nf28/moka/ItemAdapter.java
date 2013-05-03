@@ -1,6 +1,7 @@
 package fr.utc.nf28.moka;
 
 import android.content.Context;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +18,24 @@ import java.util.List;
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSimpleAdapter, Filterable {
+	private static final SectionFilterCallbacks sDummySearchCallbacks = new SectionFilterCallbacks() {
+		@Override
+		public void onSectionExist(List<BaseItem> sectionItems) {
+		}
+
+		@Override
+		public void onNoSuchSection() {
+		}
+	};
 	private static final String TAG = makeLogTag(ItemAdapter.class);
 	private final SparseArray<String> mSectionToPosition;
 	private List<BaseItem> mItems = Collections.emptyList();
 	private List<BaseItem> mSavedItems = Collections.emptyList();
+	private List<BaseItem> mSectionFilterItems = Collections.emptyList();
+	private List<BaseItem> mItemFilterItems = Collections.emptyList();
+	private SectionFilterCallbacks mSectionFilterCallbacks = sDummySearchCallbacks;
+	private ItemFilter mItemFilter;
+	private SectionFilter mSectionFilter;
 
 	public ItemAdapter(Context context) {
 		super(context);
@@ -32,7 +47,11 @@ public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 		updateItems(items, false);
 	}
 
-	private void updateItems(List<BaseItem> items, boolean dueToFilterOperation) {
+	private void updateItems(List<BaseItem> items, boolean dueToMainFilterOperation) {
+		updateItems(items, dueToMainFilterOperation, false);
+	}
+
+	private void updateItems(List<BaseItem> items, boolean dueToMainFilterOperation, boolean dueToSectionFilterOperation) {
 		mSectionToPosition.clear();
 
 		int i = 0;
@@ -45,9 +64,24 @@ public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 		mItems = items;
 		notifyDataSetChanged();
 
-		if (!dueToFilterOperation) {
+		if (!dueToMainFilterOperation && !dueToSectionFilterOperation) {
 			mSavedItems = new ArrayList<BaseItem>(items);
 		}
+
+		if (dueToMainFilterOperation) {
+			mItemFilterItems = new ArrayList<BaseItem>(items);
+		}
+		if (dueToSectionFilterOperation) {
+			mSectionFilterItems = new ArrayList<BaseItem>(items);
+		}
+	}
+
+	public void setSectionFilterCallbacks(SectionFilterCallbacks callbacks) {
+		mSectionFilterCallbacks = callbacks;
+	}
+
+	public void resetSectionFilterCallbacks() {
+		mSectionFilterCallbacks = sDummySearchCallbacks;
 	}
 
 	@Override
@@ -79,67 +113,17 @@ public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 
 	@Override
 	public Filter getFilter() {
-		return new Filter() {
-			@Override
-			protected FilterResults performFiltering(CharSequence charSequence) {
-				final FilterResults results = new FilterResults();
-				if (charSequence == null || charSequence.length() == 0) {
-					results.values = mSavedItems;
-					results.count = mSavedItems.size();
-					return results;
-				}
-
-				final List<BaseItem> foundItems = new ArrayList<BaseItem>();
-				for (BaseItem item : mSavedItems) {
-					if (item.getName().contains(charSequence)) {
-						foundItems.add(item);
-					}
-				}
-				results.values = foundItems;
-				results.count = foundItems.size();
-
-				return results;
-			}
-
-			@Override
-			@SuppressWarnings("unchecked")
-			protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-				final List<BaseItem> results = (List<BaseItem>) filterResults.values;
-				updateItems(results, true);
-			}
-		};
+		if (mItemFilter == null) {
+			mItemFilter = new ItemFilter();
+		}
+		return mItemFilter;
 	}
 
 	public Filter getSectionFilter() {
-		return new Filter() {
-			@Override
-			protected FilterResults performFiltering(CharSequence charSequence) {
-				final FilterResults results = new FilterResults();
-				if (charSequence == null || charSequence.length() == 0) {
-					results.values = mSavedItems;
-					results.count = mSavedItems.size();
-					return results;
-				}
-
-				final List<BaseItem> foundItems = new ArrayList<BaseItem>();
-				for (BaseItem item : mSavedItems) {
-					if (item.getClassName().contains(charSequence)) {
-						foundItems.add(item);
-					}
-				}
-				results.values = foundItems;
-				results.count = foundItems.size();
-
-				return results;
-			}
-
-			@Override
-			@SuppressWarnings("unchecked")
-			protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-				final List<BaseItem> results = (List<BaseItem>) filterResults.values;
-				updateItems(results, true);
-			}
-		};
+		if (mSectionFilter == null) {
+			mSectionFilter = new SectionFilter();
+		}
+		return mSectionFilter;
 	}
 
 	@Override
@@ -157,5 +141,112 @@ public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 		sectionName.setText(getItem(position).getClassName().toUpperCase());
 
 		return convertView;
+	}
+
+	public interface SectionFilterCallbacks {
+		public void onSectionExist(List<BaseItem> sectionItems);
+
+		public void onNoSuchSection();
+	}
+
+	private class ItemFilter extends Filter {
+		private boolean mIsQuerying;
+
+		@Override
+		protected FilterResults performFiltering(CharSequence charSequence) {
+			mIsQuerying = true;
+			final FilterResults results = new FilterResults();
+			if (charSequence == null || charSequence.length() == 0) {
+				if (mSectionFilter != null && mSectionFilter.isQuerying()) {
+					results.values = mSectionFilterItems;
+					results.count = mSectionFilterItems.size();
+				} else {
+					results.values = mSavedItems;
+					results.count = mSavedItems.size();
+				}
+				mIsQuerying = false;
+				return results;
+			}
+
+			Log.d(TAG, "performFiltering, query == " + charSequence);
+			final List<BaseItem> foundItems = new ArrayList<BaseItem>();
+			for (BaseItem item : mSavedItems) {
+				if (item.getName().contains(charSequence)) {
+					foundItems.add(item);
+				}
+			}
+			results.values = foundItems;
+			results.count = foundItems.size();
+
+			return results;
+		}
+
+		@Override
+		@SuppressWarnings("unchecked")
+		protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+			final List<BaseItem> results = (List<BaseItem>) filterResults.values;
+			updateItems(results, true);
+		}
+
+		public boolean isQuerying() {
+			return mIsQuerying;
+		}
+	}
+
+	private class SectionFilter extends Filter {
+		private boolean mIsQuerying;
+
+		@Override
+		protected FilterResults performFiltering(CharSequence charSequence) {
+			mIsQuerying = true;
+			final FilterResults results = new FilterResults();
+			if (charSequence == null) {
+				if (mItemFilter != null && mItemFilter.isQuerying()) {
+					results.values = mItemFilterItems;
+					results.count = mItemFilterItems.size();
+				} else {
+					results.values = mSavedItems;
+					results.count = mSavedItems.size();
+				}
+				mIsQuerying = false;
+				return results;
+			}
+
+			Log.d(TAG, "performFiltering2, query == " + charSequence);
+			final List<BaseItem> foundItems = new ArrayList<BaseItem>();
+			if (mItemFilter != null && mItemFilter.isQuerying()) {
+				for (BaseItem item : mItems) {
+					if (item.getClassName().contains(charSequence)) {
+						foundItems.add(item);
+					}
+				}
+			} else {
+				for (BaseItem item : mSavedItems) {
+					if (item.getClassName().contains(charSequence)) {
+						foundItems.add(item);
+					}
+				}
+			}
+			results.values = foundItems;
+			results.count = foundItems.size();
+
+			return results;
+		}
+
+		@Override
+		@SuppressWarnings("unchecked")
+		protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+			final List<BaseItem> results = (List<BaseItem>) filterResults.values;
+			updateItems(results, false, true);
+			if (results == null || results.isEmpty()) {
+				mSectionFilterCallbacks.onNoSuchSection();
+			} else {
+				mSectionFilterCallbacks.onSectionExist(results);
+			}
+		}
+
+		public boolean isQuerying() {
+			return mIsQuerying;
+		}
 	}
 }

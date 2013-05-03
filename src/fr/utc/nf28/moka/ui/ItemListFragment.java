@@ -27,7 +27,8 @@ import java.util.List;
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class ItemListFragment extends SherlockFragment implements AdapterView.OnItemClickListener,
-		SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener, AdapterView.OnItemSelectedListener {
+		SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener, AdapterView.OnItemSelectedListener,
+		ItemAdapter.SectionFilterCallbacks {
 	private static final String TAG = makeLogTag(ItemListFragment.class);
 	private static final String PERSISTENT_LAST_CLASS = "Moka_LastClass";
 	/**
@@ -44,6 +45,7 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 	private Callbacks mCallbacks = sDummyCallbacks;
 	private SharedPreferences mPrefs;
 	private Spinner mSpinner;
+	private StickyGridHeadersGridView mGridView;
 
 	public ItemListFragment() {
 	}
@@ -75,25 +77,29 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 		final View rootView = inflater.inflate(R.layout.fragment_item_list, container, false);
 
 		mSpinner = (Spinner) rootView.findViewById(R.id.spinner);
+		final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getSherlockActivity(),
+				R.array.item_classes, R.layout.simple_spinner_item_bigger);
+		adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item_bigger);
+		mSpinner.setAdapter(adapter);
 		mSpinner.setOnItemSelectedListener(this);
 
-		final StickyGridHeadersGridView gridView = (StickyGridHeadersGridView) rootView.findViewById(R.id.grid);
-		gridView.setOnItemClickListener(this);
-		gridView.setAreHeadersSticky(false);
-		gridView.setEmptyView(rootView.findViewById(android.R.id.empty));
+		mGridView = (StickyGridHeadersGridView) rootView.findViewById(R.id.grid);
+		mGridView.setOnItemClickListener(this);
+		mGridView.setAreHeadersSticky(false);
+		mGridView.setEmptyView(rootView.findViewById(android.R.id.empty));
+		mGridView.getEmptyView().setVisibility(View.GONE);
 		mAdapter = new ItemAdapter(getSherlockActivity());
 
 		for (int i = 1; i <= 10; i++) {
 			items.add(new BaseItem(
-					"base item " + i,
-					"adapter.getItem((i - 1) % (mSpinner.getAdapter().getCount() - 1)).toString()",
+					"Base item " + i,
+					adapter.getItem((i - 1) % (mSpinner.getAdapter().getCount() - 1)).toString(),
 					"Une description",
 					1)
 			);
 		}
+		mAdapter.setSectionFilterCallbacks(this);
 		mAdapter.updateItems(items);
-
-		gridView.setAdapter(mAdapter);
 
 		return rootView;
 	}
@@ -104,16 +110,13 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 
 		mPrefs = PreferenceManager.getDefaultSharedPreferences(getSherlockActivity());
 		mSpinner.setSelection(loadLastClassPreference());
-		final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getSherlockActivity(),
-				R.array.item_classes, R.layout.simple_spinner_item_bigger);
-		adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item_bigger);
-		mSpinner.setAdapter(adapter);
 	}
 
 	@Override
 	public void onDetach() {
 		// Reset the active callbacks interface to the dummy implementation.
 		mCallbacks = sDummyCallbacks;
+		mAdapter.resetSectionFilterCallbacks();
 
 		super.onDetach();
 	}
@@ -179,17 +182,28 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-		saveLastClassPreference(position);
 		if (position == mSpinner.getCount() - 1) {
 			mAdapter.getSectionFilter().filter(null);
-		}
-		else {
+		} else {
 			mAdapter.getSectionFilter().filter(parent.getItemAtPosition(position).toString());
 		}
+		saveLastClassPreference(position);
 	}
 
 	@Override
 	public void onNothingSelected(AdapterView<?> parent) {
+	}
+
+	@Override
+	public void onSectionExist(List<BaseItem> sectionItems) {
+		if (mGridView.getAdapter() == null) {
+			mGridView.setAdapter(mAdapter);
+			mGridView.getEmptyView().setVisibility(View.VISIBLE);
+		}
+	}
+
+	@Override
+	public void onNoSuchSection() {
 	}
 
 	/**
