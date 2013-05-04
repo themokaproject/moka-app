@@ -109,14 +109,25 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 				R.drawable.logo_item_video
 		};
 
-		for (int i = 1; i <= 10; i++) {
-			final BaseItem item = new BaseItem(
-					"Base item " + i,
-					adapter.getItem((i - 1) % (mSpinner.getAdapter().getCount() - 1)).toString(),
-					"Une description",
-					1);
-			item.setResId(resources[i - 1]);
-			items.add(item);
+		final BaseItem[] sampleItems = new BaseItem[]{
+				new BaseItem("Logo"),
+				new BaseItem("Web"),
+				new BaseItem("Icône"),
+				new BaseItem("Icône"),
+				new BaseItem("Texte"),
+				new BaseItem("Image"),
+				new BaseItem("Liste"),
+				new BaseItem("Image"),
+				new BaseItem("Logo"),
+				new BaseItem("Vidéo")
+		};
+
+		final int nbSections = mSpinner.getCount() - 1;
+		for (int i = 0; i <= 9; i++) {
+			sampleItems[i].setClassName(adapter.getItem(i % nbSections).toString());
+			sampleItems[i].setDescription("Une description");
+			sampleItems[i].setResId(resources[i]);
+			items.add(sampleItems[i]);
 		}
 		mAdapter.setSectionFilterCallbacks(this);
 		mAdapter.updateItems(items);

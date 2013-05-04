@@ -19,10 +19,14 @@ public class BaseItem implements Parcelable, Comparable<BaseItem> {
 	protected int mResId;
 
 	public BaseItem(String name, String className, String description, int resId) {
-		mName = name;
+		this(name);
 		mClassName = className;
 		mDescription = description;
 		mResId = resId;
+	}
+
+	public BaseItem(String name) {
+		mName = name;
 	}
 
 	protected BaseItem(Parcel in) {
@@ -32,36 +36,36 @@ public class BaseItem implements Parcelable, Comparable<BaseItem> {
 		mResId = in.readInt();
 	}
 
-	public void setName(String name) {
-		mName = name;
-	}
-
 	public String getName() {
 		return mName;
 	}
 
-	public void setClassName(String className) {
-		mClassName = className;
+	public void setName(String name) {
+		mName = name;
 	}
 
 	public String getClassName() {
 		return mClassName;
 	}
 
-	public void setDescription(String description) {
-		mDescription = description;
+	public void setClassName(String className) {
+		mClassName = className;
 	}
 
 	public String getDescription() {
 		return mDescription;
 	}
 
-	public void setResId(int resId) {
-		mResId = resId;
+	public void setDescription(String description) {
+		mDescription = description;
 	}
 
 	public int getResId() {
 		return mResId;
+	}
+
+	public void setResId(int resId) {
+		mResId = resId;
 	}
 
 	@Override
