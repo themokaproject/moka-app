@@ -96,13 +96,27 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 		mGridView.getEmptyView().setVisibility(View.GONE);
 		mAdapter = new ItemAdapter(getSherlockActivity());
 
+		final int resources[] = new int[]{
+				R.drawable.ic_action_refresh,
+				R.drawable.ic_action_delete,
+				R.drawable.logo,
+				R.drawable.ic_launcher,
+				R.drawable.ic_action_search,
+				R.drawable.ic_action_refresh,
+				R.drawable.logo,
+				R.drawable.ic_launcher,
+				R.drawable.ic_action_delete,
+				R.drawable.ic_launcher
+		};
+
 		for (int i = 1; i <= 10; i++) {
-			items.add(new BaseItem(
+			final BaseItem item = new BaseItem(
 					"Base item " + i,
 					adapter.getItem((i - 1) % (mSpinner.getAdapter().getCount() - 1)).toString(),
 					"Une description",
-					1)
-			);
+					1);
+			item.setResId(resources[i - 1]);
+			items.add(item);
 		}
 		mAdapter.setSectionFilterCallbacks(this);
 		mAdapter.updateItems(items);

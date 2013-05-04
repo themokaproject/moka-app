@@ -27,6 +27,7 @@
 
     <!-- ItemListFragment -->
     <string name="main_class_spinner_title">Choisir une catégorie</string>
+    <string name="item_imageview_content_description">Description de l\'élément</string>
 
     <!-- Spinner content -->
     <string-array name="item_classes">
