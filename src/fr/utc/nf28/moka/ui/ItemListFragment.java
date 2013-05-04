@@ -97,16 +97,16 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 		mAdapter = new ItemAdapter(getSherlockActivity());
 
 		final int resources[] = new int[]{
-				R.drawable.ic_action_refresh,
-				R.drawable.ic_action_delete,
 				R.drawable.logo,
+				R.drawable.logo_item_web,
 				R.drawable.ic_launcher,
-				R.drawable.ic_action_search,
-				R.drawable.ic_action_refresh,
+				R.drawable.ic_launcher,
+				R.drawable.logo_item_text,
+				R.drawable.logo_item_picture,
+				R.drawable.logo_item_list,
+				R.drawable.logo_item_picture,
 				R.drawable.logo,
-				R.drawable.ic_launcher,
-				R.drawable.ic_action_delete,
-				R.drawable.ic_launcher
+				R.drawable.logo_item_video
 		};
 
 		for (int i = 1; i <= 10; i++) {
