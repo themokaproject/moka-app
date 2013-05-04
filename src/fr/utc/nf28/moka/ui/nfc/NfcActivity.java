@@ -30,6 +30,7 @@ public class NfcActivity extends Activity {
             public void onClick(View view) {
                 Intent i = new Intent(NfcActivity.this, MainActivity.class);
                 startActivity(i);
+                finish();
             }
         });
     }
