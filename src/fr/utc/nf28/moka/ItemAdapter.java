@@ -44,11 +44,7 @@ public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 	}
 
 	public void updateItems(List<BaseItem> items) {
-		updateItems(items, false);
-	}
-
-	private void updateItems(List<BaseItem> items, boolean dueToMainFilterOperation) {
-		updateItems(items, dueToMainFilterOperation, false);
+		updateItems(items, false, false);
 	}
 
 	private void updateItems(List<BaseItem> items, boolean dueToMainFilterOperation, boolean dueToSectionFilterOperation) {
@@ -67,7 +63,6 @@ public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 		if (!dueToMainFilterOperation && !dueToSectionFilterOperation) {
 			mSavedItems = new ArrayList<BaseItem>(items);
 		}
-
 		if (dueToMainFilterOperation) {
 			mItemFilterItems = new ArrayList<BaseItem>(items);
 		}
@@ -149,104 +144,87 @@ public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 		public void onNoSuchSection();
 	}
 
-	private class ItemFilter extends Filter {
-		private boolean mIsQuerying;
-
+	private final class ItemFilter extends MokaItemsFilter {
 		@Override
-		protected FilterResults performFiltering(CharSequence charSequence) {
-			mIsQuerying = true;
-			final FilterResults results = new FilterResults();
-			if (charSequence == null || charSequence.length() == 0) {
-				if (mSectionFilter != null && mSectionFilter.isQuerying()) {
-					results.values = mSectionFilterItems;
-					results.count = mSectionFilterItems.size();
-				} else {
-					results.values = mSavedItems;
-					results.count = mSavedItems.size();
-				}
-				mIsQuerying = false;
-				return results;
+		protected void onEmptyRequest() {
+			if (mSectionFilter != null && mSectionFilter.isQuerying) {
+				Log.d(TAG, "sectionFilter == null && mSectionFIlter.isQuerying");
+				filterResults.values = mSectionFilterItems;
+				filterResults.count = mSectionFilterItems.size();
+			} else {
+				filterResults.values = mSavedItems;
+				filterResults.count = mSavedItems.size();
 			}
-
-			Log.d(TAG, "performFiltering, query == " + charSequence);
-			final List<BaseItem> foundItems = new ArrayList<BaseItem>();
-			for (BaseItem item : mSavedItems) {
-				if (item.getName().contains(charSequence)) {
-					foundItems.add(item);
-				}
-			}
-			results.values = foundItems;
-			results.count = foundItems.size();
-
-			return results;
 		}
 
 		@Override
-		@SuppressWarnings("unchecked")
-		protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-			final List<BaseItem> results = (List<BaseItem>) filterResults.values;
-			updateItems(results, true);
-		}
-
-		public boolean isQuerying() {
-			return mIsQuerying;
-		}
-	}
-
-	private class SectionFilter extends Filter {
-		private boolean mIsQuerying;
-
-		@Override
-		protected FilterResults performFiltering(CharSequence charSequence) {
-			mIsQuerying = true;
-			final FilterResults results = new FilterResults();
-			if (charSequence == null) {
-				if (mItemFilter != null && mItemFilter.isQuerying()) {
-					results.values = mItemFilterItems;
-					results.count = mItemFilterItems.size();
-				} else {
-					results.values = mSavedItems;
-					results.count = mSavedItems.size();
-				}
-				mIsQuerying = false;
-				return results;
-			}
-
-			Log.d(TAG, "performFiltering2, query == " + charSequence);
-			final List<BaseItem> foundItems = new ArrayList<BaseItem>();
-			if (mItemFilter != null && mItemFilter.isQuerying()) {
-				for (BaseItem item : mItems) {
-					if (item.getClassName().contains(charSequence)) {
+		protected void onRequest(CharSequence query) {
+			if (mSectionFilter != null && mSectionFilter.isQuerying) {
+				final List<BaseItem> currentItems = mItems;
+				for (BaseItem item : currentItems) {
+					if (item.getName().contains(query)) {
 						foundItems.add(item);
 					}
 				}
 			} else {
-				for (BaseItem item : mSavedItems) {
-					if (item.getClassName().contains(charSequence)) {
+				final List<BaseItem> savedItems = mSavedItems;
+				for (BaseItem item : savedItems) {
+					if (item.getName().contains(query)) {
 						foundItems.add(item);
 					}
 				}
 			}
-			results.values = foundItems;
-			results.count = foundItems.size();
-
-			return results;
+			filterResults.values = foundItems;
+			filterResults.count = foundItems.size();
 		}
 
 		@Override
-		@SuppressWarnings("unchecked")
-		protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-			final List<BaseItem> results = (List<BaseItem>) filterResults.values;
-			updateItems(results, false, true);
+		protected void onPublish(List<BaseItem> results) {
+			updateItems(results, mSectionFilter == null || !mSectionFilter.isQuerying, false);
+		}
+	}
+
+	private final class SectionFilter extends MokaItemsFilter {
+		@Override
+		protected void onEmptyRequest() {
+			if (mItemFilter != null && mItemFilter.isQuerying) {
+				filterResults.values = mItemFilterItems;
+				filterResults.count = mItemFilterItems.size();
+			} else {
+				filterResults.values = mSavedItems;
+				filterResults.count = mSavedItems.size();
+			}
+		}
+
+		@Override
+		protected void onRequest(CharSequence query) {
+			if (mItemFilter != null && mItemFilter.isQuerying) {
+				final List<BaseItem> currentItems = mItems;
+				for (BaseItem item : currentItems) {
+					if (item.getClassName().contains(query)) {
+						foundItems.add(item);
+					}
+				}
+			} else {
+				final List<BaseItem> savedItems = mSavedItems;
+				for (BaseItem item : savedItems) {
+					if (item.getClassName().contains(query)) {
+						foundItems.add(item);
+					}
+				}
+			}
+			filterResults.values = foundItems;
+			filterResults.count = foundItems.size();
+		}
+
+		@Override
+		protected void onPublish(List<BaseItem> results) {
+			updateItems(results, false, mItemFilter == null || !mItemFilter.isQuerying);
 			if (results == null || results.isEmpty()) {
 				mSectionFilterCallbacks.onNoSuchSection();
 			} else {
 				mSectionFilterCallbacks.onSectionExist(results);
 			}
-		}
-
-		public boolean isQuerying() {
-			return mIsQuerying;
 		}
 	}
 }
