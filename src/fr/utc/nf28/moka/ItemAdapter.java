@@ -1,12 +1,12 @@
 package fr.utc.nf28.moka;
 
 import android.content.Context;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersSimpleAdapter;
 import fr.utc.nf28.moka.data.BaseItem;
@@ -96,8 +96,10 @@ public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 		}
 
 		final TextView itemName = ViewHolder.get(convertView, R.id.item_name);
+		final ImageView itemImage = ViewHolder.get(convertView, R.id.item_image);
 		final BaseItem item = getItem(position);
 		itemName.setText(item.getName());
+		itemImage.setImageResource(item.getResId());
 
 		return convertView;
 	}
@@ -148,7 +150,6 @@ public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 		@Override
 		protected void onEmptyRequest() {
 			if (mSectionFilter != null && mSectionFilter.isQuerying) {
-				Log.d(TAG, "sectionFilter == null && mSectionFIlter.isQuerying");
 				filterResults.values = mSectionFilterItems;
 				filterResults.count = mSectionFilterItems.size();
 			} else {
@@ -180,7 +181,8 @@ public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 
 		@Override
 		protected void onPublish(List<BaseItem> results) {
-			updateItems(results, mSectionFilter == null || !mSectionFilter.isQuerying, false);
+			final boolean isSectionFiltering = mSectionFilter != null && mSectionFilter.isQuerying;
+			updateItems(results, isSectionFiltering, !isSectionFiltering);
 		}
 	}
 
@@ -219,7 +221,8 @@ public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 
 		@Override
 		protected void onPublish(List<BaseItem> results) {
-			updateItems(results, false, mItemFilter == null || !mItemFilter.isQuerying);
+			final boolean isItemFiltering = mItemFilter != null && mItemFilter.isQuerying;
+			updateItems(results, isItemFiltering, !isItemFiltering);
 			if (results == null || results.isEmpty()) {
 				mSectionFilterCallbacks.onNoSuchSection();
 			} else {
