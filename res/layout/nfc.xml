@@ -24,7 +24,12 @@
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/start_button_manuel"
+                android:text="@string/start_button_manual"
                 android:id="@+id/manuel" android:layout_gravity="center" android:layout_margin="10dp"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/skip"
+                android:text="@string/start_button_skip"/>
     </LinearLayout>
 </RelativeLayout>

@@ -2,6 +2,7 @@ package fr.utc.nf28.moka.ui.nfc;
 
 import android.app.Activity;
 import android.os.Bundle;
+import fr.utc.nf28.moka.R;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,5 +14,6 @@ import android.os.Bundle;
 public class NfcActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.nfc);
     }
 }
