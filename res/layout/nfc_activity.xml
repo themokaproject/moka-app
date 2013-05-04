@@ -4,8 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_centerHorizontal="true"
-    android:layout_centerVertical="true"
+    android:layout_gravity="center"
     android:gravity="center">
 
     <ImageView
@@ -14,8 +13,7 @@
         android:id="@+id/logo"
         android:layout_gravity="center"
         android:src="@drawable/logo"
-        android:contentDescription="@string/logo_description"
-        android:layout_marginLeft="10dp" />
+        android:contentDescription="@string/logo_description" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -25,7 +23,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:layout_margin="10dp"
-        android:textSize="20dp" />
+        android:textSize="20sp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -40,4 +38,5 @@
         android:layout_height="wrap_content"
         android:id="@+id/skip"
         android:text="@string/start_button_skip" />
+
 </LinearLayout>
