@@ -1,35 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    android:gravity="center">
 
-    <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true" android:gravity="center">
-        <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/logo" android:layout_gravity="center" android:src="@drawable/logo"
-                android:contentDescription="@string/logo_description"
-                android:layout_marginLeft="10dp"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/info_nfc_text"
-                android:id="@+id/info" android:layout_gravity="center" android:gravity="center"
-                android:layout_margin="10dp" android:textSize="20dp"/>
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/start_button_manual"
-                android:id="@+id/manuel" android:layout_gravity="center" android:layout_margin="10dp"/>
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/skip"
-                android:text="@string/start_button_skip"/>
-    </LinearLayout>
-</RelativeLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/logo"
+        android:layout_gravity="center"
+        android:src="@drawable/logo"
+        android:contentDescription="@string/logo_description"
+        android:layout_marginLeft="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/info_nfc_text"
+        android:id="@+id/info"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:textSize="20dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start_button_manual"
+        android:id="@+id/manuel"
+        android:layout_gravity="center"
+        android:layout_margin="10dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/skip"
+        android:text="@string/start_button_skip" />
+</LinearLayout>

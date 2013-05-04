@@ -9,15 +9,14 @@
         android:targetSdkVersion="17" />
     <application
         android:label="@string/app_name"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/logo"
         android:theme="@style/Theme.Moka"
         android:allowBackup="true"
         android:hardwareAccelerated="true">
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ItemDetailActivity"
             android:screenOrientation="portrait"
@@ -38,8 +37,8 @@
             android:name=".ui.nfc.NfcActivity"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
