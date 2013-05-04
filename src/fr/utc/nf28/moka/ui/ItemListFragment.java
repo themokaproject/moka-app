@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,7 @@ import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class ItemListFragment extends SherlockFragment implements AdapterView.OnItemClickListener,
 		SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener, AdapterView.OnItemSelectedListener,
-		ItemAdapter.SectionFilterCallbacks {
+		AdapterView.OnItemLongClickListener, ItemAdapter.SectionFilterCallbacks {
 	private static final String TAG = makeLogTag(ItemListFragment.class);
 	private static final String PERSISTENT_LAST_CLASS = "Moka_LastClass";
 	/**
@@ -38,6 +39,10 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 	private static final Callbacks sDummyCallbacks = new Callbacks() {
 		@Override
 		public void onItemSelected(BaseItem item) {
+		}
+
+		@Override
+		public void onItemLongClicked(BaseItem item) {
 		}
 	};
 	private final List<BaseItem> items = new ArrayList<BaseItem>(10);
@@ -85,6 +90,7 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 
 		mGridView = (StickyGridHeadersGridView) rootView.findViewById(R.id.grid);
 		mGridView.setOnItemClickListener(this);
+		mGridView.setOnItemLongClickListener(this);
 		mGridView.setAreHeadersSticky(false);
 		mGridView.setEmptyView(rootView.findViewById(android.R.id.empty));
 		mGridView.getEmptyView().setVisibility(View.GONE);
@@ -127,6 +133,12 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 	}
 
 	@Override
+	public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+		mCallbacks.onItemLongClicked(mAdapter.getItem(position));
+		return true;
+	}
+
+	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.fragment_item_list, menu);
 
@@ -140,6 +152,13 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 		// Workaround for the bug that occurs when changing tab while in search mode.
 		// There might be a better solution.
 		mAdapter.getFilter().filter(null);
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		android.view.MenuInflater inflater = getSherlockActivity().getMenuInflater();
+		inflater.inflate(R.menu.activity_item_detail, menu);
 	}
 
 	private void saveLastClassPreference(int position) {
@@ -216,5 +235,10 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 		 * Callback for when an item has been selected.
 		 */
 		public void onItemSelected(BaseItem item);
+
+		/**
+		 * Callback for when an item has been long clicked.
+		 */
+		public void onItemLongClicked(BaseItem item);
 	}
 }

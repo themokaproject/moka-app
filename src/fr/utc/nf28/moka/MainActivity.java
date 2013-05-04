@@ -89,6 +89,14 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 
 	@Override
 	public void onItemSelected(BaseItem item) {
+		final Intent detailIntent = new Intent(this, ItemDetailActivity.class);
+		final CurrentItem currentItem = new CurrentItem(item.getName());
+		detailIntent.putExtra(ItemDetailActivity.ARG_ITEM, currentItem);
+		startActivity(detailIntent);
+	}
+
+	@Override
+	public void onItemLongClicked(BaseItem item) {
 		new AlertDialog.Builder(this)
 				.setTitle(item.getName())
 				.setMessage(item.getDescription())
@@ -114,12 +122,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		@Override
 		public Fragment getItem(int position) {
 			// getItem is called to instantiate the fragment for the given page.
-			switch (position) {
-				case 0:
-					return new ItemListFragment();
-				default:
-					return new CurrentItemListFragment();
-			}
+			return position == 0 ? new ItemListFragment() : new CurrentItemListFragment();
 		}
 
 		@Override
