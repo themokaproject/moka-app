@@ -44,7 +44,7 @@ public class ItemDetailActivity extends SherlockFragmentActivity implements Acti
 				actionBar.setSelectedNavigationItem(position);
 			}
 		});
-		mViewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager()));
+		mViewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager(), mCurrentItem));
 
 		// We add our tabs
 		actionBar.addTab(actionBar.newTab()
@@ -75,6 +75,7 @@ public class ItemDetailActivity extends SherlockFragmentActivity implements Acti
 				sb.append(" ");
 				sb.append(mCurrentItem.getName());
 				sb.append(" ?");
+				// TODO: use string variables
 				new AlertDialog.Builder(this)
 						.setTitle(resources.getString(R.string.delete_confirmation_title))
 						.setMessage(sb.toString())
@@ -114,8 +115,12 @@ public class ItemDetailActivity extends SherlockFragmentActivity implements Acti
 	 * one of the sections/tabs/pages.
 	 */
 	private static class SectionsPagerAdapter extends FragmentPagerAdapter {
-		public SectionsPagerAdapter(FragmentManager fm) {
+		private final CurrentItem mCurrentItem;
+
+		public SectionsPagerAdapter(FragmentManager fm, CurrentItem currentItem) {
 			super(fm);
+
+			mCurrentItem = currentItem;
 		}
 
 		@Override
@@ -123,7 +128,7 @@ public class ItemDetailActivity extends SherlockFragmentActivity implements Acti
 			// getItem is called to instantiate the fragment for the given page.
 			switch (position) {
 				case 0:
-					return new EditItemFragment();
+					return new EditItemFragment(mCurrentItem);
 				default:
 					return new HistoryItemFragment();
 			}

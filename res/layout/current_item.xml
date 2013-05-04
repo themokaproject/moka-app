@@ -7,7 +7,6 @@
     android:background="@drawable/list_item_selector">
 
     <LinearLayout
-        android:id="@+id/left_part"
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
