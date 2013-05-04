@@ -124,10 +124,11 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 
 		final int nbSections = mSpinner.getCount() - 1;
 		for (int i = 0; i <= 9; i++) {
-			sampleItems[i].setClassName(adapter.getItem(i % nbSections).toString());
-			sampleItems[i].setDescription("Une description");
-			sampleItems[i].setResId(resources[i]);
-			items.add(sampleItems[i]);
+			final BaseItem item = sampleItems[i];
+			item.setClassName(adapter.getItem(i % nbSections).toString());
+			item.setDescription("Une description");
+			item.setResId(resources[i]);
+			items.add(item);
 		}
 		mAdapter.setSectionFilterCallbacks(this);
 		mAdapter.updateItems(items);
