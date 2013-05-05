@@ -1,5 +1,6 @@
 package fr.utc.nf28.moka.util;
 
+import android.content.Intent;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.Tag;
@@ -58,16 +59,16 @@ public class NfcUtils {
 	}
 
 	/**
-	 * Write tag with URI encoded content
+	 * Write tag with data for moka
 	 *
 	 * @param tag          tag detected by your device
-	 * @param uri          uri store in your tag
+	 * @param data         data store in your tag
 	 * @param makeReadOnly turn your tag in readOnly mode
 	 * @return result code
 	 * @throws UnsupportedEncodingException
 	 */
-	public static int writeUriTag(Tag tag, String uri, boolean makeReadOnly) throws UnsupportedEncodingException {
-		NdefRecord[] records = {createUriRecord(uri)};
+	public static int writeUriTag(Tag tag, String data, boolean makeReadOnly) throws UnsupportedEncodingException {
+		NdefRecord[] records = {createMokaRecord(data)};
 		NdefMessage message = new NdefMessage(records);
 		try {
 			// check if tag is already NDEF formatted
@@ -129,14 +130,14 @@ public class NfcUtils {
 	}
 
 	/**
-	 * Create record with matching option to uri standard
+	 * Create record with matching option to moka standard
 	 *
-	 * @param uri your uri
+	 * @param data your data
 	 * @return formatted NdefRecord
 	 * @throws UnsupportedEncodingException
 	 */
-	private static NdefRecord createUriRecord(String uri) throws UnsupportedEncodingException {
-		byte[] uriBytes = uri.getBytes(Charset.forName("UTF-8"));
+	private static NdefRecord createMokaRecord(String data) throws UnsupportedEncodingException {
+		byte[] uriBytes = data.getBytes(Charset.forName("UTF-8"));
 		int uriLength = uriBytes.length;
 		byte[] payload = new byte[1 + uriLength];
 
@@ -144,7 +145,7 @@ public class NfcUtils {
 		System.arraycopy(uriBytes, 0, payload, 1, uriLength);
 
 		return new NdefRecord(NdefRecord.TNF_WELL_KNOWN,
-				NdefRecord.RTD_URI,
+				Intent.normalizeMimeType("moka").getBytes(),
 				new byte[0],
 				payload);
 	}
