@@ -44,6 +44,10 @@ public class NfcUtils {
 	 * result code : tag not support NDEF format
 	 */
 	public static final int TAG_NOT_SUPPORT_FORMAT_NDEF = 0x00000006;
+	/**
+	 * mime type for moka tag
+	 */
+	public static final String MIME_TYPE_MOKA = "moka";
 
 	/**
 	 * Read tag with URI encoded content
@@ -145,7 +149,7 @@ public class NfcUtils {
 		System.arraycopy(uriBytes, 0, payload, 1, uriLength);
 
 		return new NdefRecord(NdefRecord.TNF_WELL_KNOWN,
-				Intent.normalizeMimeType("moka").getBytes(),
+				Intent.normalizeMimeType(MIME_TYPE_MOKA).getBytes(),
 				new byte[0],
 				payload);
 	}
