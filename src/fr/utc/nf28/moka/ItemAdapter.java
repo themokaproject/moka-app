@@ -159,18 +159,18 @@ public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 		}
 
 		@Override
-		protected void onRequest(CharSequence query) {
+		protected void onRequest(String query) {
 			if (mSectionFilter != null && mSectionFilter.isQuerying) {
 				final List<BaseItem> currentItems = mItems;
 				for (BaseItem item : currentItems) {
-					if (item.getName().contains(query)) {
+					if (item.getName().toLowerCase().contains(query)) {
 						foundItems.add(item);
 					}
 				}
 			} else {
 				final List<BaseItem> savedItems = mSavedItems;
 				for (BaseItem item : savedItems) {
-					if (item.getName().contains(query)) {
+					if (item.getName().toLowerCase().contains(query)) {
 						foundItems.add(item);
 					}
 				}
@@ -199,18 +199,18 @@ public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 		}
 
 		@Override
-		protected void onRequest(CharSequence query) {
+		protected void onRequest(String query) {
 			if (mItemFilter != null && mItemFilter.isQuerying) {
 				final List<BaseItem> currentItems = mItems;
 				for (BaseItem item : currentItems) {
-					if (item.getClassName().contains(query)) {
+					if (item.getClassName().toLowerCase().contains(query)) {
 						foundItems.add(item);
 					}
 				}
 			} else {
 				final List<BaseItem> savedItems = mSavedItems;
 				for (BaseItem item : savedItems) {
-					if (item.getClassName().contains(query)) {
+					if (item.getClassName().toLowerCase().contains(query)) {
 						foundItems.add(item);
 					}
 				}

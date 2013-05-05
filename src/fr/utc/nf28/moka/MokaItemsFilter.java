@@ -27,7 +27,7 @@ public abstract class MokaItemsFilter extends Filter {
 		foundItems.clear();
 		isQuerying = true;
 
-		onRequest(charSequence);
+		onRequest(charSequence.toString().toLowerCase());
 		return filterResults;
 	}
 
@@ -39,7 +39,7 @@ public abstract class MokaItemsFilter extends Filter {
 
 	protected abstract void onEmptyRequest();
 
-	protected abstract void onRequest(CharSequence query);
+	protected abstract void onRequest(String query);
 
 	protected abstract void onPublish(List<BaseItem> results);
 }
