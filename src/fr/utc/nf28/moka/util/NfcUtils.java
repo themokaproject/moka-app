@@ -56,7 +56,7 @@ public class NfcUtils {
 	 * @return uri store int the payload[0]
 	 * @throws UnsupportedEncodingException
 	 */
-	public static String readUriTag(Tag tag) throws UnsupportedEncodingException {
+	public static String readTag(Tag tag) throws UnsupportedEncodingException {
 		final Ndef ndef = Ndef.get(tag);
 		final NdefMessage message = ndef.getCachedNdefMessage();
 		return new String(message.getRecords()[0].getPayload());
@@ -71,7 +71,7 @@ public class NfcUtils {
 	 * @return result code
 	 * @throws UnsupportedEncodingException
 	 */
-	public static int writeUriTag(Tag tag, String data, boolean makeReadOnly) throws UnsupportedEncodingException {
+	public static int writeMokaTag(Tag tag, String data, boolean makeReadOnly) throws UnsupportedEncodingException {
 		NdefRecord[] records = {createMokaRecord(data)};
 		NdefMessage message = new NdefMessage(records);
 		try {
