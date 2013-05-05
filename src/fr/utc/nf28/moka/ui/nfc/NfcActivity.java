@@ -43,8 +43,8 @@ public class NfcActivity extends Activity {
 	protected void onResume() {
 		super.onResume();
 		enableNfcDiscovering();
-		if(getIntent().getAction().equals(NfcAdapter.ACTION_TAG_DISCOVERED)){
-			processTag((Tag)getIntent().getParcelableExtra(NfcAdapter.EXTRA_TAG));
+		if (getIntent().hasExtra(NfcAdapter.ACTION_TAG_DISCOVERED) && getIntent().getAction().equals(NfcAdapter.ACTION_TAG_DISCOVERED)) {
+			processTag((Tag) getIntent().getParcelableExtra(NfcAdapter.EXTRA_TAG));
 		}
 	}
 
@@ -58,7 +58,7 @@ public class NfcActivity extends Activity {
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
 		if (intent.hasExtra(NfcAdapter.EXTRA_TAG)) {
-			 processTag((Tag)intent.getParcelableExtra(NfcAdapter.EXTRA_TAG));
+			processTag((Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG));
 		}
 	}
 
@@ -82,6 +82,7 @@ public class NfcActivity extends Activity {
 
 	/**
 	 * process tag which has launched this activity or which has been caught;
+	 *
 	 * @param tag tag from intent
 	 */
 	private void processTag(Tag tag) {
