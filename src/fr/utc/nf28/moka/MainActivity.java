@@ -89,9 +89,8 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 
 	@Override
 	public void onItemSelected(BaseItem item) {
-		final Intent detailIntent = new Intent(this, ItemDetailActivity.class);
-		final CurrentItem currentItem = new CurrentItem(item.getName());
-		detailIntent.putExtra(ItemDetailActivity.ARG_ITEM, currentItem);
+		final Intent detailIntent = new Intent(this, NewItemActivity.class);
+		detailIntent.putExtra(ItemDetailActivity.ARG_ITEM, item);
 		startActivity(detailIntent);
 	}
 

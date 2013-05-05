@@ -26,6 +26,14 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
+            android:name=".NewItemActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
             android:name=".LicensesActivity"
             android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity">

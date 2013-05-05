@@ -43,4 +43,7 @@
     <string name="start_button_skip">Skip</string>
     <string name="logo_description">Logo de l\'application</string>
 
+    <!-- NewItemActivity -->
+    <string name="new_item_actionbar_title">Nouvel élément</string>
+
 </resources>
