@@ -22,6 +22,7 @@ public class NfcUtils {
 
 	/**
 	 * Write tag with URI encoded content
+	 *
 	 * @param tag tag detected by your device
 	 * @param uri uri store in your tag
 	 * @return result code
