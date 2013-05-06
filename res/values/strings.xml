@@ -25,7 +25,7 @@
     <string name="delete_confirmation_ok">OK</string>
     <string name="delete_confirmation_cancel">Annuler</string>
 
-    <!-- ItemListFragment -->
+    <!-- TypeListFragment -->
     <string name="main_class_spinner_title">Choisir une catégorie</string>
     <string name="item_imageview_content_description">Description de l\'élément</string>
 

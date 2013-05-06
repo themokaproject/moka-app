@@ -4,12 +4,12 @@ import android.os.Bundle;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
-import fr.utc.nf28.moka.data.BaseItem;
+import fr.utc.nf28.moka.data.MokaType;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class NewItemActivity extends SherlockFragmentActivity {
-	public static final String ARG_ITEM = "arg_item";
+	public static final String ARG_TYPE = "arg_type";
 	private static final String TAG = makeLogTag(NewItemActivity.class);
 
 	@Override
@@ -18,7 +18,7 @@ public class NewItemActivity extends SherlockFragmentActivity {
 
 		setContentView(R.layout.new_item_activity);
 
-		final BaseItem baseItem = getIntent().getExtras().getParcelable(ARG_ITEM);
+		final MokaType mokaType = getIntent().getExtras().getParcelable(ARG_TYPE);
 		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setTitle(getResources().getString(R.string.new_item_actionbar_title));

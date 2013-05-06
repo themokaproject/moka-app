@@ -5,19 +5,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import fr.utc.nf28.moka.data.CurrentItem;
+import fr.utc.nf28.moka.data.MokaItem;
 
 import java.util.Collections;
 import java.util.List;
 
 public class CurrentItemAdapter extends BaseMokaAdapter {
-	private List<CurrentItem> mCurrentItems = Collections.emptyList();
+	private List<MokaItem> mCurrentItems = Collections.emptyList();
 
 	public CurrentItemAdapter(Context context) {
 		super(context);
 	}
 
-	public void updateCurrentItems(List<CurrentItem> currentItems) {
+	public void updateCurrentItems(List<MokaItem> currentItems) {
 		mCurrentItems = currentItems;
 		notifyDataSetChanged();
 	}
@@ -28,7 +28,7 @@ public class CurrentItemAdapter extends BaseMokaAdapter {
 	}
 
 	@Override
-	public CurrentItem getItem(int position) {
+	public MokaItem getItem(int position) {
 		return mCurrentItems.get(position);
 	}
 
@@ -42,15 +42,15 @@ public class CurrentItemAdapter extends BaseMokaAdapter {
 		final TextView itemCreationDate = ViewHolder.get(convertView, R.id.item_creation_date);
 		final ImageView itemImage = ViewHolder.get(convertView, R.id.item_image);
 
-		final CurrentItem item = getItem(position);
-		itemName.setText(item.getName());
+		final MokaItem item = getItem(position);
+		itemName.setText(item.getTitle());
 		itemCreationDate.setText("ajouté le 28/04/2013 à 11h29");
-		itemImage.setImageResource(R.drawable.logo_item_text);
+		itemImage.setImageResource(R.drawable.logo_type_text);
 
 		return convertView;
 	}
 
-	public void remove(CurrentItem item) {
+	public void remove(MokaItem item) {
 		mCurrentItems.remove(item);
 		notifyDataSetChanged();
 	}

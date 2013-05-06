@@ -10,7 +10,8 @@ import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockFragment;
 import fr.utc.nf28.moka.CurrentItemAdapter;
 import fr.utc.nf28.moka.R;
-import fr.utc.nf28.moka.data.CurrentItem;
+import fr.utc.nf28.moka.data.MediaItem;
+import fr.utc.nf28.moka.data.MokaItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +26,10 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 	 */
 	private static final Callbacks sDummyCallbacks = new Callbacks() {
 		@Override
-		public void onCurrentItemSelected(CurrentItem currentItem) {
+		public void onItemSelected(MokaItem item) {
 		}
 	};
-	private final List<CurrentItem> items = new ArrayList<CurrentItem>(10);
+	private final List<MokaItem> mItems = new ArrayList<MokaItem>(10);
 	private CurrentItemAdapter mAdapter;
 	/**
 	 * The fragment's current callback object, which is notified of list item
@@ -61,7 +62,7 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 		setHasOptionsMenu(true);
 
 		for (int i = 1; i <= 10; i++) {
-			items.add(new CurrentItem("item " + i));
+			mItems.add(new MediaItem.ImageItem("Elément " + i));
 		}
 	}
 
@@ -73,7 +74,7 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 		listView.setOnItemClickListener(this);
 		listView.setEmptyView(rootView.findViewById(android.R.id.empty));
 		mAdapter = new CurrentItemAdapter(getSherlockActivity());
-		mAdapter.updateCurrentItems(items);
+		mAdapter.updateCurrentItems(mItems);
 		listView.setAdapter(mAdapter);
 
 		return rootView;
@@ -89,7 +90,7 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-		mCallbacks.onCurrentItemSelected(mAdapter.getItem(position));
+		mCallbacks.onItemSelected(mAdapter.getItem(position));
 	}
 
 	/**
@@ -101,6 +102,6 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 		/**
 		 * Callback for when an item has been selected.
 		 */
-		public void onCurrentItemSelected(CurrentItem currentItem);
+		public void onItemSelected(MokaItem item);
 	}
 }

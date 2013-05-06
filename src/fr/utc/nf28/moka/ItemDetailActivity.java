@@ -13,9 +13,9 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import fr.utc.nf28.moka.data.CurrentItem;
+import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.ui.EditItemFragment;
-import fr.utc.nf28.moka.ui.HistoryItemFragment;
+import fr.utc.nf28.moka.ui.HistoryEntryListFragment;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
@@ -23,7 +23,7 @@ public class ItemDetailActivity extends SherlockFragmentActivity implements Acti
 	public static final String ARG_ITEM = "arg_item";
 	private static final String TAG = makeLogTag(ItemDetailActivity.class);
 	private ViewPager mViewPager;
-	private CurrentItem mCurrentItem;
+	private MokaItem mSelectedItem;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -31,10 +31,10 @@ public class ItemDetailActivity extends SherlockFragmentActivity implements Acti
 
 		setContentView(R.layout.detail_activity);
 
-		mCurrentItem = getIntent().getExtras().getParcelable(ARG_ITEM);
+		mSelectedItem = getIntent().getExtras().getParcelable(ARG_ITEM);
 		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		actionBar.setTitle(mCurrentItem.getName());
+		actionBar.setTitle(mSelectedItem.getTitle());
 
 		// ViewPager setup
 		mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -44,7 +44,7 @@ public class ItemDetailActivity extends SherlockFragmentActivity implements Acti
 				actionBar.setSelectedNavigationItem(position);
 			}
 		});
-		mViewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager(), mCurrentItem));
+		mViewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager(), mSelectedItem));
 
 		// We add our tabs
 		actionBar.addTab(actionBar.newTab()
@@ -73,7 +73,7 @@ public class ItemDetailActivity extends SherlockFragmentActivity implements Acti
 				final StringBuilder sb = new StringBuilder();
 				sb.append(resources.getString(R.string.delete_confirmation_message));
 				sb.append(" ");
-				sb.append(mCurrentItem.getName());
+				sb.append(mSelectedItem.getTitle());
 				sb.append(" ?");
 				// TODO: use string variables
 				new AlertDialog.Builder(this)
@@ -115,12 +115,12 @@ public class ItemDetailActivity extends SherlockFragmentActivity implements Acti
 	 * one of the sections/tabs/pages.
 	 */
 	private static class SectionsPagerAdapter extends FragmentPagerAdapter {
-		private final CurrentItem mCurrentItem;
+		private final MokaItem mSelectedItem;
 
-		public SectionsPagerAdapter(FragmentManager fm, CurrentItem currentItem) {
+		public SectionsPagerAdapter(FragmentManager fm, MokaItem selectedItem) {
 			super(fm);
 
-			mCurrentItem = currentItem;
+			mSelectedItem = selectedItem;
 		}
 
 		@Override
@@ -128,9 +128,9 @@ public class ItemDetailActivity extends SherlockFragmentActivity implements Acti
 			// getItem is called to instantiate the fragment for the given page.
 			switch (position) {
 				case 0:
-					return new EditItemFragment(mCurrentItem);
+					return new EditItemFragment(mSelectedItem);
 				default:
-					return new HistoryItemFragment();
+					return new HistoryEntryListFragment();
 			}
 		}
 

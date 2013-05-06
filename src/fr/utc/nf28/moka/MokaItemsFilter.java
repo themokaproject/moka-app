@@ -1,19 +1,19 @@
 package fr.utc.nf28.moka;
 
 import android.widget.Filter;
-import fr.utc.nf28.moka.data.BaseItem;
+import fr.utc.nf28.moka.data.MokaType;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class MokaItemsFilter extends Filter {
 	protected final FilterResults filterResults;
-	protected final List<BaseItem> foundItems;
+	protected final List<MokaType> foundItems;
 	protected boolean isQuerying = false;
 
 	public MokaItemsFilter() {
 		filterResults = new FilterResults();
-		foundItems = new ArrayList<BaseItem>();
+		foundItems = new ArrayList<MokaType>();
 	}
 
 	@Override
@@ -34,12 +34,12 @@ public abstract class MokaItemsFilter extends Filter {
 	@Override
 	@SuppressWarnings("unchecked")
 	protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-		onPublish((List<BaseItem>) filterResults.values);
+		onPublish((List<MokaType>) filterResults.values);
 	}
 
 	protected abstract void onEmptyRequest();
 
 	protected abstract void onRequest(String query);
 
-	protected abstract void onPublish(List<BaseItem> results);
+	protected abstract void onPublish(List<MokaType> results);
 }

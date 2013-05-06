@@ -12,15 +12,15 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import fr.utc.nf28.moka.data.BaseItem;
-import fr.utc.nf28.moka.data.CurrentItem;
+import fr.utc.nf28.moka.data.MokaItem;
+import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.ui.CurrentItemListFragment;
-import fr.utc.nf28.moka.ui.ItemListFragment;
+import fr.utc.nf28.moka.ui.TypeListFragment;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class MainActivity extends SherlockFragmentActivity implements ActionBar.TabListener,
-		ItemListFragment.Callbacks, CurrentItemListFragment.Callbacks {
+		TypeListFragment.Callbacks, CurrentItemListFragment.Callbacks {
 	private static final String TAG = makeLogTag(MainActivity.class);
 	/**
 	 * The {@link ViewPager} that will host the section contents.
@@ -88,24 +88,24 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 	}
 
 	@Override
-	public void onItemSelected(BaseItem item) {
+	public void onTypeSelected(MokaType type) {
 		final Intent detailIntent = new Intent(this, NewItemActivity.class);
-		detailIntent.putExtra(ItemDetailActivity.ARG_ITEM, item);
+		detailIntent.putExtra(NewItemActivity.ARG_TYPE, type);
 		startActivity(detailIntent);
 	}
 
 	@Override
-	public void onItemLongClicked(BaseItem item) {
+	public void onTypeLongClicked(MokaType type) {
 		new AlertDialog.Builder(this)
-				.setTitle(item.getName())
-				.setMessage(item.getDescription())
+				.setTitle(type.getName())
+				.setMessage(type.getDescription())
 				.show();
 	}
 
 	@Override
-	public void onCurrentItemSelected(CurrentItem currentItem) {
+	public void onItemSelected(MokaItem item) {
 		final Intent detailIntent = new Intent(this, ItemDetailActivity.class);
-		detailIntent.putExtra(ItemDetailActivity.ARG_ITEM, currentItem);
+		detailIntent.putExtra(ItemDetailActivity.ARG_ITEM, item);
 		startActivity(detailIntent);
 	}
 
@@ -121,7 +121,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		@Override
 		public Fragment getItem(int position) {
 			// getItem is called to instantiate the fragment for the given page.
-			return position == 0 ? new ItemListFragment() : new CurrentItemListFragment();
+			return position == 0 ? new TypeListFragment() : new CurrentItemListFragment();
 		}
 
 		@Override

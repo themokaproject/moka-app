@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,46 +12,48 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.widget.SearchView;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
 import fr.utc.nf28.moka.ItemAdapter;
+import fr.utc.nf28.moka.MokaApplication;
 import fr.utc.nf28.moka.R;
-import fr.utc.nf28.moka.data.BaseItem;
+import fr.utc.nf28.moka.data.MokaType;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
-public class ItemListFragment extends SherlockFragment implements AdapterView.OnItemClickListener,
+public class TypeListFragment extends SherlockFragment implements AdapterView.OnItemClickListener,
 		SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener, AdapterView.OnItemSelectedListener,
 		AdapterView.OnItemLongClickListener, ItemAdapter.SectionFilterCallbacks {
-	private static final String TAG = makeLogTag(ItemListFragment.class);
-	private static final String PERSISTENT_LAST_CLASS = "Moka_LastClass";
+	private static final String TAG = makeLogTag(TypeListFragment.class);
+	private static final String PERSISTENT_LAST_TYPE = "Moka_LastType";
 	/**
 	 * A dummy implementation of the {@link Callbacks} interface that does
 	 * nothing. Used only when this fragment is not attached to an activity.
 	 */
 	private static final Callbacks sDummyCallbacks = new Callbacks() {
 		@Override
-		public void onItemSelected(BaseItem item) {
+		public void onTypeSelected(MokaType type) {
 		}
 
 		@Override
-		public void onItemLongClicked(BaseItem item) {
+		public void onTypeLongClicked(MokaType type) {
 		}
 	};
-	private final List<BaseItem> items = new ArrayList<BaseItem>(10);
+	private List<MokaType> mTypes;
 	private ItemAdapter mAdapter;
 	private Callbacks mCallbacks = sDummyCallbacks;
 	private SharedPreferences mPrefs;
 	private Spinner mSpinner;
 	private StickyGridHeadersGridView mGridView;
 
-	public ItemListFragment() {
+	public TypeListFragment() {
 	}
 
 	// Fragment lifecycle management
@@ -94,44 +95,9 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 		mGridView.setAreHeadersSticky(false);
 		mGridView.setEmptyView(rootView.findViewById(android.R.id.empty));
 		mGridView.getEmptyView().setVisibility(View.GONE);
+
 		mAdapter = new ItemAdapter(getSherlockActivity());
-
-		final int resources[] = new int[]{
-				R.drawable.logo,
-				R.drawable.logo_item_web,
-				R.drawable.ic_launcher,
-				R.drawable.ic_launcher,
-				R.drawable.logo_item_text,
-				R.drawable.logo_item_picture,
-				R.drawable.logo_item_list,
-				R.drawable.logo_item_picture,
-				R.drawable.logo,
-				R.drawable.logo_item_video
-		};
-
-		final BaseItem[] sampleItems = new BaseItem[]{
-				new BaseItem("Logo"),
-				new BaseItem("Web"),
-				new BaseItem("Icône"),
-				new BaseItem("Icône"),
-				new BaseItem("Texte"),
-				new BaseItem("Image"),
-				new BaseItem("Liste"),
-				new BaseItem("Image"),
-				new BaseItem("Logo"),
-				new BaseItem("Vidéo")
-		};
-
-		final int nbSections = mSpinner.getCount() - 1;
-		for (int i = 0; i <= 9; i++) {
-			final BaseItem item = sampleItems[i];
-			item.setClassName(adapter.getItem(i % nbSections).toString());
-			item.setDescription("Une description");
-			item.setResId(resources[i]);
-			items.add(item);
-		}
 		mAdapter.setSectionFilterCallbacks(this);
-		mAdapter.updateItems(items);
 
 		return rootView;
 	}
@@ -140,8 +106,11 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		mPrefs = PreferenceManager.getDefaultSharedPreferences(getSherlockActivity());
-		mSpinner.setSelection(loadLastClassPreference());
+		final SherlockFragmentActivity context = getSherlockActivity();
+		mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+		mTypes = new ArrayList<MokaType>(MokaApplication.MOKA_TYPES.values());
+		mAdapter.updateTypes(mTypes);
+		mSpinner.setSelection(getLastTypePreference());
 	}
 
 	@Override
@@ -155,12 +124,12 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-		mCallbacks.onItemSelected(mAdapter.getItem(position));
+		mCallbacks.onTypeSelected(mAdapter.getItem(position));
 	}
 
 	@Override
 	public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-		mCallbacks.onItemLongClicked(mAdapter.getItem(position));
+		mCallbacks.onTypeLongClicked(mAdapter.getItem(position));
 		return true;
 	}
 
@@ -180,24 +149,17 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 		mAdapter.getFilter().filter(null);
 	}
 
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-		super.onCreateContextMenu(menu, v, menuInfo);
-		android.view.MenuInflater inflater = getSherlockActivity().getMenuInflater();
-		inflater.inflate(R.menu.activity_item_detail, menu);
-	}
-
-	private void saveLastClassPreference(int position) {
+	private void saveLastTypePreference(int position) {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
-			mPrefs.edit().putInt(PERSISTENT_LAST_CLASS, position).apply();
+			mPrefs.edit().putInt(PERSISTENT_LAST_TYPE, position).apply();
 		} else {
-			mPrefs.edit().putInt(PERSISTENT_LAST_CLASS, position).commit();
+			mPrefs.edit().putInt(PERSISTENT_LAST_TYPE, position).commit();
 		}
 	}
 
-	private int loadLastClassPreference() {
+	private int getLastTypePreference() {
 		try {
-			return mPrefs.getInt(PERSISTENT_LAST_CLASS, mSpinner.getCount() - 1);
+			return mPrefs.getInt(PERSISTENT_LAST_TYPE, mSpinner.getCount() - 1);
 		} catch (IllegalArgumentException e) {
 			return 0;
 		}
@@ -232,7 +194,7 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 		} else {
 			mAdapter.getSectionFilter().filter(parent.getItemAtPosition(position).toString());
 		}
-		saveLastClassPreference(position);
+		saveLastTypePreference(position);
 	}
 
 	@Override
@@ -240,7 +202,7 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 	}
 
 	@Override
-	public void onSectionExist(List<BaseItem> sectionItems) {
+	public void onSectionExist(List<MokaType> sections) {
 		if (mGridView.getAdapter() == null) {
 			mGridView.setAdapter(mAdapter);
 			mGridView.getEmptyView().setVisibility(View.VISIBLE);
@@ -260,11 +222,11 @@ public class ItemListFragment extends SherlockFragment implements AdapterView.On
 		/**
 		 * Callback for when an item has been selected.
 		 */
-		public void onItemSelected(BaseItem item);
+		public void onTypeSelected(MokaType type);
 
 		/**
 		 * Callback for when an item has been long clicked.
 		 */
-		public void onItemLongClicked(BaseItem item);
+		public void onTypeLongClicked(MokaType type);
 	}
 }

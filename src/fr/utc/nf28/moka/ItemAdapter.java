@@ -9,7 +9,7 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersSimpleAdapter;
-import fr.utc.nf28.moka.data.BaseItem;
+import fr.utc.nf28.moka.data.MokaType;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,7 +20,7 @@ import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSimpleAdapter, Filterable {
 	private static final SectionFilterCallbacks sDummySearchCallbacks = new SectionFilterCallbacks() {
 		@Override
-		public void onSectionExist(List<BaseItem> sectionItems) {
+		public void onSectionExist(List<MokaType> sections) {
 		}
 
 		@Override
@@ -29,10 +29,10 @@ public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 	};
 	private static final String TAG = makeLogTag(ItemAdapter.class);
 	private final SparseArray<String> mSectionToPosition;
-	private List<BaseItem> mItems = Collections.emptyList();
-	private List<BaseItem> mSavedItems = Collections.emptyList();
-	private List<BaseItem> mSectionFilterItems = Collections.emptyList();
-	private List<BaseItem> mItemFilterItems = Collections.emptyList();
+	private List<MokaType> mItems = Collections.emptyList();
+	private List<MokaType> mSavedItems = Collections.emptyList();
+	private List<MokaType> mSectionFilterItems = Collections.emptyList();
+	private List<MokaType> mItemFilterItems = Collections.emptyList();
 	private SectionFilterCallbacks mSectionFilterCallbacks = sDummySearchCallbacks;
 	private ItemFilter mItemFilter;
 	private SectionFilter mSectionFilter;
@@ -43,31 +43,31 @@ public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 		mSectionToPosition = new SparseArray<String>();
 	}
 
-	public void updateItems(List<BaseItem> items) {
-		updateItems(items, false, false);
+	public void updateTypes(List<MokaType> types) {
+		updateTypes(types, false, false);
 	}
 
-	private void updateItems(List<BaseItem> items, boolean dueToMainFilterOperation, boolean dueToSectionFilterOperation) {
+	private void updateTypes(List<MokaType> types, boolean dueToMainFilterOperation, boolean dueToSectionFilterOperation) {
 		mSectionToPosition.clear();
 
 		int i = 0;
-		for (BaseItem item : items) {
-			mSectionToPosition.append(i, item.getClassName());
+		for (MokaType type : types) {
+			mSectionToPosition.append(i, type.getTypeName());
 			i++;
 		}
 
-		Collections.sort(items);
-		mItems = items;
+		Collections.sort(types);
+		mItems = types;
 		notifyDataSetChanged();
 
 		if (!dueToMainFilterOperation && !dueToSectionFilterOperation) {
-			mSavedItems = new ArrayList<BaseItem>(items);
+			mSavedItems = new ArrayList<MokaType>(types);
 		}
 		if (dueToMainFilterOperation) {
-			mItemFilterItems = new ArrayList<BaseItem>(items);
+			mItemFilterItems = new ArrayList<MokaType>(types);
 		}
 		if (dueToSectionFilterOperation) {
-			mSectionFilterItems = new ArrayList<BaseItem>(items);
+			mSectionFilterItems = new ArrayList<MokaType>(types);
 		}
 	}
 
@@ -85,7 +85,7 @@ public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 	}
 
 	@Override
-	public BaseItem getItem(int position) {
+	public MokaType getItem(int position) {
 		return mItems.get(position);
 	}
 
@@ -97,7 +97,7 @@ public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 
 		final TextView itemName = ViewHolder.get(convertView, R.id.item_name);
 		final ImageView itemImage = ViewHolder.get(convertView, R.id.item_image);
-		final BaseItem item = getItem(position);
+		final MokaType item = getItem(position);
 		itemName.setText(item.getName());
 		itemImage.setImageResource(item.getResId());
 
@@ -135,13 +135,13 @@ public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 		}
 
 		final TextView sectionName = ViewHolder.get(convertView, R.id.header_text);
-		sectionName.setText(getItem(position).getClassName().toUpperCase());
+		sectionName.setText(getItem(position).getTypeName().toUpperCase());
 
 		return convertView;
 	}
 
 	public interface SectionFilterCallbacks {
-		public void onSectionExist(List<BaseItem> sectionItems);
+		public void onSectionExist(List<MokaType> sections);
 
 		public void onNoSuchSection();
 	}
@@ -161,15 +161,15 @@ public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 		@Override
 		protected void onRequest(String query) {
 			if (mSectionFilter != null && mSectionFilter.isQuerying) {
-				final List<BaseItem> currentItems = mItems;
-				for (BaseItem item : currentItems) {
+				final List<MokaType> currentItems = mItems;
+				for (MokaType item : currentItems) {
 					if (item.getName().toLowerCase().contains(query)) {
 						foundItems.add(item);
 					}
 				}
 			} else {
-				final List<BaseItem> savedItems = mSavedItems;
-				for (BaseItem item : savedItems) {
+				final List<MokaType> savedItems = mSavedItems;
+				for (MokaType item : savedItems) {
 					if (item.getName().toLowerCase().contains(query)) {
 						foundItems.add(item);
 					}
@@ -180,9 +180,9 @@ public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 		}
 
 		@Override
-		protected void onPublish(List<BaseItem> results) {
+		protected void onPublish(List<MokaType> results) {
 			final boolean isSectionFiltering = mSectionFilter != null && mSectionFilter.isQuerying;
-			updateItems(results, isSectionFiltering, !isSectionFiltering);
+			updateTypes(results, isSectionFiltering, !isSectionFiltering);
 		}
 	}
 
@@ -201,16 +201,16 @@ public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 		@Override
 		protected void onRequest(String query) {
 			if (mItemFilter != null && mItemFilter.isQuerying) {
-				final List<BaseItem> currentItems = mItems;
-				for (BaseItem item : currentItems) {
-					if (item.getClassName().toLowerCase().contains(query)) {
+				final List<MokaType> currentItems = mItems;
+				for (MokaType item : currentItems) {
+					if (item.getTypeName().toLowerCase().contains(query)) {
 						foundItems.add(item);
 					}
 				}
 			} else {
-				final List<BaseItem> savedItems = mSavedItems;
-				for (BaseItem item : savedItems) {
-					if (item.getClassName().toLowerCase().contains(query)) {
+				final List<MokaType> savedItems = mSavedItems;
+				for (MokaType item : savedItems) {
+					if (item.getTypeName().toLowerCase().contains(query)) {
 						foundItems.add(item);
 					}
 				}
@@ -220,9 +220,9 @@ public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 		}
 
 		@Override
-		protected void onPublish(List<BaseItem> results) {
+		protected void onPublish(List<MokaType> results) {
 			final boolean isItemFiltering = mItemFilter != null && mItemFilter.isQuerying;
-			updateItems(results, isItemFiltering, !isItemFiltering);
+			updateTypes(results, isItemFiltering, !isItemFiltering);
 			if (results == null || results.isEmpty()) {
 				mSectionFilterCallbacks.onNoSuchSection();
 			} else {

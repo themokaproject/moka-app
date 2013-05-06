@@ -12,18 +12,18 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import fr.utc.nf28.moka.HistoryItemAdapter;
 import fr.utc.nf28.moka.R;
-import fr.utc.nf28.moka.data.CurrentItem;
+import fr.utc.nf28.moka.data.HistoryEntry;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
-public class HistoryItemFragment extends SherlockFragment {
-	private static final String TAG = makeLogTag(HistoryItemFragment.class);
-	private final List<CurrentItem> items = new ArrayList<CurrentItem>(10);
+public class HistoryEntryListFragment extends SherlockFragment {
+	private static final String TAG = makeLogTag(HistoryEntryListFragment.class);
+	private final List<HistoryEntry> mItems = new ArrayList<HistoryEntry>(10);
 
-	public HistoryItemFragment() {
+	public HistoryEntryListFragment() {
 	}
 
 	// Fragment lifecycle management
@@ -35,7 +35,7 @@ public class HistoryItemFragment extends SherlockFragment {
 		setHasOptionsMenu(true);
 
 		for (int i = 0; i < 10; i++) {
-			items.add(new CurrentItem("history " + String.valueOf(10 - i)));
+			mItems.add(new HistoryEntry("history " + String.valueOf(10 - i)));
 		}
 	}
 
@@ -45,7 +45,7 @@ public class HistoryItemFragment extends SherlockFragment {
 
 		final ListView listView = (ListView) rootView.findViewById(android.R.id.list);
 		final HistoryItemAdapter adapter = new HistoryItemAdapter(getSherlockActivity());
-		adapter.updateHistoryItems(items);
+		adapter.updateHistoryItems(mItems);
 		listView.setAdapter(adapter);
 
 		return rootView;

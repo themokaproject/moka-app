@@ -4,31 +4,31 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import fr.utc.nf28.moka.data.CurrentItem;
+import fr.utc.nf28.moka.data.HistoryEntry;
 
 import java.util.Collections;
 import java.util.List;
 
 public class HistoryItemAdapter extends BaseMokaAdapter {
-	private List<CurrentItem> mCurrentItems = Collections.emptyList();
+	private List<HistoryEntry> mHistoryEntries = Collections.emptyList();
 
 	public HistoryItemAdapter(Context context) {
 		super(context);
 	}
 
-	public void updateHistoryItems(List<CurrentItem> currentItems) {
-		mCurrentItems = currentItems;
+	public void updateHistoryItems(List<HistoryEntry> historyEntries) {
+		mHistoryEntries = historyEntries;
 		notifyDataSetChanged();
 	}
 
 	@Override
 	public int getCount() {
-		return mCurrentItems.size();
+		return mHistoryEntries.size();
 	}
 
 	@Override
-	public CurrentItem getItem(int position) {
-		return mCurrentItems.get(position);
+	public HistoryEntry getItem(int position) {
+		return mHistoryEntries.get(position);
 	}
 
 	@Override
@@ -38,8 +38,8 @@ public class HistoryItemAdapter extends BaseMokaAdapter {
 		}
 
 		final TextView itemName = ViewHolder.get(convertView, R.id.item_name);
-		final CurrentItem item = getItem(position);
-		itemName.setText(item.getName());
+		final HistoryEntry historyEntry = getItem(position);
+		itemName.setText(historyEntry.getAction());
 
 		return convertView;
 	}
