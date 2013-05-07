@@ -9,6 +9,7 @@ import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import fr.utc.nf28.moka.MainActivity;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.util.NfcUtils;
@@ -36,6 +37,9 @@ public class NfcActivity extends Activity {
 		});
 
 		mNfcAdapter = NfcAdapter.getDefaultAdapter(getApplicationContext());
+		if(mNfcAdapter == null){
+			((TextView)findViewById(R.id.info)).setText(R.string.info_no_nfc_text);
+		}
 	}
 
 
@@ -43,7 +47,7 @@ public class NfcActivity extends Activity {
 	protected void onResume() {
 		super.onResume();
 		enableNfcDiscovering();
-		if (getIntent().hasExtra(NfcAdapter.ACTION_TAG_DISCOVERED) && getIntent().getAction().equals(NfcAdapter.ACTION_TAG_DISCOVERED)) {
+		if (getIntent().hasExtra(NfcAdapter.EXTRA_TAG) && getIntent().getAction().equals(NfcAdapter.EXTRA_TAG)) {
 			processTag((Tag) getIntent().getParcelableExtra(NfcAdapter.EXTRA_TAG));
 		}
 	}
@@ -67,17 +71,21 @@ public class NfcActivity extends Activity {
 	 * the activity is displayed
 	 */
 	private void enableNfcDiscovering() {
-		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
-				new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-		IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
-		mNfcAdapter.enableForegroundDispatch(this, pendingIntent, new IntentFilter[]{tagDetected}, null);
+		if(mNfcAdapter!=null){
+			PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
+					new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+			IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
+			mNfcAdapter.enableForegroundDispatch(this, pendingIntent, new IntentFilter[]{tagDetected}, null);
+		}
 	}
 
 	/**
 	 * restore nfc priority
 	 */
 	private void disableNfcDiscovering() {
-		mNfcAdapter.disableForegroundDispatch(this);
+		if(mNfcAdapter!=null){
+			mNfcAdapter.disableForegroundDispatch(this);
+		}
 	}
 
 	/**
