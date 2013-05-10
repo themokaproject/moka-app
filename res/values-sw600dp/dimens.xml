@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="grid_card_with">180dp</dimen>
+    <dimen name="max_item_type_picture_width_height">250dp</dimen>
 </resources>
