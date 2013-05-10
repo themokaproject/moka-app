@@ -14,7 +14,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/item_name"
+            android:id="@+id/type_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24sp"
@@ -26,7 +26,7 @@
             android:layout_marginTop="8dp"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:text="Type"
+            android:text="Description"
             android:textAllCaps="true"
             android:textColor="@color/holo_blue" />
 
@@ -36,7 +36,7 @@
             android:background="@color/holo_blue" />
 
         <TextView
-            android:id="@+id/item_type"
+            android:id="@+id/type_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -48,7 +48,7 @@
             android:layout_marginTop="8dp"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:text="Source"
+            android:text="Catégorie"
             android:textAllCaps="true"
             android:textColor="@color/holo_blue" />
 
@@ -58,41 +58,19 @@
             android:background="@color/holo_blue" />
 
         <TextView
-            android:id="@+id/item_source"
+            android:id="@+id/type_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:text="Créateur"
-            android:textAllCaps="true"
-            android:textColor="@color/holo_blue" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/holo_blue" />
-
-        <TextView
-            android:id="@+id/item_creator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
             android:textSize="16sp" />
 
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/item_image"
+        android:id="@+id/type_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="32dp"
         android:contentDescription="@string/item_imageview_content_description"
         android:layout_alignParentRight="true" />
 
