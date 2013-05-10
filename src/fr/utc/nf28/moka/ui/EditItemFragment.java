@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragment;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.MokaItem;
@@ -32,8 +31,6 @@ public class EditItemFragment extends SherlockFragment {
 
 		// Fragment configuration
 		setHasOptionsMenu(true);
-
-		Toast.makeText(getSherlockActivity(), "hey dude, I'm a " + mSelectedItem.getType().getName(), Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
@@ -50,7 +47,7 @@ public class EditItemFragment extends SherlockFragment {
 		itemType.setText(mSelectedItem.getTitle());
 		itemSource.setText(mSelectedItem.getTitle());
 		itemCreator.setText(mSelectedItem.getTitle());
-		itemImage.setImageResource(R.drawable.logo);
+		itemImage.setImageResource(mSelectedItem.getType().getResId());
 
 		return rootView;
 	}
