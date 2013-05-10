@@ -63,7 +63,7 @@ public class HistoryEntryListFragment extends SherlockFragment {
 				Toast.makeText(getSherlockActivity(), "TODO: refresh action", Toast.LENGTH_SHORT).show();
 				return true;
 			default:
-				return false;
+				return super.onOptionsItemSelected(item);
 		}
 	}
 }

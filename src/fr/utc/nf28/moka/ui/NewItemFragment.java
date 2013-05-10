@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.MokaType;
 
@@ -48,5 +51,22 @@ public class NewItemFragment extends SherlockFragment {
 		typeImage.setImageResource(mSelectedType.getResId());
 
 		return rootView;
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.fragment_new_item, menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.menu_validate:
+				// TODO: call the addItem agent
+				getSherlockActivity().finish();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
 }
