@@ -10,7 +10,7 @@
     </item>
 
     <!-- Blue top color -->
-    <item android:bottom="1dp">
+    <item android:bottom="2dp">
         <shape android:shape="rectangle">
             <solid android:color="@color/holo_blue" />
         </shape>
