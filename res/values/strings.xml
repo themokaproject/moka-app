@@ -28,7 +28,7 @@
 
     <!-- TypeListFragment -->
     <string name="main_class_spinner_title">Choisir une catégorie</string>
-    <string name="type_image_content_description">Description de l\'élément</string>
+    <string name="type_image_content_description">Description du type</string>
 
     <!-- Spinner content -->
     <string-array name="item_classes">
@@ -40,7 +40,7 @@
 
     <!-- Start Activity -->
     <string name="info_nfc_text">Touchez un tag NFC Moka</string>
-    <string name="info_no_nfc_text">Nfc non disponible. Veuilez vérifier vos paramètres.</string>
+    <string name="info_no_nfc_text">NFC non disponible. Veuilez vérifier vos paramètres.</string>
     <string name="start_button_manual">Configuration manuelle</string>
     <string name="start_button_skip">Skip</string>
     <string name="logo_description">Logo de l\'application</string>
