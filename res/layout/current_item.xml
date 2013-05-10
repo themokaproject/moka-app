@@ -36,6 +36,6 @@
         android:layout_marginLeft="16dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:contentDescription="@string/item_imageview_content_description" />
+        android:contentDescription="@string/type_image_content_description" />
 
 </RelativeLayout>
