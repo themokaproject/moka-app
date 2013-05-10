@@ -5,6 +5,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import fr.utc.nf28.moka.data.MokaType;
+import fr.utc.nf28.moka.ui.NewItemFragment;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
@@ -18,10 +19,16 @@ public class NewItemActivity extends SherlockFragmentActivity {
 
 		setContentView(R.layout.new_item_activity);
 
-		final MokaType mokaType = getIntent().getExtras().getParcelable(ARG_TYPE);
 		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setTitle(getResources().getString(R.string.new_item_actionbar_title));
+
+		if (savedInstanceState == null) {
+			getSupportFragmentManager()
+					.beginTransaction()
+					.add(R.id.new_item_container, NewItemFragment.newInstance((MokaType) getIntent().getExtras().getParcelable(ARG_TYPE)))
+					.commit();
+		}
 	}
 
 	@Override
