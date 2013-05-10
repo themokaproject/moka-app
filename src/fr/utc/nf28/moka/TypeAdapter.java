@@ -168,8 +168,8 @@ public class TypeAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 					}
 				}
 			} else {
-				final List<MokaType> savedItems = mSavedTypes;
-				for (MokaType item : savedItems) {
+				final List<MokaType> savedTypes = mSavedTypes;
+				for (MokaType item : savedTypes) {
 					if (item.getName().toLowerCase().contains(query)) {
 						foundItems.add(item);
 					}
@@ -208,8 +208,8 @@ public class TypeAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 					}
 				}
 			} else {
-				final List<MokaType> savedItems = mSavedTypes;
-				for (MokaType item : savedItems) {
+				final List<MokaType> savedTypes = mSavedTypes;
+				for (MokaType item : savedTypes) {
 					if (item.getCategoryName().toLowerCase().contains(query)) {
 						foundItems.add(item);
 					}
