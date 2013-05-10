@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.MokaItem;
+import fr.utc.nf28.moka.util.DateUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
@@ -39,14 +40,14 @@ public class EditItemFragment extends SherlockFragment {
 
 		final TextView itemName = (TextView) rootView.findViewById(R.id.item_name);
 		final TextView itemType = (TextView) rootView.findViewById(R.id.item_type);
-		final TextView itemSource = (TextView) rootView.findViewById(R.id.item_source);
+		final TextView itemCategory = (TextView) rootView.findViewById(R.id.item_category);
 		final TextView itemCreator = (TextView) rootView.findViewById(R.id.item_creator);
 		final ImageView itemImage = (ImageView) rootView.findViewById(R.id.item_image);
 
 		itemName.setText(mSelectedItem.getTitle());
-		itemType.setText(mSelectedItem.getTitle());
-		itemSource.setText(mSelectedItem.getTitle());
-		itemCreator.setText(mSelectedItem.getTitle());
+		itemType.setText(mSelectedItem.getType().getName());
+		itemCategory.setText(mSelectedItem.getType().getCategoryName());
+		itemCreator.setText(mSelectedItem.getTitle() + " le " + DateUtils.getFormattedDate(mSelectedItem.getCreationDate()));
 		itemImage.setImageResource(mSelectedItem.getType().getResId());
 
 		return rootView;

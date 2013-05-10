@@ -48,7 +48,7 @@
             android:layout_marginTop="8dp"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:text="Source"
+            android:text="Catégorie"
             android:textAllCaps="true"
             android:textColor="@color/holo_blue" />
 
@@ -58,7 +58,7 @@
             android:background="@color/holo_blue" />
 
         <TextView
-            android:id="@+id/item_source"
+            android:id="@+id/item_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
