@@ -47,7 +47,7 @@ public class NewItemFragment extends SherlockFragment {
 
 		typeName.setText(mSelectedType.getName());
 		typeDescription.setText(mSelectedType.getDescription());
-		typeCategory.setText(mSelectedType.getTypeName());
+		typeCategory.setText(mSelectedType.getCategoryName());
 		typeImage.setImageResource(mSelectedType.getResId());
 
 		return rootView;

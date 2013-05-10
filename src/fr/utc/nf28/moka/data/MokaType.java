@@ -6,21 +6,21 @@ import android.os.Parcelable;
 public abstract class MokaType implements Parcelable, Comparable<MokaType> {
 	protected String mDescription;
 	protected int mResId;
-	protected String mTypeName;
+	protected String mCategoryName;
 	private String mName;
 
-	public MokaType(String name, String description, int resId, String typeName) {
+	public MokaType(String name, String description, int resId, String categoryName) {
 		mName = name;
 		mDescription = description;
 		mResId = resId;
-		mTypeName = typeName;
+		mCategoryName = categoryName;
 	}
 
 	protected MokaType(Parcel in) {
 		mName = in.readString();
 		mDescription = in.readString();
 		mResId = in.readInt();
-		mTypeName = in.readString();
+		mCategoryName = in.readString();
 	}
 
 	public String getName() {
@@ -47,17 +47,17 @@ public abstract class MokaType implements Parcelable, Comparable<MokaType> {
 		mResId = resId;
 	}
 
-	public String getTypeName() {
-		return mTypeName;
+	public String getCategoryName() {
+		return mCategoryName;
 	}
 
-	public void setTypeName(String typeName) {
-		mTypeName = typeName;
+	public void setCategoryName(String categoryName) {
+		mCategoryName = categoryName;
 	}
 
 	@Override
 	public int compareTo(MokaType other) {
-		return mTypeName.compareTo(other.mTypeName);
+		return mCategoryName.compareTo(other.mCategoryName);
 	}
 
 	@Override
@@ -70,6 +70,6 @@ public abstract class MokaType implements Parcelable, Comparable<MokaType> {
 		parcel.writeString(mName);
 		parcel.writeString(mDescription);
 		parcel.writeInt(mResId);
-		parcel.writeString(mTypeName);
+		parcel.writeString(mCategoryName);
 	}
 }

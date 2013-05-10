@@ -6,12 +6,12 @@ import fr.utc.nf28.moka.data.MokaType;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class MokaItemsFilter extends Filter {
+public abstract class MokaFilter extends Filter {
 	protected final FilterResults filterResults;
 	protected final List<MokaType> foundItems;
 	protected boolean isQuerying = false;
 
-	public MokaItemsFilter() {
+	public MokaFilter() {
 		filterResults = new FilterResults();
 		foundItems = new ArrayList<MokaType>();
 	}
