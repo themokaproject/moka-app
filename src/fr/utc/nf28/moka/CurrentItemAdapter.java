@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import fr.utc.nf28.moka.data.MokaItem;
+import fr.utc.nf28.moka.util.DateUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -44,7 +45,7 @@ public class CurrentItemAdapter extends BaseMokaAdapter {
 
 		final MokaItem item = getItem(position);
 		itemName.setText(item.getTitle());
-		itemCreationDate.setText("ajouté le 28/04/2013 à 11h29");
+		itemCreationDate.setText(DateUtils.getFormattedDate(item.getCreationDate()));
 		itemImage.setImageResource(item.getType().getResId());
 
 		return convertView;
