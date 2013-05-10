@@ -5,8 +5,8 @@ import android.os.Parcelable;
 import fr.utc.nf28.moka.MokaApplication;
 
 public abstract class MediaItem extends MokaItem implements Parcelable {
-	public MediaItem(String title) {
-		super(title, MokaApplication.MOKA_TYPES.get(MediaType.ImageType.KEY_TYPE));
+	public MediaItem(String title, MokaType type) {
+		super(title, type);
 	}
 
 	protected MediaItem(Parcel in) {
@@ -25,7 +25,7 @@ public abstract class MediaItem extends MokaItem implements Parcelable {
 		};
 
 		public ImageItem(String title) {
-			super(title);
+			super(title, MokaApplication.MOKA_TYPES.get(MediaType.ImageType.KEY_TYPE));
 		}
 
 		protected ImageItem(Parcel in) {
@@ -45,7 +45,7 @@ public abstract class MediaItem extends MokaItem implements Parcelable {
 		};
 
 		public VideoItem(String title) {
-			super(title);
+			super(title, MokaApplication.MOKA_TYPES.get(MediaType.VideoType.KEY_TYPE));
 		}
 
 		protected VideoItem(Parcel in) {
@@ -65,7 +65,7 @@ public abstract class MediaItem extends MokaItem implements Parcelable {
 		};
 
 		public WebItem(String title) {
-			super(title);
+			super(title, MokaApplication.MOKA_TYPES.get(MediaType.WebType.KEY_TYPE));
 		}
 
 		protected WebItem(Parcel in) {

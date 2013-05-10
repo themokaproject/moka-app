@@ -10,8 +10,10 @@ import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockFragment;
 import fr.utc.nf28.moka.CurrentItemAdapter;
 import fr.utc.nf28.moka.R;
+import fr.utc.nf28.moka.data.ComputerItem;
 import fr.utc.nf28.moka.data.MediaItem;
 import fr.utc.nf28.moka.data.MokaItem;
+import fr.utc.nf28.moka.data.TextItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,9 +63,13 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 		// Fragment configuration
 		setHasOptionsMenu(true);
 
-		for (int i = 1; i <= 10; i++) {
-			mItems.add(new MediaItem.ImageItem("Elément " + i));
-		}
+		mItems.add(new MediaItem.ImageItem("Image"));
+		mItems.add(new MediaItem.VideoItem("Vidéo"));
+		mItems.add(new MediaItem.WebItem("Web"));
+		mItems.add(new ComputerItem.UmlItem("Diagramme UML"));
+		mItems.add(new TextItem.PlainTextItem("Texte"));
+		mItems.add(new TextItem.ListItem("Liste"));
+		mItems.add(new TextItem.PostItItem("Post-it"));
 	}
 
 	@Override

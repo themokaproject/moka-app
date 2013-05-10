@@ -45,7 +45,7 @@ public class CurrentItemAdapter extends BaseMokaAdapter {
 		final MokaItem item = getItem(position);
 		itemName.setText(item.getTitle());
 		itemCreationDate.setText("ajouté le 28/04/2013 à 11h29");
-		itemImage.setImageResource(R.drawable.logo_type_text);
+		itemImage.setImageResource(item.getType().getResId());
 
 		return convertView;
 	}
