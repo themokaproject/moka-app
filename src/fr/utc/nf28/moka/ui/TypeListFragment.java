@@ -80,7 +80,7 @@ public class TypeListFragment extends SherlockFragment implements AdapterView.On
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		final View rootView = inflater.inflate(R.layout.fragment_item_list, container, false);
+		final View rootView = inflater.inflate(R.layout.fragment_type_list, container, false);
 
 		mSpinner = (Spinner) rootView.findViewById(R.id.spinner);
 		final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getSherlockActivity(),
@@ -135,7 +135,7 @@ public class TypeListFragment extends SherlockFragment implements AdapterView.On
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.fragment_item_list, menu);
+		inflater.inflate(R.menu.fragment_type_list, menu);
 
 		// Setup searchMenuItem and searchView
 		final MenuItem searchMenuItem = menu.findItem(R.id.menu_search);
