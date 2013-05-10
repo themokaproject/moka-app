@@ -18,7 +18,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.widget.SearchView;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
-import fr.utc.nf28.moka.ItemAdapter;
+import fr.utc.nf28.moka.TypeAdapter;
 import fr.utc.nf28.moka.MokaApplication;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.MokaType;
@@ -30,7 +30,7 @@ import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class TypeListFragment extends SherlockFragment implements AdapterView.OnItemClickListener,
 		SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener, AdapterView.OnItemSelectedListener,
-		AdapterView.OnItemLongClickListener, ItemAdapter.SectionFilterCallbacks {
+		AdapterView.OnItemLongClickListener, TypeAdapter.SectionFilterCallbacks {
 	private static final String TAG = makeLogTag(TypeListFragment.class);
 	private static final String PERSISTENT_LAST_TYPE = "Moka_LastType";
 	/**
@@ -47,7 +47,7 @@ public class TypeListFragment extends SherlockFragment implements AdapterView.On
 		}
 	};
 	private List<MokaType> mTypes;
-	private ItemAdapter mAdapter;
+	private TypeAdapter mAdapter;
 	private Callbacks mCallbacks = sDummyCallbacks;
 	private SharedPreferences mPrefs;
 	private Spinner mSpinner;
@@ -96,7 +96,7 @@ public class TypeListFragment extends SherlockFragment implements AdapterView.On
 		mGridView.setEmptyView(rootView.findViewById(android.R.id.empty));
 		mGridView.getEmptyView().setVisibility(View.GONE);
 
-		mAdapter = new ItemAdapter(getSherlockActivity());
+		mAdapter = new TypeAdapter(getSherlockActivity());
 		mAdapter.setSectionFilterCallbacks(this);
 
 		return rootView;

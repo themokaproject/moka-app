@@ -17,7 +17,7 @@ import java.util.List;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
-public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSimpleAdapter, Filterable {
+public class TypeAdapter extends BaseMokaAdapter implements StickyGridHeadersSimpleAdapter, Filterable {
 	private static final SectionFilterCallbacks sDummySearchCallbacks = new SectionFilterCallbacks() {
 		@Override
 		public void onSectionExist(List<MokaType> sections) {
@@ -27,7 +27,7 @@ public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 		public void onNoSuchSection() {
 		}
 	};
-	private static final String TAG = makeLogTag(ItemAdapter.class);
+	private static final String TAG = makeLogTag(TypeAdapter.class);
 	private final SparseArray<String> mSectionToPosition;
 	private List<MokaType> mItems = Collections.emptyList();
 	private List<MokaType> mSavedItems = Collections.emptyList();
@@ -37,7 +37,7 @@ public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 	private ItemFilter mItemFilter;
 	private SectionFilter mSectionFilter;
 
-	public ItemAdapter(Context context) {
+	public TypeAdapter(Context context) {
 		super(context);
 
 		mSectionToPosition = new SparseArray<String>();
@@ -92,7 +92,7 @@ public class ItemAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
-			convertView = mLayoutInflater.inflate(R.layout.item, null);
+			convertView = mLayoutInflater.inflate(R.layout.type, null);
 		}
 
 		final TextView itemName = ViewHolder.get(convertView, R.id.item_name);
