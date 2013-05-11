@@ -47,7 +47,8 @@ public class EditItemFragment extends SherlockFragment {
 		itemName.setText(mSelectedItem.getTitle());
 		itemType.setText(mSelectedItem.getType().getName());
 		itemCategory.setText(mSelectedItem.getType().getCategoryName());
-		itemCreator.setText(mSelectedItem.getTitle() + " le " + DateUtils.getFormattedDate(mSelectedItem.getCreationDate()));
+		itemCreator.setText("Créé par " + mSelectedItem.getCreatorName() + " le " + DateUtils.getFormattedDate(mSelectedItem.getCreationDate()));
+		// TODO: fetch values from strings.xml
 		itemImage.setImageResource(mSelectedItem.getType().getResId());
 
 		return rootView;

@@ -8,10 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class MokaItem implements Parcelable {
+	private static final String DEFAULT_CREATOR_NAME = MokaItem.class.getSimpleName();
 	private static int sIdIndex = 0;
 	private int mId;
 	private String mTitle;
 	private MokaType mType;
+	private String mCreatorName;
 	private DateTime mCreationDate;
 	private List<HistoryEntry> mHistoryEntries;
 
@@ -20,14 +22,15 @@ public abstract class MokaItem implements Parcelable {
 	}
 
 	public MokaItem(String title, MokaType type) {
-		this(title, type, new DateTime());
+		this(title, type, DEFAULT_CREATOR_NAME, new DateTime());
 	}
 
-	public MokaItem(String title, MokaType type, DateTime creationDate) {
+	public MokaItem(String title, MokaType type, String creatorName, DateTime creationDate) {
 		this();
 
 		mTitle = title;
 		mType = type;
+		mCreatorName = creatorName;
 		mCreationDate = creationDate;
 	}
 
@@ -35,6 +38,7 @@ public abstract class MokaItem implements Parcelable {
 		mId = in.readInt();
 		mTitle = in.readString();
 		mType = in.readParcelable(MokaType.class.getClassLoader());
+		mCreatorName = in.readString();
 		final long millis = in.readLong();
 		if (millis != -1) {
 			mCreationDate = new DateTime(in.readLong());
@@ -68,11 +72,12 @@ public abstract class MokaItem implements Parcelable {
 		mType = type;
 	}
 
-	public void addHistoryEntry(HistoryEntry historyEntry) {
-		if (mHistoryEntries == null) {
-			mHistoryEntries = new ArrayList<HistoryEntry>();
-		}
-		mHistoryEntries.add(historyEntry);
+	public String getCreatorName() {
+		return mCreatorName;
+	}
+
+	public void setCreatorName(String creatorName) {
+		mCreatorName = creatorName;
 	}
 
 	public DateTime getCreationDate() {
@@ -81,6 +86,13 @@ public abstract class MokaItem implements Parcelable {
 
 	public void setCreationDate(DateTime date) {
 		mCreationDate = date;
+	}
+
+	public void addHistoryEntry(HistoryEntry historyEntry) {
+		if (mHistoryEntries == null) {
+			mHistoryEntries = new ArrayList<HistoryEntry>();
+		}
+		mHistoryEntries.add(historyEntry);
 	}
 
 	@Override
@@ -93,6 +105,7 @@ public abstract class MokaItem implements Parcelable {
 		parcel.writeInt(mId);
 		parcel.writeString(mTitle);
 		parcel.writeParcelable(mType, flags);
+		parcel.writeString(mCreatorName);
 		if (mCreationDate != null) {
 			parcel.writeLong(mCreationDate.getMillis());
 		} else {
