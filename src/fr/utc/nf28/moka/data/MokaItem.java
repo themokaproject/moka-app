@@ -41,7 +41,7 @@ public abstract class MokaItem implements Parcelable {
 		mCreatorName = in.readString();
 		final long millis = in.readLong();
 		if (millis != -1) {
-			mCreationDate = new DateTime(in.readLong());
+			mCreationDate = new DateTime(millis);
 		}
 		if (mHistoryEntries != null) {
 			in.readTypedList(mHistoryEntries, HistoryEntry.CREATOR);
