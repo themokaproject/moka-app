@@ -53,7 +53,7 @@ public abstract class MokaItem implements Parcelable {
 	}
 
 	public void setId(int mId) {
-		this.mId = mId;
+		mId = mId;
 	}
 
 	public String getTitle() {
@@ -61,7 +61,7 @@ public abstract class MokaItem implements Parcelable {
 	}
 
 	public void setTitle(String title) {
-		this.mTitle = title;
+		mTitle = title;
 	}
 
 	public MokaType getType() {
