@@ -29,6 +29,7 @@ public class HistoryEntryListFragment extends SherlockFragment {
 	private HistoryItemAdapter mAdapter;
 	private ListView mListView;
 	private ProgressBar mProgressBar;
+	private MenuItem mRefreshMenuItem;
 
 	public HistoryEntryListFragment() {
 	}
@@ -66,13 +67,16 @@ public class HistoryEntryListFragment extends SherlockFragment {
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.fragment_history_item_list, menu);
+
+		mRefreshMenuItem = menu.findItem(R.id.menu_refresh);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.menu_refresh:
-				Toast.makeText(getSherlockActivity(), "TODO: refresh action", Toast.LENGTH_SHORT).show();
+				// Launch the background task
+				new LoadItemHistoryTask(this).execute();
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
@@ -98,6 +102,9 @@ public class HistoryEntryListFragment extends SherlockFragment {
 
 			final HistoryEntryListFragment ui = mUiFragment.get();
 			if (ui != null) {
+				if (ui.mRefreshMenuItem != null) {
+					ui.mRefreshMenuItem.setActionView(R.layout.progressbar);
+				}
 				ui.mListView.getEmptyView().setVisibility(View.GONE);
 				ui.mProgressBar.setVisibility(View.VISIBLE);
 			}
@@ -127,6 +134,9 @@ public class HistoryEntryListFragment extends SherlockFragment {
 					ui.mAdapter.updateHistoryItems(historyEntries);
 				}
 				ui.mListView.getEmptyView().setVisibility(View.VISIBLE);
+				if (ui.mRefreshMenuItem != null && ui.mRefreshMenuItem.getActionView() != null) {
+					ui.mRefreshMenuItem.setActionView(null);
+				}
 				ui.mProgressBar.setVisibility(View.GONE);
 			}
 		}
