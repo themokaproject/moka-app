@@ -4,6 +4,8 @@ import android.util.Log;
 import jade.android.MicroRuntimeService;
 import jade.android.RuntimeCallback;
 
+import java.util.UUID;
+
 /**
  * all utils for managing jade runtime and agents life cycle
  */
@@ -17,13 +19,17 @@ public class JadeUtils {
 	/**
 	 * Default port
 	 */
-	private static final int DEFAULT_PORT = 1099;
+	public static final int DEFAULT_PORT = 1099;
 
 	/**
 	 * runtime use for jade
 	 */
 	private static MicroRuntimeService mRuntime = null;
 
+	/**
+	 *  check if runtime has successfully started
+	 */
+	private static boolean mRuntimeStarted = false;
 
 	/**
 	 * create jade container and connect to the main container
@@ -45,6 +51,9 @@ public class JadeUtils {
 					public void onSuccess(Void arg0) {
 						// Connection success
 						Log.i(TAG, "container created ! ");
+						mRuntimeStarted = true;
+						//start the unique agent of android device
+						startAgent(UUID.randomUUID().toString(), "AndroidAgent.class",null);
 					}
 				}
 		);
@@ -71,6 +80,9 @@ public class JadeUtils {
 					public void onSuccess(Void arg0) {
 						// Connection success
 						Log.i(TAG, "container created ! ");
+						mRuntimeStarted = true;
+						//start the unique agent of android device
+						startAgent(UUID.randomUUID().toString(), "AndroidAgent.class",null);
 					}
 				}
 		);
@@ -81,10 +93,24 @@ public class JadeUtils {
 	 *
 	 * @param name       name to identify agent which has to be unique
 	 * @param agentClass class of your agent
-	 * @return true onSuccess, false onError see log for error type
 	 */
-	public static boolean startAgent(String name, String agentClass) {
-		return true;
+	private static void startAgent(final String name, final String agentClass) {
+		if(!mRuntimeStarted){
+			//connection to the main container failed
+			return;
+		}
+		mRuntime.startAgent(name, agentClass, null,
+				new RuntimeCallback<Void>() {
+					@Override
+					public void onFailure(Throwable arg0) {
+					}
+
+					@Override
+					public void onSuccess(Void arg0) {
+						Log.i(TAG, "agent " + name + " : " + agentClass + " started ! ");
+					}
+				}
+		);
 	}
 
 	/**
@@ -95,8 +121,19 @@ public class JadeUtils {
 	 * @param params     Array of object which will be retrieved by your agent
 	 * @return true onSuccess, false onError see log for error type
 	 */
-	public static boolean startAgent(String name, String agentClass, Object[] params) {
-		return true;
+	private static void startAgent(final String name, final String agentClass, final Object[] params) {
+		mRuntime.startAgent(name, agentClass, params,
+				new RuntimeCallback<Void>() {
+					@Override
+					public void onFailure(Throwable arg0) {
+					}
+
+					@Override
+					public void onSuccess(Void arg0) {
+						Log.i(TAG, "agent " + name + " : " + agentClass + " started ! ");
+					}
+				}
+		);
 	}
 
 	/**
