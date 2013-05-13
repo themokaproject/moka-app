@@ -1,5 +1,7 @@
 package fr.utc.nf28.moka.util;
 
+import jade.android.MicroRuntimeService;
+
 /**
  * all utils for managing jade runtime and agents life cycle
  */
@@ -16,12 +18,21 @@ public class JadeUtils {
 	private static final int DEFAULT_PORT = 1099;
 
 	/**
+	 * runtime use for jade
+	 */
+	private static MicroRuntimeService mRuntime = null;
+
+	/**
 	 * create jade container and connect to the main container
 	 *
 	 * @param ip ip address of computer which host the main container
 	 * @return true onSuccess, false onError
 	 */
-	public boolean createContainer(String ip) {
+	public static boolean createContainer(String ip) {
+		if (mRuntime == null) {
+			mRuntime = new MicroRuntimeService();
+		}
+
 		return true;
 	}
 
@@ -32,7 +43,7 @@ public class JadeUtils {
 	 * @param port port for network communication
 	 * @return true onSuccess, false onError
 	 */
-	public boolean createContainer(String ip, int port) {
+	public static boolean createContainer(String ip, int port) {
 		return true;
 	}
 
@@ -43,7 +54,7 @@ public class JadeUtils {
 	 * @param agentClass class of your agent
 	 * @return true onSuccess, false onError see log for error type
 	 */
-	public boolean startAgent(String name, String agentClass) {
+	public static boolean startAgent(String name, String agentClass) {
 		return true;
 	}
 
@@ -55,7 +66,7 @@ public class JadeUtils {
 	 * @param params     Array of object which will be retrieved by your agent
 	 * @return true onSuccess, false onError see log for error type
 	 */
-	public boolean startAgent(String name, String agentClass, Object[] params) {
+	public static boolean startAgent(String name, String agentClass, Object[] params) {
 		return true;
 	}
 
@@ -63,7 +74,7 @@ public class JadeUtils {
 	 * end the whole jade session
 	 * Stop agent container
 	 */
-	public void close() {
+	public static void close() {
 
 	}
 }
