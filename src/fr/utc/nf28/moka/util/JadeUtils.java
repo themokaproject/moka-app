@@ -34,34 +34,6 @@ public class JadeUtils {
 	/**
 	 * create jade container and connect to the main container
 	 *
-	 * @param ip ip address of computer which host the main container
-	 */
-	public static void createContainer(String ip) {
-		if (mRuntime == null) {
-			mRuntime = new MicroRuntimeService();
-		}
-		mRuntime.startAgentContainer(ip, DEFAULT_PORT,
-				new RuntimeCallback<Void>() {
-					@Override
-					public void onFailure(Throwable arg0) {
-						// Connection error
-					}
-
-					@Override
-					public void onSuccess(Void arg0) {
-						// Connection success
-						Log.i(TAG, "container created ! ");
-						mRuntimeStarted = true;
-						//start the unique agent of android device
-						startAgent(UUID.randomUUID().toString(), "AndroidAgent.class",null);
-					}
-				}
-		);
-	}
-
-	/**
-	 * create jade container and connect to the main container
-	 *
 	 * @param ip   ip address of computer which host the main container
 	 * @param port port for network communication
 	 */
