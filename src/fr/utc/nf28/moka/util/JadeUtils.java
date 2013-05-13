@@ -56,6 +56,14 @@ public class JadeUtils {
 	 * @return true onSuccess, false onError see log for error type
 	 */
 	public boolean startAgent(String name, String agentClass, Object[] params) {
+		return true;
+	}
+
+	/**
+	 * end the whole jade session
+	 * Stop agent container
+	 */
+	public void close() {
 
 	}
 }
