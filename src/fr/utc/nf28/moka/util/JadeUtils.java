@@ -27,11 +27,6 @@ public class JadeUtils {
 	private static MicroRuntimeService mRuntime = null;
 
 	/**
-	 *  check if runtime has successfully started
-	 */
-	private static boolean mRuntimeStarted = false;
-
-	/**
 	 * create jade container and connect to the main container
 	 *
 	 * @param ip   ip address of computer which host the main container
@@ -52,9 +47,8 @@ public class JadeUtils {
 					public void onSuccess(Void arg0) {
 						// Connection success
 						Log.i(TAG, "container created ! ");
-						mRuntimeStarted = true;
 						//start the unique agent of android device
-						startAgent(UUID.randomUUID().toString(), "AndroidAgent.class",null);
+						startAgent(UUID.randomUUID().toString(), "AndroidAgent.class", null);
 					}
 				}
 		);
@@ -88,6 +82,16 @@ public class JadeUtils {
 	 * Stop agent container
 	 */
 	public static void close() {
+		if (mRuntime != null)
+			mRuntime.stopAgentContainer(new RuntimeCallback<Void>() {
+				@Override
+				public void onFailure(Throwable arg0) {
+				}
 
+				@Override
+				public void onSuccess(Void arg0) {
+					mRuntime = null;
+				}
+			});
 	}
 }
