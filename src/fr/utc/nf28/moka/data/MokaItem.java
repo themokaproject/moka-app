@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class MokaItem implements Parcelable {
@@ -15,7 +16,7 @@ public abstract class MokaItem implements Parcelable {
 	private MokaType mType;
 	private String mCreatorName;
 	private DateTime mCreationDate;
-	private List<HistoryEntry> mHistoryEntries;
+	private List<HistoryEntry> mHistoryEntries = Collections.emptyList();
 
 	public MokaItem() {
 		mId = sIdIndex++;
@@ -43,17 +44,15 @@ public abstract class MokaItem implements Parcelable {
 		if (millis != -1) {
 			mCreationDate = new DateTime(millis);
 		}
-		if (mHistoryEntries != null) {
-			in.readTypedList(mHistoryEntries, HistoryEntry.CREATOR);
-		}
+		in.readTypedList(mHistoryEntries, HistoryEntry.CREATOR);
 	}
 
 	public int getId() {
 		return mId;
 	}
 
-	public void setId(int mId) {
-		mId = mId;
+	public void setId(int id) {
+		mId = id;
 	}
 
 	public String getTitle() {
@@ -111,8 +110,6 @@ public abstract class MokaItem implements Parcelable {
 		} else {
 			parcel.writeLong(-1);
 		}
-		if (mHistoryEntries != null) {
-			parcel.writeTypedList(mHistoryEntries);
-		}
+		parcel.writeTypedList(mHistoryEntries);
 	}
 }
