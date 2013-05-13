@@ -35,7 +35,7 @@ public class JadeUtils {
 	 * create jade container and connect to the main container
 	 *
 	 * @param ip   ip address of computer which host the main container
-	 * @param port port for network communication
+	 * @param port port for network communication, could use DEFAULT_PORT
 	 */
 	public static void createContainer(String ip, int port) {
 		if (mRuntime == null) {
@@ -55,31 +55,6 @@ public class JadeUtils {
 						mRuntimeStarted = true;
 						//start the unique agent of android device
 						startAgent(UUID.randomUUID().toString(), "AndroidAgent.class",null);
-					}
-				}
-		);
-	}
-
-	/**
-	 * start a new agent,container has to be started
-	 *
-	 * @param name       name to identify agent which has to be unique
-	 * @param agentClass class of your agent
-	 */
-	private static void startAgent(final String name, final String agentClass) {
-		if(!mRuntimeStarted){
-			//connection to the main container failed
-			return;
-		}
-		mRuntime.startAgent(name, agentClass, null,
-				new RuntimeCallback<Void>() {
-					@Override
-					public void onFailure(Throwable arg0) {
-					}
-
-					@Override
-					public void onSuccess(Void arg0) {
-						Log.i(TAG, "agent " + name + " : " + agentClass + " started ! ");
 					}
 				}
 		);
