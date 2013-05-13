@@ -1,6 +1,8 @@
 package fr.utc.nf28.moka.util;
 
+import android.util.Log;
 import jade.android.MicroRuntimeService;
+import jade.android.RuntimeCallback;
 
 /**
  * all utils for managing jade runtime and agents life cycle
@@ -22,18 +24,30 @@ public class JadeUtils {
 	 */
 	private static MicroRuntimeService mRuntime = null;
 
+
 	/**
 	 * create jade container and connect to the main container
 	 *
 	 * @param ip ip address of computer which host the main container
-	 * @return true onSuccess, false onError
 	 */
-	public static boolean createContainer(String ip) {
+	public static void createContainer(String ip) {
 		if (mRuntime == null) {
 			mRuntime = new MicroRuntimeService();
 		}
+		mRuntime.startAgentContainer(ip, DEFAULT_PORT,
+				new RuntimeCallback<Void>() {
+					@Override
+					public void onFailure(Throwable arg0) {
+						// Connection error
+					}
 
-		return true;
+					@Override
+					public void onSuccess(Void arg0) {
+						// Connection success
+						Log.i(TAG, "container created ! ");
+					}
+				}
+		);
 	}
 
 	/**
@@ -41,10 +55,25 @@ public class JadeUtils {
 	 *
 	 * @param ip   ip address of computer which host the main container
 	 * @param port port for network communication
-	 * @return true onSuccess, false onError
 	 */
-	public static boolean createContainer(String ip, int port) {
-		return true;
+	public static void createContainer(String ip, int port) {
+		if (mRuntime == null) {
+			mRuntime = new MicroRuntimeService();
+		}
+		mRuntime.startAgentContainer(ip, port,
+				new RuntimeCallback<Void>() {
+					@Override
+					public void onFailure(Throwable arg0) {
+						// Connection error
+					}
+
+					@Override
+					public void onSuccess(Void arg0) {
+						// Connection success
+						Log.i(TAG, "container created ! ");
+					}
+				}
+		);
 	}
 
 	/**
