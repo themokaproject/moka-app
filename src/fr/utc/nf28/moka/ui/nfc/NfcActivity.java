@@ -49,7 +49,6 @@ public class NfcActivity extends Activity {
 	protected void onResume() {
 		super.onResume();
 		enableNfcDiscovering();
-		Log.i(TAG,getIntent().getAction());
 		if (getIntent().hasExtra(NfcAdapter.EXTRA_TAG)) {
 			processTag((Tag) getIntent().getParcelableExtra(NfcAdapter.EXTRA_TAG));
 		}

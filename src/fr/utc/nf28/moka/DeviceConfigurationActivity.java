@@ -27,9 +27,9 @@ public class DeviceConfigurationActivity extends Activity {
 	 */
 	public static final String EXTRA_IP = "ipFromNfc";
 	/**
-	 * port tag for EXTRA in intent
+	 * port tag for EXTRA in	 intent
 	 */
-	public static final String EXTRA_PORT= "portFromNfc";
+	public static final String EXTRA_PORT = "portFromNfc";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +38,11 @@ public class DeviceConfigurationActivity extends Activity {
 
 		Intent i = getIntent();
 
-		if(i!=null && i.hasExtra(EXTRA_SSID) && i.hasExtra(EXTRA_PWD) && i.hasExtra(EXTRA_IP) && i.hasExtra(EXTRA_PORT)){
-			((TextView)findViewById(R.id.textSSID)).setText(i.getStringExtra(EXTRA_SSID));
-			((TextView)findViewById(R.id.textPWD)).setText(i.getStringExtra(EXTRA_SSID));
-			((TextView)findViewById(R.id.textIP)).setText(i.getStringExtra(EXTRA_SSID));
-			((TextView)findViewById(R.id.textPort)).setText(i.getStringExtra(EXTRA_SSID));
+		if (i != null && i.hasExtra(EXTRA_SSID) && i.hasExtra(EXTRA_PWD) && i.hasExtra(EXTRA_IP) && i.hasExtra(EXTRA_PORT)) {
+			((TextView) findViewById(R.id.textSSID)).setText(i.getStringExtra(EXTRA_SSID));
+			((TextView) findViewById(R.id.textPWD)).setText(i.getStringExtra(EXTRA_PWD));
+			((TextView) findViewById(R.id.textIP)).setText(i.getStringExtra(EXTRA_IP));
+			((TextView) findViewById(R.id.textPort)).setText(i.getStringExtra(EXTRA_PORT));
 		}
 
 
