@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import fr.utc.nf28.moka.util.LogUtils;
 
 public class DeviceConfigurationActivity extends Activity {
@@ -33,14 +34,15 @@ public class DeviceConfigurationActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.device_configuration_activity);
 
 		Intent i = getIntent();
 
 		if(i!=null && i.hasExtra(EXTRA_SSID) && i.hasExtra(EXTRA_PWD) && i.hasExtra(EXTRA_IP) && i.hasExtra(EXTRA_PORT)){
-			Log.i(TAG,"ssid from tag :"+i.getStringExtra(EXTRA_SSID));
-			Log.i(TAG,"pwd from tag :"+i.getStringExtra(EXTRA_PWD));
-			Log.i(TAG,"ip from tag :"+i.getStringExtra(EXTRA_IP));
-			Log.i(TAG, "port from tag :" + i.getStringExtra(EXTRA_PORT));
+			((TextView)findViewById(R.id.textSSID)).setText(i.getStringExtra(EXTRA_SSID));
+			((TextView)findViewById(R.id.textPWD)).setText(i.getStringExtra(EXTRA_SSID));
+			((TextView)findViewById(R.id.textIP)).setText(i.getStringExtra(EXTRA_SSID));
+			((TextView)findViewById(R.id.textPort)).setText(i.getStringExtra(EXTRA_SSID));
 		}
 
 
