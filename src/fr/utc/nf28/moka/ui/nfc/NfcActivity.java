@@ -95,7 +95,7 @@ public class NfcActivity extends Activity {
 	 */
 	private void processTag(Tag tag) {
 		try {
-			int result = NfcUtils.writeMokaTag(tag, "test", false);
+			int result = NfcUtils.writeMokaTag(tag, "http://moka.fr/q/androidap/lolowned", false);
 			Log.i(TAG, "write : " + String.valueOf(result));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();

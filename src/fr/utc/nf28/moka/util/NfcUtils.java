@@ -142,15 +142,15 @@ public class NfcUtils {
 	 */
 	private static NdefRecord createMokaRecord(String data) throws UnsupportedEncodingException {
 		byte[] uriBytes = data.getBytes(Charset.forName("UTF-8"));
-		int uriLength = uriBytes.length;
-		byte[] payload = new byte[1 + uriLength];
+		int textLength = uriBytes.length;
+		byte[] payload = new byte[1 + textLength];
 
-		// copy uribytes into payload
-		System.arraycopy(uriBytes, 0, payload, 1, uriLength);
+		System.arraycopy(uriBytes, 0, payload, 1, textLength);
 
 		return new NdefRecord(NdefRecord.TNF_WELL_KNOWN,
-				Intent.normalizeMimeType(MIME_TYPE_MOKA).getBytes(),
+				NdefRecord.RTD_URI,
 				new byte[0],
 				payload);
+
 	}
 }
