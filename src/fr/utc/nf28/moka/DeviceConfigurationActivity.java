@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import fr.utc.nf28.moka.data.ConfigParcelable;
 import fr.utc.nf28.moka.util.LogUtils;
 
 public class DeviceConfigurationActivity extends Activity {
@@ -15,9 +14,21 @@ public class DeviceConfigurationActivity extends Activity {
 	private static final String TAG = LogUtils.makeLogTag(DeviceConfigurationActivity.class);
 
 	/**
-	 * tag for EXTRA in intent
+	 * ssid tag for EXTRA in intent
 	 */
-	public static final String EXTRA_CONFIG = "configurationFromNfc";
+	public static final String EXTRA_SSID = "ssidFromNfc";
+	/**
+	 * pwd tag for EXTRA in intent
+	 */
+	public static final String EXTRA_PWD = "pwdFromNfc";
+	/**
+	 * ip tag for EXTRA in intent
+	 */
+	public static final String EXTRA_IP = "ipFromNfc";
+	/**
+	 * port tag for EXTRA in intent
+	 */
+	public static final String EXTRA_PORT= "portFromNfc";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +36,11 @@ public class DeviceConfigurationActivity extends Activity {
 
 		Intent i = getIntent();
 
-		if(i!=null & i.hasExtra(EXTRA_CONFIG)){
-			ConfigParcelable config = (ConfigParcelable) i.getParcelableExtra(EXTRA_CONFIG);
-			Log.i(TAG, "ssid from extra"+config.getSSID());
-			Log.i(TAG, "pwd from extra"+config.getPWD());
-			Log.i(TAG, "ip from extra"+config.getIpAgent());
-			Log.i(TAG, "port from extra"+config.getPortAgent());
+		if(i!=null && i.hasExtra(EXTRA_SSID) && i.hasExtra(EXTRA_PWD) && i.hasExtra(EXTRA_IP) && i.hasExtra(EXTRA_PORT)){
+			Log.i(TAG,"ssid from tag :"+i.getStringExtra(EXTRA_SSID));
+			Log.i(TAG,"pwd from tag :"+i.getStringExtra(EXTRA_PWD));
+			Log.i(TAG,"ip from tag :"+i.getStringExtra(EXTRA_IP));
+			Log.i(TAG, "port from tag :" + i.getStringExtra(EXTRA_PORT));
 		}
 
 

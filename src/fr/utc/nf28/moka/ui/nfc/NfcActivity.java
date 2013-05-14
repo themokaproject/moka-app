@@ -102,9 +102,12 @@ public class NfcActivity extends Activity {
 			Log.i(TAG, "query : " + String.valueOf(query));
 			String[] tagsParams = query.split(",");
 			if(tagsParams.length == 4){
-				ConfigParcelable c = new ConfigParcelable(tagsParams[0],tagsParams[1],tagsParams[2],tagsParams[3]);
 				Intent i = new Intent(this, DeviceConfigurationActivity.class);
-				i.putExtra(c);
+				i.putExtra(DeviceConfigurationActivity.EXTRA_SSID,tagsParams[0]);
+				i.putExtra(DeviceConfigurationActivity.EXTRA_PWD,tagsParams[1]);
+				i.putExtra(DeviceConfigurationActivity.EXTRA_IP,tagsParams[2]);
+				i.putExtra(DeviceConfigurationActivity.EXTRA_PORT,tagsParams[3]);
+				startActivity(i);
 			}else{
 				Log.i(TAG, "Wrong tag");
 			}
