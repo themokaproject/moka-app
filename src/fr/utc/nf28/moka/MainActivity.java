@@ -13,11 +13,11 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.ui.CurrentItemListFragment;
 import fr.utc.nf28.moka.ui.TypeListFragment;
+import fr.utc.nf28.moka.util.CroutonUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
@@ -25,6 +25,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		TypeListFragment.Callbacks, CurrentItemListFragment.Callbacks {
 	private static final String TAG = makeLogTag(MainActivity.class);
 	private static final int CREATE_ITEM_REQUEST = 0;
+	private static final int EDIT_ITEM_REQUEST = 1;
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
@@ -65,6 +66,13 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getSupportMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
+	}
+
+	@Override
+	public void onDestroy() {
+		Crouton.cancelAllCroutons();
+
+		super.onDestroy();
 	}
 
 	@Override
@@ -109,14 +117,18 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 	public void onItemSelected(MokaItem item) {
 		final Intent detailIntent = new Intent(this, ItemDetailActivity.class);
 		detailIntent.putExtra(ItemDetailActivity.ARG_ITEM, item);
-		startActivity(detailIntent);
+		startActivityForResult(detailIntent, EDIT_ITEM_REQUEST);
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == CREATE_ITEM_REQUEST) {
 			if (resultCode == RESULT_OK) {
 				Crouton.makeText(this, ((MokaItem) data.getParcelableExtra(NewItemActivity.RET_ITEM)).getTitle() +
-						" a été correctement ajouté", Style.CONFIRM).show(); // TODO: fetch from strings
+						" a été correctement ajouté", CroutonUtils.INFO_MOKA_STYLE).show(); // TODO: fetch from strings
+			}
+		} else if (requestCode == EDIT_ITEM_REQUEST) {
+			if (resultCode == ItemDetailActivity.RESULT_DELETE) {
+				Crouton.makeText(this, "L'élément a été correctement supprimé", CroutonUtils.INFO_MOKA_STYLE).show(); // TODO: fetch from strings
 			}
 		}
 	}

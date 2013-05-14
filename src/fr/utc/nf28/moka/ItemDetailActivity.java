@@ -21,6 +21,7 @@ import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class ItemDetailActivity extends SherlockFragmentActivity implements ActionBar.TabListener {
 	public static final String ARG_ITEM = "arg_item";
+	public static final int RESULT_DELETE = RESULT_FIRST_USER + 1;
 	private static final String TAG = makeLogTag(ItemDetailActivity.class);
 	private ViewPager mViewPager;
 	private MokaItem mSelectedItem;
@@ -83,6 +84,7 @@ public class ItemDetailActivity extends SherlockFragmentActivity implements Acti
 							@Override
 							public void onClick(DialogInterface dialogInterface, int which) {
 								// TODO: call the DeleteAgent
+								setResult(RESULT_DELETE);
 								finish();
 							}
 						})
