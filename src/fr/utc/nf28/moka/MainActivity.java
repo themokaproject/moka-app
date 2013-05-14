@@ -12,6 +12,8 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.ui.CurrentItemListFragment;
@@ -22,6 +24,7 @@ import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 public class MainActivity extends SherlockFragmentActivity implements ActionBar.TabListener,
 		TypeListFragment.Callbacks, CurrentItemListFragment.Callbacks {
 	private static final String TAG = makeLogTag(MainActivity.class);
+	private static final int CREATE_ITEM_REQUEST = 0;
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
@@ -91,7 +94,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 	public void onTypeSelected(MokaType type) {
 		final Intent detailIntent = new Intent(this, NewItemActivity.class);
 		detailIntent.putExtra(NewItemActivity.ARG_TYPE, type);
-		startActivity(detailIntent);
+		startActivityForResult(detailIntent, CREATE_ITEM_REQUEST);
 	}
 
 	@Override
@@ -107,6 +110,15 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		final Intent detailIntent = new Intent(this, ItemDetailActivity.class);
 		detailIntent.putExtra(ItemDetailActivity.ARG_ITEM, item);
 		startActivity(detailIntent);
+	}
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == CREATE_ITEM_REQUEST) {
+			if (resultCode == RESULT_OK) {
+				Crouton.makeText(this, ((MokaItem) data.getParcelableExtra(NewItemActivity.RET_ITEM)).getTitle() +
+						" a été correctement ajouté", Style.CONFIRM).show(); // TODO: fetch from strings
+			}
+		}
 	}
 
 	/**
