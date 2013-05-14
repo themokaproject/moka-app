@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.Bundle;
@@ -95,8 +96,19 @@ public class NfcActivity extends Activity {
 	 */
 	private void processTag(Tag tag) {
 		try {
-			int result = NfcUtils.writeMokaTag(tag, "http://moka.fr/c/androidap/lolowned", false);
-			Log.i(TAG, "write : " + String.valueOf(result));
+			String result = NfcUtils.readTag(tag);
+			String query = Uri.parse(result).getQuery();
+			Log.i(TAG, "query : " + String.valueOf(query));
+			String[] tagsParams = query.split(",");
+			if(tagsParams.length == 4){
+				Log.i(TAG, "From tag ssid : " + tagsParams[0]);
+				Log.i(TAG, "From tag mdp : " + tagsParams[1]);
+				Log.i(TAG, "From tag ip : " + tagsParams[2]);
+				Log.i(TAG, "From tag ssid : " + tagsParams[3]);
+			}else{
+				Log.i(TAG, "Wrong tag");
+			}
+
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
