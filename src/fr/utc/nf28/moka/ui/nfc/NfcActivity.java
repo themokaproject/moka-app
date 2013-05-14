@@ -49,7 +49,8 @@ public class NfcActivity extends Activity {
 	protected void onResume() {
 		super.onResume();
 		enableNfcDiscovering();
-		if (getIntent().hasExtra(NfcAdapter.EXTRA_TAG) && getIntent().getAction().equals(NfcAdapter.EXTRA_TAG)) {
+		Log.i(TAG,getIntent().getAction());
+		if (getIntent().hasExtra(NfcAdapter.EXTRA_TAG)) {
 			processTag((Tag) getIntent().getParcelableExtra(NfcAdapter.EXTRA_TAG));
 		}
 	}
@@ -108,6 +109,7 @@ public class NfcActivity extends Activity {
 				i.putExtra(DeviceConfigurationActivity.EXTRA_IP,tagsParams[2]);
 				i.putExtra(DeviceConfigurationActivity.EXTRA_PORT,tagsParams[3]);
 				startActivity(i);
+				this.finish();
 			}else{
 				Log.i(TAG, "Wrong tag");
 			}
