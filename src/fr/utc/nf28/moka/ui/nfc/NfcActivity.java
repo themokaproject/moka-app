@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import fr.utc.nf28.moka.DeviceConfigurationActivity;
 import fr.utc.nf28.moka.MainActivity;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.util.NfcUtils;
@@ -101,10 +102,9 @@ public class NfcActivity extends Activity {
 			Log.i(TAG, "query : " + String.valueOf(query));
 			String[] tagsParams = query.split(",");
 			if(tagsParams.length == 4){
-				Log.i(TAG, "From tag ssid : " + tagsParams[0]);
-				Log.i(TAG, "From tag mdp : " + tagsParams[1]);
-				Log.i(TAG, "From tag ip : " + tagsParams[2]);
-				Log.i(TAG, "From tag ssid : " + tagsParams[3]);
+				ConfigParcelable c = new ConfigParcelable(tagsParams[0],tagsParams[1],tagsParams[2],tagsParams[3]);
+				Intent i = new Intent(this, DeviceConfigurationActivity.class);
+				i.putExtra(c);
 			}else{
 				Log.i(TAG, "Wrong tag");
 			}
