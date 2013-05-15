@@ -49,4 +49,11 @@
     <!-- NewItemActivity -->
     <string name="new_item_actionbar_title">Nouvel élément</string>
 
+    <!-- Configuration Preferences -->
+    <string name="category_wireless">Wifi</string>
+    <string name="category_jade">Jade</string>
+    <string name="preference_ip_title">Adresse ip</string>
+    <string name="preference_ip_summary">Adresse ip de la machine executant le mainContainer JADE</string>
+    <string name="preference_ip_dialog_title">Adresse ip</string>
+
 </resources>
