@@ -10,7 +10,9 @@ import android.nfc.Tag;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
 import fr.utc.nf28.moka.ui.ConfigurationFragment;
+import fr.utc.nf28.moka.util.CroutonUtils;
 import fr.utc.nf28.moka.util.LogUtils;
 import fr.utc.nf28.moka.util.NfcUtils;
 
@@ -69,6 +71,9 @@ public class ManualConfigurationActivity extends Activity {
 				@Override
 				public void onClick(View view) {
 					enableNfcDiscovering();
+					Crouton.makeText(ManualConfigurationActivity.this
+							, getResources().getString(R.string.touch_a_tag)
+							, CroutonUtils.INFO_MOKA_STYLE).show();
 				}
 			});
 		}

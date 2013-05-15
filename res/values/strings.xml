@@ -70,5 +70,6 @@
     <!-- Manual Configuration Activity -->
     <string name="button_write">Ecrire TAG</string>
     <string name="button_connect">Connection</string>
+    <string name="touch_a_tag">Touch a tag</string>
 
 </resources>
