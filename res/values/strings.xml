@@ -67,4 +67,8 @@
     <string name="preference_pwd_summary">Mot de passe du réseau WiFi</string>
     <string name="preference_pwd_dialog_title">Password WiFi</string>
 
+    <!-- Manual Configuration Activity -->
+    <string name="button_write">Ecrire TAG</string>
+    <string name="button_connect">Connection</string>
+
 </resources>
