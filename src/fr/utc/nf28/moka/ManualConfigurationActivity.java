@@ -8,7 +8,7 @@ public class ManualConfigurationActivity extends Activity {
 	/**
 	 * Tag for log cat
 	 */
-	private static  final String TAG = LogUtils.makeLogTag(ManualConfigurationActivity.class);
+	private static final String TAG = LogUtils.makeLogTag(ManualConfigurationActivity.class);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
