@@ -52,8 +52,17 @@
     <!-- Configuration Preferences -->
     <string name="category_wireless">Wifi</string>
     <string name="category_jade">Jade</string>
-    <string name="preference_ip_title">Adresse ip</string>
-    <string name="preference_ip_summary">Adresse ip de la machine executant le mainContainer JADE</string>
-    <string name="preference_ip_dialog_title">Adresse ip</string>
+    <string name="preference_ip_title">Adresse IP</string>
+    <string name="preference_ip_summary">IP de la machine executant le mainContainer JADE</string>
+    <string name="preference_ip_dialog_title">Adresse IP</string>
+    <string name="preference_port_title">Port</string>
+    <string name="preference_port_summary">Port sur lequel tourne le mainContainer JADE</string>
+    <string name="preference_port_dialog_title">Port de JADE</string>
+    <string name="preference_ssid_title">SSID</string>
+    <string name="preference_ssid_summary">Identifiant du réseau WiFi</string>
+    <string name="preference_ssid_dialog_title">SSID</string>
+    <string name="preference_pwd_title">Password</string>
+    <string name="preference_pwd_summary">Mot de passe du réseau WiFi</string>
+    <string name="preference_pwd_dialog_title">Password WiFi</string>
 
 </resources>
