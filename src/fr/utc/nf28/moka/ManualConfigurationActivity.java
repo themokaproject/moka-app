@@ -6,11 +6,15 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.nfc.NfcAdapter;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import fr.utc.nf28.moka.ui.ConfigurationFragment;
 import fr.utc.nf28.moka.util.LogUtils;
+import fr.utc.nf28.moka.util.NfcUtils;
+
+import java.io.UnsupportedEncodingException;
 
 public class ManualConfigurationActivity extends Activity {
 	/**
@@ -30,6 +34,7 @@ public class ManualConfigurationActivity extends Activity {
 	 * use to available nfc
 	 */
 	private NfcAdapter mNfcAdapter;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +97,19 @@ public class ManualConfigurationActivity extends Activity {
 	protected void onPause() {
 		super.onPause();
 		disableNfcDiscovering();
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+		if (intent.hasExtra(NfcAdapter.EXTRA_TAG)) {
+			try {
+				NfcUtils.writeMokaTag((Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG),
+						"http://moka.fr/c/", false);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }
 
