@@ -55,9 +55,11 @@
     <string name="preference_ip_title">Adresse IP</string>
     <string name="preference_ip_summary">IP de la machine executant le mainContainer JADE</string>
     <string name="preference_ip_dialog_title">Adresse IP</string>
+    <string name="preference_ip_default">192.168.1.50</string>
     <string name="preference_port_title">Port</string>
     <string name="preference_port_summary">Port sur lequel tourne le mainContainer JADE</string>
     <string name="preference_port_dialog_title">Port de JADE</string>
+    <string name="preference_port_default">1099</string>
     <string name="preference_ssid_title">SSID</string>
     <string name="preference_ssid_summary">Identifiant du réseau WiFi</string>
     <string name="preference_ssid_dialog_title">SSID</string>
