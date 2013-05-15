@@ -35,6 +35,10 @@ public class ManualConfigurationActivity extends Activity {
 	 */
 	private NfcAdapter mNfcAdapter;
 
+	/**
+	 * scheme for tag
+	 */
+	private static final String TAG_MOKA_SCHEME = "http://moka.fr/c/?";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -104,8 +108,13 @@ public class ManualConfigurationActivity extends Activity {
 		super.onNewIntent(intent);
 		if (intent.hasExtra(NfcAdapter.EXTRA_TAG)) {
 			try {
-				NfcUtils.writeMokaTag((Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG),
-						"http://moka.fr/c/", false);
+				SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ManualConfigurationActivity.this);
+				NfcUtils.writeMokaTag((Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
+						,TAG_MOKA_SCHEME+sharedPref.getString(KEY_PREF_SSID, "")+","
+								+sharedPref.getString(KEY_PREF_PWD, "")+","
+								+sharedPref.getString(KEY_PREF_IP, "")+","
+								+sharedPref.getString(KEY_PREF_PORT, "")
+						, false);
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
