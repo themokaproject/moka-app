@@ -1,3 +1,5 @@
+package fr.utc.nf28.moka;
+
 import android.app.Activity;
 import android.os.Bundle;
 import fr.utc.nf28.moka.util.LogUtils;
