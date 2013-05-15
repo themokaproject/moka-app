@@ -1,7 +1,5 @@
 package fr.utc.nf28.moka;
 
-import android.*;
-import android.R;
 import android.app.Activity;
 import android.os.Bundle;
 import fr.utc.nf28.moka.ui.ConfigurationFragment;
@@ -16,8 +14,9 @@ public class ManualConfigurationActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.manual_configuration_activity);
 
 		//display fragment as main content
-		getFragmentManager().beginTransaction().replace(R.id.content,new ConfigurationFragment()).commit();
+		getFragmentManager().beginTransaction().add(R.id.settings,new ConfigurationFragment()).commit();
 	}
 }
