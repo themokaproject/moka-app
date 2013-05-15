@@ -1,9 +1,11 @@
 package fr.utc.nf28.moka;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -65,11 +67,45 @@ public class DeviceConfigurationActivity extends Activity {
 		IntentFilter myIntentFilter = new IntentFilter();
 		myIntentFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
 		myIntentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-		//registerReceiver(broadcastReceiver, myIntentFilter); //TODO implement broadcast receiver
+		registerReceiver(MokaWifiStateChangedReceiver, myIntentFilter);
 
 		//enable wifi cause know we can receive broadcast
 		mWifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 		mWifiManager.setWifiEnabled(true);
 	}
+
+	private BroadcastReceiver MokaWifiStateChangedReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			int extraWifiState = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE,
+					WifiManager.WIFI_STATE_UNKNOWN);
+
+			switch (extraWifiState) {
+				case WifiManager.WIFI_STATE_DISABLED:
+					//wifi Disabled
+					break;
+				case WifiManager.WIFI_STATE_DISABLING:
+					//wifi Disabling
+					break;
+				case WifiManager.WIFI_STATE_ENABLED:
+					//wifi Enable
+					//TODO configure Wifi here
+					break;
+				case WifiManager.WIFI_STATE_ENABLING:
+					//wifi Enabling
+					break;
+				case WifiManager.WIFI_STATE_UNKNOWN:
+					break;
+			}
+
+			final String action = intent.getAction();
+			if (action.equals(WifiManager.NETWORK_STATE_CHANGED_ACTION)) {
+				NetworkInfo info = (NetworkInfo) intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
+				if (info.getState().equals(NetworkInfo.State.CONNECTED)) {
+					//TODO start activity caus know, this device is connected
+				}
+			}
+		}
+	};
 
 }
