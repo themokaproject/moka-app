@@ -12,8 +12,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 
-import java.io.UnsupportedEncodingException;
-
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import fr.utc.nf28.moka.ui.ConfigurationFragment;
 import fr.utc.nf28.moka.util.CroutonUtils;
@@ -113,16 +111,12 @@ public class ManualConfigurationActivity extends Activity {
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
 		if (intent.hasExtra(NfcAdapter.EXTRA_TAG)) {
-			try {
-				NfcUtils.writeMokaTag((Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
-						, TAG_MOKA_SCHEME + mPrefs.getString(KEY_PREF_SSID, "") + ","
-						+ mPrefs.getString(KEY_PREF_PWD, "") + ","
-						+ mPrefs.getString(KEY_PREF_IP, "") + ","
-						+ mPrefs.getString(KEY_PREF_PORT, "")
-						, false);
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
+			NfcUtils.writeMokaTag((Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
+					, TAG_MOKA_SCHEME + mPrefs.getString(KEY_PREF_SSID, "") + ","
+					+ mPrefs.getString(KEY_PREF_PWD, "") + ","
+					+ mPrefs.getString(KEY_PREF_IP, "") + ","
+					+ mPrefs.getString(KEY_PREF_PORT, "")
+					, false);
 		}
 	}
 }

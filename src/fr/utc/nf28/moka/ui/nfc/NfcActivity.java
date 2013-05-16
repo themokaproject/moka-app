@@ -12,8 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import java.io.UnsupportedEncodingException;
-
 import fr.utc.nf28.moka.DeviceConfigurationActivity;
 import fr.utc.nf28.moka.MainActivity;
 import fr.utc.nf28.moka.ManualConfigurationActivity;
@@ -105,26 +103,22 @@ public class NfcActivity extends Activity {
 	 * @param tag tag from intent
 	 */
 	private void processTag(Tag tag) {
-		try {
-			final String result = NfcUtils.readTag(tag);
-			final String query = Uri.parse(result).getQuery();
-			Log.i(TAG, "query : " + String.valueOf(query));
-			if (query != null) {
-				final String[] tagsParams = query.split(",");
-				if (tagsParams.length == 4) {
-					final Intent i = new Intent(this, DeviceConfigurationActivity.class);
-					i.putExtra(DeviceConfigurationActivity.EXTRA_SSID, tagsParams[0]);
-					i.putExtra(DeviceConfigurationActivity.EXTRA_PWD, tagsParams[1]);
-					i.putExtra(DeviceConfigurationActivity.EXTRA_IP, tagsParams[2]);
-					i.putExtra(DeviceConfigurationActivity.EXTRA_PORT, tagsParams[3]);
-					startActivity(i);
-					finish();
-				} else {
-					Log.i(TAG, "Wrong tag");
-				}
+		final String result = NfcUtils.readTag(tag);
+		final String query = Uri.parse(result).getQuery();
+		Log.i(TAG, "query : " + String.valueOf(query));
+		if (query != null) {
+			final String[] tagsParams = query.split(",");
+			if (tagsParams.length == 4) {
+				final Intent i = new Intent(this, DeviceConfigurationActivity.class);
+				i.putExtra(DeviceConfigurationActivity.EXTRA_SSID, tagsParams[0]);
+				i.putExtra(DeviceConfigurationActivity.EXTRA_PWD, tagsParams[1]);
+				i.putExtra(DeviceConfigurationActivity.EXTRA_IP, tagsParams[2]);
+				i.putExtra(DeviceConfigurationActivity.EXTRA_PORT, tagsParams[3]);
+				startActivity(i);
+				finish();
+			} else {
+				Log.i(TAG, "Wrong tag");
 			}
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
 		}
 	}
 }

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -18,13 +19,14 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.widget.SearchView;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
-import fr.utc.nf28.moka.TypeAdapter;
-import fr.utc.nf28.moka.MokaApplication;
-import fr.utc.nf28.moka.R;
-import fr.utc.nf28.moka.data.MokaType;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import fr.utc.nf28.moka.MokaApplication;
+import fr.utc.nf28.moka.R;
+import fr.utc.nf28.moka.TypeAdapter;
+import fr.utc.nf28.moka.data.MokaType;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
@@ -192,7 +194,10 @@ public class TypeListFragment extends SherlockFragment implements AdapterView.On
 		if (position == mSpinner.getCount() - 1) {
 			mAdapter.getSectionFilter().filter(null);
 		} else {
-			mAdapter.getSectionFilter().filter(parent.getItemAtPosition(position).toString());
+			final Object selectedObj = parent.getItemAtPosition(position);
+			if (selectedObj != null) {
+				mAdapter.getSectionFilter().filter(selectedObj.toString());
+			}
 		}
 		saveLastTypePreference(position);
 	}

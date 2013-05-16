@@ -30,6 +30,6 @@
         android:layout_marginRight="32dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="@string/type_list_empty_text" />
+        android:text="@string/history_entry_list_empty_text" />
 
 </LinearLayout>

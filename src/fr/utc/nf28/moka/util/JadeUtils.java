@@ -61,7 +61,6 @@ public class JadeUtils {
 	 * @param name       name to identify agent which has to be unique
 	 * @param agentClass class of your agent
 	 * @param params     Array of object which will be retrieved by your agent
-	 * @return true onSuccess, false onError see log for error type
 	 */
 	private static void startAgent(final String name, final String agentClass, final Object[] params) {
 		mRuntime.startAgent(name, agentClass, params,

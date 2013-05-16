@@ -1,6 +1,5 @@
 package fr.utc.nf28.moka.util;
 
-import android.content.Intent;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.Tag;
@@ -16,10 +15,6 @@ import java.nio.charset.Charset;
  * Utils to write and read NFC tag
  */
 public class NfcUtils {
-	/**
-	 * Log TAG
-	 */
-	private static final String TAG = LogUtils.makeLogTag(NfcUtils.class);
 	/**
 	 * result code : tag made read only
 	 */
@@ -48,6 +43,10 @@ public class NfcUtils {
 	 * mime type for moka tag
 	 */
 	public static final String MIME_TYPE_MOKA = "moka";
+	/**
+	 * Log TAG
+	 */
+	private static final String TAG = LogUtils.makeLogTag(NfcUtils.class);
 
 	/**
 	 * Read tag with URI encoded content
@@ -56,10 +55,16 @@ public class NfcUtils {
 	 * @return uri store int the payload[0]
 	 * @throws UnsupportedEncodingException
 	 */
-	public static String readTag(Tag tag) throws UnsupportedEncodingException {
+	public static String readTag(Tag tag) {
 		final Ndef ndef = Ndef.get(tag);
-		final NdefMessage message = ndef.getCachedNdefMessage();
-		return new String(message.getRecords()[0].getPayload());
+		if (ndef != null) {
+			final NdefMessage message = ndef.getCachedNdefMessage();
+			if (message != null) {
+				return new String(message.getRecords()[0].getPayload());
+			}
+			return null;
+		}
+		return null;
 	}
 
 	/**
@@ -69,14 +74,13 @@ public class NfcUtils {
 	 * @param data         data store in your tag
 	 * @param makeReadOnly turn your tag in readOnly mode
 	 * @return result code
-	 * @throws UnsupportedEncodingException
 	 */
-	public static int writeMokaTag(Tag tag, String data, boolean makeReadOnly) throws UnsupportedEncodingException {
-		NdefRecord[] records = {createMokaRecord(data)};
-		NdefMessage message = new NdefMessage(records);
+	public static int writeMokaTag(Tag tag, String data, boolean makeReadOnly) {
+		final NdefRecord[] records = {createMokaRecord(data)};
+		final NdefMessage message = new NdefMessage(records);
 		try {
 			// check if tag is already NDEF formatted
-			Ndef ndef = Ndef.get(tag);
+			final Ndef ndef = Ndef.get(tag);
 			if (ndef != null) {
 				ndef.connect();
 				if (!ndef.isWritable()) {
@@ -86,7 +90,7 @@ public class NfcUtils {
 				}
 
 				//calculate our data size
-				int size = message.toByteArray().length;
+				final int size = message.toByteArray().length;
 
 				//check if there is enough place
 				if (ndef.getMaxSize() < size) {
@@ -105,12 +109,10 @@ public class NfcUtils {
 				Log.i(TAG, "write tag succeeded");
 				ndef.close();
 				return TAG_WRITTEN_SUCCESS;
-
-
 				//tag isn't NDEF formatted
 			} else {
 				//try to format it
-				NdefFormatable format = NdefFormatable.get(tag);
+				final NdefFormatable format = NdefFormatable.get(tag);
 				if (format != null) {
 					try {
 						format.connect();
@@ -140,10 +142,10 @@ public class NfcUtils {
 	 * @return formatted NdefRecord
 	 * @throws UnsupportedEncodingException
 	 */
-	private static NdefRecord createMokaRecord(String data) throws UnsupportedEncodingException {
-		byte[] uriBytes = data.getBytes(Charset.forName("UTF-8"));
-		int textLength = uriBytes.length;
-		byte[] payload = new byte[1 + textLength];
+	private static NdefRecord createMokaRecord(String data) {
+		final byte[] uriBytes = data.getBytes(Charset.forName("UTF-8"));
+		final int textLength = uriBytes.length;
+		final byte[] payload = new byte[1 + textLength];
 
 		System.arraycopy(uriBytes, 0, payload, 1, textLength);
 
@@ -151,6 +153,5 @@ public class NfcUtils {
 				NdefRecord.RTD_URI,
 				new byte[0],
 				payload);
-
 	}
 }
