@@ -103,7 +103,8 @@ public class DeviceConfigurationActivity extends Activity {
 				case WifiManager.WIFI_STATE_ENABLED:
 					//wifi Enable
 					Log.i(TAG, "WIFI_STATE_ENABLED");
-					configureWifi();
+					//TODO remove after dev-period. Choose WPA2 or WEP
+					configureWifiWPA2();
 					break;
 				case WifiManager.WIFI_STATE_ENABLING:
 					//wifi Enabling
@@ -127,9 +128,9 @@ public class DeviceConfigurationActivity extends Activity {
 	};
 
 	/**
-	 * use to configure wireless connection from code
+	 * use to configure wireless WPA2 connection from code
 	 */
-	private void configureWifi() {
+	private void configureWifiWPA2() {
 		Log.i(TAG, "configureWifi");
 		WifiConfiguration mWifiConfig = new WifiConfiguration();
 		mWifiConfig.SSID = "\"" + mSSID + "\"";
@@ -145,6 +146,30 @@ public class DeviceConfigurationActivity extends Activity {
 		mWifiConfig.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
 		mWifiConfig.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
 		mWifiConfig.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
+		int netId = mWifiManager.addNetwork(mWifiConfig);
+		Log.i(TAG, "addNetWork return code : " + String.valueOf(netId));
+		boolean b = mWifiManager.enableNetwork(netId, true);
+		Log.i(TAG, "enableNetwork return code : " + String.valueOf(b));
+
+	}
+
+	/**
+	 * use to configure wireless WPA2 connection from code
+	 */
+	private void configureWifiWEP() {
+		Log.i(TAG, "configureWifi");
+		WifiConfiguration mWifiConfig = new WifiConfiguration();
+		mWifiConfig.SSID = "\"" + mSSID + "\"";
+		mWifiConfig.priority = 40;
+		mWifiConfig.status = WifiConfiguration.Status.ENABLED;
+		mWifiConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+		mWifiConfig.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
+		mWifiConfig.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
+		mWifiConfig.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.SHARED);
+		mWifiConfig.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
+		mWifiConfig.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
+		mWifiConfig.wepKeys[0]= "\"" + mPWD + "\"";
+		mWifiConfig.wepTxKeyIndex = 0;
 		int netId = mWifiManager.addNetwork(mWifiConfig);
 		Log.i(TAG, "addNetWork return code : " + String.valueOf(netId));
 		boolean b = mWifiManager.enableNetwork(netId, true);
