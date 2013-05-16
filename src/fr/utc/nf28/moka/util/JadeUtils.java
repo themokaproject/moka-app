@@ -1,26 +1,24 @@
 package fr.utc.nf28.moka.util;
 
 import android.util.Log;
-import jade.android.MicroRuntimeService;
-import jade.android.RuntimeCallback;
 
 import java.util.UUID;
+
+import jade.android.MicroRuntimeService;
+import jade.android.RuntimeCallback;
 
 /**
  * all utils for managing jade runtime and agents life cycle
  */
 public class JadeUtils {
-
-	/**
-	 * Log TAG
-	 */
-	private static final String TAG = LogUtils.makeLogTag(JadeUtils.class);
-
 	/**
 	 * Default port
 	 */
 	public static final int DEFAULT_PORT = 1099;
-
+	/**
+	 * Log TAG
+	 */
+	private static final String TAG = LogUtils.makeLogTag(JadeUtils.class);
 	/**
 	 * runtime use for jade
 	 */
