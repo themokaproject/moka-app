@@ -2,20 +2,30 @@ package fr.utc.nf28.moka;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.UUID;
+
 import fr.utc.nf28.moka.util.LogUtils;
+import jade.android.MicroRuntimeService;
+import jade.android.MicroRuntimeServiceBinder;
+import jade.android.RuntimeCallback;
+import jade.core.Profile;
+import jade.util.leap.Properties;
 
 public class DeviceConfigurationActivity extends Activity {
 
@@ -70,6 +80,13 @@ public class DeviceConfigurationActivity extends Activity {
 	private CheckBox mCheckContainer;
 	private CheckBox mCheckAgent;
 
+	/**
+	 * JADE
+	 */
+	private MicroRuntimeServiceBinder mMicroRuntimeServiceBinder;
+	private Properties mAgentContainerProperties;
+	private static final String ANDROID_AGENT_NICKNAME = "AndroidAgent_" + UUID.randomUUID().toString();
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -93,6 +110,9 @@ public class DeviceConfigurationActivity extends Activity {
 		mCheckIp = (CheckBox) findViewById(R.id.checkOptenirIp);
 		mCheckContainer = (CheckBox) findViewById(R.id.checkContainer);
 		mCheckAgent = (CheckBox) findViewById(R.id.checkAgent);
+
+		mAgentContainerProperties = new Properties();
+		mAgentContainerProperties.setProperty(Profile.JVM, Profile.ANDROID);
 
 		Log.i(TAG, "activity start with ssid = " + mSSID + " and pwd = " + mPWD);
 		enableWifi();
@@ -159,6 +179,7 @@ public class DeviceConfigurationActivity extends Activity {
 					mProgressContainer.setVisibility(View.VISIBLE);
 					Log.i(TAG, "NetworkInfo.State.CONNECTED");
 					//TODO start JADE container
+					startJadePlatform(mMainContainerIp,Integer.valueOf(mMainContainerPort));
 				} else {
 					Log.i(TAG, info.getState().toString());
 				}
@@ -225,5 +246,92 @@ public class DeviceConfigurationActivity extends Activity {
 	protected void onPause() {
 		super.onPause();
 		unregisterReceiver(MokaWifiStateChangedReceiver);
+	}
+
+	/**
+	 * Start agent plateform
+	 *
+	 * @param host adress ip of mainContainer Machine
+	 * @param port port to reach mainContainer Machine
+	 */
+	public void startJadePlatform(final String host, final int port) {
+		Log.i(TAG, "start jade platform");
+		mAgentContainerProperties.setProperty(Profile.MAIN_HOST, host);
+		mAgentContainerProperties.setProperty(Profile.MAIN_PORT, String.valueOf(port));
+		bindMicroRuntimeService();
+	}
+
+	/**
+	 * JadeAndroid good practices for jade runtime
+	 */
+	private void bindMicroRuntimeService() {
+		Log.i(TAG, "bind micro runtime");
+		ServiceConnection serviceConnection = new ServiceConnection() {
+			public void onServiceConnected(ComponentName className, IBinder service) {
+				// Bind successful
+				Log.i(TAG, "bind micro runtime success");
+				mMicroRuntimeServiceBinder = (MicroRuntimeServiceBinder) service;
+				startAgentContainer();
+			}
+
+			public void onServiceDisconnected(ComponentName className) {
+				// Bind unsuccessful
+				Log.i(TAG, "bind micro runtime fail");
+				mMicroRuntimeServiceBinder = null;
+			}
+		};
+
+		bindService(new Intent(getApplicationContext(), MicroRuntimeService.class),
+				serviceConnection,
+				Context.BIND_AUTO_CREATE);
+	}
+
+
+	/**
+	 * start JADE Agent container
+	 */
+	private void startAgentContainer() {
+		Log.i(TAG, "start agent container");
+		mMicroRuntimeServiceBinder.startAgentContainer(mAgentContainerProperties,
+				new RuntimeCallback<Void>() {
+					@Override
+					public void onSuccess(Void thisIsNull) {
+						Log.i(TAG, "start agent container success");
+						// Split container successfully started
+						//TODO implement an Agent class
+						//startAgent(ANDROID_AGENT_NICKNAME, AndroidAgent.class.getName(), null);
+					}
+
+					@Override
+					public void onFailure(Throwable throwable) {
+						Log.i(TAG, "start agent container fail");
+						// Split container startup error
+					}
+				});
+	}
+
+	/**
+	 * start a JADE Agent
+	 *
+	 * @param nickName  agent name, must be unique
+	 * @param className agent class
+	 * @param params    params which can be retrieved by the agent in setup()
+	 */
+	private void startAgent(final String nickName, final String className, Object[] params) {
+		Log.i(TAG, "start agent " + nickName);
+		mMicroRuntimeServiceBinder.startAgent(nickName, className, params,
+				new RuntimeCallback<Void>() {
+					@Override
+					public void onSuccess(Void aVoid) {
+						//Agent successfully started
+						Log.i(TAG, "start agent " + nickName + " success");
+					}
+
+					@Override
+					public void onFailure(Throwable throwable) {
+						//Agent startup error
+						Log.e(TAG, "start agent " + nickName + " fail", throwable);
+					}
+				});
 	}
 }
