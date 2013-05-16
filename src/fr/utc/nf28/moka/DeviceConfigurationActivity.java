@@ -150,6 +150,7 @@ public class DeviceConfigurationActivity extends Activity {
 					mCheckIp.setVisibility(View.VISIBLE);
 					mProgressContainer.setVisibility(View.VISIBLE);
 					Log.i(TAG, "NetworkInfo.State.CONNECTED");
+					//TODO start JADE container
 				} else {
 					Log.i(TAG, info.getState().toString());
 				}
