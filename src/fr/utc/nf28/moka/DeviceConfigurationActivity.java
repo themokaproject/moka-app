@@ -11,6 +11,8 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import fr.utc.nf28.moka.util.LogUtils;
@@ -53,6 +55,14 @@ public class DeviceConfigurationActivity extends Activity {
 	/**
 	 * layout component
 	 */
+	private ProgressBar mProgressConnexion;
+	private ProgressBar mProgressIp;
+	private ProgressBar mProgressContainer;
+	private ProgressBar mProgressAgent;
+	private CheckBox mCheckConnexion;
+	private CheckBox mCheckIp;
+	private CheckBox mCheckContainer;
+	private CheckBox mCheckAgent;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,15 +75,27 @@ public class DeviceConfigurationActivity extends Activity {
 			mSSID = i.getStringExtra(EXTRA_SSID);
 			mPWD = i.getStringExtra(EXTRA_PWD);
 		}
+
+		//get layout element
+		mProgressConnexion = (ProgressBar) findViewById(R.id.progressConnexion);
+		mProgressIp = (ProgressBar) findViewById(R.id.progressOptenirIp);
+		mProgressContainer = (ProgressBar) findViewById(R.id.progressContainer);
+		mProgressAgent = (ProgressBar) findViewById(R.id.progressAgent);
+		mCheckConnexion = (CheckBox) findViewById(R.id.checkConnexion);
+		mCheckIp = (CheckBox) findViewById(R.id.checkOptenirIp);
+		mCheckContainer = (CheckBox) findViewById(R.id.checkContainer);
+		mCheckAgent = (CheckBox) findViewById(R.id.checkAgent);
+
 		Log.i(TAG, "activity start with ssid = " + mSSID + " and pwd = " + mPWD);
 		enableWifi();
-
 	}
 
 	/**
 	 * enable wifi if not and register to wifi and network lister
 	 */
 	private void enableWifi() {
+		mProgressConnexion.setVisibility(View.VISIBLE);
+
 		//Register receiver
 		IntentFilter myIntentFilter = new IntentFilter();
 		myIntentFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
@@ -106,6 +128,9 @@ public class DeviceConfigurationActivity extends Activity {
 				case WifiManager.WIFI_STATE_ENABLED:
 					//wifi Enable
 					Log.i(TAG, "WIFI_STATE_ENABLED");
+					mProgressConnexion.setVisibility(View.INVISIBLE);
+					mCheckConnexion.setVisibility(View.VISIBLE);
+					mProgressIp.setVisibility(View.VISIBLE);
 					//TODO remove after dev-period. Choose WPA2 or WEP
 					configureWifiWPA2();
 					break;
@@ -121,8 +146,10 @@ public class DeviceConfigurationActivity extends Activity {
 			if (action.equals(WifiManager.NETWORK_STATE_CHANGED_ACTION)) {
 				NetworkInfo info = (NetworkInfo) intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
 				if (info.getState().equals(NetworkInfo.State.CONNECTED)) {
+					mProgressIp.setVisibility(View.INVISIBLE);
+					mCheckIp.setVisibility(View.VISIBLE);
+					mProgressContainer.setVisibility(View.VISIBLE);
 					Log.i(TAG, "NetworkInfo.State.CONNECTED");
-					launchMainActivity();
 				} else {
 					Log.i(TAG, info.getState().toString());
 				}
@@ -171,7 +198,7 @@ public class DeviceConfigurationActivity extends Activity {
 		mWifiConfig.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.SHARED);
 		mWifiConfig.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
 		mWifiConfig.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
-		mWifiConfig.wepKeys[0]= "\"" + mPWD + "\"";
+		mWifiConfig.wepKeys[0] = "\"" + mPWD + "\"";
 		mWifiConfig.wepTxKeyIndex = 0;
 		int netId = mWifiManager.addNetwork(mWifiConfig);
 		Log.i(TAG, "addNetWork return code : " + String.valueOf(netId));
