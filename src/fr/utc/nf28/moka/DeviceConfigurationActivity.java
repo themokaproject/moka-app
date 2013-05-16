@@ -271,6 +271,9 @@ public class DeviceConfigurationActivity extends Activity {
 				// Bind successful
 				Log.i(TAG, "bind micro runtime success");
 				mMicroRuntimeServiceBinder = (MicroRuntimeServiceBinder) service;
+				mProgressContainer.setVisibility(View.INVISIBLE);
+				mCheckContainer.setVisibility(View.VISIBLE);
+				mProgressAgent.setVisibility(View.VISIBLE);
 				startAgentContainer();
 			}
 
