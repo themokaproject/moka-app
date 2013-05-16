@@ -9,10 +9,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.ui.EditItemFragment;
 import fr.utc.nf28.moka.ui.HistoryEntryListFragment;
@@ -132,7 +134,7 @@ public class ItemDetailActivity extends SherlockFragmentActivity implements Acti
 				case 0:
 					return new EditItemFragment(mSelectedItem);
 				default:
-					return new HistoryEntryListFragment();
+					return new HistoryEntryListFragment(mSelectedItem);
 			}
 		}
 

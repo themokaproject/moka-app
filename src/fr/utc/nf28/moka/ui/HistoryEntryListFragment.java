@@ -4,34 +4,46 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
 import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import fr.utc.nf28.moka.HistoryItemAdapter;
-import fr.utc.nf28.moka.R;
-import fr.utc.nf28.moka.data.HistoryEntry;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.utc.nf28.moka.HistoryItemAdapter;
+import fr.utc.nf28.moka.MokaRestService;
+import fr.utc.nf28.moka.R;
+import fr.utc.nf28.moka.data.HistoryEntry;
+import fr.utc.nf28.moka.data.MokaItem;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class HistoryEntryListFragment extends SherlockFragment {
+	private static final String API_URL = "http://thomaskeunebroek.fr/moka";
 	private static final String TAG = makeLogTag(HistoryEntryListFragment.class);
+	private final MokaItem mSelectedItem;
 	private HistoryItemAdapter mAdapter;
 	private ListView mListView;
 	private ProgressBar mProgressBar;
-	private MenuItem mRefreshMenuItem;
 
-	public HistoryEntryListFragment() {
+	public HistoryEntryListFragment(MokaItem selectedItem) {
+		mSelectedItem = selectedItem;
+	}
+
+	public static HistoryEntryListFragment newInstance(MokaItem selectedItem) {
+		return new HistoryEntryListFragment(selectedItem);
 	}
 
 	// Fragment lifecycle management
@@ -56,31 +68,27 @@ public class HistoryEntryListFragment extends SherlockFragment {
 
 		// Launch the background task
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			new LoadItemHistoryTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+			//new LoadItemHistoryTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 		} else {
-			new LoadItemHistoryTask(this).execute();
+			//new LoadItemHistoryTask(this).execute();
 		}
+
+		final RestAdapter restAdapter = new RestAdapter.Builder().setServer(API_URL).setDebug(true).build();
+		final MokaRestService mokaRestService = restAdapter.create(MokaRestService.class);
+		mokaRestService.historyEntries(mSelectedItem.getId(), new Callback<List<HistoryEntry>>() {
+			@Override
+			public void success(List<HistoryEntry> historyEntries, Response response) {
+				Log.d(TAG, "success");
+				mAdapter.updateHistoryItems(historyEntries);
+			}
+
+			@Override
+			public void failure(RetrofitError retrofitError) {
+				Log.d(TAG, "failure === " + retrofitError.toString());
+			}
+		});
 
 		return rootView;
-	}
-
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.fragment_history_item_list, menu);
-
-		mRefreshMenuItem = menu.findItem(R.id.menu_refresh);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case R.id.menu_refresh:
-				// Launch the background task
-				new LoadItemHistoryTask(this).execute();
-				return true;
-			default:
-				return super.onOptionsItemSelected(item);
-		}
 	}
 
 	private void handleNetworkError() {
@@ -102,9 +110,6 @@ public class HistoryEntryListFragment extends SherlockFragment {
 
 			final HistoryEntryListFragment ui = mUiFragment.get();
 			if (ui != null) {
-				if (ui.mRefreshMenuItem != null) {
-					ui.mRefreshMenuItem.setActionView(R.layout.progressbar);
-				}
 				ui.mListView.getEmptyView().setVisibility(View.GONE);
 				ui.mProgressBar.setVisibility(View.VISIBLE);
 			}
@@ -115,7 +120,7 @@ public class HistoryEntryListFragment extends SherlockFragment {
 			final List<HistoryEntry> historyEntries = new ArrayList<HistoryEntry>(10);
 
 			for (int i = 0; i < 10; i++) {
-				historyEntries.add(new HistoryEntry("history " + String.valueOf(10 - i)));
+				//historyEntries.add(new HistoryEntry("history " + String.valueOf(10 - i)));
 			}
 
 			SystemClock.sleep(5000);
@@ -134,9 +139,6 @@ public class HistoryEntryListFragment extends SherlockFragment {
 					ui.mAdapter.updateHistoryItems(historyEntries);
 				}
 				ui.mListView.getEmptyView().setVisibility(View.VISIBLE);
-				if (ui.mRefreshMenuItem != null && ui.mRefreshMenuItem.getActionView() != null) {
-					ui.mRefreshMenuItem.setActionView(null);
-				}
 				ui.mProgressBar.setVisibility(View.GONE);
 			}
 		}
