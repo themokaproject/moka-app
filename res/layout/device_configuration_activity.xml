@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="false"
         android:gravity="center"
@@ -15,9 +15,9 @@
 
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/ssid"
+            android:id="@+id/connexion"
             android:layout_centerInParent="true"
             android:gravity="center"
             android:layout_alignParentEnd="false"
@@ -26,79 +26,155 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="New Text"
-                android:id="@+id/textSSID"
-                android:layout_marginRight="50dp" />
+                android:id="@+id/textConnexion"
+                android:layout_marginRight="50dp"
+                android:gravity="center"/>
 
-            <ProgressBar
+            <FrameLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/progressBar" />
+                android:layout_height="fill_parent"
+                android:layout_gravity="center">
+
+                <ProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/progressConnexion"
+                    android:layout_gravity="center"
+                    android:visibility="invisible"/>
+
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/checkConnexion"
+                    android:layout_gravity="center"
+                    android:checked="true"
+                    android:clickable="false"
+                    android:visibility="invisible"/>
+            </FrameLayout>
+
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_centerInParent="true"
-            android:id="@+id/pwd"
+            android:id="@+id/optenirIp"
             android:layout_marginTop="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="New Text"
-                android:id="@+id/textPWD"
-                android:layout_marginRight="50dp" />
+                android:id="@+id/textOptenirIp"
+                android:layout_marginRight="50dp"
+                android:gravity="center"/>
 
-            <ProgressBar
+            <FrameLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/progressBar1" />
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:id="@+id/frameLayout">
+
+                <ProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/progressOptenirIp"
+                    android:layout_gravity="center"
+                    android:visibility="invisible"/>
+
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/checkOptenirIp"
+                    android:layout_gravity="center"
+                    android:checked="true"
+                    android:visibility="invisible"/>
+            </FrameLayout>
+
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:gravity="center"
-            android:id="@+id/ip"
+            android:id="@+id/container"
             android:layout_marginTop="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="New Text"
-                android:id="@+id/textIP"
-                android:layout_marginRight="50dp" />
+                android:id="@+id/textContainer"
+                android:layout_marginRight="50dp"
+                android:gravity="center"/>
 
-            <ProgressBar
+            <FrameLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/progressBar2" />
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:id="@+id/frameLayout2">
+
+                <ProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/progressContainer"
+                    android:layout_gravity="center"
+                    android:visibility="invisible"/>
+
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/checkContainer"
+                    android:layout_gravity="center"
+                    android:checked="true"
+                    android:visibility="invisible"/>
+            </FrameLayout>
+
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:id="@+id/port">
+            android:id="@+id/agent">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="New Text"
-                android:id="@+id/textPort"
-                android:layout_marginRight="50dp" />
+                android:id="@+id/textAgent"
+                android:layout_marginRight="50dp"
+                android:gravity="center"/>
 
-            <ProgressBar
+            <FrameLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/progressBar3" />
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:id="@+id/frameLayout3">
+
+                <ProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/progressAgent"
+                    android:layout_gravity="center"
+                    android:visibility="invisible"/>
+
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/checkAgent"
+                    android:layout_gravity="center"
+                    android:checked="true"
+                    android:visibility="invisible"/>
+            </FrameLayout>
+
         </LinearLayout>
     </LinearLayout>
 
