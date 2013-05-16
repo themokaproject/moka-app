@@ -53,7 +53,7 @@
     <string name="category_wireless">Wifi</string>
     <string name="category_jade">Jade</string>
     <string name="preference_ip_title">Adresse IP</string>
-    <string name="preference_ip_summary">IP de la machine executant le mainContainer JADE</string>
+    <string name="preference_ip_summary">IP de la machine exécutant le mainContainer JADE</string>
     <string name="preference_ip_dialog_title">Adresse IP</string>
     <string name="preference_ip_default">192.168.1.50</string>
     <string name="preference_port_title">Port</string>
@@ -68,8 +68,8 @@
     <string name="preference_pwd_dialog_title">Password WiFi</string>
 
     <!-- Manual Configuration Activity -->
-    <string name="button_write">Ecrire TAG</string>
-    <string name="button_connect">Connection</string>
+    <string name="button_write">Écrire TAG</string>
+    <string name="button_connect">Connexion</string>
     <string name="touch_a_tag">Touch a tag</string>
 
     <!-- Device Configuration Activity -->
