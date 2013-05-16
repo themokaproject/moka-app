@@ -154,7 +154,7 @@ public class DeviceConfigurationActivity extends Activity {
 	}
 
 	/**
-	 * use to configure wireless WPA2 connection from code
+	 * use to configure wireless WEP connection from code
 	 */
 	private void configureWifiWEP() {
 		Log.i(TAG, "configureWifi");
