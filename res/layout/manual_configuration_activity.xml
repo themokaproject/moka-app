@@ -29,12 +29,14 @@
             android:text="@string/button_connect"
             android:id="@+id/connect"
             android:layout_marginLeft="10dp" />
+
     </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_above="@+id/button"
-        android:id="@+id/settings"></LinearLayout>
+        android:id="@+id/settings" />
+
 </RelativeLayout>
