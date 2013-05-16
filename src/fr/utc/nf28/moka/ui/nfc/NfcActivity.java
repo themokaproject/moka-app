@@ -46,7 +46,7 @@ public class NfcActivity extends Activity {
 		});
 
 		mNfcAdapter = NfcAdapter.getDefaultAdapter(getApplicationContext());
-		if (mNfcAdapter == null) {
+		if (mNfcAdapter == null || !mNfcAdapter.isEnabled()) {
 			((TextView) findViewById(R.id.info)).setText(R.string.info_no_nfc_text);
 		}
 	}
