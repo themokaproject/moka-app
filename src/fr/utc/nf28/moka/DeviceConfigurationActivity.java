@@ -100,7 +100,7 @@ public class DeviceConfigurationActivity extends Activity {
 				case WifiManager.WIFI_STATE_ENABLED:
 					//wifi Enable
 					Log.i(TAG, "WIFI_STATE_ENABLED");
-					mProgressConnexion.setVisibility(View.INVISIBLE);
+					mProgressConnexion.setVisibility(View.GONE);
 					mCheckConnexion.setVisibility(View.VISIBLE);
 					mProgressIp.setVisibility(View.VISIBLE);
 					//TODO remove after dev-period. Choose WPA2 or WEP
@@ -119,7 +119,7 @@ public class DeviceConfigurationActivity extends Activity {
 				final NetworkInfo info = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
 				if (info != null) {
 					if (NetworkInfo.State.CONNECTED.equals(info.getState())) {
-						mProgressIp.setVisibility(View.INVISIBLE);
+						mProgressIp.setVisibility(View.GONE);
 						mCheckIp.setVisibility(View.VISIBLE);
 						mProgressContainer.setVisibility(View.VISIBLE);
 						Log.i(TAG, "NetworkInfo.State.CONNECTED");
@@ -298,9 +298,9 @@ public class DeviceConfigurationActivity extends Activity {
 						DeviceConfigurationActivity.this.runOnUiThread(new Runnable() {
 							@Override
 							public void run() {
-								mProgressContainer.setVisibility(View.INVISIBLE);
-								mCheckContainer.setVisibility(View.VISIBLE);
-								mProgressAgent.setVisibility(View.VISIBLE);
+								mProgressContainer.setVisibility(View.GONE);
+								mCheckContainer.setVisibility(View.GONE);
+								mProgressAgent.setVisibility(View.GONE);
 							}
 						});
 						startAgent(ANDROID_AGENT_NICKNAME, AndroidAgent.class.getName(), null);
@@ -333,8 +333,8 @@ public class DeviceConfigurationActivity extends Activity {
 						DeviceConfigurationActivity.this.runOnUiThread(new Runnable() {
 							@Override
 							public void run() {
-								mProgressAgent.setVisibility(View.INVISIBLE);
-								mCheckAgent.setVisibility(View.VISIBLE);
+								mProgressAgent.setVisibility(View.GONE);
+								mCheckAgent.setVisibility(View.GONE);
 							}
 						});
 						//launchMainActivity();
