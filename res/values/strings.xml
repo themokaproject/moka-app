@@ -72,4 +72,11 @@
     <string name="button_connect">Connection</string>
     <string name="touch_a_tag">Touch a tag</string>
 
+    <!-- Device Configuration Activity -->
+    <string name="connexion">Connexion au réseau</string>
+    <string name="optenir">Récupération d\' une adresse IP</string>
+    <string name="container">Connexion au mainContainer JADE</string>
+    <string name="agent">Lancement de l\'agent android JADE</string>
+
 </resources>
+

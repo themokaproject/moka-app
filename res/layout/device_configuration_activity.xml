@@ -2,7 +2,8 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <LinearLayout
         android:orientation="vertical"
@@ -10,48 +11,59 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="false"
         android:gravity="center"
-        android:layout_centerInParent="true"
-        android:id="@+id/all">
+        android:id="@+id/all"
+        android:layout_alignParentStart="false"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:contentDescription="@string/logo_description"
+            android:src="@drawable/logo"
+            android:layout_marginBottom="20dp"/>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/connexion"
-            android:layout_centerInParent="true"
-            android:gravity="center"
+            android:gravity="center|left"
             android:layout_alignParentEnd="false"
-            android:layout_alignParentTop="false"
-            android:layout_alignParentStart="false">
+            android:layout_alignParentStart="false"
+            android:layout_marginLeft="15dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text="@string/connexion"
                 android:id="@+id/textConnexion"
                 android:layout_marginRight="50dp"
                 android:gravity="center"/>
 
             <FrameLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="fill_parent"
-                android:layout_gravity="center">
+                android:layout_gravity="right"
+                >
 
                 <ProgressBar
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:id="@+id/progressConnexion"
-                    android:layout_gravity="center"
-                    android:visibility="invisible"/>
+                    android:layout_gravity="center|right"
+                    android:visibility="invisible"
+                    android:layout_marginRight="15dp"/>
 
                 <CheckBox
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:id="@+id/checkConnexion"
-                    android:layout_gravity="center"
+                    android:layout_gravity="center|right"
                     android:checked="true"
                     android:clickable="false"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible"
+                    android:layout_marginRight="25dp"/>
             </FrameLayout>
 
         </LinearLayout>
@@ -60,39 +72,41 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_centerInParent="true"
+            android:gravity="center|left"
             android:id="@+id/optenirIp"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text="@string/optenir"
                 android:id="@+id/textOptenirIp"
                 android:layout_marginRight="50dp"
                 android:gravity="center"/>
 
             <FrameLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="fill_parent"
-                android:layout_gravity="center"
+                android:layout_gravity="center|right"
                 android:id="@+id/frameLayout">
 
                 <ProgressBar
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:id="@+id/progressOptenirIp"
-                    android:layout_gravity="center"
-                    android:visibility="invisible"/>
+                    android:layout_gravity="center|right"
+                    android:visibility="invisible"
+                    android:layout_marginRight="15dp"/>
 
                 <CheckBox
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:id="@+id/checkOptenirIp"
-                    android:layout_gravity="center"
+                    android:layout_gravity="center|right"
                     android:checked="true"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible"
+                    android:layout_marginRight="25dp"/>
             </FrameLayout>
 
         </LinearLayout>
@@ -101,38 +115,41 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:gravity="center"
+            android:gravity="center|left"
             android:id="@+id/container"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text="@string/container"
                 android:id="@+id/textContainer"
                 android:layout_marginRight="50dp"
                 android:gravity="center"/>
 
             <FrameLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="fill_parent"
-                android:layout_gravity="center"
+                android:layout_gravity="center|left"
                 android:id="@+id/frameLayout2">
 
                 <ProgressBar
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:id="@+id/progressContainer"
-                    android:layout_gravity="center"
-                    android:visibility="invisible"/>
+                    android:layout_gravity="center|right"
+                    android:visibility="invisible"
+                    android:layout_marginRight="15dp"/>
 
                 <CheckBox
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:id="@+id/checkContainer"
-                    android:layout_gravity="center"
+                    android:layout_gravity="center|right"
                     android:checked="true"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible"
+                    android:layout_marginRight="25dp"/>
             </FrameLayout>
 
         </LinearLayout>
@@ -142,37 +159,40 @@
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:id="@+id/agent">
+            android:gravity="center|left"
+            android:id="@+id/agent"
+            android:layout_marginLeft="15dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text="@string/agent"
                 android:id="@+id/textAgent"
                 android:layout_marginRight="50dp"
                 android:gravity="center"/>
 
             <FrameLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="fill_parent"
-                android:layout_gravity="center"
+                android:layout_gravity="center|right"
                 android:id="@+id/frameLayout3">
 
                 <ProgressBar
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:id="@+id/progressAgent"
-                    android:layout_gravity="center"
-                    android:visibility="invisible"/>
+                    android:layout_gravity="center|right"
+                    android:visibility="invisible"
+                    android:layout_marginRight="15dp"/>
 
                 <CheckBox
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:id="@+id/checkAgent"
-                    android:layout_gravity="center"
+                    android:layout_gravity="center|right"
                     android:checked="true"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible"
+                    android:layout_marginRight="25dp"/>
             </FrameLayout>
 
         </LinearLayout>
