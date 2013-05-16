@@ -26,3 +26,6 @@ local.properties
 
 # Windows file system files
 *.db
+
+# Data files
+*.json
