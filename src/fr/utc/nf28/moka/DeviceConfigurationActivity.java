@@ -86,6 +86,7 @@ public class DeviceConfigurationActivity extends Activity {
 	 */
 	private MicroRuntimeServiceBinder mMicroRuntimeServiceBinder;
 	private Properties mAgentContainerProperties;
+	private ServiceConnection mServiceConnection;
 	private static final String ANDROID_AGENT_NICKNAME = "AndroidAgent_" + UUID.randomUUID().toString();
 
 	@Override
@@ -180,7 +181,7 @@ public class DeviceConfigurationActivity extends Activity {
 					mProgressContainer.setVisibility(View.VISIBLE);
 					Log.i(TAG, "NetworkInfo.State.CONNECTED");
 					//TODO start JADE container
-					startJadePlatform(mMainContainerIp,Integer.valueOf(mMainContainerPort));
+					startJadePlatform(mMainContainerIp, Integer.valueOf(mMainContainerPort));
 				} else {
 					Log.i(TAG, info.getState().toString());
 				}
@@ -240,6 +241,7 @@ public class DeviceConfigurationActivity extends Activity {
 
 	private void launchMainActivity() {
 		startActivity(new Intent(DeviceConfigurationActivity.this, MainActivity.class));
+		unbindService(mServiceConnection);
 		finish();
 	}
 
@@ -267,7 +269,7 @@ public class DeviceConfigurationActivity extends Activity {
 	 */
 	private void bindMicroRuntimeService() {
 		Log.i(TAG, "bind micro runtime");
-		ServiceConnection serviceConnection = new ServiceConnection() {
+		mServiceConnection = new ServiceConnection() {
 			public void onServiceConnected(ComponentName className, IBinder service) {
 				// Bind successful
 				Log.i(TAG, "bind micro runtime success");
@@ -286,7 +288,7 @@ public class DeviceConfigurationActivity extends Activity {
 		};
 
 		bindService(new Intent(getApplicationContext(), MicroRuntimeService.class),
-				serviceConnection,
+				mServiceConnection,
 				Context.BIND_AUTO_CREATE);
 	}
 
@@ -328,9 +330,8 @@ public class DeviceConfigurationActivity extends Activity {
 					public void onSuccess(Void aVoid) {
 						//Agent successfully started
 						Log.i(TAG, "start agent " + nickName + " success");
-						mProgressAgent.setVisibility(View.INVISIBLE);
-						mCheckAgent.setVisibility(View.VISIBLE);
-						launchMainActivity();
+						//TODO change activity unbind the service which cause jade platform death
+						//launchMainActivity();
 					}
 
 					@Override
