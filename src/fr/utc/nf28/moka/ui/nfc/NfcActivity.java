@@ -11,20 +11,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import java.io.UnsupportedEncodingException;
+
 import fr.utc.nf28.moka.DeviceConfigurationActivity;
 import fr.utc.nf28.moka.MainActivity;
 import fr.utc.nf28.moka.ManualConfigurationActivity;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.util.NfcUtils;
 
-import java.io.UnsupportedEncodingException;
-
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class NfcActivity extends Activity {
-
 	private static final String TAG = makeLogTag(NfcActivity.class);
-
 	private NfcAdapter mNfcAdapter;
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -42,20 +41,20 @@ public class NfcActivity extends Activity {
 		findViewById(R.id.manuel).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				startActivity(new Intent(NfcActivity.this,ManualConfigurationActivity.class));
+				startActivity(new Intent(NfcActivity.this, ManualConfigurationActivity.class));
 			}
 		});
 
 		mNfcAdapter = NfcAdapter.getDefaultAdapter(getApplicationContext());
-		if(mNfcAdapter == null){
-			((TextView)findViewById(R.id.info)).setText(R.string.info_no_nfc_text);
+		if (mNfcAdapter == null) {
+			((TextView) findViewById(R.id.info)).setText(R.string.info_no_nfc_text);
 		}
 	}
-
 
 	@Override
 	protected void onResume() {
 		super.onResume();
+
 		enableNfcDiscovering();
 		if (getIntent().hasExtra(NfcAdapter.EXTRA_TAG)) {
 			processTag((Tag) getIntent().getParcelableExtra(NfcAdapter.EXTRA_TAG));
@@ -65,12 +64,14 @@ public class NfcActivity extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
+
 		disableNfcDiscovering();
 	}
 
 	@Override
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
+
 		if (intent.hasExtra(NfcAdapter.EXTRA_TAG)) {
 			processTag((Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG));
 		}
@@ -81,10 +82,10 @@ public class NfcActivity extends Activity {
 	 * the activity is displayed
 	 */
 	private void enableNfcDiscovering() {
-		if(mNfcAdapter!=null){
-			PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
+		if (mNfcAdapter != null) {
+			final PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
 					new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-			IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
+			final IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
 			mNfcAdapter.enableForegroundDispatch(this, pendingIntent, new IntentFilter[]{tagDetected}, null);
 		}
 	}
@@ -93,7 +94,7 @@ public class NfcActivity extends Activity {
 	 * restore nfc priority
 	 */
 	private void disableNfcDiscovering() {
-		if(mNfcAdapter!=null){
+		if (mNfcAdapter != null) {
 			mNfcAdapter.disableForegroundDispatch(this);
 		}
 	}
@@ -105,22 +106,23 @@ public class NfcActivity extends Activity {
 	 */
 	private void processTag(Tag tag) {
 		try {
-			String result = NfcUtils.readTag(tag);
-			String query = Uri.parse(result).getQuery();
+			final String result = NfcUtils.readTag(tag);
+			final String query = Uri.parse(result).getQuery();
 			Log.i(TAG, "query : " + String.valueOf(query));
-			String[] tagsParams = query.split(",");
-			if(tagsParams.length == 4){
-				Intent i = new Intent(this, DeviceConfigurationActivity.class);
-				i.putExtra(DeviceConfigurationActivity.EXTRA_SSID,tagsParams[0]);
-				i.putExtra(DeviceConfigurationActivity.EXTRA_PWD,tagsParams[1]);
-				i.putExtra(DeviceConfigurationActivity.EXTRA_IP,tagsParams[2]);
-				i.putExtra(DeviceConfigurationActivity.EXTRA_PORT,tagsParams[3]);
-				startActivity(i);
-				this.finish();
-			}else{
-				Log.i(TAG, "Wrong tag");
+			if (query != null) {
+				final String[] tagsParams = query.split(",");
+				if (tagsParams.length == 4) {
+					final Intent i = new Intent(this, DeviceConfigurationActivity.class);
+					i.putExtra(DeviceConfigurationActivity.EXTRA_SSID, tagsParams[0]);
+					i.putExtra(DeviceConfigurationActivity.EXTRA_PWD, tagsParams[1]);
+					i.putExtra(DeviceConfigurationActivity.EXTRA_IP, tagsParams[2]);
+					i.putExtra(DeviceConfigurationActivity.EXTRA_PORT, tagsParams[3]);
+					startActivity(i);
+					finish();
+				} else {
+					Log.i(TAG, "Wrong tag");
+				}
 			}
-
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}

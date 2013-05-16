@@ -51,40 +51,9 @@ public class DeviceConfigurationActivity extends Activity {
 	private static final String TAG = makeLogTag(DeviceConfigurationActivity.class);
 	private static final String ANDROID_AGENT_NICKNAME = "AndroidAgent_" + UUID.randomUUID().toString();
 	/**
-	 * WifiManager to manage network
-	 */
-	private WifiManager mWifiManager;
-	/**
-	 * wireless configuration from tag in extra
-	 */
-	private String mSSID;
-	private String mPWD;
-	/**
-	 * JADE parameters from tag
-	 */
-	private String mMainContainerIp;
-	private String mMainContainerPort;
-	/**
-	 * layout component
-	 */
-	private ProgressBar mProgressConnexion;
-	private ProgressBar mProgressIp;
-	private ProgressBar mProgressContainer;
-	private ProgressBar mProgressAgent;
-	private CheckBox mCheckConnexion;
-	private CheckBox mCheckIp;
-	private CheckBox mCheckContainer;
-	private CheckBox mCheckAgent;
-	/**
-	 * JADE
-	 */
-	private MicroRuntimeServiceBinder mMicroRuntimeServiceBinder;
-	private Properties mAgentContainerProperties;
-	private ServiceConnection mServiceConnection;
-	/**
 	 * Use to receive broadcast from wifi and network
 	 */
-	private BroadcastReceiver MokaWifiStateChangedReceiver = new BroadcastReceiver() {
+	private final BroadcastReceiver MokaWifiStateChangedReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			final int extraWifiState = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE,
@@ -132,6 +101,37 @@ public class DeviceConfigurationActivity extends Activity {
 			}
 		}
 	};
+	/**
+	 * WifiManager to manage network
+	 */
+	private WifiManager mWifiManager;
+	/**
+	 * wireless configuration from tag in extra
+	 */
+	private String mSSID;
+	private String mPWD;
+	/**
+	 * JADE parameters from tag
+	 */
+	private String mMainContainerIp;
+	private String mMainContainerPort;
+	/**
+	 * layout component
+	 */
+	private ProgressBar mProgressConnexion;
+	private ProgressBar mProgressIp;
+	private ProgressBar mProgressContainer;
+	private ProgressBar mProgressAgent;
+	private CheckBox mCheckConnexion;
+	private CheckBox mCheckIp;
+	private CheckBox mCheckContainer;
+	private CheckBox mCheckAgent;
+	/**
+	 * JADE
+	 */
+	private MicroRuntimeServiceBinder mMicroRuntimeServiceBinder;
+	private Properties mAgentContainerProperties;
+	private ServiceConnection mServiceConnection;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
