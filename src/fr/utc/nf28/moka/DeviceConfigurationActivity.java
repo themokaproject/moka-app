@@ -53,6 +53,12 @@ public class DeviceConfigurationActivity extends Activity {
 	private String mPWD;
 
 	/**
+	 * JADE parameters from tag
+	 */
+	private String mMainContainerIp;
+	private String mMainContainerPort;
+
+	/**
 	 * layout component
 	 */
 	private ProgressBar mProgressConnexion;
@@ -74,6 +80,8 @@ public class DeviceConfigurationActivity extends Activity {
 		if (i != null && i.hasExtra(EXTRA_SSID) && i.hasExtra(EXTRA_PWD) && i.hasExtra(EXTRA_IP) && i.hasExtra(EXTRA_PORT)) {
 			mSSID = i.getStringExtra(EXTRA_SSID);
 			mPWD = i.getStringExtra(EXTRA_PWD);
+			mMainContainerIp = i.getStringExtra(EXTRA_IP);
+			mMainContainerPort = i.getStringExtra(EXTRA_PORT);
 		}
 
 		//get layout element
