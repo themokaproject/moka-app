@@ -70,8 +70,8 @@ public class DeviceConfigurationActivity extends Activity {
 					//wifi Enable
 					Log.i(TAG, "WIFI_STATE_ENABLED");
 					mProgressConnexion.setVisibility(View.GONE);
-					mCheckConnexion.setVisibility(View.GONE);
-					mProgressIp.setVisibility(View.GONE);
+					mCheckConnexion.setVisibility(View.VISIBLE);
+					mProgressIp.setVisibility(View.VISIBLE);
 					//TODO remove after dev-period. Choose WPA2 or WEP
 					configureWifiWPA2();
 					break;
@@ -89,8 +89,8 @@ public class DeviceConfigurationActivity extends Activity {
 				if (info != null) {
 					if (NetworkInfo.State.CONNECTED.equals(info.getState())) {
 						mProgressIp.setVisibility(View.GONE);
-						mCheckIp.setVisibility(View.GONE);
-						mProgressContainer.setVisibility(View.GONE);
+						mCheckIp.setVisibility(View.VISIBLE);
+						mProgressContainer.setVisibility(View.VISIBLE);
 						Log.i(TAG, "NetworkInfo.State.CONNECTED");
 						//TODO start JADE container
 						startJadePlatform(mMainContainerIp, Integer.valueOf(mMainContainerPort));
@@ -167,13 +167,7 @@ public class DeviceConfigurationActivity extends Activity {
 	 * enable wifi if not and register to wifi and network lister
 	 */
 	private void enableWifi() {
-		mProgressConnexion.setVisibility(View.GONE);
-
-		//Register receiver
-		final IntentFilter myIntentFilter = new IntentFilter();
-		myIntentFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
-		myIntentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-		registerReceiver(MokaWifiStateChangedReceiver, myIntentFilter);
+		mProgressConnexion.setVisibility(View.VISIBLE);
 
 		//enable wifi cause know we can receive broadcast
 		mWifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
@@ -246,6 +240,16 @@ public class DeviceConfigurationActivity extends Activity {
 		unregisterReceiver(MokaWifiStateChangedReceiver);
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		//Register receiver
+		final IntentFilter myIntentFilter = new IntentFilter();
+		myIntentFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+		myIntentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+		registerReceiver(MokaWifiStateChangedReceiver, myIntentFilter);
+	}
+
 	/**
 	 * Start agent plateform
 	 *
@@ -299,8 +303,8 @@ public class DeviceConfigurationActivity extends Activity {
 							@Override
 							public void run() {
 								mProgressContainer.setVisibility(View.GONE);
-								mCheckContainer.setVisibility(View.GONE);
-								mProgressAgent.setVisibility(View.GONE);
+								mCheckContainer.setVisibility(View.VISIBLE);
+								mProgressAgent.setVisibility(View.VISIBLE);
 							}
 						});
 						startAgent(ANDROID_AGENT_NICKNAME, AndroidAgent.class.getName(), null);
@@ -334,7 +338,7 @@ public class DeviceConfigurationActivity extends Activity {
 							@Override
 							public void run() {
 								mProgressAgent.setVisibility(View.GONE);
-								mCheckAgent.setVisibility(View.GONE);
+								mCheckAgent.setVisibility(View.VISIBLE);
 							}
 						});
 						//launchMainActivity();
