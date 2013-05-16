@@ -101,8 +101,8 @@ public class DeviceConfigurationActivity extends Activity {
 					//wifi Enable
 					Log.i(TAG, "WIFI_STATE_ENABLED");
 					mProgressConnexion.setVisibility(View.GONE);
-					mCheckConnexion.setVisibility(View.VISIBLE);
-					mProgressIp.setVisibility(View.VISIBLE);
+					mCheckConnexion.setVisibility(View.GONE);
+					mProgressIp.setVisibility(View.GONE);
 					//TODO remove after dev-period. Choose WPA2 or WEP
 					configureWifiWPA2();
 					break;
@@ -120,8 +120,8 @@ public class DeviceConfigurationActivity extends Activity {
 				if (info != null) {
 					if (NetworkInfo.State.CONNECTED.equals(info.getState())) {
 						mProgressIp.setVisibility(View.GONE);
-						mCheckIp.setVisibility(View.VISIBLE);
-						mProgressContainer.setVisibility(View.VISIBLE);
+						mCheckIp.setVisibility(View.GONE);
+						mProgressContainer.setVisibility(View.GONE);
 						Log.i(TAG, "NetworkInfo.State.CONNECTED");
 						//TODO start JADE container
 						startJadePlatform(mMainContainerIp, Integer.valueOf(mMainContainerPort));
@@ -167,7 +167,7 @@ public class DeviceConfigurationActivity extends Activity {
 	 * enable wifi if not and register to wifi and network lister
 	 */
 	private void enableWifi() {
-		mProgressConnexion.setVisibility(View.VISIBLE);
+		mProgressConnexion.setVisibility(View.GONE);
 
 		//Register receiver
 		final IntentFilter myIntentFilter = new IntentFilter();
@@ -179,7 +179,7 @@ public class DeviceConfigurationActivity extends Activity {
 		mWifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 		mWifiManager.setWifiEnabled(true);
 
-		findViewById(R.id.progressConnexion).setVisibility(View.VISIBLE);
+		findViewById(R.id.progressConnexion).setVisibility(View.GONE);
 	}
 
 	/**
