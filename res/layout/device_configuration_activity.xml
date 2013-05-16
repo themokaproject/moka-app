@@ -106,7 +106,8 @@
                     android:layout_gravity="center|right"
                     android:checked="true"
                     android:visibility="invisible"
-                    android:layout_marginRight="25dp"/>
+                    android:layout_marginRight="25dp"
+                    android:clickable="false"/>
             </FrameLayout>
 
         </LinearLayout>
@@ -148,6 +149,7 @@
                     android:id="@+id/checkContainer"
                     android:layout_gravity="center|right"
                     android:checked="true"
+                    android:clickable="false"
                     android:visibility="invisible"
                     android:layout_marginRight="25dp"/>
             </FrameLayout>
@@ -191,6 +193,7 @@
                     android:id="@+id/checkAgent"
                     android:layout_gravity="center|right"
                     android:checked="true"
+                    android:clickable="false"
                     android:visibility="invisible"
                     android:layout_marginRight="25dp"/>
             </FrameLayout>
