@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-
 import fr.utc.nf28.moka.DeviceConfigurationActivity;
 import fr.utc.nf28.moka.MainActivity;
 import fr.utc.nf28.moka.ManualConfigurationActivity;
@@ -43,14 +42,13 @@ public class NfcActivity extends Activity {
 		findViewById(R.id.manuel).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				startActivity(new Intent(NfcActivity.this, ManualConfigurationActivity.class));
+				startActivity(new Intent(NfcActivity.this,ManualConfigurationActivity.class));
 			}
 		});
 
-		if (getPackageManager().hasSystemFeature("android.hardware.nfc")) {
-			((TextView) findViewById(R.id.info)).setText(R.string.info_no_nfc_text);
-		} else {
-			mNfcAdapter = NfcAdapter.getDefaultAdapter(getApplicationContext());
+		mNfcAdapter = NfcAdapter.getDefaultAdapter(getApplicationContext());
+		if(mNfcAdapter == null){
+			((TextView)findViewById(R.id.info)).setText(R.string.info_no_nfc_text);
 		}
 	}
 
@@ -83,7 +81,7 @@ public class NfcActivity extends Activity {
 	 * the activity is displayed
 	 */
 	private void enableNfcDiscovering() {
-		if (mNfcAdapter != null) {
+		if(mNfcAdapter!=null){
 			PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
 					new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
 			IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
@@ -95,7 +93,7 @@ public class NfcActivity extends Activity {
 	 * restore nfc priority
 	 */
 	private void disableNfcDiscovering() {
-		if (mNfcAdapter != null) {
+		if(mNfcAdapter!=null){
 			mNfcAdapter.disableForegroundDispatch(this);
 		}
 	}
@@ -111,15 +109,15 @@ public class NfcActivity extends Activity {
 			String query = Uri.parse(result).getQuery();
 			Log.i(TAG, "query : " + String.valueOf(query));
 			String[] tagsParams = query.split(",");
-			if (tagsParams.length == 4) {
+			if(tagsParams.length == 4){
 				Intent i = new Intent(this, DeviceConfigurationActivity.class);
-				i.putExtra(DeviceConfigurationActivity.EXTRA_SSID, tagsParams[0]);
-				i.putExtra(DeviceConfigurationActivity.EXTRA_PWD, tagsParams[1]);
-				i.putExtra(DeviceConfigurationActivity.EXTRA_IP, tagsParams[2]);
-				i.putExtra(DeviceConfigurationActivity.EXTRA_PORT, tagsParams[3]);
+				i.putExtra(DeviceConfigurationActivity.EXTRA_SSID,tagsParams[0]);
+				i.putExtra(DeviceConfigurationActivity.EXTRA_PWD,tagsParams[1]);
+				i.putExtra(DeviceConfigurationActivity.EXTRA_IP,tagsParams[2]);
+				i.putExtra(DeviceConfigurationActivity.EXTRA_PORT,tagsParams[3]);
 				startActivity(i);
 				this.finish();
-			} else {
+			}else{
 				Log.i(TAG, "Wrong tag");
 			}
 
