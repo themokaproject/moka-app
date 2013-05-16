@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import java.util.UUID;
 
+import fr.utc.nf28.moka.agent.AndroidAgent;
 import fr.utc.nf28.moka.util.LogUtils;
 import jade.android.MicroRuntimeService;
 import jade.android.MicroRuntimeServiceBinder;
@@ -301,8 +302,7 @@ public class DeviceConfigurationActivity extends Activity {
 					public void onSuccess(Void thisIsNull) {
 						Log.i(TAG, "start agent container success");
 						// Split container successfully started
-						//TODO implement an Agent class
-						//startAgent(ANDROID_AGENT_NICKNAME, AndroidAgent.class.getName(), null);
+						startAgent(ANDROID_AGENT_NICKNAME, AndroidAgent.class.getName(), null);
 					}
 
 					@Override
@@ -328,6 +328,9 @@ public class DeviceConfigurationActivity extends Activity {
 					public void onSuccess(Void aVoid) {
 						//Agent successfully started
 						Log.i(TAG, "start agent " + nickName + " success");
+						mProgressAgent.setVisibility(View.INVISIBLE);
+						mCheckAgent.setVisibility(View.VISIBLE);
+						launchMainActivity();
 					}
 
 					@Override
