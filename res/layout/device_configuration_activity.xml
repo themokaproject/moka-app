@@ -2,8 +2,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:orientation="vertical"
@@ -21,7 +20,7 @@
             android:id="@+id/imageView"
             android:contentDescription="@string/logo_description"
             android:src="@drawable/logo"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="20dp" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -39,13 +38,12 @@
                 android:text="@string/connexion"
                 android:id="@+id/textConnexion"
                 android:layout_marginRight="50dp"
-                android:gravity="center"/>
+                android:gravity="center" />
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
-                android:layout_gravity="right"
-                >
+                android:layout_gravity="right">
 
                 <ProgressBar
                     android:layout_width="wrap_content"
@@ -53,7 +51,7 @@
                     android:id="@+id/progressConnexion"
                     android:layout_gravity="center|right"
                     android:visibility="invisible"
-                    android:layout_marginRight="15dp"/>
+                    android:layout_marginRight="15dp" />
 
                 <CheckBox
                     android:layout_width="wrap_content"
@@ -63,7 +61,7 @@
                     android:checked="true"
                     android:clickable="false"
                     android:visibility="invisible"
-                    android:layout_marginRight="25dp"/>
+                    android:layout_marginRight="25dp" />
             </FrameLayout>
 
         </LinearLayout>
@@ -83,7 +81,7 @@
                 android:text="@string/optenir"
                 android:id="@+id/textOptenirIp"
                 android:layout_marginRight="50dp"
-                android:gravity="center"/>
+                android:gravity="center" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -97,7 +95,7 @@
                     android:id="@+id/progressOptenirIp"
                     android:layout_gravity="center|right"
                     android:visibility="invisible"
-                    android:layout_marginRight="15dp"/>
+                    android:layout_marginRight="15dp" />
 
                 <CheckBox
                     android:layout_width="wrap_content"
@@ -107,7 +105,7 @@
                     android:checked="true"
                     android:visibility="invisible"
                     android:layout_marginRight="25dp"
-                    android:clickable="false"/>
+                    android:clickable="false" />
             </FrameLayout>
 
         </LinearLayout>
@@ -127,7 +125,7 @@
                 android:text="@string/container"
                 android:id="@+id/textContainer"
                 android:layout_marginRight="50dp"
-                android:gravity="center"/>
+                android:gravity="center" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -141,7 +139,7 @@
                     android:id="@+id/progressContainer"
                     android:layout_gravity="center|right"
                     android:visibility="invisible"
-                    android:layout_marginRight="15dp"/>
+                    android:layout_marginRight="15dp" />
 
                 <CheckBox
                     android:layout_width="wrap_content"
@@ -151,7 +149,7 @@
                     android:checked="true"
                     android:clickable="false"
                     android:visibility="invisible"
-                    android:layout_marginRight="25dp"/>
+                    android:layout_marginRight="25dp" />
             </FrameLayout>
 
         </LinearLayout>
@@ -171,7 +169,7 @@
                 android:text="@string/agent"
                 android:id="@+id/textAgent"
                 android:layout_marginRight="50dp"
-                android:gravity="center"/>
+                android:gravity="center" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -185,7 +183,7 @@
                     android:id="@+id/progressAgent"
                     android:layout_gravity="center|right"
                     android:visibility="invisible"
-                    android:layout_marginRight="15dp"/>
+                    android:layout_marginRight="15dp" />
 
                 <CheckBox
                     android:layout_width="wrap_content"
@@ -195,7 +193,7 @@
                     android:checked="true"
                     android:clickable="false"
                     android:visibility="invisible"
-                    android:layout_marginRight="25dp"/>
+                    android:layout_marginRight="25dp" />
             </FrameLayout>
 
         </LinearLayout>

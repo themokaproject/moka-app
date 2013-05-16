@@ -301,9 +301,14 @@ public class DeviceConfigurationActivity extends Activity {
 					public void onSuccess(Void thisIsNull) {
 						Log.i(TAG, "start agent container success");
 						// Split container successfully started
-						mProgressContainer.setVisibility(View.INVISIBLE);
-						mCheckContainer.setVisibility(View.VISIBLE);
-						mProgressAgent.setVisibility(View.VISIBLE);
+						DeviceConfigurationActivity.this.runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								mProgressContainer.setVisibility(View.INVISIBLE);
+								mCheckContainer.setVisibility(View.VISIBLE);
+								mProgressAgent.setVisibility(View.VISIBLE);
+							}
+						});
 						startAgent(ANDROID_AGENT_NICKNAME, AndroidAgent.class.getName(), null);
 					}
 
@@ -331,6 +336,13 @@ public class DeviceConfigurationActivity extends Activity {
 						//Agent successfully started
 						Log.i(TAG, "start agent " + nickName + " success");
 						//TODO change activity unbind the service which cause jade platform death
+						DeviceConfigurationActivity.this.runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								mProgressAgent.setVisibility(View.INVISIBLE);
+								mCheckAgent.setVisibility(View.VISIBLE);
+							}
+						});
 						//launchMainActivity();
 					}
 
