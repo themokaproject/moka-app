@@ -10,6 +10,7 @@ import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import fr.utc.nf28.moka.util.LogUtils;
@@ -49,6 +50,10 @@ public class DeviceConfigurationActivity extends Activity {
 	private String mSSID;
 	private String mPWD;
 
+	/**
+	 * layout component
+	 */
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -59,10 +64,6 @@ public class DeviceConfigurationActivity extends Activity {
 		if (i != null && i.hasExtra(EXTRA_SSID) && i.hasExtra(EXTRA_PWD) && i.hasExtra(EXTRA_IP) && i.hasExtra(EXTRA_PORT)) {
 			mSSID = i.getStringExtra(EXTRA_SSID);
 			mPWD = i.getStringExtra(EXTRA_PWD);
-			((TextView) findViewById(R.id.textSSID)).setText(mSSID);
-			((TextView) findViewById(R.id.textPWD)).setText(mPWD);
-			((TextView) findViewById(R.id.textIP)).setText(i.getStringExtra(EXTRA_IP));
-			((TextView) findViewById(R.id.textPort)).setText(i.getStringExtra(EXTRA_PORT));
 		}
 		Log.i(TAG, "activity start with ssid = " + mSSID + " and pwd = " + mPWD);
 		enableWifi();
@@ -82,6 +83,8 @@ public class DeviceConfigurationActivity extends Activity {
 		//enable wifi cause know we can receive broadcast
 		mWifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 		mWifiManager.setWifiEnabled(true);
+
+		findViewById(R.id.progressConnexion).setVisibility(View.VISIBLE);
 	}
 
 	/**
