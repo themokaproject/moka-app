@@ -1,11 +1,14 @@
 package fr.utc.nf28.moka.util;
 
+
 import android.util.Log;
 
 import java.util.UUID;
 
 import jade.android.MicroRuntimeService;
 import jade.android.RuntimeCallback;
+
+import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 /**
  * all utils for managing jade runtime and agents life cycle
@@ -18,7 +21,7 @@ public class JadeUtils {
 	/**
 	 * Log TAG
 	 */
-	private static final String TAG = LogUtils.makeLogTag(JadeUtils.class);
+	private static final String TAG = makeLogTag(JadeUtils.class);
 	/**
 	 * runtime use for jade
 	 */
