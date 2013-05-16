@@ -80,7 +80,7 @@ public class NfcActivity extends Activity {
 	 * the activity is displayed
 	 */
 	private void enableNfcDiscovering() {
-		if (mNfcAdapter != null) {
+		if (mNfcAdapter != null && mNfcAdapter.isEnabled()) {
 			final PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
 					new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
 			final IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
@@ -92,7 +92,7 @@ public class NfcActivity extends Activity {
 	 * restore nfc priority
 	 */
 	private void disableNfcDiscovering() {
-		if (mNfcAdapter != null) {
+		if (mNfcAdapter != null && mNfcAdapter.isEnabled()) {
 			mNfcAdapter.disableForegroundDispatch(this);
 		}
 	}
