@@ -274,9 +274,6 @@ public class DeviceConfigurationActivity extends Activity {
 				// Bind successful
 				Log.i(TAG, "bind micro runtime success");
 				mMicroRuntimeServiceBinder = (MicroRuntimeServiceBinder) service;
-				mProgressContainer.setVisibility(View.INVISIBLE);
-				mCheckContainer.setVisibility(View.VISIBLE);
-				mProgressAgent.setVisibility(View.VISIBLE);
 				startAgentContainer();
 			}
 
@@ -304,6 +301,9 @@ public class DeviceConfigurationActivity extends Activity {
 					public void onSuccess(Void thisIsNull) {
 						Log.i(TAG, "start agent container success");
 						// Split container successfully started
+						mProgressContainer.setVisibility(View.INVISIBLE);
+						mCheckContainer.setVisibility(View.VISIBLE);
+						mProgressAgent.setVisibility(View.VISIBLE);
 						startAgent(ANDROID_AGENT_NICKNAME, AndroidAgent.class.getName(), null);
 					}
 
