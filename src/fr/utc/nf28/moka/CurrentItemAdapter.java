@@ -5,17 +5,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import fr.utc.nf28.moka.data.MokaItem;
-import fr.utc.nf28.moka.util.DateUtils;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.Collections;
 import java.util.List;
 
+import fr.utc.nf28.moka.data.MokaItem;
+import fr.utc.nf28.moka.util.DateUtils;
+
 public class CurrentItemAdapter extends BaseMokaAdapter {
+	private final Context mContext;
 	private List<MokaItem> mCurrentItems = Collections.emptyList();
 
 	public CurrentItemAdapter(Context context) {
 		super(context);
+
+		mContext = context;
 	}
 
 	public void updateCurrentItems(List<MokaItem> currentItems) {
@@ -46,7 +52,7 @@ public class CurrentItemAdapter extends BaseMokaAdapter {
 		final MokaItem item = getItem(position);
 		itemName.setText(item.getTitle());
 		itemCreationDate.setText(DateUtils.getFormattedDate(item.getCreationDate()));
-		itemImage.setImageResource(item.getType().getResId());
+		Picasso.with(mContext).load(item.getType().getResId()).resizeDimen(R.dimen.list_current_item_type_picture_width_height, R.dimen.list_current_item_type_picture_width_height).into(itemImage);
 
 		return convertView;
 	}

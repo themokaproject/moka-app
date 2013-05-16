@@ -30,8 +30,8 @@
 
     <ImageView
         android:id="@+id/item_image"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="@dimen/list_current_item_type_picture_width_height"
+        android:layout_height="@dimen/list_current_item_type_picture_width_height"
         android:scaleType="centerInside"
         android:layout_marginLeft="16dp"
         android:layout_alignParentRight="true"

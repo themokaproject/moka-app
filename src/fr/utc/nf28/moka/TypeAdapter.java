@@ -8,12 +8,15 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersSimpleAdapter;
-import fr.utc.nf28.moka.data.MokaType;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import fr.utc.nf28.moka.data.MokaType;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
@@ -28,6 +31,7 @@ public class TypeAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 		}
 	};
 	private static final String TAG = makeLogTag(TypeAdapter.class);
+	private final Context mContext;
 	private final SparseArray<String> mSectionToPosition;
 	private List<MokaType> mTypes = Collections.emptyList();
 	private List<MokaType> mSavedTypes = Collections.emptyList();
@@ -40,6 +44,7 @@ public class TypeAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 	public TypeAdapter(Context context) {
 		super(context);
 
+		mContext = context;
 		mSectionToPosition = new SparseArray<String>();
 	}
 
@@ -99,7 +104,7 @@ public class TypeAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 		final ImageView itemImage = ViewHolder.get(convertView, R.id.item_image);
 		final MokaType item = getItem(position);
 		itemName.setText(item.getName());
-		itemImage.setImageResource(item.getResId());
+		Picasso.with(mContext).load(item.getResId()).resizeDimen(R.dimen.list_type_picture_width_height, R.dimen.list_type_picture_width_height).into(itemImage);
 
 		return convertView;
 	}
