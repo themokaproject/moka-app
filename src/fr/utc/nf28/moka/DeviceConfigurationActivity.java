@@ -172,8 +172,7 @@ public class DeviceConfigurationActivity extends Activity {
 						mProgressAgent.setVisibility(View.VISIBLE);
 					}
 				});
-				//TODO start agent
-				//startAgent(JadeUtils.ANDROID_AGENT_NICKNAME, AndroidAgent.class.getName(), null);
+				((MokaApplication)getApplication()).startAgent(JadeUtils.ANDROID_AGENT_NICKNAME, AndroidAgent.class.getName(), null);
 			}
 
 			@Override

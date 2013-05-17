@@ -119,7 +119,7 @@ public class MokaApplication extends Application {
 	 * @param className agent class
 	 * @param params    params which can be retrieved by the agent in setup()
 	 */
-	private void startAgent(final String nickName, final String className, Object[] params) {
+	public void startAgent(final String nickName, final String className, Object[] params) {
 		Log.i(TAG, "start agent " + nickName);
 		mMicroRuntimeServiceBinder.startAgent(nickName, className, params,
 				mAgentCallback);
