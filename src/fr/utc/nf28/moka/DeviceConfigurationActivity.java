@@ -275,8 +275,6 @@ public class DeviceConfigurationActivity extends Activity {
 
 	private void launchMainActivity() {
 		startActivity(new Intent(DeviceConfigurationActivity.this, MainActivity.class));
-		//TODO unbind make no sense here. Bind on the application now
-		//unbindService(mServiceConnection);
 		finish();
 	}
 
