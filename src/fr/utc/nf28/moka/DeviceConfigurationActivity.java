@@ -180,6 +180,30 @@ public class DeviceConfigurationActivity extends Activity {
 			}
 		};
 
+		//implement callback for Jade container creation
+		mAgentCallback = new RuntimeCallback<Void>() {
+			@Override
+			public void onSuccess(Void aVoid) {
+				//Agent successfully started
+				Log.i(TAG, "start agent " + JadeUtils.ANDROID_AGENT_NICKNAME + " success");
+				DeviceConfigurationActivity.this.runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						mProgressAgent.setVisibility(View.GONE);
+						mCheckAgent.setVisibility(View.VISIBLE);
+					}
+				});
+				//TODO launch main Activity
+				//launchMainActivity();
+			}
+
+			@Override
+			public void onFailure(Throwable throwable) {
+				//Agent startup error
+				Log.e(TAG, "start agent " + JadeUtils.ANDROID_AGENT_NICKNAME + " fail", throwable);
+			}
+		};
+
 
 		Log.i(TAG, "activity start with ssid = " + mSSID + " and pwd = " + mPWD);
 		enableWifi();
