@@ -235,8 +235,6 @@ public class DeviceConfigurationActivity extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-
-		//TODO need to check, Activity can be pause before Receiver registering
 		unregisterReceiver(MokaWifiStateChangedReceiver);
 	}
 
