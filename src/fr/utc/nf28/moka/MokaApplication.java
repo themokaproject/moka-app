@@ -126,7 +126,7 @@ public class MokaApplication extends Application {
 	@Override
 	public void onTerminate() {
 		super.onTerminate();
-		if(mServiceConnection != null){
+		if (mServiceConnection != null) {
 			unbindService(mServiceConnection);
 		}
 	}
