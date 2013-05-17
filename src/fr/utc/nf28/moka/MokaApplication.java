@@ -126,6 +126,7 @@ public class MokaApplication extends Application {
 	@Override
 	public void onTerminate() {
 		super.onTerminate();
+		//TODO container and agent still visible in jade plateform
 		if (mServiceConnection != null) {
 			unbindService(mServiceConnection);
 		}
