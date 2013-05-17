@@ -333,7 +333,6 @@ public class DeviceConfigurationActivity extends Activity {
 					public void onSuccess(Void aVoid) {
 						//Agent successfully started
 						Log.i(TAG, "start agent " + nickName + " success");
-						//TODO change activity unbind the service which cause jade platform death
 						DeviceConfigurationActivity.this.runOnUiThread(new Runnable() {
 							@Override
 							public void run() {
@@ -341,6 +340,7 @@ public class DeviceConfigurationActivity extends Activity {
 								mCheckAgent.setVisibility(View.VISIBLE);
 							}
 						});
+						//TODO change activity unbind the service which cause jade platform death
 						//launchMainActivity();
 					}
 

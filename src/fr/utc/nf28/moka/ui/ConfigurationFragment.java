@@ -15,5 +15,6 @@ public class ConfigurationFragment extends PreferenceFragment {
 
 		//load preferences from an XML ressource here
 		addPreferencesFromResource(R.xml.configuration_preferences);
+
 	}
 }
