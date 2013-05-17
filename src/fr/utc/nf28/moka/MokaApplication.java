@@ -123,5 +123,11 @@ public class MokaApplication extends Application {
 				agentCallback);
 	}
 
-
+	@Override
+	public void onTerminate() {
+		super.onTerminate();
+		if(mServiceConnection != null){
+			unbindService(mServiceConnection);
+		}
+	}
 }
