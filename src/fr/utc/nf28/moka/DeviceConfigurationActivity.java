@@ -283,7 +283,7 @@ public class DeviceConfigurationActivity extends Activity {
 			}
 		};
 
-		bindService(new Intent(getApplicationContext(), MicroRuntimeService.class),
+		this.getApplication().bindService(new Intent(getApplicationContext(), MicroRuntimeService.class),
 				mServiceConnection,
 				Context.BIND_AUTO_CREATE);
 	}
@@ -341,7 +341,7 @@ public class DeviceConfigurationActivity extends Activity {
 							}
 						});
 						//TODO change activity unbind the service which cause jade platform death
-						//launchMainActivity();
+						launchMainActivity();
 					}
 
 					@Override
