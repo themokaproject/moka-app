@@ -8,7 +8,7 @@ import jade.wrapper.ControllerException;
 
 public class JadeUtils {
 
-	private static final String ANDROID_AGENT_NICKNAME = "AndroidAgent_" + UUID.randomUUID().toString();
+	public static final String ANDROID_AGENT_NICKNAME = "AndroidAgent_" + UUID.randomUUID().toString();
 
 	public IAndroidAgent getAndroidAgentInterface() {
 		try {

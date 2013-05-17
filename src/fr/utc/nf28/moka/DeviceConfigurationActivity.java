@@ -49,7 +49,6 @@ public class DeviceConfigurationActivity extends Activity {
 	 * Log for Logcat
 	 */
 	private static final String TAG = makeLogTag(DeviceConfigurationActivity.class);
-	private static final String ANDROID_AGENT_NICKNAME = "AndroidAgent_" + UUID.randomUUID().toString();
 	/**
 	 * Use to receive broadcast from wifi and network
 	 */
@@ -93,7 +92,6 @@ public class DeviceConfigurationActivity extends Activity {
 						mProgressContainer.setVisibility(View.VISIBLE);
 						Log.i(TAG, "NetworkInfo.State.CONNECTED");
 						//TODO start JADE container
-						startJadePlatform(mMainContainerIp, Integer.valueOf(mMainContainerPort));
 					} else {
 						Log.i(TAG, info.getState().toString());
 					}
@@ -126,12 +124,7 @@ public class DeviceConfigurationActivity extends Activity {
 	private CheckBox mCheckIp;
 	private CheckBox mCheckContainer;
 	private CheckBox mCheckAgent;
-	/**
-	 * JADE
-	 */
-	private MicroRuntimeServiceBinder mMicroRuntimeServiceBinder;
-	private Properties mAgentContainerProperties;
-	private ServiceConnection mServiceConnection;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -155,9 +148,6 @@ public class DeviceConfigurationActivity extends Activity {
 		mCheckIp = (CheckBox) findViewById(R.id.checkOptenirIp);
 		mCheckContainer = (CheckBox) findViewById(R.id.checkContainer);
 		mCheckAgent = (CheckBox) findViewById(R.id.checkAgent);
-
-		mAgentContainerProperties = new Properties();
-		mAgentContainerProperties.setProperty(Profile.JVM, Profile.ANDROID);
 
 		Log.i(TAG, "activity start with ssid = " + mSSID + " and pwd = " + mPWD);
 		enableWifi();
@@ -249,104 +239,5 @@ public class DeviceConfigurationActivity extends Activity {
 		registerReceiver(MokaWifiStateChangedReceiver, myIntentFilter);
 	}
 
-	/**
-	 * Start agent plateform
-	 *
-	 * @param host adress ip of mainContainer Machine
-	 * @param port port to reach mainContainer Machine
-	 */
-	public void startJadePlatform(final String host, final int port) {
-		Log.i(TAG, "start jade platform");
-		mAgentContainerProperties.setProperty(Profile.MAIN_HOST, host);
-		mAgentContainerProperties.setProperty(Profile.MAIN_PORT, String.valueOf(port));
-		bindMicroRuntimeService();
-	}
 
-	/**
-	 * JadeAndroid good practices for jade runtime
-	 */
-	private void bindMicroRuntimeService() {
-		Log.i(TAG, "bind micro runtime");
-		mServiceConnection = new ServiceConnection() {
-			public void onServiceConnected(ComponentName className, IBinder service) {
-				// Bind successful
-				Log.i(TAG, "bind micro runtime success");
-				mMicroRuntimeServiceBinder = (MicroRuntimeServiceBinder) service;
-				startAgentContainer();
-			}
-
-			public void onServiceDisconnected(ComponentName className) {
-				// Bind unsuccessful
-				Log.i(TAG, "bind micro runtime fail");
-				mMicroRuntimeServiceBinder = null;
-			}
-		};
-
-		this.getApplication().bindService(new Intent(getApplicationContext(), MicroRuntimeService.class),
-				mServiceConnection,
-				Context.BIND_AUTO_CREATE);
-	}
-
-	/**
-	 * start JADE Agent container
-	 */
-	private void startAgentContainer() {
-		Log.i(TAG, "start agent container");
-		mMicroRuntimeServiceBinder.startAgentContainer(mAgentContainerProperties,
-				new RuntimeCallback<Void>() {
-					@Override
-					public void onSuccess(Void thisIsNull) {
-						Log.i(TAG, "start agent container success");
-						// Split container successfully started
-						DeviceConfigurationActivity.this.runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								mProgressContainer.setVisibility(View.GONE);
-								mCheckContainer.setVisibility(View.VISIBLE);
-								mProgressAgent.setVisibility(View.VISIBLE);
-							}
-						});
-						startAgent(ANDROID_AGENT_NICKNAME, AndroidAgent.class.getName(), null);
-					}
-
-					@Override
-					public void onFailure(Throwable throwable) {
-						Log.i(TAG, "start agent container fail");
-						// Split container startup error
-					}
-				});
-	}
-
-	/**
-	 * start a JADE Agent
-	 *
-	 * @param nickName  agent name, must be unique
-	 * @param className agent class
-	 * @param params    params which can be retrieved by the agent in setup()
-	 */
-	private void startAgent(final String nickName, final String className, Object[] params) {
-		Log.i(TAG, "start agent " + nickName);
-		mMicroRuntimeServiceBinder.startAgent(nickName, className, params,
-				new RuntimeCallback<Void>() {
-					@Override
-					public void onSuccess(Void aVoid) {
-						//Agent successfully started
-						Log.i(TAG, "start agent " + nickName + " success");
-						DeviceConfigurationActivity.this.runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								mProgressAgent.setVisibility(View.GONE);
-								mCheckAgent.setVisibility(View.VISIBLE);
-							}
-						});
-						launchMainActivity();
-					}
-
-					@Override
-					public void onFailure(Throwable throwable) {
-						//Agent startup error
-						Log.e(TAG, "start agent " + nickName + " fail", throwable);
-					}
-				});
-	}
 }
