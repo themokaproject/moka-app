@@ -213,6 +213,7 @@ public class DeviceConfigurationActivity extends Activity {
 	 * enable wifi if not and register to wifi and network lister
 	 */
 	private void enableWifi() {
+		//TODO first progress bar not visible
 		mProgressConnexion.setVisibility(View.VISIBLE);
 
 		//enable wifi cause know we can receive broadcast
