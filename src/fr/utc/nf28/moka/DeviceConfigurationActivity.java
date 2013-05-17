@@ -94,8 +94,7 @@ public class DeviceConfigurationActivity extends Activity {
 						Log.i(TAG, "NetworkInfo.State.CONNECTED");
 						((MokaApplication) getApplication()).startJadePlatform(mMainContainerIp,
 								Integer.valueOf(mMainContainerPort),
-								mContainerCallback,
-								mAgentCallback);
+								mContainerCallback);
 					} else {
 						Log.i(TAG, info.getState().toString());
 					}
@@ -172,7 +171,7 @@ public class DeviceConfigurationActivity extends Activity {
 						mProgressAgent.setVisibility(View.VISIBLE);
 					}
 				});
-				((MokaApplication) getApplication()).startAgent(JadeUtils.ANDROID_AGENT_NICKNAME, AndroidAgent.class.getName(), null);
+				((MokaApplication) getApplication()).startAgent(JadeUtils.ANDROID_AGENT_NICKNAME, AndroidAgent.class.getName(), null,mAgentCallback);
 			}
 
 			@Override
