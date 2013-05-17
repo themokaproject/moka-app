@@ -39,7 +39,6 @@ public class MokaApplication extends Application {
 	private Properties mAgentContainerProperties;
 	private ServiceConnection mServiceConnection;
 	private RuntimeCallback<Void> mContainerCallback;
-	private RuntimeCallback<Void> mAgentCallback;
 
 	@Override
 	public void onCreate() {
@@ -67,13 +66,11 @@ public class MokaApplication extends Application {
 	 * @param host              adress ip of mainContainer Machine
 	 * @param port              port to reach mainContainer Machine
 	 * @param containerCallback callback for container connection
-	 * @param agentCallback     callback for agent creation
 	 */
-	public void startJadePlatform(final String host, final int port, RuntimeCallback<Void> containerCallback, RuntimeCallback<Void> agentCallback) {
+	public void startJadePlatform(final String host, final int port, RuntimeCallback<Void> containerCallback) {
 		Log.i(TAG, "start jade platform");
 		mAgentContainerProperties.setProperty(Profile.MAIN_HOST, host);
 		mAgentContainerProperties.setProperty(Profile.MAIN_PORT, String.valueOf(port));
-		mAgentCallback = agentCallback;
 		mContainerCallback = containerCallback;
 		bindMicroRuntimeService();
 	}
@@ -115,14 +112,15 @@ public class MokaApplication extends Application {
 	/**
 	 * start a JADE Agent
 	 *
-	 * @param nickName  agent name, must be unique
-	 * @param className agent class
-	 * @param params    params which can be retrieved by the agent in setup()
+	 * @param nickName      agent name, must be unique
+	 * @param className     agent class
+	 * @param params        params which can be retrieved by the agent in setup()
+	 * @param agentCallback callback for agent creation
 	 */
-	public void startAgent(final String nickName, final String className, Object[] params) {
+	public void startAgent(final String nickName, final String className, Object[] params, RuntimeCallback<Void> agentCallback) {
 		Log.i(TAG, "start agent " + nickName);
 		mMicroRuntimeServiceBinder.startAgent(nickName, className, params,
-				mAgentCallback);
+				agentCallback);
 	}
 
 
