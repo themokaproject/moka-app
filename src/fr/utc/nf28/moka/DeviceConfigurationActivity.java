@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import java.util.UUID;
 
 import fr.utc.nf28.moka.agent.AndroidAgent;
+import fr.utc.nf28.moka.util.JadeUtils;
 import jade.android.MicroRuntimeService;
 import jade.android.MicroRuntimeServiceBinder;
 import jade.android.RuntimeCallback;
@@ -100,6 +101,11 @@ public class DeviceConfigurationActivity extends Activity {
 		}
 	};
 	/**
+	 * Jade callback
+	 */
+	private RuntimeCallback<Void> mContainerCallback;
+	private RuntimeCallback<Void> mAgentCallback;
+	/**
 	 * WifiManager to manage network
 	 */
 	private WifiManager mWifiManager;
@@ -148,6 +154,32 @@ public class DeviceConfigurationActivity extends Activity {
 		mCheckIp = (CheckBox) findViewById(R.id.checkOptenirIp);
 		mCheckContainer = (CheckBox) findViewById(R.id.checkContainer);
 		mCheckAgent = (CheckBox) findViewById(R.id.checkAgent);
+
+		//implement callback for Jade container creation
+		mContainerCallback = new RuntimeCallback<Void>() {
+			@Override
+			public void onSuccess(Void thisIsNull) {
+				Log.i(TAG, "start agent container success");
+				// Split container successfully started
+				DeviceConfigurationActivity.this.runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						mProgressContainer.setVisibility(View.GONE);
+						mCheckContainer.setVisibility(View.VISIBLE);
+						mProgressAgent.setVisibility(View.VISIBLE);
+					}
+				});
+				//TODO start agent
+				//startAgent(JadeUtils.ANDROID_AGENT_NICKNAME, AndroidAgent.class.getName(), null);
+			}
+
+			@Override
+			public void onFailure(Throwable throwable) {
+				Log.i(TAG, "start agent container fail");
+				// Split container startup error
+			}
+		};
+
 
 		Log.i(TAG, "activity start with ssid = " + mSSID + " and pwd = " + mPWD);
 		enableWifi();
