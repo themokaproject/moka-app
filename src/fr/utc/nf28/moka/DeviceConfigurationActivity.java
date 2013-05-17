@@ -92,7 +92,10 @@ public class DeviceConfigurationActivity extends Activity {
 						mCheckIp.setVisibility(View.VISIBLE);
 						mProgressContainer.setVisibility(View.VISIBLE);
 						Log.i(TAG, "NetworkInfo.State.CONNECTED");
-						//TODO start JADE container
+						((MokaApplication) getApplication()).startJadePlatform(mMainContainerIp,
+								Integer.valueOf(mMainContainerIp),
+								mContainerCallback,
+								mAgentCallback);
 					} else {
 						Log.i(TAG, info.getState().toString());
 					}
@@ -100,11 +103,6 @@ public class DeviceConfigurationActivity extends Activity {
 			}
 		}
 	};
-	/**
-	 * Jade callback
-	 */
-	private RuntimeCallback<Void> mContainerCallback;
-	private RuntimeCallback<Void> mAgentCallback;
 	/**
 	 * WifiManager to manage network
 	 */
@@ -119,6 +117,11 @@ public class DeviceConfigurationActivity extends Activity {
 	 */
 	private String mMainContainerIp;
 	private String mMainContainerPort;
+	/**
+	 * Jade callback
+	 */
+	private RuntimeCallback<Void> mContainerCallback;
+	private RuntimeCallback<Void> mAgentCallback;
 	/**
 	 * layout component
 	 */
