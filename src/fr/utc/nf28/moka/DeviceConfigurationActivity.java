@@ -340,7 +340,6 @@ public class DeviceConfigurationActivity extends Activity {
 								mCheckAgent.setVisibility(View.VISIBLE);
 							}
 						});
-						//TODO change activity unbind the service which cause jade platform death
 						launchMainActivity();
 					}
 
