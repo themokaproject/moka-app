@@ -2,17 +2,17 @@ package fr.utc.nf28.moka.util;
 
 import java.util.UUID;
 
-import fr.utc.nf28.moka.agent.IAndroiAgent;
+import fr.utc.nf28.moka.agent.IAndroidAgent;
 import jade.core.MicroRuntime;
 import jade.wrapper.ControllerException;
 
 public class JadeUtils {
 
-	private static final String ANDROID_AGENT_NICKNAME = "AndroidAgent_"+ UUID.randomUUID().toString();
+	private static final String ANDROID_AGENT_NICKNAME = "AndroidAgent_" + UUID.randomUUID().toString();
 
-	public IAndroiAgent getAndroidAgentInterface() {
+	public IAndroidAgent getAndroidAgentInterface() {
 		try {
-			return MicroRuntime.getAgent(ANDROID_AGENT_NICKNAME).getO2AInterface(IAndroiAgent.class);
+			return MicroRuntime.getAgent(ANDROID_AGENT_NICKNAME).getO2AInterface(IAndroidAgent.class);
 		} catch (ControllerException e) {
 			e.printStackTrace();
 			return null;
