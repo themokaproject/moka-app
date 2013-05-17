@@ -194,8 +194,7 @@ public class DeviceConfigurationActivity extends Activity {
 						mCheckAgent.setVisibility(View.VISIBLE);
 					}
 				});
-				//TODO launch main Activity
-				//launchMainActivity();
+				launchMainActivity();
 			}
 
 			@Override
