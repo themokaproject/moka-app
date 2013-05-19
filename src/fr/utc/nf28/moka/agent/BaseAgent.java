@@ -1,5 +1,6 @@
 package fr.utc.nf28.moka.agent;
 
+import fr.utc.nf28.moka.util.JadeUtils;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.domain.DFService;
@@ -15,7 +16,6 @@ import java.util.ArrayList;
  */
 public class BaseAgent extends Agent {
 
-	private static final String DEFAULT_TYPE = "DefaultServiceType";
 
 	/**
 	 * Retrieve all the agents AID that have a skill
@@ -24,8 +24,8 @@ public class BaseAgent extends Agent {
 	 * @param skillName
 	 * @return an arrayList of AIDs
 	 */
-	protected  ArrayList<AID> getAgentsWithSkill(String skillName) {
-		return getAgentsWithSkill(skillName, DEFAULT_TYPE);
+	protected ArrayList<AID> getAgentsWithSkill(String skillName) {
+		return getAgentsWithSkill(skillName, JadeUtils.JADE_SKILL_TYPE_DEFAULT);
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class BaseAgent extends Agent {
 		ArrayList<AID> result = new ArrayList<AID>();
 		try {
 			DFAgentDescription[] agentDescriptions = DFService.search(this, getAgentDescriptionWithService(skillName, skillType));
-			for(DFAgentDescription ad : agentDescriptions ) {
+			for (DFAgentDescription ad : agentDescriptions) {
 				result.add(ad.getName());
 			}
 		} catch (FIPAException e) {
@@ -59,7 +59,7 @@ public class BaseAgent extends Agent {
 	protected void registerSkill(String skillName) {
 		//use a default type
 		// type is a mandatory field of a service-description
-		registerSkill(skillName, DEFAULT_TYPE);
+		registerSkill(skillName, JadeUtils.JADE_SKILL_TYPE_DEFAULT);
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class BaseAgent extends Agent {
 		serviceDescription.setName(skillName);
 		serviceDescription.setType(skillType);
 		agentDescription.addServices(serviceDescription);
-		return  agentDescription;
+		return agentDescription;
 	}
 
 }
