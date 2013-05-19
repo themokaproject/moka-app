@@ -18,7 +18,7 @@ public class JadeUtils {
 	 *
 	 * @return interface reference of AndroidAgent running on device
 	 */
-	public IAndroidAgent getAndroidAgentInterface() {
+	public static IAndroidAgent getAndroidAgentInterface() {
 		try {
 			return MicroRuntime.getAgent(ANDROID_AGENT_NICKNAME).getO2AInterface(IAndroidAgent.class);
 		} catch (ControllerException e) {

@@ -13,11 +13,13 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
+import fr.utc.nf28.moka.agent.IAndroidAgent;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.ui.CurrentItemListFragment;
 import fr.utc.nf28.moka.ui.TypeListFragment;
 import fr.utc.nf28.moka.util.CroutonUtils;
+import fr.utc.nf28.moka.util.JadeUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
@@ -60,6 +62,8 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 				.setText(getString(R.string.tab_title_current))
 				.setTabListener(this));
 
+		//test to send message
+		final IAndroidAgent interfaceAgent = JadeUtils.getAndroidAgentInterface();
 	}
 
 	@Override
