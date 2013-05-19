@@ -36,4 +36,9 @@ public class JadeUtils {
 	 * name for Jade skill registering of AndroidAgent
 	 */
 	public static final String JADE_SKILL_NAME_ANDROID = "AndroidAgentSkillName";
+
+	/**
+	 * name for Jade skill registering of ConnectionAgent
+	 */
+	public static final String JADE_SKILL_NAME_CONNECTION = "ConnectionAgentSkillName";
 }
