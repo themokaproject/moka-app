@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -64,7 +66,11 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 
 		//test to send message
 		final IAndroidAgent interfaceAgent = JadeUtils.getAndroidAgentInterface();
-		interfaceAgent.connectPlatform();
+		if(interfaceAgent == null){
+			Log.i(TAG, "getAndroidAgentInterface return null");
+		}else{
+			interfaceAgent.connectPlatform();
+		}
 	}
 
 	@Override
