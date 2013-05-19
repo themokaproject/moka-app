@@ -11,7 +11,7 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 
 	@Override
 	public void connectPlatform() {
-		
+
 	}
 
 	@Override
