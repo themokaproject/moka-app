@@ -64,6 +64,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 
 		//test to send message
 		final IAndroidAgent interfaceAgent = JadeUtils.getAndroidAgentInterface();
+		interfaceAgent.connectPlatform();
 	}
 
 	@Override
