@@ -23,6 +23,11 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 
 	@Override
 	public void createItem() {
+		//TODO construct the content
+		sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_CREATION),
+				"{\"type\":\"creation\",\"request\":\"{\\\"methods\\\":[],\\\"members\\\"" +
+						":[],\\\"className\\\":\\\"MyClass\\\",\\\"id\\\":0,\\\"title\\\":\\\"" +
+						"MyClass\\\",\\\"y\\\":100,\\\"x\\\":100}\"}");
 	}
 
 	@Override
