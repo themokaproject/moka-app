@@ -10,15 +10,15 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 	protected void setup() {
 		super.setup();
 		registerSkill(JadeUtils.JADE_SKILL_NAME_ANDROID);
-		registerO2AInterface(IAndroidAgent.class,this);
+		registerO2AInterface(IAndroidAgent.class, this);
 	}
 
 	@Override
 	public void connectPlatform() {
-		final ACLMessage connectionMessage = new ACLMessage(ACLMessage.REQUEST);
-		connectionMessage.addReceiver(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_CONNECTION).get(0));
-		connectionMessage.setContent("{\"type\":\"connection\",\"request\":\"{\\\"color\\\":-1,\\\"ip\\\":\\\"127.0.0.1\\\",\\\"currentItem\\\":null,\\\"lastName\\\":\\\"Masciulli\\\",\\\"firstName\\\":\\\"Alexandre\\\"}\"}");
-		send(connectionMessage);
+		sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_CONNECTION),
+				"{\"type\":\"connection\",\"request\":\"{\\\"color\\\":-1,\\\"ip\\\"" +
+						":\\\"127.0.0.1\\\",\\\"currentItem\\\":null,\\\"lastName\\\":" +
+						"\\\"Masciulli\\\",\\\"firstName\\\":\\\"Alexandre\\\"}\"}");
 	}
 
 	@Override
