@@ -7,8 +7,10 @@ import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
+import jade.lang.acl.ACLMessage;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * A base agent that can register skills
@@ -74,6 +76,22 @@ public class BaseAgent extends Agent {
 		} catch (FIPAException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * send message with REQUEST performatif
+	 *
+	 * @param receivers use getAgentsWithSkill
+	 * @param content   message content
+	 */
+	protected void sendRequestMessage(ArrayList<AID> receivers, String content) {
+		final ACLMessage connectionMessage = new ACLMessage(ACLMessage.REQUEST);
+		Iterator<AID> i = receivers.iterator();
+		while (i.hasNext()) {
+			connectionMessage.addReceiver(i.next());
+		}
+		connectionMessage.setContent(content);
+		send(connectionMessage);
 	}
 
 	private DFAgentDescription getAgentDescriptionWithService(String skillName, String skillType) {
