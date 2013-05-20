@@ -76,6 +76,8 @@
     <string name="optenir">Récupération d\' une adresse IP</string>
     <string name="container">Connexion au mainContainer JADE</string>
     <string name="agent">Lancement de l\'agent android JADE</string>
+    <string name="name">Nom</string>
+    <string name="first_name">Prénom</string>
 
 </resources>
 
