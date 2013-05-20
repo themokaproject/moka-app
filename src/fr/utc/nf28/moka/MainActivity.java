@@ -3,10 +3,10 @@ package fr.utc.nf28.moka;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -70,7 +70,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 				.setText(getString(R.string.tab_title_current))
 				.setTabListener(this));
 
-		(new RetrieveIpTask()).execute();
+		new RetrieveIpTask().execute();
 
 	}
 
@@ -167,29 +167,29 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 	}
 
 	private class RetrieveIpTask extends AsyncTask<Void, Void, String> {
-
 		protected String doInBackground(Void... voids) {
-			WifiManager wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
-			WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-			int ip = wifiInfo.getIpAddress();
+			final WifiManager wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
+			final int ip = wifiManager.getConnectionInfo().getIpAddress();
 
-			String ipString = String.format(
+			return String.format(
 					"%d.%d.%d.%d",
 					(ip & 0xff),
 					(ip >> 8 & 0xff),
 					(ip >> 16 & 0xff),
-					(ip >> 24 & 0xff));
-			return ipString;
+					(ip >> 24 & 0xff)
+			);
 		}
 
 		protected void onPostExecute(String ipString) {
+			super.onPostExecute(ipString);
+
 			final IAndroidAgent interfaceAgent = JadeUtils.getAndroidAgentInterface();
 			if (interfaceAgent == null) {
 				Log.i(TAG, "getAndroidAgentInterface return null");
 			} else {
-				SharedPreferences settings = getSharedPreferences(NfcActivity.PREFS_NAME, 0);
-				String firstName = settings.getString("firstName", getString(R.string.unknown_firstname));
-				String lastName = settings.getString("lastName", getString(R.string.unknown_lastname));
+				final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+				final String firstName = prefs.getString(NfcActivity.PERSISTENT_FIRST_NAME, getString(R.string.unknown_firstname));
+				final String lastName = prefs.getString(NfcActivity.PERSISTENT_LAST_NAME, getString(R.string.unknown_lastname));
 				interfaceAgent.connectPlatform(firstName, lastName, ipString);
 			}
 		}

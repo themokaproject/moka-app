@@ -8,7 +8,9 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -23,7 +25,8 @@ import fr.utc.nf28.moka.util.NfcUtils;
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class NfcActivity extends Activity {
-	public static final String PREFS_NAME = "MyPrefsFile";
+	public static final String PERSISTENT_LAST_NAME = "MokaUserLastName";
+	public static final String PERSISTENT_FIRST_NAME = "MokaUserFirstName";
 	private static final String TAG = makeLogTag(NfcActivity.class);
 	private NfcAdapter mNfcAdapter;
 	private EditText mFirstName;
@@ -36,12 +39,10 @@ public class NfcActivity extends Activity {
 		mFirstName = (EditText) findViewById(R.id.firstnamefield);
 		mLastName = (EditText) findViewById(R.id.lastnamefield);
 
-		SharedPreferences settings = getSharedPreferences(NfcActivity.PREFS_NAME, 0);
-		String savedLastName = settings.getString("lastName", "");
-		String savedFirstName = settings.getString("firstName", "");
+		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-		mFirstName.setText(savedFirstName);
-		mLastName.setText(savedLastName);
+		mFirstName.setText(prefs.getString(PERSISTENT_LAST_NAME, ""));
+		mLastName.setText(prefs.getString(PERSISTENT_FIRST_NAME, ""));
 
 		findViewById(R.id.skip).setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -54,19 +55,19 @@ public class NfcActivity extends Activity {
 		findViewById(R.id.manuel).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				// We need an Editor object to make preference changes.
-				// All objects are from android.context.Context
-				SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-				SharedPreferences.Editor editor = settings.edit();
+				final CharSequence firstName = mFirstName.getText();
+				final CharSequence lastName = mLastName.getText();
+				if (firstName != null && lastName != null) {
+					final SharedPreferences.Editor editor = prefs.edit();
+					editor.putString(PERSISTENT_FIRST_NAME, firstName.toString());
+					editor.putString(PERSISTENT_LAST_NAME, lastName.toString());
+					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+						editor.apply();
+					} else {
+						editor.commit();
+					}
+				}
 
-				String firstNameString = mFirstName.getText().toString();
-				String lastNameString = mLastName.getText().toString();
-
-				editor.putString("firstName", firstNameString);
-				editor.putString("lastName", lastNameString);
-
-				// Commit the edits!
-				editor.commit();
 				startActivity(new Intent(NfcActivity.this, ManualConfigurationActivity.class));
 			}
 		});
