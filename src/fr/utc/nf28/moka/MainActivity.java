@@ -112,6 +112,8 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 
 	@Override
 	public void onTypeSelected(MokaType type) {
+		//test dynamic communication
+		JadeUtils.getAndroidAgentInterface().createItem();
 		final Intent detailIntent = new Intent(this, NewItemActivity.class);
 		detailIntent.putExtra(NewItemActivity.ARG_TYPE, type);
 		startActivityForResult(detailIntent, CREATE_ITEM_REQUEST);
@@ -127,8 +129,6 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 
 	@Override
 	public void onItemSelected(MokaItem item) {
-		//test dynamic communication
-		JadeUtils.getAndroidAgentInterface().createItem();
 		final Intent detailIntent = new Intent(this, ItemDetailActivity.class);
 		detailIntent.putExtra(ItemDetailActivity.ARG_ITEM, item);
 		startActivityForResult(detailIntent, EDIT_ITEM_REQUEST);
