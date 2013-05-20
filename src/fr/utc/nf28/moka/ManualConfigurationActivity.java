@@ -65,7 +65,7 @@ public class ManualConfigurationActivity extends Activity {
 		});
 
 		mNfcAdapter = NfcAdapter.getDefaultAdapter(getApplicationContext());
-		if (mNfcAdapter == null) {
+		if (mNfcAdapter == null || !mNfcAdapter.isEnabled()) {
 			findViewById(R.id.write).setClickable(false);
 		} else {
 			findViewById(R.id.write).setOnClickListener(new View.OnClickListener() {
