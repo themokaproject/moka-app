@@ -7,6 +7,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 
+import fr.utc.nf28.moka.agent.IAndroidAgent;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.ui.NewItemFragment;
@@ -37,7 +38,10 @@ public class NewItemActivity extends SherlockFragmentActivity implements NewItem
 		}
 
 		// test dynamic communication
-		JadeUtils.getAndroidAgentInterface().createItem();
+		final IAndroidAgent agent = JadeUtils.getAndroidAgentInterface();
+		if (agent != null) {
+			agent.createItem();
+		}
 	}
 
 	@Override
