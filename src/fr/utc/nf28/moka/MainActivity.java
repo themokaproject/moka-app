@@ -14,6 +14,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import fr.utc.nf28.moka.agent.IAndroidAgent;
 import fr.utc.nf28.moka.data.MokaItem;
@@ -66,9 +67,9 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 
 		//test to send message
 		final IAndroidAgent interfaceAgent = JadeUtils.getAndroidAgentInterface();
-		if(interfaceAgent == null){
+		if (interfaceAgent == null) {
 			Log.i(TAG, "getAndroidAgentInterface return null");
-		}else{
+		} else {
 			interfaceAgent.connectPlatform();
 		}
 	}
@@ -126,6 +127,8 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 
 	@Override
 	public void onItemSelected(MokaItem item) {
+		//test dynamic communication
+		JadeUtils.getAndroidAgentInterface().createItem();
 		final Intent detailIntent = new Intent(this, ItemDetailActivity.class);
 		detailIntent.putExtra(ItemDetailActivity.ARG_ITEM, item);
 		startActivityForResult(detailIntent, EDIT_ITEM_REQUEST);
