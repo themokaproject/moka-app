@@ -23,26 +23,25 @@ import fr.utc.nf28.moka.util.NfcUtils;
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class NfcActivity extends Activity {
+	public static final String PREFS_NAME = "MyPrefsFile";
 	private static final String TAG = makeLogTag(NfcActivity.class);
 	private NfcAdapter mNfcAdapter;
-    public static final String PREFS_NAME = "MyPrefsFile";
-
-    private EditText mFirstName;
-    private EditText mLastName;
+	private EditText mFirstName;
+	private EditText mLastName;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.nfc_activity);
 
-        mFirstName = (EditText)findViewById(R.id.firstnamefield);
-        mLastName = (EditText)findViewById(R.id.lastnamefield);
+		mFirstName = (EditText) findViewById(R.id.firstnamefield);
+		mLastName = (EditText) findViewById(R.id.lastnamefield);
 
-        SharedPreferences settings = getSharedPreferences(NfcActivity.PREFS_NAME, 0);
-        String savedLastName = settings.getString("lastName", "");
-        String savedFirstName = settings.getString("firstName", "");
+		SharedPreferences settings = getSharedPreferences(NfcActivity.PREFS_NAME, 0);
+		String savedLastName = settings.getString("lastName", "");
+		String savedFirstName = settings.getString("firstName", "");
 
-        mFirstName.setText(savedFirstName);
-        mLastName.setText(savedLastName);
+		mFirstName.setText(savedFirstName);
+		mLastName.setText(savedLastName);
 
 		findViewById(R.id.skip).setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -55,19 +54,19 @@ public class NfcActivity extends Activity {
 		findViewById(R.id.manuel).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-                // We need an Editor object to make preference changes.
-                // All objects are from android.context.Context
-                SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-                SharedPreferences.Editor editor = settings.edit();
+				// We need an Editor object to make preference changes.
+				// All objects are from android.context.Context
+				SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+				SharedPreferences.Editor editor = settings.edit();
 
-                String firstNameString = mFirstName.getText().toString();
-                String lastNameString = mLastName.getText().toString();
+				String firstNameString = mFirstName.getText().toString();
+				String lastNameString = mLastName.getText().toString();
 
-                editor.putString("firstName", firstNameString);
-                editor.putString("lastName", lastNameString);
+				editor.putString("firstName", firstNameString);
+				editor.putString("lastName", lastNameString);
 
-                // Commit the edits!
-                editor.commit();
+				// Commit the edits!
+				editor.commit();
 				startActivity(new Intent(NfcActivity.this, ManualConfigurationActivity.class));
 			}
 		});
