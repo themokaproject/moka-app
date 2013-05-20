@@ -2,12 +2,15 @@ package fr.utc.nf28.moka;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
+
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.ui.NewItemFragment;
+import fr.utc.nf28.moka.util.JadeUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
@@ -32,6 +35,9 @@ public class NewItemActivity extends SherlockFragmentActivity implements NewItem
 					.add(R.id.new_item_container, NewItemFragment.newInstance((MokaType) getIntent().getExtras().getParcelable(ARG_TYPE)))
 					.commit();
 		}
+
+		// test dynamic communication
+		JadeUtils.getAndroidAgentInterface().createItem();
 	}
 
 	@Override
