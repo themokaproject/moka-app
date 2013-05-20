@@ -29,171 +29,169 @@ import fr.utc.nf28.moka.ui.nfc.NfcActivity;
 import fr.utc.nf28.moka.util.CroutonUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
 
-import java.net.*;
-
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class MainActivity extends SherlockFragmentActivity implements ActionBar.TabListener,
-        TypeListFragment.Callbacks, CurrentItemListFragment.Callbacks {
-    private static final String TAG = makeLogTag(MainActivity.class);
-    private static final int CREATE_ITEM_REQUEST = 0;
-    private static final int EDIT_ITEM_REQUEST = 1;
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
-    private ViewPager mViewPager;
+		TypeListFragment.Callbacks, CurrentItemListFragment.Callbacks {
+	private static final String TAG = makeLogTag(MainActivity.class);
+	private static final int CREATE_ITEM_REQUEST = 0;
+	private static final int EDIT_ITEM_REQUEST = 1;
+	/**
+	 * The {@link ViewPager} that will host the section contents.
+	 */
+	private ViewPager mViewPager;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.main);
+		setContentView(R.layout.main);
 
-        // ActionBar setup
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(false);
+		// ActionBar setup
+		final ActionBar actionBar = getSupportActionBar();
+		actionBar.setHomeButtonEnabled(false);
 
-        // ViewPager setup
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                actionBar.setSelectedNavigationItem(position);
-            }
-        });
-        mViewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager()));
+		// ViewPager setup
+		mViewPager = (ViewPager) findViewById(R.id.pager);
+		mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+			@Override
+			public void onPageSelected(int position) {
+				actionBar.setSelectedNavigationItem(position);
+			}
+		});
+		mViewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager()));
 
-        // We add our tabs
-        actionBar.addTab(actionBar.newTab()
-                .setText(getString(R.string.tab_title_create))
-                .setTabListener(this));
+		// We add our tabs
+		actionBar.addTab(actionBar.newTab()
+				.setText(getString(R.string.tab_title_create))
+				.setTabListener(this));
 
-        actionBar.addTab(actionBar.newTab()
-                .setText(getString(R.string.tab_title_current))
-                .setTabListener(this));
+		actionBar.addTab(actionBar.newTab()
+				.setText(getString(R.string.tab_title_current))
+				.setTabListener(this));
 
-        (new RetrieveIpTask()).execute();
+		(new RetrieveIpTask()).execute();
 
-    }
+	}
 
-    private class RetrieveIpTask extends AsyncTask<Void, Void, String> {
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getSupportMenuInflater().inflate(R.menu.activity_main, menu);
+		return true;
+	}
 
-        protected String doInBackground(Void... voids) {
-            WifiManager wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
-            WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-            int ip = wifiInfo.getIpAddress();
+	@Override
+	public void onDestroy() {
+		Crouton.cancelAllCroutons();
 
-            String ipString = String.format(
-                    "%d.%d.%d.%d",
-                    (ip & 0xff),
-                    (ip >> 8 & 0xff),
-                    (ip >> 16 & 0xff),
-                    (ip >> 24 & 0xff));
-            return ipString;
-    }
+		super.onDestroy();
+	}
 
-        protected void onPostExecute(String ipString) {
-            final IAndroidAgent interfaceAgent = JadeUtils.getAndroidAgentInterface();
-            if (interfaceAgent == null) {
-                Log.i(TAG, "getAndroidAgentInterface return null");
-            } else {
-                SharedPreferences settings = getSharedPreferences(NfcActivity.PREFS_NAME, 0);
-                String firstName = settings.getString("firstName", getString(R.string.unknown_firstname));
-                String lastName = settings.getString("lastName", getString(R.string.unknown_lastname));
-                interfaceAgent.connectPlatform(firstName, lastName, ipString);
-            }
-        }
-    }
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.menu_licenses:
+				startActivity(new Intent(this, LicensesActivity.class));
+				return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.activity_main, menu);
-        return true;
-    }
+	@Override
+	public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+		mViewPager.setCurrentItem(tab.getPosition());
+	}
 
-    @Override
-    public void onDestroy() {
-        Crouton.cancelAllCroutons();
+	@Override
+	public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+	}
 
-        super.onDestroy();
-    }
+	@Override
+	public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+	}
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_licenses:
-                startActivity(new Intent(this, LicensesActivity.class));
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+	@Override
+	public void onTypeSelected(MokaType type) {
+		final Intent detailIntent = new Intent(this, NewItemActivity.class);
+		detailIntent.putExtra(NewItemActivity.ARG_TYPE, type);
+		startActivityForResult(detailIntent, CREATE_ITEM_REQUEST);
+	}
 
-    @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-        mViewPager.setCurrentItem(tab.getPosition());
-    }
+	@Override
+	public void onTypeLongClicked(MokaType type) {
+		new AlertDialog.Builder(this)
+				.setTitle(type.getName())
+				.setMessage(type.getDescription())
+				.show();
+	}
 
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
-    }
+	@Override
+	public void onItemSelected(MokaItem item) {
+		final Intent detailIntent = new Intent(this, ItemDetailActivity.class);
+		detailIntent.putExtra(ItemDetailActivity.ARG_ITEM, item);
+		startActivityForResult(detailIntent, EDIT_ITEM_REQUEST);
+	}
 
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
-    }
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == CREATE_ITEM_REQUEST) {
+			if (resultCode == RESULT_OK) {
+				Crouton.makeText(this, ((MokaItem) data.getParcelableExtra(NewItemActivity.RET_ITEM)).getTitle() +
+						" a été correctement ajouté", CroutonUtils.INFO_MOKA_STYLE).show(); // TODO: fetch from strings
+			}
+		} else if (requestCode == EDIT_ITEM_REQUEST) {
+			if (resultCode == ItemDetailActivity.RESULT_DELETE) {
+				Crouton.makeText(this, "L'élément a été correctement supprimé", CroutonUtils.INFO_MOKA_STYLE).show(); // TODO: fetch from strings
+			}
+		}
+	}
 
-    @Override
-    public void onTypeSelected(MokaType type) {
-        final Intent detailIntent = new Intent(this, NewItemActivity.class);
-        detailIntent.putExtra(NewItemActivity.ARG_TYPE, type);
-        startActivityForResult(detailIntent, CREATE_ITEM_REQUEST);
-    }
+	/**
+	 * A {@link android.support.v4.app.FragmentPagerAdapter} that returns a fragment corresponding to
+	 * one of the sections/tabs/pages.
+	 */
+	private static class SectionsPagerAdapter extends FragmentPagerAdapter {
+		public SectionsPagerAdapter(FragmentManager fm) {
+			super(fm);
+		}
 
-    @Override
-    public void onTypeLongClicked(MokaType type) {
-        new AlertDialog.Builder(this)
-                .setTitle(type.getName())
-                .setMessage(type.getDescription())
-                .show();
-    }
+		@Override
+		public Fragment getItem(int position) {
+			// getItem is called to instantiate the fragment for the given page.
+			return position == 0 ? new TypeListFragment() : new CurrentItemListFragment();
+		}
 
-    @Override
-    public void onItemSelected(MokaItem item) {
-        final Intent detailIntent = new Intent(this, ItemDetailActivity.class);
-        detailIntent.putExtra(ItemDetailActivity.ARG_ITEM, item);
-        startActivityForResult(detailIntent, EDIT_ITEM_REQUEST);
-    }
+		@Override
+		public int getCount() {
+			return 2;
+		}
+	}
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CREATE_ITEM_REQUEST) {
-            if (resultCode == RESULT_OK) {
-                Crouton.makeText(this, ((MokaItem) data.getParcelableExtra(NewItemActivity.RET_ITEM)).getTitle() +
-                        " a été correctement ajouté", CroutonUtils.INFO_MOKA_STYLE).show(); // TODO: fetch from strings
-            }
-        } else if (requestCode == EDIT_ITEM_REQUEST) {
-            if (resultCode == ItemDetailActivity.RESULT_DELETE) {
-                Crouton.makeText(this, "L'élément a été correctement supprimé", CroutonUtils.INFO_MOKA_STYLE).show(); // TODO: fetch from strings
-            }
-        }
-    }
+	private class RetrieveIpTask extends AsyncTask<Void, Void, String> {
 
-    /**
-     * A {@link android.support.v4.app.FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    private static class SectionsPagerAdapter extends FragmentPagerAdapter {
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
+		protected String doInBackground(Void... voids) {
+			WifiManager wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
+			WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+			int ip = wifiInfo.getIpAddress();
 
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            return position == 0 ? new TypeListFragment() : new CurrentItemListFragment();
-        }
+			String ipString = String.format(
+					"%d.%d.%d.%d",
+					(ip & 0xff),
+					(ip >> 8 & 0xff),
+					(ip >> 16 & 0xff),
+					(ip >> 24 & 0xff));
+			return ipString;
+		}
 
-        @Override
-        public int getCount() {
-            return 2;
-        }
-    }
+		protected void onPostExecute(String ipString) {
+			final IAndroidAgent interfaceAgent = JadeUtils.getAndroidAgentInterface();
+			if (interfaceAgent == null) {
+				Log.i(TAG, "getAndroidAgentInterface return null");
+			} else {
+				SharedPreferences settings = getSharedPreferences(NfcActivity.PREFS_NAME, 0);
+				String firstName = settings.getString("firstName", getString(R.string.unknown_firstname));
+				String lastName = settings.getString("lastName", getString(R.string.unknown_lastname));
+				interfaceAgent.connectPlatform(firstName, lastName, ipString);
+			}
+		}
+	}
 }
