@@ -1,5 +1,7 @@
 package fr.utc.nf28.moka.agent;
 
+import java.util.ArrayList;
+
 import fr.utc.nf28.moka.util.JadeUtils;
 import jade.core.AID;
 import jade.core.Agent;
@@ -8,14 +10,14 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 
-import java.util.ArrayList;
-
 /**
  * A base agent that can register skills
  * and retrieve agents based on their skills
  */
 public class BaseAgent extends Agent {
-
+	private final DFAgentDescription mAgentDescription = new DFAgentDescription();
+	private final ServiceDescription mServiceDescription = new ServiceDescription();
+	private final ArrayList<AID> mResults = new ArrayList<AID>();
 
 	/**
 	 * Retrieve all the agents AID that have a skill
@@ -37,18 +39,25 @@ public class BaseAgent extends Agent {
 	 * @return an arrayList of AIDs
 	 */
 	protected ArrayList<AID> getAgentsWithSkill(String skillName, String skillType) {
-		ArrayList<AID> result = new ArrayList<AID>();
+		mResults.clear();
 		try {
-			DFAgentDescription[] agentDescriptions = DFService.search(this, getAgentDescriptionWithService(skillName, skillType));
+			final DFAgentDescription[] agentDescriptions = DFService.search(this, getAgentDescriptionWithService(skillName, skillType));
 			for (DFAgentDescription ad : agentDescriptions) {
-				result.add(ad.getName());
+				mResults.add(ad.getName());
 			}
 		} catch (FIPAException e) {
 			e.printStackTrace();
 		}
 
-		return result;
+		return mResults;
+	}
 
+	protected AID getFirstAgentWithSkill(String skillName, String skillType) {
+		return getAgentsWithSkill(skillName, skillType).get(0);
+	}
+
+	protected AID getFirstAgentWithSkill(String skillName) {
+		return getAgentsWithSkill(skillName).get(0);
 	}
 
 	/**
@@ -57,7 +66,7 @@ public class BaseAgent extends Agent {
 	 * @param skillName
 	 */
 	protected void registerSkill(String skillName) {
-		//use a default type
+		// use a default type
 		// type is a mandatory field of a service-description
 		registerSkill(skillName, JadeUtils.JADE_SKILL_TYPE_DEFAULT);
 	}
@@ -77,12 +86,11 @@ public class BaseAgent extends Agent {
 	}
 
 	private DFAgentDescription getAgentDescriptionWithService(String skillName, String skillType) {
-		DFAgentDescription agentDescription = new DFAgentDescription();
-		ServiceDescription serviceDescription = new ServiceDescription();
-		serviceDescription.setName(skillName);
-		serviceDescription.setType(skillType);
-		agentDescription.addServices(serviceDescription);
-		return agentDescription;
+		mAgentDescription.clearAllServices();
+		mServiceDescription.setName(skillName);
+		mServiceDescription.setType(skillType);
+		mAgentDescription.addServices(mServiceDescription);
+		return mAgentDescription;
 	}
 
 }
