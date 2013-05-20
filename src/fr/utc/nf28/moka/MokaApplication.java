@@ -7,21 +7,18 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.util.Log;
-import android.view.View;
 
-import fr.utc.nf28.moka.agent.AndroidAgent;
+import java.util.HashMap;
+
 import fr.utc.nf28.moka.data.ComputerType;
 import fr.utc.nf28.moka.data.MediaType;
 import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.data.TextType;
-import fr.utc.nf28.moka.util.JadeUtils;
 import jade.android.MicroRuntimeService;
 import jade.android.MicroRuntimeServiceBinder;
 import jade.android.RuntimeCallback;
 import jade.core.Profile;
 import jade.util.leap.Properties;
-
-import java.util.HashMap;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 

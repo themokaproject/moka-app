@@ -2,30 +2,21 @@ package fr.utc.nf28.moka;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.ServiceConnection;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ProgressBar;
 
-import java.util.UUID;
-
 import fr.utc.nf28.moka.agent.AndroidAgent;
 import fr.utc.nf28.moka.util.JadeUtils;
-import jade.android.MicroRuntimeService;
-import jade.android.MicroRuntimeServiceBinder;
 import jade.android.RuntimeCallback;
-import jade.core.Profile;
-import jade.util.leap.Properties;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
