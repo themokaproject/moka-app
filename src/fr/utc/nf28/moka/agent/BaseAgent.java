@@ -16,7 +16,6 @@ import jade.lang.acl.ACLMessage;
  * and retrieve agents based on their skills
  */
 public class BaseAgent extends Agent {
-	private final DFAgentDescription mAgentDescription = new DFAgentDescription();
 	private final ServiceDescription mServiceDescription = new ServiceDescription();
 	private final ArrayList<AID> mResults = new ArrayList<AID>();
 
@@ -102,11 +101,10 @@ public class BaseAgent extends Agent {
 	}
 
 	private DFAgentDescription getAgentDescriptionWithService(String skillName, String skillType) {
-		mAgentDescription.clearAllServices();
+		final DFAgentDescription dfAgentDescription = new DFAgentDescription();
 		mServiceDescription.setName(skillName);
 		mServiceDescription.setType(skillType);
-		mAgentDescription.addServices(mServiceDescription);
-		return mAgentDescription;
+		dfAgentDescription.addServices(mServiceDescription);
+		return dfAgentDescription;
 	}
-
 }
