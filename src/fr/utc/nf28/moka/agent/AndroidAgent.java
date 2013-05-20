@@ -1,7 +1,6 @@
 package fr.utc.nf28.moka.agent;
 
 import fr.utc.nf28.moka.util.JadeUtils;
-import jade.lang.acl.ACLMessage;
 
 public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 
@@ -15,10 +14,11 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 
 	@Override
 	public void connectPlatform() {
-		final ACLMessage connectionMessage = new ACLMessage(ACLMessage.REQUEST);
-		connectionMessage.addReceiver(getFirstAgentWithSkill(JadeUtils.JADE_SKILL_NAME_CONNECTION));
-		connectionMessage.setContent("{\"type\":\"connection\",\"request\":\"{\\\"color\\\":-1,\\\"ip\\\":\\\"127.0.0.1\\\",\\\"currentItem\\\":null,\\\"lastName\\\":\\\"Masciulli\\\",\\\"firstName\\\":\\\"Alexandre\\\"}\"}");
-		send(connectionMessage);
+		//TODO construct the content
+		sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_CONNECTION),
+				"{\"type\":\"connection\",\"request\":\"{\\\"color\\\":-1,\\\"ip\\\"" +
+						":\\\"127.0.0.1\\\",\\\"currentItem\\\":null,\\\"lastName\\\":" +
+						"\\\"Masciulli\\\",\\\"firstName\\\":\\\"Alexandre\\\"}\"}");
 	}
 
 	@Override
