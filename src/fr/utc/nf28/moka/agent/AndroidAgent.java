@@ -10,6 +10,7 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 	protected void setup() {
 		super.setup();
 		registerSkill(JadeUtils.JADE_SKILL_NAME_ANDROID);
+		registerO2AInterface(IAndroidAgent.class,this);
 	}
 
 	@Override
