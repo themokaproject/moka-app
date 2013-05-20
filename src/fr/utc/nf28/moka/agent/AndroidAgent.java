@@ -1,7 +1,6 @@
 package fr.utc.nf28.moka.agent;
 
 import fr.utc.nf28.moka.util.JadeUtils;
-import jade.core.Agent;
 import jade.lang.acl.ACLMessage;
 
 public class AndroidAgent extends BaseAgent implements IAndroidAgent {
@@ -10,7 +9,7 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 	protected void setup() {
 		super.setup();
 		registerSkill(JadeUtils.JADE_SKILL_NAME_ANDROID);
-		registerO2AInterface(IAndroidAgent.class,this);
+		registerO2AInterface(IAndroidAgent.class, this);
 	}
 
 	@Override
