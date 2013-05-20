@@ -124,7 +124,6 @@ public class DeviceConfigurationActivity extends Activity {
 	private CheckBox mCheckContainer;
 	private CheckBox mCheckAgent;
 
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -173,27 +172,29 @@ public class DeviceConfigurationActivity extends Activity {
 		};
 
 		//implement callback for Jade container creation
-		mAgentCallback = new RuntimeCallback<Void>() {
-			@Override
-			public void onSuccess(Void aVoid) {
-				//Agent successfully started
-				Log.i(TAG, "start agent " + JadeUtils.ANDROID_AGENT_NICKNAME + " success");
-				DeviceConfigurationActivity.this.runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						mProgressAgent.setVisibility(View.GONE);
-						mCheckAgent.setVisibility(View.VISIBLE);
-					}
-				});
-				launchMainActivity();
-			}
+		mAgentCallback = new
 
-			@Override
-			public void onFailure(Throwable throwable) {
-				//Agent startup error
-				Log.e(TAG, "start agent " + JadeUtils.ANDROID_AGENT_NICKNAME + " fail", throwable);
-			}
-		};
+				RuntimeCallback<Void>() {
+					@Override
+					public void onSuccess(Void aVoid) {
+						//Agent successfully started
+						Log.i(TAG, "start agent " + JadeUtils.ANDROID_AGENT_NICKNAME + " success");
+						DeviceConfigurationActivity.this.runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								mProgressAgent.setVisibility(View.GONE);
+								mCheckAgent.setVisibility(View.VISIBLE);
+							}
+						});
+						launchMainActivity();
+					}
+
+					@Override
+					public void onFailure(Throwable throwable) {
+						//Agent startup error
+						Log.e(TAG, "start agent " + JadeUtils.ANDROID_AGENT_NICKNAME + " fail", throwable);
+					}
+				};
 
 
 		Log.i(TAG, "activity start with ssid = " + mSSID + " and pwd = " + mPWD);
@@ -237,7 +238,6 @@ public class DeviceConfigurationActivity extends Activity {
 		Log.i(TAG, "addNetWork return code : " + String.valueOf(netId));
 		final boolean b = mWifiManager.enableNetwork(netId, true);
 		Log.i(TAG, "enableNetwork return code : " + String.valueOf(b));
-
 	}
 
 	/**
@@ -261,12 +261,12 @@ public class DeviceConfigurationActivity extends Activity {
 		Log.i(TAG, "addNetWork return code : " + String.valueOf(netId));
 		final boolean b = mWifiManager.enableNetwork(netId, true);
 		Log.i(TAG, "enableNetwork return code : " + String.valueOf(b));
-
 	}
 
 	private void launchMainActivity() {
-		startActivity(new Intent(DeviceConfigurationActivity.this, MainActivity.class));
-		finish();
+		final Intent mainIntent = new Intent(this, MainActivity.class);
+		mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+		startActivity(mainIntent);
 	}
 
 	@Override
@@ -284,6 +284,4 @@ public class DeviceConfigurationActivity extends Activity {
 		myIntentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
 		registerReceiver(MokaWifiStateChangedReceiver, myIntentFilter);
 	}
-
-
 }
