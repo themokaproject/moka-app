@@ -9,7 +9,7 @@ public interface IAndroidAgent {
 	/**
 	 * send information about the user
 	 */
-	public void connectPlatform();
+	public void connectPlatform(String firstName, String lastName, String ip);
 
 	/**
 	 * create new item on platform

@@ -78,6 +78,8 @@
     <string name="agent">Lancement de l\'agent android JADE</string>
     <string name="name">Nom</string>
     <string name="first_name">Prénom</string>
+    <string name="unknown_lastname">Inconnu</string>
+    <string name="unknown_firstname">Inconnu</string>
 
 </resources>
 

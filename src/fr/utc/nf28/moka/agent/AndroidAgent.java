@@ -13,12 +13,11 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 	}
 
 	@Override
-	public void connectPlatform() {
-		//TODO construct the content
-		sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_CONNECTION),
-				"{\"type\":\"connection\",\"request\":\"{\\\"color\\\":-1,\\\"ip\\\"" +
-						":\\\"127.0.0.1\\\",\\\"currentItem\\\":null,\\\"lastName\\\":" +
-						"\\\"Masciulli\\\",\\\"firstName\\\":\\\"Alexandre\\\"}\"}");
+	public void connectPlatform(String firstName, String lastName, String ip) {
+        String json = "{\"type\":\"connection\",\"request\":\"{\\\"color\\\":-1,\\\"ip\\\"" +
+                ":\\\"" + ip + "\\\",\\\"currentItem\\\":null,\\\"lastName\\\":\\\"" + lastName + "\\\",\\\"firstName\\\":\\\"" + firstName + "\\\"}\"}";
+
+		sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_CONNECTION), json);
 	}
 
 	@Override
