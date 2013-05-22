@@ -2,6 +2,19 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <PreferenceCategory android:title="@string/category_user">
+        <EditTextPreference
+            android:key="MokaUserFirstName"
+            android:title="@string/preference_first_name_title"
+            android:dialogTitle="@string/preference_first_dialog_title">
+        </EditTextPreference>
+        <EditTextPreference
+            android:key="MokaUserLastName"
+            android:title="@string/preference_last_name_title"
+            android:dialogTitle="@string/preference_last_dialog_title">
+        </EditTextPreference>
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/category_wireless">
         <EditTextPreference
             android:key="preference_wifi_ssid"
