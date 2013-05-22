@@ -121,16 +121,6 @@ public class SettingsActivity extends Activity implements SharedPreferences.OnSh
 			makeTextSuccess(getResources().getString(R.string.change_success_ssid));
 		} else if (key.equals(SharedPreferencesUtils.KEY_PREF_PWD)) {
 			makeTextSuccess(getResources().getString(R.string.change_success_pwd));
-		} else if (key.equals(SharedPreferencesUtils.KEY_PREF_IP)) {
-			//check if ip is a valid one
-			if (RegexUtils.validateIpAddress(sharedPreferences.getString(key, ""))) {
-				makeTextSuccess(getResources().getString(R.string.change_success_ip));
-			} else {
-				makeTextError(getResources().getString(R.string.change_error_ip));
-				//TODO restor dafault value
-//				setPreference(sharedPreferences,key,SharedPreferencesUtils.DEFAULT_PREF_IP);
-				return;
-			}
 		} else if (key.equals(SharedPreferencesUtils.KEY_PREF_PORT)) {
 			//TODO check port valid ?
 			makeTextSuccess(getResources().getString(R.string.change_success_port));
