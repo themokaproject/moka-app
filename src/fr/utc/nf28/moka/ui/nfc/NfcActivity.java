@@ -138,6 +138,12 @@ public class NfcActivity extends SherlockActivity {
 	}
 
 	@Override
+	protected void onDestroy() {
+		Crouton.cancelAllCroutons();
+		super.onDestroy();
+	}
+
+	@Override
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
 
