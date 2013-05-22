@@ -51,6 +51,7 @@
     <!-- Configuration Preferences -->
     <string name="category_wireless">Wifi</string>
     <string name="category_jade">Jade</string>
+    <string name="category_user">User</string>
     <string name="preference_ip_title">Adresse IP</string>
     <string name="preference_ip_summary">IP de la machine exécutant le mainContainer JADE</string>
     <string name="preference_ip_dialog_title">Adresse IP</string>
@@ -65,6 +66,10 @@
     <string name="preference_pwd_title">Password</string>
     <string name="preference_pwd_summary">Mot de passe du réseau WiFi</string>
     <string name="preference_pwd_dialog_title">Password WiFi</string>
+    <string name="preference_first_name_title">Prénom</string>
+    <string name="preference_first_dialog_title">Entrez votre prénom</string>
+    <string name="preference_last_name_title">Nom</string>
+    <string name="preference_last_dialog_title">Entrez votre nom</string>
 
     <!-- Manual Configuration Activity -->
     <string name="button_write">Écrire TAG</string>
