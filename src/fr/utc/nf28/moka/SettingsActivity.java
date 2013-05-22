@@ -39,7 +39,7 @@ public class SettingsActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.manual_configuration_activity);
+		setContentView(R.layout.settings_activity);
 
 		mPrefs = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
 
