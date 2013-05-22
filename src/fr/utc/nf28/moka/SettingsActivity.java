@@ -42,6 +42,7 @@ public class SettingsActivity extends Activity implements SharedPreferences.OnSh
 		setContentView(R.layout.settings_activity);
 
 		mPrefs = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
+		mPrefs.registerOnSharedPreferenceChangeListener(this);
 
 		//display fragment as main content
 		getFragmentManager().beginTransaction().add(R.id.settings, new ConfigurationFragment()).commit();
@@ -103,8 +104,10 @@ public class SettingsActivity extends Activity implements SharedPreferences.OnSh
 	}
 
 	@Override
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+		Crouton.makeText(SettingsActivity.this
+				, key
+				, CroutonUtils.INFO_MOKA_STYLE).show();
 	}
 }
 
