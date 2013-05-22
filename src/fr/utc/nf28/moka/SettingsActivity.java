@@ -107,7 +107,27 @@ public class SettingsActivity extends Activity implements SharedPreferences.OnSh
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 		if(key.equals(SharedPreferencesUtils.KEY_PREF_FIRST_NAME)){
 			Crouton.makeText(SettingsActivity.this
-					, key
+					, getResources().getString(R.string.change_success_first_name)
+					, CroutonUtils.INFO_MOKA_STYLE).show();
+		}else if(key.equals(SharedPreferencesUtils.KEY_PREF_LAST_NAME)){
+			Crouton.makeText(SettingsActivity.this
+					, getResources().getString(R.string.change_success_last_name)
+					, CroutonUtils.INFO_MOKA_STYLE).show();
+		}else if(key.equals(SharedPreferencesUtils.KEY_PREF_SSID)){
+			Crouton.makeText(SettingsActivity.this
+					, getResources().getString(R.string.change_success_ssid)
+					, CroutonUtils.INFO_MOKA_STYLE).show();
+		}else if(key.equals(SharedPreferencesUtils.KEY_PREF_PWD)){
+			Crouton.makeText(SettingsActivity.this
+					, getResources().getString(R.string.change_success_pwd)
+					, CroutonUtils.INFO_MOKA_STYLE).show();
+		}else if(key.equals(SharedPreferencesUtils.KEY_PREF_IP)){
+			Crouton.makeText(SettingsActivity.this
+					, getResources().getString(R.string.change_success_ip)
+					, CroutonUtils.INFO_MOKA_STYLE).show();
+		}else if(key.equals(SharedPreferencesUtils.KEY_PREF_PORT)){
+			Crouton.makeText(SettingsActivity.this
+					, getResources().getString(R.string.change_success_port)
 					, CroutonUtils.INFO_MOKA_STYLE).show();
 		}
 	}
