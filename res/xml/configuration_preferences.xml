@@ -6,13 +6,13 @@
         <EditTextPreference
             android:key="MokaUserFirstName"
             android:title="@string/preference_first_name_title"
-            android:dialogTitle="@string/preference_first_dialog_title">
-        </EditTextPreference>
+            android:summary="@string/preference_first_name_summary"
+            android:dialogTitle="@string/preference_first_dialog_title"></EditTextPreference>
         <EditTextPreference
             android:key="MokaUserLastName"
             android:title="@string/preference_last_name_title"
-            android:dialogTitle="@string/preference_last_dialog_title">
-        </EditTextPreference>
+            android:summary="@string/preference_last_name_summary"
+            android:dialogTitle="@string/preference_last_dialog_title"></EditTextPreference>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/category_wireless">
@@ -20,14 +20,12 @@
             android:key="preference_wifi_ssid"
             android:title="@string/preference_ssid_title"
             android:summary="@string/preference_ssid_summary"
-            android:dialogTitle="@string/preference_ssid_dialog_title">
-        </EditTextPreference>
+            android:dialogTitle="@string/preference_ssid_dialog_title"></EditTextPreference>
         <EditTextPreference
             android:key="preference_wifi_password"
             android:title="@string/preference_pwd_title"
             android:summary="@string/preference_pwd_summary"
-            android:dialogTitle="@string/preference_pwd_dialog_title">
-        </EditTextPreference>
+            android:dialogTitle="@string/preference_pwd_dialog_title"></EditTextPreference>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/category_jade">
@@ -36,15 +34,13 @@
             android:title="@string/preference_ip_title"
             android:summary="@string/preference_ip_summary"
             android:dialogTitle="@string/preference_ip_dialog_title"
-            android:defaultValue="@string/preference_ip_default">
-        </EditTextPreference>
+            android:defaultValue="@string/preference_ip_default"></EditTextPreference>
         <EditTextPreference
             android:key="preference_jade_port"
             android:title="@string/preference_port_title"
             android:summary="@string/preference_port_summary"
             android:dialogTitle="@string/preference_port_dialog_title"
-            android:defaultValue="@string/preference_port_default">
-        </EditTextPreference>
+            android:defaultValue="@string/preference_port_default"></EditTextPreference>
     </PreferenceCategory>
 
 </PreferenceScreen>

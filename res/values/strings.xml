@@ -67,8 +67,10 @@
     <string name="preference_pwd_summary">Mot de passe du réseau WiFi</string>
     <string name="preference_pwd_dialog_title">Password WiFi</string>
     <string name="preference_first_name_title">Prénom</string>
+    <string name="preference_first_name_summary">Prénom de l'utilisateur</string>
     <string name="preference_first_dialog_title">Entrez votre prénom</string>
     <string name="preference_last_name_title">Nom</string>
+    <string name="preference_last_name_summary">Nom de l'utilisateur</string>
     <string name="preference_last_dialog_title">Entrez votre nom</string>
 
     <!-- Manual Configuration Activity -->
