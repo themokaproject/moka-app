@@ -19,10 +19,12 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
+import de.keyboardsurfer.android.widget.crouton.Crouton;
 import fr.utc.nf28.moka.DeviceConfigurationActivity;
 import fr.utc.nf28.moka.MainActivity;
 import fr.utc.nf28.moka.SettingsActivity;
 import fr.utc.nf28.moka.R;
+import fr.utc.nf28.moka.util.CroutonUtils;
 import fr.utc.nf28.moka.util.NfcUtils;
 import fr.utc.nf28.moka.util.SharedPreferencesUtils;
 
@@ -33,6 +35,7 @@ public class NfcActivity extends SherlockActivity {
 	private NfcAdapter mNfcAdapter;
 	private EditText mFirstName;
 	private EditText mLastName;
+	private SharedPreferences mPrefs;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,10 +44,10 @@ public class NfcActivity extends SherlockActivity {
 		mFirstName = (EditText) findViewById(R.id.firstnamefield);
 		mLastName = (EditText) findViewById(R.id.lastnamefield);
 
-		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-		mFirstName.setText(prefs.getString(SharedPreferencesUtils.KEY_PREF_FIRST_NAME, ""));
-		mLastName.setText(prefs.getString(SharedPreferencesUtils.KEY_PREF_LAST_NAME, ""));
+		mFirstName.setText(mPrefs.getString(SharedPreferencesUtils.KEY_PREF_FIRST_NAME, ""));
+		mLastName.setText(mPrefs.getString(SharedPreferencesUtils.KEY_PREF_LAST_NAME, ""));
 
 		findViewById(R.id.skip).setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -60,7 +63,7 @@ public class NfcActivity extends SherlockActivity {
 				final CharSequence firstName = mFirstName.getText();
 				final CharSequence lastName = mLastName.getText();
 				if (firstName != null && lastName != null) {
-					final SharedPreferences.Editor editor = prefs.edit();
+					final SharedPreferences.Editor editor = mPrefs.edit();
 					editor.putString(SharedPreferencesUtils.KEY_PREF_FIRST_NAME, firstName.toString());
 					editor.putString(SharedPreferencesUtils.KEY_PREF_LAST_NAME, lastName.toString());
 					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
@@ -69,13 +72,14 @@ public class NfcActivity extends SherlockActivity {
 						editor.commit();
 					}
 				}
-				final Intent i = new Intent(NfcActivity.this, DeviceConfigurationActivity.class);
-				final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(NfcActivity.this);
-				i.putExtra(DeviceConfigurationActivity.EXTRA_SSID, prefs.getString(SharedPreferencesUtils.KEY_PREF_SSID, ""));
-				i.putExtra(DeviceConfigurationActivity.EXTRA_PWD, prefs.getString(SharedPreferencesUtils.KEY_PREF_PWD, ""));
-				i.putExtra(DeviceConfigurationActivity.EXTRA_IP, prefs.getString(SharedPreferencesUtils.KEY_PREF_IP, ""));
-				i.putExtra(DeviceConfigurationActivity.EXTRA_PORT, prefs.getString(SharedPreferencesUtils.KEY_PREF_PORT, ""));
-				startActivity(i);
+				if(checkPreferences()){
+					final Intent i = new Intent(NfcActivity.this, DeviceConfigurationActivity.class);
+					i.putExtra(DeviceConfigurationActivity.EXTRA_SSID, mPrefs.getString(SharedPreferencesUtils.KEY_PREF_SSID, ""));
+					i.putExtra(DeviceConfigurationActivity.EXTRA_PWD, mPrefs.getString(SharedPreferencesUtils.KEY_PREF_PWD, ""));
+					i.putExtra(DeviceConfigurationActivity.EXTRA_IP, mPrefs.getString(SharedPreferencesUtils.KEY_PREF_IP, ""));
+					i.putExtra(DeviceConfigurationActivity.EXTRA_PORT, mPrefs.getString(SharedPreferencesUtils.KEY_PREF_PORT, ""));
+					startActivity(i);
+				}
 			}
 		});
 
@@ -83,6 +87,17 @@ public class NfcActivity extends SherlockActivity {
 		if (mNfcAdapter == null || !mNfcAdapter.isEnabled()) {
 			((TextView) findViewById(R.id.info)).setText(R.string.info_no_nfc_text);
 		}
+	}
+
+	public boolean checkPreferences(){
+		final String ssid = mPrefs.getString(SharedPreferencesUtils.KEY_PREF_SSID, "");
+		if(ssid.equals("")){
+			Crouton.makeText(this
+					, getResources().getString(R.string.no_ssid)
+					, CroutonUtils.INFO_MOKA_STYLE).show();
+			return false;
+		}
+		return true;
 	}
 
 	@Override

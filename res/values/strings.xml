@@ -88,5 +88,8 @@
     <string name="unknown_lastname">Inconnu</string>
     <string name="unknown_firstname">Inconnu</string>
 
+    <!-- Croutons toast -->
+    <string name="no_ssid">SSID invalide, vérifier les paramètres.</string>
+
 </resources>
 
