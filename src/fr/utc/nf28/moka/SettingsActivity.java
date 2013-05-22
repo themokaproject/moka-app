@@ -45,7 +45,6 @@ public class SettingsActivity extends Activity implements SharedPreferences.OnSh
 		setContentView(R.layout.settings_activity);
 
 		mPrefs = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
-		mPrefs.registerOnSharedPreferenceChangeListener(this);
 
 		//display fragment as main content
 		getFragmentManager().beginTransaction().add(R.id.settings, new ConfigurationFragment()).commit();
@@ -89,8 +88,14 @@ public class SettingsActivity extends Activity implements SharedPreferences.OnSh
 	@Override
 	protected void onPause() {
 		super.onPause();
-
+		mPrefs.unregisterOnSharedPreferenceChangeListener(this);
 		disableNfcDiscovering();
+	}
+
+	@Override
+	protected void onResume() {
+		mPrefs.registerOnSharedPreferenceChangeListener(this);
+		super.onResume();
 	}
 
 	@Override
@@ -130,10 +135,11 @@ public class SettingsActivity extends Activity implements SharedPreferences.OnSh
 						, getResources().getString(R.string.change_success_ip)
 						, CroutonUtils.INFO_MOKA_STYLE).show();
 			} else {
-				setPreference(sharedPreferences,key,SharedPreferencesUtils.DEFAULT_PREF_IP);
 				Crouton.makeText(SettingsActivity.this
 						, getResources().getString(R.string.change_error_ip)
 						, Style.ALERT).show();
+				//TODO restor dafault value
+//				setPreference(sharedPreferences,key,SharedPreferencesUtils.DEFAULT_PREF_IP);
 				return;
 			}
 		} else if (key.equals(SharedPreferencesUtils.KEY_PREF_PORT)) {
@@ -144,8 +150,17 @@ public class SettingsActivity extends Activity implements SharedPreferences.OnSh
 		}
 	}
 
+	/**
+	 * use to restort default value after wrong settings change
+	 * //TODO does'nt work, lauch onSharedPreferenceLister and doens't save default
+	 *
+	 * @param prefs
+	 * @param key
+	 * @param content
+	 */
 	public void setPreference(SharedPreferences prefs, String key, String content) {
-		final SharedPreferences.Editor editor = mPrefs.edit();
+		final SharedPreferences.Editor editor = prefs.edit();
+		editor.clear();
 		editor.putString(key, content);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
 			editor.apply();
