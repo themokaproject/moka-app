@@ -28,6 +28,7 @@ import fr.utc.nf28.moka.ui.TypeListFragment;
 import fr.utc.nf28.moka.ui.nfc.NfcActivity;
 import fr.utc.nf28.moka.util.CroutonUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
+import fr.utc.nf28.moka.util.SharedPreferencesUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
@@ -188,8 +189,8 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 				Log.i(TAG, "getAndroidAgentInterface return null");
 			} else {
 				final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-				final String firstName = prefs.getString(NfcActivity.PERSISTENT_FIRST_NAME, getString(R.string.unknown_firstname));
-				final String lastName = prefs.getString(NfcActivity.PERSISTENT_LAST_NAME, getString(R.string.unknown_lastname));
+				final String firstName = prefs.getString(SharedPreferencesUtils.KEY_PREF_FIRST_NAME, getString(R.string.unknown_firstname));
+				final String lastName = prefs.getString(SharedPreferencesUtils.KEY_PREF_LAST_NAME, getString(R.string.unknown_lastname));
 				interfaceAgent.connectPlatform(firstName, lastName, ipString);
 			}
 		}
