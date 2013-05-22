@@ -87,6 +87,16 @@ public class NfcActivity extends SherlockActivity {
 	}
 
 	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.menu_settings:
+				startActivity(new Intent(this, ManualConfigurationActivity.class));
+				return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
 	protected void onResume() {
 		super.onResume();
 
