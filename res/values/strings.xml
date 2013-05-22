@@ -76,7 +76,6 @@
 
     <!-- Manual Configuration Activity -->
     <string name="button_write">Écrire TAG</string>
-    <string name="button_connect">Connexion</string>
     <string name="touch_a_tag">Touch a tag</string>
 
     <!-- Device Configuration Activity -->
