@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.SherlockActivity;
+
 import fr.utc.nf28.moka.DeviceConfigurationActivity;
 import fr.utc.nf28.moka.MainActivity;
 import fr.utc.nf28.moka.ManualConfigurationActivity;
@@ -25,7 +27,7 @@ import fr.utc.nf28.moka.util.SharedPreferencesUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
-public class NfcActivity extends Activity {
+public class NfcActivity extends SherlockActivity {
 	private static final String TAG = makeLogTag(NfcActivity.class);
 	private NfcAdapter mNfcAdapter;
 	private EditText mFirstName;
