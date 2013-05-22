@@ -17,4 +17,12 @@ public class SharedPreferencesUtils {
 	 * network port of jade main container
 	 */
 	public static final String KEY_PREF_PORT = "preference_jade_port";
+	/**
+	 * user last name
+	 */
+	public static final String KEY_PREF_LAST_NAME = "MokaUserLastName";
+	/**
+	 * user first name
+	 */
+	public static final String KEY_PREF_FIRST_NAME = "MokaUserFirstName";
 }
