@@ -109,5 +109,11 @@ public class SettingsActivity extends Activity implements SharedPreferences.OnSh
 				, key
 				, CroutonUtils.INFO_MOKA_STYLE).show();
 	}
+
+	@Override
+	protected void onDestroy() {
+		Crouton.cancelAllCroutons();
+		super.onDestroy();
+	}
 }
 
