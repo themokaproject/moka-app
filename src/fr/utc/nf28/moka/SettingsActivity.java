@@ -105,9 +105,11 @@ public class SettingsActivity extends Activity implements SharedPreferences.OnSh
 
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-		Crouton.makeText(SettingsActivity.this
-				, key
-				, CroutonUtils.INFO_MOKA_STYLE).show();
+		if(key.equals(SharedPreferencesUtils.KEY_PREF_FIRST_NAME)){
+			Crouton.makeText(SettingsActivity.this
+					, key
+					, CroutonUtils.INFO_MOKA_STYLE).show();
+		}
 	}
 
 	@Override

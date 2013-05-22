@@ -91,6 +91,12 @@
     <!-- Croutons toast -->
     <string name="no_ssid">SSID non renseigné, vérifier les paramètres.</string>
     <string name="no_pwd">Password wifi non renseigné, vérifier les paramètres.</string>
+    <string name="change_success_first_name">Prénom enregistré.</string>
+    <string name="change_success_last_name">Nom enregistré.</string>
+    <string name="change_success_ssid">SSID enregistré.</string>
+    <string name="change_success_pwd">Password wifi enregistré.</string>
+    <string name="change_success_ip">JADE IP enregistrée.</string>
+    <string name="change_success_port">JADE port enregistré.</string>
 
 </resources>
 
