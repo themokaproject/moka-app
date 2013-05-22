@@ -20,11 +20,11 @@ import fr.utc.nf28.moka.util.SharedPreferencesUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
-public class ManualConfigurationActivity extends Activity {
+public class SettingsActivity extends Activity {
 	/**
 	 * Tag for log cat
 	 */
-	private static final String TAG = makeLogTag(ManualConfigurationActivity.class);
+	private static final String TAG = makeLogTag(SettingsActivity.class);
 	/**
 	 * scheme for tag
 	 */
@@ -41,7 +41,7 @@ public class ManualConfigurationActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.manual_configuration_activity);
 
-		mPrefs = PreferenceManager.getDefaultSharedPreferences(ManualConfigurationActivity.this);
+		mPrefs = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
 
 		//display fragment as main content
 		getFragmentManager().beginTransaction().add(R.id.settings, new ConfigurationFragment()).commit();
@@ -49,7 +49,7 @@ public class ManualConfigurationActivity extends Activity {
 		findViewById(R.id.connect).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				final Intent i = new Intent(ManualConfigurationActivity.this, DeviceConfigurationActivity.class);
+				final Intent i = new Intent(SettingsActivity.this, DeviceConfigurationActivity.class);
 				i.putExtra(DeviceConfigurationActivity.EXTRA_SSID, mPrefs.getString(SharedPreferencesUtils.KEY_PREF_SSID, ""));
 				i.putExtra(DeviceConfigurationActivity.EXTRA_PWD, mPrefs.getString(SharedPreferencesUtils.KEY_PREF_PWD, ""));
 				i.putExtra(DeviceConfigurationActivity.EXTRA_IP, mPrefs.getString(SharedPreferencesUtils.KEY_PREF_IP, ""));
@@ -66,7 +66,7 @@ public class ManualConfigurationActivity extends Activity {
 				@Override
 				public void onClick(View view) {
 					enableNfcDiscovering();
-					Crouton.makeText(ManualConfigurationActivity.this
+					Crouton.makeText(SettingsActivity.this
 							, getResources().getString(R.string.touch_a_tag)
 							, CroutonUtils.INFO_MOKA_STYLE).show();
 				}

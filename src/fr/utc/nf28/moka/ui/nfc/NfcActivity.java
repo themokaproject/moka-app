@@ -21,7 +21,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 import fr.utc.nf28.moka.DeviceConfigurationActivity;
 import fr.utc.nf28.moka.MainActivity;
-import fr.utc.nf28.moka.ManualConfigurationActivity;
+import fr.utc.nf28.moka.SettingsActivity;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.util.NfcUtils;
 import fr.utc.nf28.moka.util.SharedPreferencesUtils;
@@ -70,7 +70,7 @@ public class NfcActivity extends SherlockActivity {
 					}
 				}
 
-				startActivity(new Intent(NfcActivity.this, ManualConfigurationActivity.class));
+				startActivity(new Intent(NfcActivity.this, SettingsActivity.class));
 			}
 		});
 
@@ -90,7 +90,7 @@ public class NfcActivity extends SherlockActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.menu_settings:
-				startActivity(new Intent(this, ManualConfigurationActivity.class));
+				startActivity(new Intent(this, SettingsActivity.class));
 				return true;
 		}
 		return super.onOptionsItemSelected(item);

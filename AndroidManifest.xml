@@ -60,7 +60,7 @@
                 android:value=".ui.nfc.NfcActivity"/>
         </activity>
         <activity
-            android:name=".ManualConfigurationActivity"
+            android:name=".SettingsActivity"
             android:screenOrientation="portrait"
             android:parentActivityName=".ui.nfc.NfcActivity">
             <meta-data
