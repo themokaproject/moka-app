@@ -13,9 +13,11 @@ import android.preference.PreferenceManager;
 import android.view.View;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.utc.nf28.moka.ui.ConfigurationFragment;
 import fr.utc.nf28.moka.util.CroutonUtils;
 import fr.utc.nf28.moka.util.NfcUtils;
+import fr.utc.nf28.moka.util.RegexUtils;
 import fr.utc.nf28.moka.util.SharedPreferencesUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
@@ -123,9 +125,16 @@ public class SettingsActivity extends Activity implements SharedPreferences.OnSh
 					, CroutonUtils.INFO_MOKA_STYLE).show();
 		}else if(key.equals(SharedPreferencesUtils.KEY_PREF_IP)){
 			//TODO check ip valid ?
-			Crouton.makeText(SettingsActivity.this
-					, getResources().getString(R.string.change_success_ip)
-					, CroutonUtils.INFO_MOKA_STYLE).show();
+			if(RegexUtils.validateIpAddress(sharedPreferences.getString(key,""))){
+				Crouton.makeText(SettingsActivity.this
+						, getResources().getString(R.string.change_success_ip)
+						, CroutonUtils.INFO_MOKA_STYLE).show();
+			}else{
+				Crouton.makeText(SettingsActivity.this
+						, getResources().getString(R.string.change_error_ip)
+						, Style.ALERT).show();
+				return;
+			}
 		}else if(key.equals(SharedPreferencesUtils.KEY_PREF_PORT)){
 			//TODO check port valid ?
 			Crouton.makeText(SettingsActivity.this
