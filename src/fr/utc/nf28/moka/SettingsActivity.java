@@ -46,18 +46,6 @@ public class SettingsActivity extends Activity {
 		//display fragment as main content
 		getFragmentManager().beginTransaction().add(R.id.settings, new ConfigurationFragment()).commit();
 
-		findViewById(R.id.connect).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				final Intent i = new Intent(SettingsActivity.this, DeviceConfigurationActivity.class);
-				i.putExtra(DeviceConfigurationActivity.EXTRA_SSID, mPrefs.getString(SharedPreferencesUtils.KEY_PREF_SSID, ""));
-				i.putExtra(DeviceConfigurationActivity.EXTRA_PWD, mPrefs.getString(SharedPreferencesUtils.KEY_PREF_PWD, ""));
-				i.putExtra(DeviceConfigurationActivity.EXTRA_IP, mPrefs.getString(SharedPreferencesUtils.KEY_PREF_IP, ""));
-				i.putExtra(DeviceConfigurationActivity.EXTRA_PORT, mPrefs.getString(SharedPreferencesUtils.KEY_PREF_PORT, ""));
-				startActivity(i);
-			}
-		});
-
 		mNfcAdapter = NfcAdapter.getDefaultAdapter(getApplicationContext());
 		if (mNfcAdapter == null || !mNfcAdapter.isEnabled()) {
 			findViewById(R.id.write).setClickable(false);
