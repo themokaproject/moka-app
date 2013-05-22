@@ -69,8 +69,13 @@ public class NfcActivity extends SherlockActivity {
 						editor.commit();
 					}
 				}
-
-				startActivity(new Intent(NfcActivity.this, SettingsActivity.class));
+				final Intent i = new Intent(NfcActivity.this, DeviceConfigurationActivity.class);
+				final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(NfcActivity.this);
+				i.putExtra(DeviceConfigurationActivity.EXTRA_SSID, prefs.getString(SharedPreferencesUtils.KEY_PREF_SSID, ""));
+				i.putExtra(DeviceConfigurationActivity.EXTRA_PWD, prefs.getString(SharedPreferencesUtils.KEY_PREF_PWD, ""));
+				i.putExtra(DeviceConfigurationActivity.EXTRA_IP, prefs.getString(SharedPreferencesUtils.KEY_PREF_IP, ""));
+				i.putExtra(DeviceConfigurationActivity.EXTRA_PORT, prefs.getString(SharedPreferencesUtils.KEY_PREF_PORT, ""));
+				startActivity(i);
 			}
 		});
 
