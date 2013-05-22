@@ -122,10 +122,12 @@ public class SettingsActivity extends Activity implements SharedPreferences.OnSh
 					, getResources().getString(R.string.change_success_pwd)
 					, CroutonUtils.INFO_MOKA_STYLE).show();
 		}else if(key.equals(SharedPreferencesUtils.KEY_PREF_IP)){
+			//TODO check ip valid ?
 			Crouton.makeText(SettingsActivity.this
 					, getResources().getString(R.string.change_success_ip)
 					, CroutonUtils.INFO_MOKA_STYLE).show();
 		}else if(key.equals(SharedPreferencesUtils.KEY_PREF_PORT)){
+			//TODO check port valid ?
 			Crouton.makeText(SettingsActivity.this
 					, getResources().getString(R.string.change_success_port)
 					, CroutonUtils.INFO_MOKA_STYLE).show();
