@@ -23,13 +23,6 @@
             android:id="@+id/write"
             android:layout_marginRight="10dp" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/button_connect"
-            android:id="@+id/connect"
-            android:layout_marginLeft="10dp" />
-
     </LinearLayout>
 
     <LinearLayout
