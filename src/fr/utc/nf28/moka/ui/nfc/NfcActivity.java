@@ -1,6 +1,5 @@
 package fr.utc.nf28.moka.ui.nfc;
 
-import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -17,6 +16,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
 import fr.utc.nf28.moka.DeviceConfigurationActivity;
 import fr.utc.nf28.moka.MainActivity;
@@ -77,6 +78,12 @@ public class NfcActivity extends SherlockActivity {
 		if (mNfcAdapter == null || !mNfcAdapter.isEnabled()) {
 			((TextView) findViewById(R.id.info)).setText(R.string.info_no_nfc_text);
 		}
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getSupportMenuInflater().inflate(R.menu.activity_nfc, menu);
+		return true;
 	}
 
 	@Override
