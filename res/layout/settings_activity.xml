@@ -6,22 +6,20 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:id="@+id/button"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:gravity="center"
-        android:layout_marginBottom="10dp">
+        android:gravity="center">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:text="@string/button_write"
-            android:id="@+id/write"
-            android:layout_marginRight="10dp" />
+            android:id="@+id/write" />
 
     </LinearLayout>
 
