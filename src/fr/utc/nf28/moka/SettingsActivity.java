@@ -114,39 +114,26 @@ public class SettingsActivity extends Activity implements SharedPreferences.OnSh
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 		if (key.equals(SharedPreferencesUtils.KEY_PREF_FIRST_NAME)) {
-			Crouton.makeText(SettingsActivity.this
-					, getResources().getString(R.string.change_success_first_name)
-					, CroutonUtils.INFO_MOKA_STYLE).show();
+			makeTextSuccess(getResources().getString(R.string.change_success_first_name));
 		} else if (key.equals(SharedPreferencesUtils.KEY_PREF_LAST_NAME)) {
-			Crouton.makeText(SettingsActivity.this
-					, getResources().getString(R.string.change_success_last_name)
-					, CroutonUtils.INFO_MOKA_STYLE).show();
+			makeTextSuccess(getResources().getString(R.string.change_success_last_name));
 		} else if (key.equals(SharedPreferencesUtils.KEY_PREF_SSID)) {
-			Crouton.makeText(SettingsActivity.this
-					, getResources().getString(R.string.change_success_ssid)
-					, CroutonUtils.INFO_MOKA_STYLE).show();
+			makeTextSuccess(getResources().getString(R.string.change_success_ssid));
 		} else if (key.equals(SharedPreferencesUtils.KEY_PREF_PWD)) {
-			Crouton.makeText(SettingsActivity.this
-					, getResources().getString(R.string.change_success_pwd)
-					, CroutonUtils.INFO_MOKA_STYLE).show();
+			makeTextSuccess(getResources().getString(R.string.change_success_pwd));
 		} else if (key.equals(SharedPreferencesUtils.KEY_PREF_IP)) {
+			//check if ip is a valid one
 			if (RegexUtils.validateIpAddress(sharedPreferences.getString(key, ""))) {
-				Crouton.makeText(SettingsActivity.this
-						, getResources().getString(R.string.change_success_ip)
-						, CroutonUtils.INFO_MOKA_STYLE).show();
+				makeTextSuccess(getResources().getString(R.string.change_success_ip));
 			} else {
-				Crouton.makeText(SettingsActivity.this
-						, getResources().getString(R.string.change_error_ip)
-						, Style.ALERT).show();
+				makeTextError(getResources().getString(R.string.change_error_ip));
 				//TODO restor dafault value
 //				setPreference(sharedPreferences,key,SharedPreferencesUtils.DEFAULT_PREF_IP);
 				return;
 			}
 		} else if (key.equals(SharedPreferencesUtils.KEY_PREF_PORT)) {
 			//TODO check port valid ?
-			Crouton.makeText(SettingsActivity.this
-					, getResources().getString(R.string.change_success_port)
-					, CroutonUtils.INFO_MOKA_STYLE).show();
+			makeTextSuccess(getResources().getString(R.string.change_success_port));
 		}
 	}
 
@@ -167,6 +154,28 @@ public class SettingsActivity extends Activity implements SharedPreferences.OnSh
 		} else {
 			editor.commit();
 		}
+	}
+
+	/**
+	 * make a Crouton toast with premade error style
+	 *
+	 * @param content
+	 */
+	public void makeTextError(String content) {
+		Crouton.makeText(SettingsActivity.this
+				, content
+				, Style.ALERT).show();
+	}
+
+	/**
+	 * make a Crouton toast with premade confirm style
+	 *
+	 * @param content
+	 */
+	public void makeTextSuccess(String content) {
+		Crouton.makeText(SettingsActivity.this
+				, content
+				, Style.CONFIRM).show();
 	}
 
 	@Override
