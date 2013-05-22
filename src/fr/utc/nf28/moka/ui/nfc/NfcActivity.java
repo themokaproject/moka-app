@@ -21,12 +21,11 @@ import fr.utc.nf28.moka.MainActivity;
 import fr.utc.nf28.moka.ManualConfigurationActivity;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.util.NfcUtils;
+import fr.utc.nf28.moka.util.SharedPreferencesUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class NfcActivity extends Activity {
-	public static final String PERSISTENT_LAST_NAME = "MokaUserLastName";
-	public static final String PERSISTENT_FIRST_NAME = "MokaUserFirstName";
 	private static final String TAG = makeLogTag(NfcActivity.class);
 	private NfcAdapter mNfcAdapter;
 	private EditText mFirstName;
@@ -41,8 +40,8 @@ public class NfcActivity extends Activity {
 
 		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-		mFirstName.setText(prefs.getString(PERSISTENT_LAST_NAME, ""));
-		mLastName.setText(prefs.getString(PERSISTENT_FIRST_NAME, ""));
+		mFirstName.setText(prefs.getString(SharedPreferencesUtils.KEY_PREF_FIRST_NAME, ""));
+		mLastName.setText(prefs.getString(SharedPreferencesUtils.KEY_PREF_LAST_NAME, ""));
 
 		findViewById(R.id.skip).setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -59,8 +58,8 @@ public class NfcActivity extends Activity {
 				final CharSequence lastName = mLastName.getText();
 				if (firstName != null && lastName != null) {
 					final SharedPreferences.Editor editor = prefs.edit();
-					editor.putString(PERSISTENT_FIRST_NAME, firstName.toString());
-					editor.putString(PERSISTENT_LAST_NAME, lastName.toString());
+					editor.putString(SharedPreferencesUtils.KEY_PREF_FIRST_NAME, firstName.toString());
+					editor.putString(SharedPreferencesUtils.KEY_PREF_LAST_NAME, lastName.toString());
 					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
 						editor.apply();
 					} else {
