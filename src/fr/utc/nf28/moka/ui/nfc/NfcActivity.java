@@ -95,6 +95,11 @@ public class NfcActivity extends SherlockActivity {
 					, getResources().getString(R.string.no_ssid)
 					, CroutonUtils.INFO_MOKA_STYLE).show();
 			return false;
+		}else if(mPrefs.getString(SharedPreferencesUtils.KEY_PREF_PWD, "").equals("")) {
+			Crouton.makeText(this
+					, getResources().getString(R.string.no_pwd)
+					, CroutonUtils.INFO_MOKA_STYLE).show();
+			return false;
 		}
 		return true;
 	}

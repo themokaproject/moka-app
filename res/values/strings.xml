@@ -89,7 +89,8 @@
     <string name="unknown_firstname">Inconnu</string>
 
     <!-- Croutons toast -->
-    <string name="no_ssid">SSID no renseigné, vérifier les paramètres.</string>
+    <string name="no_ssid">SSID non renseigné, vérifier les paramètres.</string>
+    <string name="no_pwd">Password wifi non renseigné, vérifier les paramètres.</string>
 
 </resources>
 
