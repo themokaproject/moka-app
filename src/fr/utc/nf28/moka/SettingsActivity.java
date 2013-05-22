@@ -20,7 +20,7 @@ import fr.utc.nf28.moka.util.SharedPreferencesUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
-public class SettingsActivity extends Activity {
+public class SettingsActivity extends Activity implements SharedPreferences.OnSharedPreferenceChangeListener {
 	/**
 	 * Tag for log cat
 	 */
@@ -100,6 +100,11 @@ public class SettingsActivity extends Activity {
 					+ mPrefs.getString(SharedPreferencesUtils.KEY_PREF_PORT, "")
 					, false);
 		}
+	}
+
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+
 	}
 }
 
