@@ -16,17 +16,11 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
 import fr.utc.nf28.moka.ui.ConfigurationFragment;
 import fr.utc.nf28.moka.util.CroutonUtils;
 import fr.utc.nf28.moka.util.NfcUtils;
+import fr.utc.nf28.moka.util.SharedPreferencesUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class ManualConfigurationActivity extends Activity {
-	/**
-	 * key for connection configs in sharedPreferences
-	 */
-	public static final String KEY_PREF_SSID = "preference_wifi_ssid";
-	public static final String KEY_PREF_PWD = "preference_wifi_password";
-	public static final String KEY_PREF_IP = "preference_jade_ip";
-	public static final String KEY_PREF_PORT = "preference_jade_port";
 	/**
 	 * Tag for log cat
 	 */
@@ -56,10 +50,10 @@ public class ManualConfigurationActivity extends Activity {
 			@Override
 			public void onClick(View view) {
 				final Intent i = new Intent(ManualConfigurationActivity.this, DeviceConfigurationActivity.class);
-				i.putExtra(DeviceConfigurationActivity.EXTRA_SSID, mPrefs.getString(KEY_PREF_SSID, ""));
-				i.putExtra(DeviceConfigurationActivity.EXTRA_PWD, mPrefs.getString(KEY_PREF_PWD, ""));
-				i.putExtra(DeviceConfigurationActivity.EXTRA_IP, mPrefs.getString(KEY_PREF_IP, ""));
-				i.putExtra(DeviceConfigurationActivity.EXTRA_PORT, mPrefs.getString(KEY_PREF_PORT, ""));
+				i.putExtra(DeviceConfigurationActivity.EXTRA_SSID, mPrefs.getString(SharedPreferencesUtils.KEY_PREF_SSID, ""));
+				i.putExtra(DeviceConfigurationActivity.EXTRA_PWD, mPrefs.getString(SharedPreferencesUtils.KEY_PREF_PWD, ""));
+				i.putExtra(DeviceConfigurationActivity.EXTRA_IP, mPrefs.getString(SharedPreferencesUtils.KEY_PREF_IP, ""));
+				i.putExtra(DeviceConfigurationActivity.EXTRA_PORT, mPrefs.getString(SharedPreferencesUtils.KEY_PREF_PORT, ""));
 				startActivity(i);
 			}
 		});
@@ -112,10 +106,10 @@ public class ManualConfigurationActivity extends Activity {
 		super.onNewIntent(intent);
 		if (intent.hasExtra(NfcAdapter.EXTRA_TAG)) {
 			NfcUtils.writeMokaTag((Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
-					, TAG_MOKA_SCHEME + mPrefs.getString(KEY_PREF_SSID, "") + ","
-					+ mPrefs.getString(KEY_PREF_PWD, "") + ","
-					+ mPrefs.getString(KEY_PREF_IP, "") + ","
-					+ mPrefs.getString(KEY_PREF_PORT, "")
+					, TAG_MOKA_SCHEME + mPrefs.getString(SharedPreferencesUtils.KEY_PREF_SSID, "") + ","
+					+ mPrefs.getString(SharedPreferencesUtils.KEY_PREF_PWD, "") + ","
+					+ mPrefs.getString(SharedPreferencesUtils.KEY_PREF_IP, "") + ","
+					+ mPrefs.getString(SharedPreferencesUtils.KEY_PREF_PORT, "")
 					, false);
 		}
 	}
