@@ -22,8 +22,8 @@ import com.actionbarsherlock.view.MenuItem;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import fr.utc.nf28.moka.DeviceConfigurationActivity;
 import fr.utc.nf28.moka.MainActivity;
-import fr.utc.nf28.moka.SettingsActivity;
 import fr.utc.nf28.moka.R;
+import fr.utc.nf28.moka.SettingsActivity;
 import fr.utc.nf28.moka.util.CroutonUtils;
 import fr.utc.nf28.moka.util.NfcUtils;
 import fr.utc.nf28.moka.util.SharedPreferencesUtils;
@@ -72,7 +72,7 @@ public class NfcActivity extends SherlockActivity {
 						editor.commit();
 					}
 				}
-				if(checkPreferences()){
+				if (checkPreferences()) {
 					final Intent i = new Intent(NfcActivity.this, DeviceConfigurationActivity.class);
 					i.putExtra(DeviceConfigurationActivity.EXTRA_SSID, mPrefs.getString(SharedPreferencesUtils.KEY_PREF_SSID, ""));
 					i.putExtra(DeviceConfigurationActivity.EXTRA_PWD, mPrefs.getString(SharedPreferencesUtils.KEY_PREF_PWD, ""));
@@ -89,13 +89,19 @@ public class NfcActivity extends SherlockActivity {
 		}
 	}
 
-	public boolean checkPreferences(){
-		if(mPrefs.getString(SharedPreferencesUtils.KEY_PREF_SSID, "").equals("")){
+	/**
+	 * Use to check preference before starting ManualConfiguration
+	 * make Crouton toast to inform empty preferences
+	 *
+	 * @return boolean
+	 */
+	public boolean checkPreferences() {
+		if (mPrefs.getString(SharedPreferencesUtils.KEY_PREF_SSID, "").equals("")) {
 			Crouton.makeText(this
 					, getResources().getString(R.string.no_ssid)
 					, CroutonUtils.INFO_MOKA_STYLE).show();
 			return false;
-		}else if(mPrefs.getString(SharedPreferencesUtils.KEY_PREF_PWD, "").equals("")) {
+		} else if (mPrefs.getString(SharedPreferencesUtils.KEY_PREF_PWD, "").equals("")) {
 			Crouton.makeText(this
 					, getResources().getString(R.string.no_pwd)
 					, CroutonUtils.INFO_MOKA_STYLE).show();
