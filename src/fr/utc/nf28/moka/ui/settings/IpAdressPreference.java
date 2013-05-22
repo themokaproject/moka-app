@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.preference.EditTextPreference;
 import android.util.AttributeSet;
-import android.util.Log;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
