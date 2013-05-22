@@ -90,8 +90,7 @@ public class NfcActivity extends SherlockActivity {
 	}
 
 	public boolean checkPreferences(){
-		final String ssid = mPrefs.getString(SharedPreferencesUtils.KEY_PREF_SSID, "");
-		if(ssid.equals("")){
+		if(mPrefs.getString(SharedPreferencesUtils.KEY_PREF_SSID, "").equals("")){
 			Crouton.makeText(this
 					, getResources().getString(R.string.no_ssid)
 					, CroutonUtils.INFO_MOKA_STYLE).show();
