@@ -6,9 +6,14 @@ import java.util.HashMap;
 
 import fr.utc.nf28.moka.util.JSONParserUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
+import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class AndroidAgent extends BaseAgent implements IAndroidAgent {
-	
+
+	/**
+	 * Tag for logcat
+	 */
+	private static final String TAG = makeLogTag(AndroidAgent.class);
 
 	@Override
 	protected void setup() {
