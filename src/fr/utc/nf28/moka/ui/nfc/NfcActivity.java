@@ -33,21 +33,13 @@ import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 public class NfcActivity extends SherlockActivity {
 	private static final String TAG = makeLogTag(NfcActivity.class);
 	private NfcAdapter mNfcAdapter;
-	private EditText mFirstName;
-	private EditText mLastName;
 	private SharedPreferences mPrefs;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.nfc_activity);
 
-		mFirstName = (EditText) findViewById(R.id.firstnamefield);
-		mLastName = (EditText) findViewById(R.id.lastnamefield);
-
 		mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-		mFirstName.setText(mPrefs.getString(SharedPreferencesUtils.KEY_PREF_FIRST_NAME, ""));
-		mLastName.setText(mPrefs.getString(SharedPreferencesUtils.KEY_PREF_LAST_NAME, ""));
 
 		findViewById(R.id.skip).setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -60,18 +52,6 @@ public class NfcActivity extends SherlockActivity {
 		findViewById(R.id.manuel).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				final CharSequence firstName = mFirstName.getText();
-				final CharSequence lastName = mLastName.getText();
-				if (firstName != null && lastName != null) {
-					final SharedPreferences.Editor editor = mPrefs.edit();
-					editor.putString(SharedPreferencesUtils.KEY_PREF_FIRST_NAME, firstName.toString());
-					editor.putString(SharedPreferencesUtils.KEY_PREF_LAST_NAME, lastName.toString());
-					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
-						editor.apply();
-					} else {
-						editor.commit();
-					}
-				}
 				if (checkPreferences()) {
 					final Intent i = new Intent(NfcActivity.this, DeviceConfigurationActivity.class);
 					i.putExtra(DeviceConfigurationActivity.EXTRA_SSID, mPrefs.getString(SharedPreferencesUtils.KEY_PREF_SSID, ""));
