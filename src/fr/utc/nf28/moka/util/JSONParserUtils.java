@@ -11,7 +11,7 @@ import fr.utc.nf28.moka.agent.A2ATransaction;
 public class JSONParserUtils {
     private static final ObjectMapper sMapper = new ObjectMapper();
 
-	public String serializeA2ATransaction(A2ATransaction transaction) throws JsonProcessingException{
+	public static String serializeA2ATransaction(A2ATransaction transaction) throws JsonProcessingException{
 		return sMapper.writeValueAsString(transaction);
 	}
 

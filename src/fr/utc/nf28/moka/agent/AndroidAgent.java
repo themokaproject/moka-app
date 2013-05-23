@@ -1,10 +1,14 @@
 package fr.utc.nf28.moka.agent;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import java.util.HashMap;
 
+import fr.utc.nf28.moka.util.JSONParserUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
 
 public class AndroidAgent extends BaseAgent implements IAndroidAgent {
+	
 
 	@Override
 	protected void setup() {
@@ -16,10 +20,16 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 
 	@Override
 	public void connectPlatform(String firstName, String lastName, String ip) {
-        String json = "{\"type\":\"connection\",\"request\":\"{\\\"color\\\":-1,\\\"ip\\\"" +
-                ":\\\"" + ip + "\\\",\\\"currentItem\\\":null,\\\"lastName\\\":\\\"" + lastName + "\\\",\\\"firstName\\\":\\\"" + firstName + "\\\"}\"}";
-
-		sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_CONNECTION), json);
+		final HashMap<String,String> connexion = new HashMap<String, String>();
+		connexion.put("ip",ip);
+		connexion.put("lastName",lastName);
+		connexion.put("firstName",firstName);
+		try {
+			final String json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction("connection",connexion));
+			sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_CONNECTION), json);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
