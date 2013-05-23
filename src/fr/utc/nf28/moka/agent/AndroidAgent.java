@@ -1,5 +1,7 @@
 package fr.utc.nf28.moka.agent;
 
+import java.util.HashMap;
+
 import fr.utc.nf28.moka.util.JadeUtils;
 
 public class AndroidAgent extends BaseAgent implements IAndroidAgent {
