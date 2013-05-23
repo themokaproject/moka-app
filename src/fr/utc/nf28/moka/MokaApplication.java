@@ -23,12 +23,11 @@ import jade.util.leap.Properties;
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class MokaApplication extends Application {
-	public static HashMap<String, MokaType> MOKA_TYPES;
-
 	/**
 	 * Log for Logcat
 	 */
 	private static final String TAG = makeLogTag(MokaApplication.class);
+	public static HashMap<String, MokaType> MOKA_TYPES;
 	/**
 	 * JADE
 	 */
@@ -120,10 +119,11 @@ public class MokaApplication extends Application {
 				agentCallback);
 	}
 
-	@Override
-	public void onTerminate() {
-		super.onTerminate();
-		//TODO container and agent still visible in jade plateform
+	private void cleanup() {
+		// TODO: find a way to call cleanup() (normally in the Service#onDestroy())
+		if (mMicroRuntimeServiceBinder != null) {
+			mMicroRuntimeServiceBinder.stopAgentContainer(mContainerCallback);
+		}
 		if (mServiceConnection != null) {
 			unbindService(mServiceConnection);
 		}
