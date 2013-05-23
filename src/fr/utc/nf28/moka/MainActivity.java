@@ -12,7 +12,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -177,14 +176,10 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 			super.onPostExecute(ipString);
 
 			final IAndroidAgent interfaceAgent = JadeUtils.getAndroidAgentInterface();
-			if (interfaceAgent == null) {
-				Log.i(TAG, "getAndroidAgentInterface return null");
-			} else {
-				final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-				final String firstName = prefs.getString(SharedPreferencesUtils.KEY_PREF_FIRST_NAME, getString(R.string.unknown_firstname));
-				final String lastName = prefs.getString(SharedPreferencesUtils.KEY_PREF_LAST_NAME, getString(R.string.unknown_lastname));
-				interfaceAgent.connectPlatform(firstName, lastName, ipString);
-			}
+			final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+			final String firstName = prefs.getString(SharedPreferencesUtils.KEY_PREF_FIRST_NAME, getString(R.string.unknown_firstname));
+			final String lastName = prefs.getString(SharedPreferencesUtils.KEY_PREF_LAST_NAME, getString(R.string.unknown_lastname));
+			interfaceAgent.connectPlatform(firstName, lastName, ipString);
 		}
 	}
 }

@@ -36,9 +36,7 @@ public class NewItemActivity extends SherlockFragmentActivity {
 
 		// test dynamic communication
 		final IAndroidAgent agent = JadeUtils.getAndroidAgentInterface();
-		if (agent != null) {
-			agent.createItem();
-		}
+		agent.createItem();
 	}
 
 	@Override
