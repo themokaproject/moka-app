@@ -70,7 +70,6 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 				.setTabListener(this));
 
 		new RetrieveIpTask().execute();
-
 	}
 
 	@Override
