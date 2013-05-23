@@ -28,12 +28,12 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 
 	@Override
 	public void connectPlatform(String firstName, String lastName, String ip) {
-		final HashMap<String, String> connexion = new HashMap<String, String>();
-		connexion.put("ip", ip);
-		connexion.put("lastName", lastName);
-		connexion.put("firstName", firstName);
+		final HashMap<String, String> connection = new HashMap<String, String>();
+		connection.put("ip", ip);
+		connection.put("lastName", lastName);
+		connection.put("firstName", firstName);
 		try {
-			final String json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction("connection", connexion));
+			final String json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction("connection", connection));
 			sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_CONNECTION), json);
 		} catch (JsonProcessingException e) {
 			Log.e(TAG, "connectPlatform failed : JsonProcessingException");
