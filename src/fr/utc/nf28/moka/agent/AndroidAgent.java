@@ -1,11 +1,14 @@
 package fr.utc.nf28.moka.agent;
 
+import android.util.Log;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.HashMap;
 
 import fr.utc.nf28.moka.util.JSONParserUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
+
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class AndroidAgent extends BaseAgent implements IAndroidAgent {
@@ -25,14 +28,15 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 
 	@Override
 	public void connectPlatform(String firstName, String lastName, String ip) {
-		final HashMap<String,String> connexion = new HashMap<String, String>();
-		connexion.put("ip",ip);
-		connexion.put("lastName",lastName);
-		connexion.put("firstName",firstName);
+		final HashMap<String, String> connexion = new HashMap<String, String>();
+		connexion.put("ip", ip);
+		connexion.put("lastName", lastName);
+		connexion.put("firstName", firstName);
 		try {
-			final String json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction("connection",connexion));
+			final String json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction("connection", connexion));
 			sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_CONNECTION), json);
 		} catch (JsonProcessingException e) {
+			Log.e(TAG, "connectPlatrform failed : JsonProcessingException");
 			e.printStackTrace();
 		}
 	}
