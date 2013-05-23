@@ -28,7 +28,7 @@ public class MokaApplication extends Application {
 	/**
 	 * Log for Logcat
 	 */
-	private static final String TAG = makeLogTag(DeviceConfigurationActivity.class);
+	private static final String TAG = makeLogTag(MokaApplication.class);
 	/**
 	 * JADE
 	 */
