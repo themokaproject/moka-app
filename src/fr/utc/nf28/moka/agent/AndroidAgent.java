@@ -44,10 +44,12 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 	@Override
 	public void createItem() {
 		//TODO construct the content
-		sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_CREATION),
-				"{\"type\":\"creation\",\"request\":\"{\\\"methods\\\":[],\\\"members\\\"" +
-						":[],\\\"className\\\":\\\"MyClass\\\",\\\"id\\\":0,\\\"title\\\":\\\"" +
-						"MyClass\\\",\\\"y\\\":100,\\\"x\\\":100}\"}");
+		try {
+			final String json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction("creation","uml"));
+			sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_CREATION),json);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
