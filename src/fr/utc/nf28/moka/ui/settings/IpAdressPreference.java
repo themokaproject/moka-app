@@ -28,15 +28,17 @@ public class IpAdressPreference extends EditTextPreference {
 	@Override
 	protected void onDialogClosed(boolean positiveResult) {
 		super.onDialogClosed(positiveResult);
-		if (!RegexUtils.validateIpAddress(getText())) {
-			setText(SharedPreferencesUtils.DEFAULT_PREF_IP);
-			Crouton.makeText((Activity) getContext()
-					, getContext().getResources().getString(R.string.change_error_ip)
-					, Style.ALERT).show();
-		} else {
-			Crouton.makeText((Activity) getContext()
-					, getContext().getResources().getString(R.string.change_success_ip)
-					, Style.CONFIRM).show();
+		if (positiveResult) {
+			if (!RegexUtils.validateIpAddress(getText())) {
+				setText(SharedPreferencesUtils.DEFAULT_PREF_IP);
+				Crouton.makeText((Activity) getContext()
+						, getContext().getResources().getString(R.string.change_error_ip)
+						, Style.ALERT).show();
+			} else {
+				Crouton.makeText((Activity) getContext()
+						, getContext().getResources().getString(R.string.change_success_ip)
+						, Style.CONFIRM).show();
+			}
 		}
 	}
 }
