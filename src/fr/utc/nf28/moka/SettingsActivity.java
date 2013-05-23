@@ -18,7 +18,6 @@ import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.utc.nf28.moka.ui.ConfigurationFragment;
 import fr.utc.nf28.moka.util.CroutonUtils;
 import fr.utc.nf28.moka.util.NfcUtils;
-import fr.utc.nf28.moka.util.RegexUtils;
 import fr.utc.nf28.moka.util.SharedPreferencesUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
@@ -113,15 +112,15 @@ public class SettingsActivity extends Activity implements SharedPreferences.OnSh
 
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-		if (key.equals(SharedPreferencesUtils.KEY_PREF_FIRST_NAME)) {
+		if (SharedPreferencesUtils.KEY_PREF_FIRST_NAME.equals(key)) {
 			makeTextSuccess(getResources().getString(R.string.change_success_first_name));
-		} else if (key.equals(SharedPreferencesUtils.KEY_PREF_LAST_NAME)) {
+		} else if (SharedPreferencesUtils.KEY_PREF_LAST_NAME.equals(key)) {
 			makeTextSuccess(getResources().getString(R.string.change_success_last_name));
-		} else if (key.equals(SharedPreferencesUtils.KEY_PREF_SSID)) {
+		} else if (SharedPreferencesUtils.KEY_PREF_SSID.equals(key)) {
 			makeTextSuccess(getResources().getString(R.string.change_success_ssid));
-		} else if (key.equals(SharedPreferencesUtils.KEY_PREF_PWD)) {
+		} else if (SharedPreferencesUtils.KEY_PREF_PWD.equals(key)) {
 			makeTextSuccess(getResources().getString(R.string.change_success_pwd));
-		} else if (key.equals(SharedPreferencesUtils.KEY_PREF_PORT)) {
+		} else if (SharedPreferencesUtils.KEY_PREF_PORT.equals(key)) {
 			//TODO check port valid ?
 			makeTextSuccess(getResources().getString(R.string.change_success_port));
 		}
