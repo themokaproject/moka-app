@@ -6,7 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.actionbarsherlock.app.SherlockFragment;
+
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.util.DateUtils;
@@ -26,13 +28,6 @@ public class EditItemFragment extends SherlockFragment {
 	}
 
 	// Fragment lifecycle management
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-		// Fragment configuration
-		setHasOptionsMenu(true);
-	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
