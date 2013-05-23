@@ -7,20 +7,6 @@
     android:layout_gravity="center"
     android:gravity="center">
 
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:hint="@string/first_name"
-            android:ems="10"
-            android:id="@+id/firstnamefield"/>
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:hint="@string/name"
-            android:ems="10"
-            android:id="@+id/lastnamefield"/>
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
