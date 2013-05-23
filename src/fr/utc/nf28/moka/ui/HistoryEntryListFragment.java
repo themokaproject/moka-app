@@ -47,13 +47,6 @@ public class HistoryEntryListFragment extends SherlockFragment {
 	}
 
 	// Fragment lifecycle management
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-		// Fragment configuration
-		setHasOptionsMenu(true);
-	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
