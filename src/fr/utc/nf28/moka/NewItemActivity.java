@@ -1,6 +1,5 @@
 package fr.utc.nf28.moka;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -8,16 +7,14 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 
 import fr.utc.nf28.moka.agent.IAndroidAgent;
-import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.ui.NewItemFragment;
 import fr.utc.nf28.moka.util.JadeUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
-public class NewItemActivity extends SherlockFragmentActivity implements NewItemFragment.Callbacks {
+public class NewItemActivity extends SherlockFragmentActivity {
 	public static final String ARG_TYPE = "arg_type";
-	public static final String RET_ITEM = "ret_item";
 	private static final String TAG = makeLogTag(NewItemActivity.class);
 
 	@Override
@@ -52,12 +49,5 @@ public class NewItemActivity extends SherlockFragmentActivity implements NewItem
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	public void onValidate(MokaItem newItem) {
-		// TODO: Call the AddItemAgent
-		setResult(RESULT_OK, new Intent().putExtra(RET_ITEM, newItem));
-		finish();
 	}
 }
