@@ -4,15 +4,15 @@ package fr.utc.nf28.moka.agent;
  * common Transaction between two agents
  */
 public class A2ATransaction {
-	public String type;
-	public Object content;
+	public final String mType;
+	public Object mContent;
 
 	public A2ATransaction(String type) {
-		this.type = type;
+		mType = type;
 	}
 
 	public A2ATransaction(String type, Object content) {
-		this.type = type;
-		this.content = content;
+		this(type);
+		mContent = content;
 	}
 }
