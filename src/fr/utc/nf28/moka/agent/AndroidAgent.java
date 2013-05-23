@@ -36,7 +36,7 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 			final String json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction("connection", connexion));
 			sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_CONNECTION), json);
 		} catch (JsonProcessingException e) {
-			Log.e(TAG, "connectPlatrform failed : JsonProcessingException");
+			Log.e(TAG, "connectPlatform failed : JsonProcessingException");
 			e.printStackTrace();
 		}
 	}
