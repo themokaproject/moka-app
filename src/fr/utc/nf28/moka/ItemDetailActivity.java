@@ -35,6 +35,11 @@ public class ItemDetailActivity extends SherlockFragmentActivity implements Acti
 		setContentView(R.layout.detail_activity);
 
 		mSelectedItem = getIntent().getExtras().getParcelable(ARG_ITEM);
+
+		if (mSelectedItem == null) {
+			throw new IllegalStateException("Selected item cannot be null");
+		}
+
 		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setTitle(mSelectedItem.getTitle());
