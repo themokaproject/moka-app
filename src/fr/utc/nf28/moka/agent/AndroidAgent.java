@@ -33,7 +33,7 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 		connection.put("lastName", lastName);
 		connection.put("firstName", firstName);
 		try {
-			final String json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction(JadeUtils.TYPE_CONNECTION_TO_CONNECTION_AGENT, connection));
+			final String json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction(JadeUtils.TRANSACTION_TYPE_CONNECTION, connection));
 			sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_CONNECTION), json);
 		} catch (JsonProcessingException e) {
 			Log.e(TAG, "connectPlatform failed : JsonProcessingException");
@@ -45,7 +45,7 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 	public void createItem() {
 		//TODO construct the content
 		try {
-			final String json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction(JadeUtils.TYPE_ADD_ITEM_TO_ITEM_CREATION_AGENT, "umlClass"));
+			final String json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction(JadeUtils.TRANSACTION_TYPE_ADD_ITEM, "umlClass"));
 			sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_CREATION), json);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
