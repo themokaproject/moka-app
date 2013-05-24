@@ -58,4 +58,14 @@ public class JadeUtils {
 			return sDummyAndroidAgentInterface;
 		}
 	}
+
+	//Transactions to ConnectionAgent
+	public static final String TYPE_CONNECTION_TO_CONNECTION_AGENT = "connectionToConnectionAgent";
+
+	//Transactions to ItemCreationAgent
+	public static final String TYPE_ADD_ITEM_TO_ITEM_CREATION_AGENT = "addItemToItemCreationAgent";
+
+	//Transactions To WebSocketAgent
+	public static final String TYPE_ADD_USER_TO_WEB_SOCKET_AGENT = "addUserToWebSocketAgent";
+	public static final String TYPE_ADD_ITEM_TO_WEB_SOCKET_AGENT = "addItemToWebSocketAgent";
 }
