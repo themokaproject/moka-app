@@ -30,28 +30,9 @@ public class WelcomeActivity extends SherlockActivity {
 		findViewById(R.id.welcome_start_moka).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				mPrefs.edit().putString(SharedPreferencesUtils.KEY_PREF_FIRST_NAME,
+						((EditText)findViewById(R.id.welcome_first_name)).getText().toString()).commit();
 				startActivity(new Intent(WelcomeActivity.this, NfcActivity.class));
-			}
-		});
-
-
-		((EditText)findViewById(R.id.welcome_first_name)).addTextChangedListener(new TextWatcher() {
-			@Override
-			public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-
-			}
-
-			@Override
-			public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-
-			}
-
-			@Override
-			public void afterTextChanged(Editable editable) {
-				mPrefs.edit().putString(SharedPreferencesUtils.KEY_PREF_FIRST_NAME,editable.toString()).commit();
-				Crouton.makeText(WelcomeActivity.this
-						, "prénom enregistré : "+editable.toString()
-						, CroutonUtils.INFO_MOKA_STYLE).show();
 			}
 		});
 	}
