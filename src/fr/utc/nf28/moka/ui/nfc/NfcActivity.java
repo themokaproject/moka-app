@@ -45,6 +45,7 @@ public class NfcActivity extends SherlockActivity {
 		if(mPrefs.getString(SharedPreferencesUtils.KEY_PREF_FIRST_NAME,"").equals("") ||
 				mPrefs.getString(SharedPreferencesUtils.KEY_PREF_LAST_NAME,"").equals("")){
 			startActivity(new Intent(NfcActivity.this, WelcomeActivity.class));
+			finish();
 		}
 
 		findViewById(R.id.skip).setOnClickListener(new View.OnClickListener() {
