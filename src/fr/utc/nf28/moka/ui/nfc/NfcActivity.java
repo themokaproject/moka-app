@@ -7,12 +7,10 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockActivity;
@@ -42,8 +40,9 @@ public class NfcActivity extends SherlockActivity {
 
 		mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-		if(mPrefs.getString(SharedPreferencesUtils.KEY_PREF_FIRST_NAME,"").equals("") ||
-				mPrefs.getString(SharedPreferencesUtils.KEY_PREF_LAST_NAME,"").equals("")){
+		//check name for first connection and display welcome activity
+		if (mPrefs.getString(SharedPreferencesUtils.KEY_PREF_FIRST_NAME, "").equals("") ||
+				mPrefs.getString(SharedPreferencesUtils.KEY_PREF_LAST_NAME, "").equals("")) {
 			startActivity(new Intent(NfcActivity.this, WelcomeActivity.class));
 			finish();
 		}
