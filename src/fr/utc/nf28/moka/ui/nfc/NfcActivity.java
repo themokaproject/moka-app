@@ -24,6 +24,7 @@ import fr.utc.nf28.moka.DeviceConfigurationActivity;
 import fr.utc.nf28.moka.MainActivity;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.SettingsActivity;
+import fr.utc.nf28.moka.WelcomeActivity;
 import fr.utc.nf28.moka.util.CroutonUtils;
 import fr.utc.nf28.moka.util.NfcUtils;
 import fr.utc.nf28.moka.util.SharedPreferencesUtils;
@@ -40,6 +41,11 @@ public class NfcActivity extends SherlockActivity {
 		setContentView(R.layout.nfc_activity);
 
 		mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+		if(mPrefs.getString(SharedPreferencesUtils.KEY_PREF_FIRST_NAME,"").equals("") ||
+				mPrefs.getString(SharedPreferencesUtils.KEY_PREF_LAST_NAME,"").equals("")){
+			startActivity(new Intent(NfcActivity.this, WelcomeActivity.class));
+		}
 
 		findViewById(R.id.skip).setOnClickListener(new View.OnClickListener() {
 			@Override
