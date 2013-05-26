@@ -1,5 +1,8 @@
 package fr.utc.nf28.moka.agent;
 
+import android.content.Context;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -18,9 +21,16 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 	 */
 	private static final String TAG = makeLogTag(AndroidAgent.class);
 
+	/**
+	 * Application context to send broadcast
+	 */
+	private Context mContext;
+
 	@Override
 	protected void setup() {
 		super.setup();
+
+		mContext = (Context) getArguments()[0];
 
 		registerSkill(JadeUtils.JADE_SKILL_NAME_ANDROID);
 		registerO2AInterface(IAndroidAgent.class, this);
@@ -70,5 +80,16 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 
 	@Override
 	public void editItem() {
+	}
+
+	/**
+	 * use to send message to the activity which register a JadeServerReceiver
+	 *
+	 * @param content message content
+	 */
+	private void sendBroadcastMessage(String content) {
+		final Intent i = new Intent(JadeServerReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER);
+		i.putExtra(JadeServerReceiver.EXTRA_JADE_SERVER_MESSAGE, content);
+		LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
 	}
 }
