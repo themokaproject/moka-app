@@ -1,7 +1,5 @@
 package fr.utc.nf28.moka.agent;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 import fr.utc.nf28.moka.util.JadeUtils;
