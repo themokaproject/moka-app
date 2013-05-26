@@ -23,8 +23,8 @@ public class WelcomeActivity extends SherlockActivity {
 
 		mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-		final EditText fName= (EditText)findViewById(R.id.welcome_first_name);
-		final EditText lName= (EditText)findViewById(R.id.welcome_last_name);
+		final EditText fName = (EditText) findViewById(R.id.welcome_first_name);
+		final EditText lName = (EditText) findViewById(R.id.welcome_last_name);
 
 		fName.setHint(R.string.first_name);
 		lName.setHint(R.string.name);
