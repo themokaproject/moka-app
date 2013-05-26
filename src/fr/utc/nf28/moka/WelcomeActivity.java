@@ -23,13 +23,19 @@ public class WelcomeActivity extends SherlockActivity {
 
 		mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
+		final EditText fName= (EditText)findViewById(R.id.welcome_first_name);
+		final EditText lName= (EditText)findViewById(R.id.welcome_last_name);
+
+		fName.setHint(R.string.first_name);
+		lName.setHint(R.string.name);
+
 		findViewById(R.id.welcome_start_moka).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				mPrefs.edit().putString(SharedPreferencesUtils.KEY_PREF_FIRST_NAME,
-						((EditText) findViewById(R.id.welcome_first_name)).getText().toString()).commit();
+						fName.getText().toString()).commit();
 				mPrefs.edit().putString(SharedPreferencesUtils.KEY_PREF_LAST_NAME,
-						((EditText) findViewById(R.id.welcome_last_name)).getText().toString()).commit();
+						lName.getText().toString()).commit();
 				startActivity(new Intent(WelcomeActivity.this, NfcActivity.class));
 				finish();
 			}
