@@ -39,6 +39,7 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 
 	@Override
 	public void connectPlatform(String firstName, String lastName, String ip) {
+		mRequest.clear();
 		mRequest.put("ip", ip);
 		mRequest.put("lastName", lastName);
 		mRequest.put("firstName", firstName);
@@ -74,6 +75,7 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 
 	@Override
 	public void moveItem(int itemId, int direction, int velocity) {
+		mRequest.clear();
 		try {
 			mRequest.put("itemId", itemId);
 			mRequest.put("direction", direction);
