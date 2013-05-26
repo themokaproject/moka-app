@@ -10,13 +10,11 @@ public class JadeServerReceiver extends BroadcastReceiver {
 	 * identify broadcast message
 	 */
 	public static final String INTENT_FILTER_JADE_SERVER_RECEIVER = "fr.utc.nf28.moka.agent.JadeServerReceiver";
-
 	/**
 	 * intent extra for callback content
 	 */
 	public static final String EXTRA_JADE_SERVER_MESSAGE = "callbackContentFromJadeServer";
-
-	private IJadeServerReceiver mInterface;
+	private final IJadeServerReceiver mInterface;
 
 	/**
 	 * constructor
