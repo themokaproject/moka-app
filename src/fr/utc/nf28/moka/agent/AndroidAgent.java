@@ -25,7 +25,9 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 		registerSkill(JadeUtils.JADE_SKILL_NAME_ANDROID);
 		registerO2AInterface(IAndroidAgent.class, this);
 
-		addBehaviour(new ReceptionBehaviour());
+		//TODO jade.domain.FIPAException: Timeout searching for data into df
+		//TODO with this behaviour, df return null to getAgentsWithSkill request
+		//addBehaviour(new ReceptionBehaviour());
 	}
 
 	@Override
