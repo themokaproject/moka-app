@@ -20,6 +20,7 @@ public class ReceptionBehaviour extends CyclicBehaviour {
 		final ACLMessage message = myAgent.receive(MessageTemplate.MatchPerformative(ACLMessage.REQUEST));
 		if (message != null) {
 			final String content = message.getContent();
+			((AndroidAgent)myAgent).sendBroadcastMessage(content);
 			Log.i(TAG, content);
 		} else {
 			block();
