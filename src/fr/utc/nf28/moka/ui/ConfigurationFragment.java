@@ -7,6 +7,7 @@ import android.preference.PreferenceFragment;
 
 import fr.utc.nf28.moka.R;
 
+// TODO: make this class Gingerbread & Froyo compliant, or use PreferenceActivity
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ConfigurationFragment extends PreferenceFragment {
 
