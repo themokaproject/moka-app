@@ -161,14 +161,14 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 
 	@Override
 	public void onItemSelected(MokaItem item) {
-		final Intent detailIntent = new Intent(this, ItemDetailActivity.class);
-		detailIntent.putExtra(ItemDetailActivity.ARG_ITEM, item);
+		final Intent detailIntent = new Intent(this, EditItemActivity.class);
+		detailIntent.putExtra(EditItemActivity.ARG_ITEM, item);
 		startActivityForResult(detailIntent, EDIT_ITEM_REQUEST);
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == EDIT_ITEM_REQUEST) {
-			if (resultCode == ItemDetailActivity.RESULT_DELETE) {
+			if (resultCode == EditItemActivity.RESULT_DELETE) {
 				Crouton.makeText(this, "L'élément a été correctement supprimé", CroutonUtils.INFO_MOKA_STYLE).show(); // TODO: fetch from strings
 			}
 		}

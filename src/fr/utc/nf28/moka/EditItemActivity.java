@@ -12,16 +12,16 @@ import fr.utc.nf28.moka.util.JadeUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
-public class ItemDetailActivity extends SherlockFragmentActivity implements EditItemFragment.Callbacks {
+public class EditItemActivity extends SherlockFragmentActivity implements EditItemFragment.Callbacks {
 	public static final String ARG_ITEM = "arg_item";
 	public static final int RESULT_DELETE = RESULT_FIRST_USER + 1;
-	private static final String TAG = makeLogTag(ItemDetailActivity.class);
+	private static final String TAG = makeLogTag(EditItemActivity.class);
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.detail_activity);
+		setContentView(R.layout.edit_item_activity);
 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -48,7 +48,7 @@ public class ItemDetailActivity extends SherlockFragmentActivity implements Edit
 		// TODO: call the DeleteAgent
 		final IAndroidAgent agent = JadeUtils.getAndroidAgentInterface();
 		agent.deleteItem(item.getId());
-		setResult(ItemDetailActivity.RESULT_DELETE);
+		setResult(EditItemActivity.RESULT_DELETE);
 		finish();
 	}
 }
