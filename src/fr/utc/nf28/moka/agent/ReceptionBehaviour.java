@@ -2,7 +2,6 @@ package fr.utc.nf28.moka.agent;
 
 import android.util.Log;
 
-import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
