@@ -37,6 +37,10 @@ public class JadeUtils {
 		}
 
 		@Override
+		public void deleteItem(int itemId) {
+		}
+
+		@Override
 		public void lockItem() {
 		}
 
@@ -59,9 +63,18 @@ public class JadeUtils {
 		}
 	}
 
-	//connection transaction
+	/**
+	 * connection transaction
+	 */
 	public static final String TRANSACTION_TYPE_CONNECTION = "connection";
 
-	//addItem transaction
+	/**
+	 * addItem transaction
+	 */
 	public static final String TRANSACTION_TYPE_ADD_ITEM = "addItem";
+
+	/**
+	 * deleteItem transaction
+	 */
+	public static final String TRANSACTION_TYPE_DELETE_ITEM = "deleteItem";
 }

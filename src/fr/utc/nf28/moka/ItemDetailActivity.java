@@ -15,9 +15,11 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
+import fr.utc.nf28.moka.agent.IAndroidAgent;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.ui.EditItemFragment;
 import fr.utc.nf28.moka.ui.HistoryEntryListFragment;
+import fr.utc.nf28.moka.util.JadeUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
@@ -91,6 +93,8 @@ public class ItemDetailActivity extends SherlockFragmentActivity implements Acti
 							@Override
 							public void onClick(DialogInterface dialogInterface, int which) {
 								// TODO: call the DeleteAgent
+								final IAndroidAgent agent = JadeUtils.getAndroidAgentInterface();
+								agent.deleteItem(mSelectedItem.getId());
 								setResult(RESULT_DELETE);
 								finish();
 							}

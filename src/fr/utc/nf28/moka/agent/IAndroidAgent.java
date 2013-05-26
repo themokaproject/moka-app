@@ -17,6 +17,11 @@ public interface IAndroidAgent {
 	public void createItem();
 
 	/**
+	 * delete item on platform
+	 */
+	public void deleteItem(int itemId);
+
+	/**
 	 * lock item for edition
 	 */
 	public void lockItem();
