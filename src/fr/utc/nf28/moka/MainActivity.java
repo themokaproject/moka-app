@@ -2,6 +2,7 @@ package fr.utc.nf28.moka;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
@@ -11,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -20,6 +22,8 @@ import com.actionbarsherlock.view.MenuItem;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import fr.utc.nf28.moka.agent.IAndroidAgent;
+import fr.utc.nf28.moka.agent.IJadeServerReceiver;
+import fr.utc.nf28.moka.agent.JadeServerReceiver;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.ui.CurrentItemListFragment;
@@ -31,7 +35,7 @@ import fr.utc.nf28.moka.util.SharedPreferencesUtils;
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class MainActivity extends SherlockFragmentActivity implements ActionBar.TabListener,
-		TypeListFragment.Callbacks, CurrentItemListFragment.Callbacks {
+		TypeListFragment.Callbacks, CurrentItemListFragment.Callbacks, IJadeServerReceiver {
 	private static final String TAG = makeLogTag(MainActivity.class);
 	private static final int EDIT_ITEM_REQUEST = 0;
 	/**
@@ -39,11 +43,19 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 	 */
 	private ViewPager mViewPager;
 
+	/**
+	 * broadcast receiver use to catch agent callback
+	 */
+	private JadeServerReceiver mJadeServerReceiver;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.main);
+
+		//create new receiver
+		mJadeServerReceiver = new JadeServerReceiver(this);
 
 		// ActionBar setup
 		final ActionBar actionBar = getSupportActionBar();
@@ -82,6 +94,19 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		Crouton.cancelAllCroutons();
 
 		super.onDestroy();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		LocalBroadcastManager.getInstance(this).registerReceiver(mJadeServerReceiver,
+				new IntentFilter(JadeServerReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER));
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		LocalBroadcastManager.getInstance(this).unregisterReceiver(mJadeServerReceiver);
 	}
 
 	@Override
@@ -135,6 +160,11 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 				Crouton.makeText(this, "L'élément a été correctement supprimé", CroutonUtils.INFO_MOKA_STYLE).show(); // TODO: fetch from strings
 			}
 		}
+	}
+
+	@Override
+	public void onNewItem(String content) {
+		Crouton.makeText(this, "From server : " + content, CroutonUtils.INFO_MOKA_STYLE).show();
 	}
 
 	/**

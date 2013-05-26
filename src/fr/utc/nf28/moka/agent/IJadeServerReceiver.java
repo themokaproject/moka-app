@@ -7,5 +7,5 @@ public interface IJadeServerReceiver {
 	 * call when jade server inform Android device that a new item
 	 * has been created
 	 */
-	public void onNewItem();
+	public void onNewItem(String content);
 }
