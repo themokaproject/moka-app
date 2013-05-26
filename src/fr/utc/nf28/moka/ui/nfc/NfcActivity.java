@@ -82,16 +82,12 @@ public class NfcActivity extends SherlockActivity {
 	 * @return boolean
 	 */
 	public boolean checkPreferences() {
-		if (mPrefs.getString(SharedPreferencesUtils.KEY_PREF_SSID, "").equals("")) {
-			Crouton.makeText(this
-					, getResources().getString(R.string.no_ssid)
-					, CroutonUtils.INFO_MOKA_STYLE).show();
+		if (!mPrefs.contains(SharedPreferencesUtils.KEY_PREF_SSID)) {
+			Crouton.makeText(this, getResources().getString(R.string.no_ssid), CroutonUtils.INFO_MOKA_STYLE).show();
 			return false;
 		}
-		if (mPrefs.getString(SharedPreferencesUtils.KEY_PREF_PWD, "").equals("")) {
-			Crouton.makeText(this
-					, getResources().getString(R.string.no_pwd)
-					, CroutonUtils.INFO_MOKA_STYLE).show();
+		if (!mPrefs.contains(SharedPreferencesUtils.KEY_PREF_PWD)) {
+			Crouton.makeText(this, getResources().getString(R.string.no_pwd), CroutonUtils.INFO_MOKA_STYLE).show();
 			return false;
 		}
 		return true;
