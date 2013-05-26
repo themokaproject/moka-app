@@ -86,5 +86,13 @@
                     android:pathPattern="/c/.*" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".EditItemActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
     </application>
 </manifest>

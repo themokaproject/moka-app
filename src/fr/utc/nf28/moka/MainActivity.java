@@ -24,6 +24,7 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
 import fr.utc.nf28.moka.agent.IAndroidAgent;
 import fr.utc.nf28.moka.agent.IJadeServerReceiver;
 import fr.utc.nf28.moka.agent.JadeServerReceiver;
+import fr.utc.nf28.moka.data.ComputerItem;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.ui.CurrentItemListFragment;
@@ -134,8 +135,12 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 
 	@Override
 	public void onTypeSelected(MokaType type) {
-		final Intent detailIntent = new Intent(this, NewItemActivity.class);
-		detailIntent.putExtra(NewItemActivity.ARG_TYPE, type);
+		//TODO create the right item according to the type
+		MokaItem itemFromType = new ComputerItem.UmlItem("Diagramme UML");
+		final IAndroidAgent agent = JadeUtils.getAndroidAgentInterface();
+		agent.createItem();
+		final Intent detailIntent = new Intent(this, EditItemActivity.class);
+		detailIntent.putExtra(EditItemActivity.ARG_ITEM, itemFromType);
 		startActivity(detailIntent);
 	}
 
@@ -149,8 +154,8 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 
 	@Override
 	public void onItemSelected(MokaItem item) {
-		final Intent detailIntent = new Intent(this, ItemDetailActivity.class);
-		detailIntent.putExtra(ItemDetailActivity.ARG_ITEM, item);
+		final Intent detailIntent = new Intent(this, EditItemActivity.class);
+		detailIntent.putExtra(EditItemActivity.ARG_ITEM, item);
 		startActivityForResult(detailIntent, EDIT_ITEM_REQUEST);
 	}
 
