@@ -15,12 +15,11 @@ import fr.utc.nf28.moka.util.JadeUtils;
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class AndroidAgent extends BaseAgent implements IAndroidAgent {
-
 	/**
 	 * Tag for logcat
 	 */
 	private static final String TAG = makeLogTag(AndroidAgent.class);
-
+	private final HashMap<String, Object> mRequest = new HashMap<String, Object>();
 	/**
 	 * Application context to send broadcast
 	 */
@@ -40,12 +39,11 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 
 	@Override
 	public void connectPlatform(String firstName, String lastName, String ip) {
-		final HashMap<String, String> connection = new HashMap<String, String>();
-		connection.put("ip", ip);
-		connection.put("lastName", lastName);
-		connection.put("firstName", firstName);
+		mRequest.put("ip", ip);
+		mRequest.put("lastName", lastName);
+		mRequest.put("firstName", firstName);
 		try {
-			final String json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction(JadeUtils.TRANSACTION_TYPE_CONNECTION, connection));
+			final String json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction(JadeUtils.TRANSACTION_TYPE_CONNECTION, mRequest));
 			sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_CONNECTION), json);
 		} catch (JsonProcessingException e) {
 			Log.e(TAG, "connectPlatform failed : JsonProcessingException");
@@ -77,11 +75,10 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 	@Override
 	public void moveItem(int itemId, int direction, int velocity) {
 		try {
-			final HashMap<String, Integer> movement = new HashMap<String, Integer>();
-			movement.put("itemId", itemId);
-			movement.put("direction", direction);
-			movement.put("velocity", velocity);
-			final String json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction(JadeUtils.TRANSACTION_TYPE_MOVE_ITEM, movement));
+			mRequest.put("itemId", itemId);
+			mRequest.put("direction", direction);
+			mRequest.put("velocity", velocity);
+			final String json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction(JadeUtils.TRANSACTION_TYPE_MOVE_ITEM, mRequest));
 			sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_ITEM_MOVEMENT), json);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
