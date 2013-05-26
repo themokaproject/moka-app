@@ -8,11 +8,11 @@
     android:paddingBottom="32dp"
     android:paddingTop="16dp">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout">
+        android:id="@+id/item_data_fields">
 
         <TextView
             android:id="@+id/item_name"
@@ -101,12 +101,12 @@
         android:layout_alignParentRight="true" />
 
     <SurfaceView
+        android:id="@+id/canvas_move_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/surfaceView"
-        android:layout_below="@+id/linearLayout"
-        android:layout_alignLeft="@+id/linearLayout"
-        android:layout_alignRight="@+id/item_image"
+        android:layout_below="@id/item_data_fields"
+        android:layout_alignLeft="@id/item_data_fields"
+        android:layout_alignRight="@id/item_image"
         android:layout_alignParentBottom="true"
         android:background="@color/card_grey"
         android:layout_marginTop="16dp" />

@@ -59,6 +59,7 @@ public class TypeListFragment extends SherlockFragment implements AdapterView.On
 	}
 
 	// Fragment lifecycle management
+
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);

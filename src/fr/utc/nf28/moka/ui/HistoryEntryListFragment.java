@@ -4,7 +4,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,31 +18,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.utc.nf28.moka.HistoryItemAdapter;
-import fr.utc.nf28.moka.MokaRestService;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.HistoryEntry;
-import fr.utc.nf28.moka.data.MokaItem;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class HistoryEntryListFragment extends SherlockFragment {
 	private static final String API_URL = "http://thomaskeunebroek.fr/moka";
 	private static final String TAG = makeLogTag(HistoryEntryListFragment.class);
-	private final MokaItem mSelectedItem;
 	private HistoryItemAdapter mAdapter;
 	private ListView mListView;
 	private ProgressBar mProgressBar;
 
-	public HistoryEntryListFragment(MokaItem selectedItem) {
-		mSelectedItem = selectedItem;
+	public HistoryEntryListFragment() {
 	}
 
-	public static HistoryEntryListFragment newInstance(MokaItem selectedItem) {
-		return new HistoryEntryListFragment(selectedItem);
+	public static HistoryEntryListFragment newInstance() {
+		return new HistoryEntryListFragment();
 	}
 
 	// Fragment lifecycle management
@@ -61,25 +52,26 @@ public class HistoryEntryListFragment extends SherlockFragment {
 
 		// Launch the background task
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			//new LoadItemHistoryTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+			new LoadItemHistoryTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 		} else {
-			//new LoadItemHistoryTask(this).execute();
+			new LoadItemHistoryTask(this).execute();
 		}
 
-		final RestAdapter restAdapter = new RestAdapter.Builder().setServer(API_URL).setDebug(true).build();
-		final MokaRestService mokaRestService = restAdapter.create(MokaRestService.class);
-		mokaRestService.historyEntries(mSelectedItem.getId(), new Callback<List<HistoryEntry>>() {
-			@Override
-			public void success(List<HistoryEntry> historyEntries, Response response) {
-				Log.d(TAG, "success");
-				mAdapter.updateHistoryItems(historyEntries);
-			}
-
-			@Override
-			public void failure(RetrofitError retrofitError) {
-				Log.d(TAG, "failure === " + retrofitError.toString());
-			}
-		});
+		/** TODO: REST implementation */
+//		final RestAdapter restAdapter = new RestAdapter.Builder().setServer(API_URL).setDebug(true).build();
+//		final MokaRestService mokaRestService = restAdapter.create(MokaRestService.class);
+//		mokaRestService.historyEntries(mSelectedItem.getId(), new Callback<List<HistoryEntry>>() {
+//			@Override
+//			public void success(List<HistoryEntry> historyEntries, Response response) {
+//				Log.d(TAG, "success");
+//				mAdapter.updateHistoryItems(historyEntries);
+//			}
+//
+//			@Override
+//			public void failure(RetrofitError retrofitError) {
+//				Log.d(TAG, "failure === " + retrofitError.toString());
+//			}
+//		});
 
 		return rootView;
 	}
@@ -113,10 +105,10 @@ public class HistoryEntryListFragment extends SherlockFragment {
 			final List<HistoryEntry> historyEntries = new ArrayList<HistoryEntry>(10);
 
 			for (int i = 0; i < 10; i++) {
-				//historyEntries.add(new HistoryEntry("history " + String.valueOf(10 - i)));
+				historyEntries.add(new HistoryEntry("history " + String.valueOf(10 - i)));
 			}
 
-			SystemClock.sleep(5000);
+			SystemClock.sleep(3000);
 			return historyEntries;
 		}
 
