@@ -11,7 +11,8 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout">
 
         <TextView
             android:id="@+id/item_name"
@@ -98,5 +99,16 @@
         android:layout_marginLeft="32dp"
         android:contentDescription="@string/type_image_content_description"
         android:layout_alignParentRight="true" />
+
+    <SurfaceView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/surfaceView"
+        android:layout_below="@+id/linearLayout"
+        android:layout_alignLeft="@+id/linearLayout"
+        android:layout_alignRight="@+id/item_image"
+        android:layout_alignParentBottom="true"
+        android:background="@color/card_grey"
+        android:layout_marginTop="16dp" />
 
 </RelativeLayout>

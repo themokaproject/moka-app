@@ -75,6 +75,20 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 	}
 
 	@Override
+	public void moveItem(int itemId, int direction, int velocity) {
+		try {
+			final HashMap<String, Integer> movement = new HashMap<String, Integer>();
+			movement.put("itemId", itemId);
+			movement.put("direction", direction);
+			movement.put("velocity", velocity);
+			final String json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction(JadeUtils.TRANSACTION_TYPE_MOVE_ITEM, movement));
+			sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_ITEM_MOVEMENT), json);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
 	public void lockItem() {
 	}
 

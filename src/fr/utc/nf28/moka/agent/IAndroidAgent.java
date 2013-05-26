@@ -22,6 +22,11 @@ public interface IAndroidAgent {
 	public void deleteItem(int itemId);
 
 	/**
+	 * move item
+	 */
+	public void moveItem(int itemId, int direction, int velocity);
+
+	/**
 	 * lock item for edition
 	 */
 	public void lockItem();
