@@ -2,6 +2,7 @@ package fr.utc.nf28.moka;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -32,10 +33,14 @@ public class WelcomeActivity extends SherlockActivity {
 		findViewById(R.id.welcome_start_moka).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				mPrefs.edit().putString(SharedPreferencesUtils.KEY_PREF_FIRST_NAME,
-						fName.getText().toString()).commit();
-				mPrefs.edit().putString(SharedPreferencesUtils.KEY_PREF_LAST_NAME,
-						lName.getText().toString()).commit();
+				final SharedPreferences.Editor editor = mPrefs.edit();
+				editor.putString(SharedPreferencesUtils.KEY_PREF_LAST_NAME, lName.getText().toString());
+				editor.putString(SharedPreferencesUtils.KEY_PREF_FIRST_NAME, fName.getText().toString());
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+					editor.apply();
+				} else {
+					editor.commit();
+				}
 				startActivity(new Intent(WelcomeActivity.this, NfcActivity.class));
 				finish();
 			}
