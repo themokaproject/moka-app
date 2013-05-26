@@ -52,7 +52,10 @@ public class CurrentItemAdapter extends BaseMokaAdapter {
 		final MokaItem item = getItem(position);
 		itemName.setText(item.getTitle());
 		itemCreationDate.setText(DateUtils.getFormattedDate(item.getCreationDate()));
-		Picasso.with(mContext).load(item.getType().getResId()).resizeDimen(R.dimen.list_current_item_type_picture_width_height, R.dimen.list_current_item_type_picture_width_height).into(itemImage);
+		Picasso.with(mContext)
+				.load(item.getType().getResId())
+				.resizeDimen(R.dimen.list_current_item_type_picture_width_height, R.dimen.list_current_item_type_picture_width_height)
+				.into(itemImage);
 
 		return convertView;
 	}

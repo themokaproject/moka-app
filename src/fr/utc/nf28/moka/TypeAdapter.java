@@ -104,7 +104,10 @@ public class TypeAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 		final ImageView itemImage = ViewHolder.get(convertView, R.id.item_image);
 		final MokaType item = getItem(position);
 		itemName.setText(item.getName());
-		Picasso.with(mContext).load(item.getResId()).resizeDimen(R.dimen.list_type_picture_width_height, R.dimen.list_type_picture_width_height).into(itemImage);
+		Picasso.with(mContext)
+				.load(item.getResId())
+				.resizeDimen(R.dimen.list_type_picture_width_height, R.dimen.list_type_picture_width_height)
+				.into(itemImage);
 
 		return convertView;
 	}
