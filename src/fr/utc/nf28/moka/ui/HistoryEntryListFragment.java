@@ -15,7 +15,6 @@ import java.util.List;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
-import fr.utc.nf28.moka.HistoryItemAdapter;
 import fr.utc.nf28.moka.io.MokaRestAdapter;
 import fr.utc.nf28.moka.io.MokaRestService;
 import fr.utc.nf28.moka.R;

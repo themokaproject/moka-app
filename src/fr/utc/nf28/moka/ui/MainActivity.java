@@ -1,4 +1,4 @@
-package fr.utc.nf28.moka;
+package fr.utc.nf28.moka.ui;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -21,14 +21,12 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
+import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.agent.IAndroidAgent;
 import fr.utc.nf28.moka.agent.IJadeServerReceiver;
 import fr.utc.nf28.moka.agent.JadeServerReceiver;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.data.MokaType;
-import fr.utc.nf28.moka.ui.CurrentItemListFragment;
-import fr.utc.nf28.moka.ui.HistoryEntryListFragment;
-import fr.utc.nf28.moka.ui.TypeListFragment;
 import fr.utc.nf28.moka.util.CroutonUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
 import fr.utc.nf28.moka.util.SharedPreferencesUtils;

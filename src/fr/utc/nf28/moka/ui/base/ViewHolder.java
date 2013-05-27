@@ -1,4 +1,4 @@
-package fr.utc.nf28.moka;
+package fr.utc.nf28.moka.ui.base;
 
 import android.util.SparseArray;
 import android.view.View;

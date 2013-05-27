@@ -1,13 +1,17 @@
-package fr.utc.nf28.moka;
+package fr.utc.nf28.moka.ui;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import fr.utc.nf28.moka.data.HistoryEntry;
 
 import java.util.Collections;
 import java.util.List;
+
+import fr.utc.nf28.moka.R;
+import fr.utc.nf28.moka.data.HistoryEntry;
+import fr.utc.nf28.moka.ui.base.BaseMokaAdapter;
+import fr.utc.nf28.moka.ui.base.ViewHolder;
 
 public class HistoryItemAdapter extends BaseMokaAdapter {
 	private List<HistoryEntry> mHistoryEntries = Collections.emptyList();

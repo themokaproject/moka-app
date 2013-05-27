@@ -25,7 +25,6 @@ import java.util.List;
 
 import fr.utc.nf28.moka.MokaApplication;
 import fr.utc.nf28.moka.R;
-import fr.utc.nf28.moka.TypeAdapter;
 import fr.utc.nf28.moka.data.MokaType;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;

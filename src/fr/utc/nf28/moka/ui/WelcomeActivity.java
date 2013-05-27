@@ -1,4 +1,4 @@
-package fr.utc.nf28.moka;
+package fr.utc.nf28.moka.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import com.actionbarsherlock.app.SherlockActivity;
 
+import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.ui.nfc.NfcActivity;
 import fr.utc.nf28.moka.util.SharedPreferencesUtils;
 

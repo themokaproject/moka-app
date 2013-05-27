@@ -1,4 +1,4 @@
-package fr.utc.nf28.moka;
+package fr.utc.nf28.moka.ui;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ProgressBar;
 
+import fr.utc.nf28.moka.MokaApplication;
+import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.agent.AndroidAgent;
 import fr.utc.nf28.moka.util.JadeUtils;
 import jade.android.RuntimeCallback;

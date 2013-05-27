@@ -1,4 +1,4 @@
-package fr.utc.nf28.moka;
+package fr.utc.nf28.moka.ui;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -15,7 +15,7 @@ import android.view.View;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
-import fr.utc.nf28.moka.ui.ConfigurationFragment;
+import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.util.CroutonUtils;
 import fr.utc.nf28.moka.util.NfcUtils;
 import fr.utc.nf28.moka.util.SharedPreferencesUtils;

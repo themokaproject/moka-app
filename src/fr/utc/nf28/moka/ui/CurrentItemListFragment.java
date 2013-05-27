@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockFragment;
-import fr.utc.nf28.moka.CurrentItemAdapter;
+
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.ComputerItem;
 import fr.utc.nf28.moka.data.MediaItem;

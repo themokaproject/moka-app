@@ -1,4 +1,4 @@
-package fr.utc.nf28.moka;
+package fr.utc.nf28.moka.ui;
 
 import android.content.Context;
 import android.view.View;
@@ -11,7 +11,10 @@ import com.squareup.picasso.Picasso;
 import java.util.Collections;
 import java.util.List;
 
+import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.MokaItem;
+import fr.utc.nf28.moka.ui.base.BaseMokaAdapter;
+import fr.utc.nf28.moka.ui.base.ViewHolder;
 import fr.utc.nf28.moka.util.DateUtils;
 
 public class CurrentItemAdapter extends BaseMokaAdapter {

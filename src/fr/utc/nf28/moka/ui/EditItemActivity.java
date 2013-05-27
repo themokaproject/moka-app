@@ -1,13 +1,13 @@
-package fr.utc.nf28.moka;
+package fr.utc.nf28.moka.ui;
 
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 
+import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.agent.IAndroidAgent;
 import fr.utc.nf28.moka.data.MokaItem;
-import fr.utc.nf28.moka.ui.EditItemFragment;
 import fr.utc.nf28.moka.util.JadeUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;

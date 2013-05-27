@@ -18,11 +18,11 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
-import fr.utc.nf28.moka.DeviceConfigurationActivity;
-import fr.utc.nf28.moka.MainActivity;
+import fr.utc.nf28.moka.ui.DeviceConfigurationActivity;
+import fr.utc.nf28.moka.ui.MainActivity;
 import fr.utc.nf28.moka.R;
-import fr.utc.nf28.moka.SettingsActivity;
-import fr.utc.nf28.moka.WelcomeActivity;
+import fr.utc.nf28.moka.ui.SettingsActivity;
+import fr.utc.nf28.moka.ui.WelcomeActivity;
 import fr.utc.nf28.moka.util.CroutonUtils;
 import fr.utc.nf28.moka.util.NfcUtils;
 import fr.utc.nf28.moka.util.SharedPreferencesUtils;

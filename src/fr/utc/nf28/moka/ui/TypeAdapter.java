@@ -1,4 +1,4 @@
-package fr.utc.nf28.moka;
+package fr.utc.nf28.moka.ui;
 
 import android.content.Context;
 import android.util.SparseArray;
@@ -16,7 +16,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.MokaType;
+import fr.utc.nf28.moka.ui.base.BaseMokaAdapter;
+import fr.utc.nf28.moka.ui.base.MokaFilter;
+import fr.utc.nf28.moka.ui.base.ViewHolder;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 

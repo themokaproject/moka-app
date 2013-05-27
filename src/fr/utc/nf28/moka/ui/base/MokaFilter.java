@@ -1,15 +1,16 @@
-package fr.utc.nf28.moka;
+package fr.utc.nf28.moka.ui.base;
 
 import android.widget.Filter;
-import fr.utc.nf28.moka.data.MokaType;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.utc.nf28.moka.data.MokaType;
+
 public abstract class MokaFilter extends Filter {
 	protected final FilterResults filterResults;
 	protected final List<MokaType> foundItems;
-	protected boolean isQuerying = false;
+	public boolean isQuerying = false;
 
 	public MokaFilter() {
 		filterResults = new FilterResults();

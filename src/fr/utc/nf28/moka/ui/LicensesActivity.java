@@ -1,4 +1,4 @@
-package fr.utc.nf28.moka;
+package fr.utc.nf28.moka.ui;
 
 import android.os.Bundle;
 import android.webkit.WebView;
@@ -6,6 +6,8 @@ import android.webkit.WebViewClient;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
+
+import fr.utc.nf28.moka.R;
 
 public class LicensesActivity extends SherlockActivity {
 	private static final String LICENSES_URL = "file:///android_asset/licenses.html";
