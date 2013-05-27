@@ -3,6 +3,8 @@ package fr.utc.nf28.moka.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 public class HistoryEntry implements Parcelable {
 	public static final Parcelable.Creator<HistoryEntry> CREATOR = new Parcelable.Creator<HistoryEntry>() {
 		public HistoryEntry createFromParcel(Parcel in) {
@@ -13,6 +15,7 @@ public class HistoryEntry implements Parcelable {
 			return new HistoryEntry[size];
 		}
 	};
+	@SerializedName("action")
 	private String mAction;
 
 	public HistoryEntry(String action) {
