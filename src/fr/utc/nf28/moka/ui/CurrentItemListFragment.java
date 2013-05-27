@@ -7,16 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
 import com.actionbarsherlock.app.SherlockFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.ComputerItem;
 import fr.utc.nf28.moka.data.MediaItem;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.data.TextItem;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
