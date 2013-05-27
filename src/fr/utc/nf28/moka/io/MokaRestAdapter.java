@@ -1,5 +1,6 @@
-package fr.utc.nf28.moka;
+package fr.utc.nf28.moka.io;
 
+import fr.utc.nf28.moka.BuildConfig;
 import retrofit.RestAdapter;
 
 public class MokaRestAdapter {
