@@ -16,12 +16,12 @@ import java.util.List;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.utc.nf28.moka.HistoryItemAdapter;
+import fr.utc.nf28.moka.MokaRestAdapter;
 import fr.utc.nf28.moka.MokaRestService;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.HistoryEntry;
 import fr.utc.nf28.moka.util.SharedPreferencesUtils;
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
@@ -59,8 +59,7 @@ public class HistoryEntryListFragment extends SherlockFragment {
 				.getString(SharedPreferencesUtils.KEY_PREF_IP, DEFAULT_REST_SERVER_IP) + "/moka";
 
 		// TODO: ProgessBar
-		final RestAdapter restAdapter = new RestAdapter.Builder().setServer(API_URL).setDebug(true).build();
-		final MokaRestService mokaRestService = restAdapter.create(MokaRestService.class);
+		final MokaRestService mokaRestService = MokaRestAdapter.getInstance(API_URL).create(MokaRestService.class);
 		mokaRestService.historyEntries(new Callback<List<HistoryEntry>>() {
 			@Override
 			public void success(List<HistoryEntry> historyEntries, Response response) {
