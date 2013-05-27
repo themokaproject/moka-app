@@ -2,17 +2,15 @@ package fr.utc.nf28.moka.ui;
 
 import android.os.Bundle;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.MenuItem;
-
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.agent.IAndroidAgent;
 import fr.utc.nf28.moka.data.MokaItem;
+import fr.utc.nf28.moka.ui.base.MokaUpActivity;
 import fr.utc.nf28.moka.util.JadeUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
-public class EditItemActivity extends SherlockFragmentActivity implements EditItemFragment.Callbacks {
+public class EditItemActivity extends MokaUpActivity implements EditItemFragment.Callbacks {
 	public static final String ARG_ITEM = "arg_item";
 	public static final int RESULT_DELETE = RESULT_FIRST_USER + 1;
 	private static final String TAG = makeLogTag(EditItemActivity.class);
@@ -31,16 +29,6 @@ public class EditItemActivity extends SherlockFragmentActivity implements EditIt
 					.add(R.id.edit_item_container, EditItemFragment.newInstance((MokaItem) getIntent().getExtras().getParcelable(ARG_ITEM)))
 					.commit();
 		}
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case android.R.id.home:
-				finish();
-				return true;
-		}
-		return super.onOptionsItemSelected(item);
 	}
 
 	@Override

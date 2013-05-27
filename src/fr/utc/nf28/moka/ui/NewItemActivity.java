@@ -3,17 +3,16 @@ package fr.utc.nf28.moka.ui;
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.MenuItem;
 
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.agent.IAndroidAgent;
 import fr.utc.nf28.moka.data.MokaType;
+import fr.utc.nf28.moka.ui.base.MokaUpActivity;
 import fr.utc.nf28.moka.util.JadeUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
-public class NewItemActivity extends SherlockFragmentActivity {
+public class NewItemActivity extends MokaUpActivity {
 	public static final String ARG_TYPE = "arg_type";
 	private static final String TAG = makeLogTag(NewItemActivity.class);
 
@@ -37,15 +36,5 @@ public class NewItemActivity extends SherlockFragmentActivity {
 		// test dynamic communication
 		final IAndroidAgent agent = JadeUtils.getAndroidAgentInterface();
 		agent.createItem();
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case android.R.id.home:
-				finish();
-				return true;
-		}
-		return super.onOptionsItemSelected(item);
 	}
 }
