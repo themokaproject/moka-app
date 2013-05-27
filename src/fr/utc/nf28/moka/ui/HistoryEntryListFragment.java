@@ -71,7 +71,7 @@ public class HistoryEntryListFragment extends SherlockFragment {
 			@Override
 			public void failure(RetrofitError retrofitError) {
 				Log.d(TAG, "REST call failure === " + retrofitError.toString());
-				Crouton.makeText(getSherlockActivity(), "Erreur réseau", Style.ALERT).show();
+				Crouton.makeText(getSherlockActivity(), getResources().getString(R.string.network_error), Style.ALERT).show();
 			}
 		});
 
