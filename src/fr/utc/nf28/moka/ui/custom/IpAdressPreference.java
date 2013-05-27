@@ -1,4 +1,4 @@
-package fr.utc.nf28.moka.ui.settings;
+package fr.utc.nf28.moka.ui.custom;
 
 import android.app.Activity;
 import android.content.Context;
