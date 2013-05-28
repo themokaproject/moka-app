@@ -183,6 +183,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 	public void onItemCreationSuccess(int id) {
 		//start only if item creation succeed
 		final Intent detailIntent = new Intent(this, NewItemActivity.class);
+		//TODO need to retreive the type of last selected item ? or should we transfer it in transaction ?
 		detailIntent.putExtra(NewItemActivity.ARG_TYPE,
 				new ComputerType.UmlType("Diagramme UML", "Description d'un diagramme UML"));
 		startActivity(detailIntent);
