@@ -31,6 +31,80 @@
     <string name="main_class_spinner_title">Choisir une catégorie</string>
     <string name="type_image_content_description">Description du type</string>
 
+    <!-- Type titles -->
+    <string name="image_type_title">Image</string>
+    <string name="video_type_title">Vidéo</string>
+    <string name="web_page_type_title">Page web</string>
+    <string name="plain_text_type_title">Texte</string>
+    <string name="list_type_title">Liste</string>
+    <string name="post_it_type_title">Post-it</string>
+    <string name="uml_type_title">Diagramme UML</string>
+    <!-- Type descriptions -->
+    <string name="image_type_description"><![CDATA[Une <b>image</b> est une représentation visuelle d\'un objet.<br><br>
+        Après avoir rajouté une image, vous pourrez :<br><br>
+        <ul>
+            <li>Modifier son titre,</li>
+            <li>Modifier l\'image source,</li>
+            <li>La déplacer, l\'agrandir et la faire tourner.</li>
+        </ul>]]>
+    </string>
+    <string name="video_type_description"><![CDATA[Une <b>vidéo</b> permet d\'afficher tout type de contenu vidéo, par
+        exemple un lien YouTube.<br><br>
+        Après avoir rajouté une vidéo, vous pourrez :<br><br>
+        <ul>
+            <li>Modifier son titre,</li>
+            <li>Modifier le lien source,</li>
+            <li>La déplacer, l\'agrandir et la faire tourner,</li>
+            <li>La forcer à être jouée automatiquement.</li>
+        </ul>]]>
+    </string>
+    <string name="web_page_type_description"><![CDATA[Une <b>page web</b> permet d\'afficher n\'importe quel élément web
+        à la manière d\'un navigateur.<br><br>
+        Après avoir rajouté une page web, vous pourrez :<br><br>
+        <ul>
+            <li>Modifier son titre,</li>
+            <li>Choisir si elle est affichée automatiquement ou sous forme de lien,</li>
+            <li>Modifier le lien source,</li>
+            <li>La déplacer, l\'agrandir et la faire tourner.</li>
+        </ul>]]>
+    </string>
+    <string name="plain_text_type_description"><![CDATA[Un élément <b>texte</b> permet d\'afficher du texte, généralement
+        de longueur assez faible, par exemple un mémo ou encore un titre.<br><br>
+        Après avoir rajouté un élément texte, vous pourrez :<br><br>
+        <ul>
+            <li>Modifier son contenu,</li>
+            <li>Le déplacer, l\'agrandir et le faire tourner.</li>
+        </ul>]]>
+    </string>
+    <string name="list_type_description"><![CDATA[Une <b>liste</b> permet d\'afficher une suite d\'éléments placés
+        les uns à la suite des autres de manière ordonnée.<br><br>
+        Après avoir rajouté une liste, vous pourrez :<br><br>
+        <ul>
+            <li>Ajouter, modifier ou supprimer un élément,</li>
+            <li>La déplacer, l\'agrandir et la faire tourner.</li>
+        </ul>]]>
+    </string>
+    <string name="post_it_type_description"><![CDATA[Un <b>post-it</b> permet d\'afficher de manière visuelle un mémo.
+        Un post-it est consitué d\'un titre et de texte destiné à épingler une information ou une question.<br><br>
+        Après avoir rajouté un post-it, vous pourrez :<br><br>
+        <ul>
+            <li>Modifier son titre,</li>
+            <li>Modifier son contenu,</li>
+            <li>Changer sa couleur,</li>
+            <li>Le déplacer, l\'agrandir et le faire tourner.</li>
+        </ul>]]>
+    </string>
+    <string name="uml_type_description"><![CDATA[Un élément de type <b>UML</b> permet de construire et d\'afficher un
+        diagramme UML.<br><br>
+        Après avoir rajouté un élément de type UML, vous pourrez :<br><br>
+        <ul>
+            <li>Modifier son titre,</li>
+            <li>Modifier son contenu,</li>
+            <li>Ajouter des liens,</li>
+            <li>Le déplacer, l\'agrandir et le faire tourner.</li>
+        </ul>]]>
+    </string>
+
     <!-- Spinner content -->
     <string-array name="item_classes">
         <item>Texte</item>

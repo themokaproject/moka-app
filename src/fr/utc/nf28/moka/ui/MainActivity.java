@@ -14,6 +14,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
+import android.text.Editable;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +27,8 @@ import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+
+import org.xml.sax.XMLReader;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import fr.utc.nf28.moka.R;
@@ -228,6 +232,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		private static final String ARG_TITLE = "title";
 		private static final String ARG_DESCRIPTION = "description";
 		private static final String ARG_RES_ID = "res_id";
+		private final Html.TagHandler mTagHandler = new ListTagHandler();
 
 		static DescriptionDialogFragment newInstance(String title, String description, int resId) {
 			final DescriptionDialogFragment f = new DescriptionDialogFragment();
@@ -253,10 +258,32 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 
 			final View rootView = inflater.inflate(R.layout.fragment_dialog, null);
 			((TextView) rootView.findViewById(R.id.dialog_title)).setText(arguments.getString(ARG_TITLE));
-			((TextView) rootView.findViewById(R.id.type_description)).setText(arguments.getString(ARG_DESCRIPTION));
+			((TextView) rootView.findViewById(R.id.type_description)).setText(Html.fromHtml(arguments.getString(ARG_DESCRIPTION), null, mTagHandler));
 			((ImageView) rootView.findViewById(R.id.type_image)).setImageResource(arguments.getInt(ARG_RES_ID));
 
 			return rootView;
+		}
+
+		static class ListTagHandler implements Html.TagHandler {
+			boolean first = true;
+
+			@Override
+			public void handleTag(boolean opening, String tag, Editable output, XMLReader xmlReader) {
+				if ("li".equals(tag)) {
+					char lastChar = 0;
+					if (output.length() > 0)
+						lastChar = output.charAt(output.length() - 1);
+					if (first) {
+						if (lastChar == '\n')
+							output.append("\t•  ");
+						else
+							output.append("\n\t•  ");
+						first = false;
+					} else {
+						first = true;
+					}
+				}
+			}
 		}
 	}
 

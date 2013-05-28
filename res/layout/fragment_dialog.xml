@@ -47,20 +47,20 @@
             android:id="@+id/type_image"
             android:layout_width="@dimen/list_type_picture_width_height"
             android:layout_height="@dimen/list_type_picture_width_height"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:scaleType="centerInside"
             android:contentDescription="@string/type_image_content_description"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
             android:layout_gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/type_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:gravity="center"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:gravity="left|center_vertical"
             android:textSize="16sp"
             android:layout_gravity="center_horizontal" />
 
