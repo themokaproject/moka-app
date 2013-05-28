@@ -150,9 +150,16 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 //		agent.createItem();
 //		final Intent detailIntent = new Intent(this, EditItemActivity.class);
 //		detailIntent.putExtra(EditItemActivity.ARG_ITEM, itemFromType);
-		final Intent detailIntent = new Intent(this, NewItemActivity.class);
-		detailIntent.putExtra(NewItemActivity.ARG_TYPE, type);
-		startActivity(detailIntent);
+
+		// test dynamic communication
+		final IAndroidAgent agent = JadeUtils.getAndroidAgentInterface();
+		//TODO dynamic get the right item type
+		agent.createItem("umlClass");
+
+		//start only if item creation succeed
+//		final Intent detailIntent = new Intent(this, NewItemActivity.class);
+//		detailIntent.putExtra(NewItemActivity.ARG_TYPE, type);
+//		startActivity(detailIntent);
 	}
 
 	@Override

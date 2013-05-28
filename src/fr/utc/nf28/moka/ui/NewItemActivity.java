@@ -32,10 +32,5 @@ public class NewItemActivity extends MokaUpActivity {
 					.add(R.id.new_item_container, NewItemFragment.newInstance((MokaType) getIntent().getExtras().getParcelable(ARG_TYPE)))
 					.commit();
 		}
-
-		// test dynamic communication
-		final IAndroidAgent agent = JadeUtils.getAndroidAgentInterface();
-		//TODO dynamic get the right item type
-		agent.createItem("umlClass");
 	}
 }

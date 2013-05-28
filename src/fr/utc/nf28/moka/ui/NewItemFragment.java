@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.SurfaceView;
 import android.view.View;
@@ -34,6 +35,7 @@ public class NewItemFragment extends SherlockFragment {
 
 	public NewItemFragment(MokaType selectedType) {
 		mSelectedType = selectedType;
+		Log.i(TAG, mSelectedType.getName());
 	}
 
 	public static NewItemFragment newInstance(MokaType selectedType) {
