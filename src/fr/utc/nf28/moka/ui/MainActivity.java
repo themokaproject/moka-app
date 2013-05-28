@@ -1,6 +1,5 @@
 package fr.utc.nf28.moka.ui;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -8,25 +7,32 @@ import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import fr.utc.nf28.moka.R;
+import fr.utc.nf28.moka.data.MokaItem;
+import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.io.agent.IAndroidAgent;
 import fr.utc.nf28.moka.io.agent.IJadeServerReceiver;
 import fr.utc.nf28.moka.io.agent.JadeServerReceiver;
-import fr.utc.nf28.moka.data.MokaItem;
-import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.util.CroutonUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
 import fr.utc.nf28.moka.util.SharedPreferencesUtils;
@@ -151,10 +157,8 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 
 	@Override
 	public void onTypeLongClicked(MokaType type) {
-		new AlertDialog.Builder(this)
-				.setTitle(type.getName())
-				.setMessage(type.getDescription())
-				.show();
+		DescriptionDialogFragment.newInstance(type.getName(), type.getDescription(), type.getResId())
+				.show(getSupportFragmentManager(), "dialog");
 	}
 
 	@Override
@@ -204,6 +208,42 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		@Override
 		public int getCount() {
 			return 3;
+		}
+	}
+
+	static class DescriptionDialogFragment extends SherlockDialogFragment {
+		private static final String ARG_TITLE = "title";
+		private static final String ARG_DESCRIPTION = "description";
+		private static final String ARG_RES_ID = "res_id";
+
+		static DescriptionDialogFragment newInstance(String title, String description, int resId) {
+			final DescriptionDialogFragment f = new DescriptionDialogFragment();
+			final Bundle args = new Bundle();
+			args.putString(ARG_TITLE, title);
+			args.putString(ARG_DESCRIPTION, description);
+			args.putInt(ARG_RES_ID, resId);
+			f.setArguments(args);
+
+			return f;
+		}
+
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+
+			setStyle(DialogFragment.STYLE_NO_TITLE, android.R.style.Theme_DeviceDefault_Light_Dialog);
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+			final Bundle arguments = getArguments();
+
+			final View rootView = inflater.inflate(R.layout.fragment_dialog, null);
+			((TextView) rootView.findViewById(R.id.dialog_title)).setText(arguments.getString(ARG_TITLE));
+			((TextView) rootView.findViewById(R.id.type_description)).setText(arguments.getString(ARG_DESCRIPTION));
+			((ImageView) rootView.findViewById(R.id.type_image)).setImageResource(arguments.getInt(ARG_RES_ID));
+
+			return rootView;
 		}
 	}
 
