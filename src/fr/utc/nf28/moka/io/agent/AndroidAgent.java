@@ -97,11 +97,11 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 	/**
 	 * use to send message to the activity which register a JadeServerReceiver
 	 *
-	 * @param content message content
+	 * @param request request from SMA
 	 */
-	public void sendBroadcastMessage(String content) {
+	public void sendBroadcastMessage(final A2ATransaction request) {
 		final Intent i = new Intent(JadeServerReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER);
-		i.putExtra(JadeServerReceiver.EXTRA_JADE_SERVER_MESSAGE, content);
+		//i.putExtra(JadeServerReceiver.EXTRA_JADE_SERVER_MESSAGE, content);
 		LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
 	}
 }

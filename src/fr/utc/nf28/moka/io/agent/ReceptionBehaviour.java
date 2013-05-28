@@ -2,6 +2,9 @@ package fr.utc.nf28.moka.io.agent;
 
 import android.util.Log;
 
+import java.io.IOException;
+
+import fr.utc.nf28.moka.util.JSONParserUtils;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
@@ -19,9 +22,12 @@ public class ReceptionBehaviour extends CyclicBehaviour {
 	public void action() {
 		final ACLMessage message = myAgent.receive(MessageTemplate.MatchPerformative(ACLMessage.REQUEST));
 		if (message != null) {
-			final String content = message.getContent();
-			((AndroidAgent)myAgent).sendBroadcastMessage(content);
-			Log.i(TAG, content);
+			try {
+				final A2ATransaction request = JSONParserUtils.deserializeA2ATransaction(message.getContent());
+				((AndroidAgent)myAgent).sendBroadcastMessage(request);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		} else {
 			block();
 		}
