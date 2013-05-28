@@ -40,9 +40,9 @@ public class JadeServerReceiver extends BroadcastReceiver {
 						JSONParserUtils.deserializeA2ATransaction(intent.getStringExtra(EXTRA_JADE_REQUEST));
 				final String type = request.getType();
 				if (type.equals(JadeUtils.TRANSACTION_TYPE_ITEM_CREATION_SUCCESS)) {
-					//TODO call creation success callback
+					mInterface.onItemCreationSuccess((Integer)request.getContent());
 				} else if (type.equals(JadeUtils.TRANSACTION_TYPE_REFRESH_CURRENT_ITEMS)) {
-					//TODO call refresh current items callback
+					mInterface.onNewItemCreated();
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
