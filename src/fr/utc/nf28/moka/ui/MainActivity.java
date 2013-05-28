@@ -28,6 +28,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import fr.utc.nf28.moka.R;
+import fr.utc.nf28.moka.data.ComputerType;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.io.agent.IAndroidAgent;
@@ -155,11 +156,6 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		final IAndroidAgent agent = JadeUtils.getAndroidAgentInterface();
 		//TODO dynamic get the right item type
 		agent.createItem("umlClass");
-
-		//start only if item creation succeed
-//		final Intent detailIntent = new Intent(this, NewItemActivity.class);
-//		detailIntent.putExtra(NewItemActivity.ARG_TYPE, type);
-//		startActivity(detailIntent);
 	}
 
 	@Override
@@ -185,7 +181,11 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 
 	@Override
 	public void onItemCreationSuccess(int id) {
-
+		//start only if item creation succeed
+		final Intent detailIntent = new Intent(this, NewItemActivity.class);
+		detailIntent.putExtra(NewItemActivity.ARG_TYPE,
+				new ComputerType.UmlType("Diagramme UML", "Description d'un diagramme UML"));
+		startActivity(detailIntent);
 	}
 
 	@Override
