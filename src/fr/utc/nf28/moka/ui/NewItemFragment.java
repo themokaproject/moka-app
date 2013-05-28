@@ -61,7 +61,7 @@ public class NewItemFragment extends SherlockFragment {
 		final SurfaceView canvasMoveItem = (SurfaceView) rootView.findViewById(R.id.canvas_move_item);
 
 		typeName.setText(mSelectedType.getName());
-		typeDescription.setText(mSelectedType.getDescription());
+		typeDescription.setText(mSelectedType.getDescription()); // TODO: remove description
 		typeCategory.setText(mSelectedType.getCategoryName());
 		typeImage.setImageResource(mSelectedType.getResId());
 		canvasMoveItem.setOnTouchListener(new MoveItemListener() {

@@ -149,17 +149,10 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 
 	@Override
 	public void onTypeSelected(MokaType type) {
-		//TODO create the right item according to the type
-//		MokaItem itemFromType = new ComputerItem.UmlItem("Diagramme UML");
-//		final IAndroidAgent agent = JadeUtils.getAndroidAgentInterface();
-//		agent.createItem();
-//		final Intent detailIntent = new Intent(this, EditItemActivity.class);
-//		detailIntent.putExtra(EditItemActivity.ARG_ITEM, itemFromType);
+		final Intent detailIntent = new Intent(this, NewItemActivity.class);
+		detailIntent.putExtra(NewItemActivity.ARG_TYPE, type);
+		startActivity(detailIntent);
 
-		// test dynamic communication
-		final IAndroidAgent agent = JadeUtils.getAndroidAgentInterface();
-		//TODO dynamic get the right item type
-		agent.createItem("umlClass");
 	}
 
 	@Override
