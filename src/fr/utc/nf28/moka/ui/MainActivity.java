@@ -22,9 +22,9 @@ import com.actionbarsherlock.view.MenuItem;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import fr.utc.nf28.moka.R;
-import fr.utc.nf28.moka.agent.IAndroidAgent;
-import fr.utc.nf28.moka.agent.IJadeServerReceiver;
-import fr.utc.nf28.moka.agent.JadeServerReceiver;
+import fr.utc.nf28.moka.io.agent.IAndroidAgent;
+import fr.utc.nf28.moka.io.agent.IJadeServerReceiver;
+import fr.utc.nf28.moka.io.agent.JadeServerReceiver;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.util.CroutonUtils;

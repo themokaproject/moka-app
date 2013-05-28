@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.actionbarsherlock.app.ActionBar;
 
 import fr.utc.nf28.moka.R;
-import fr.utc.nf28.moka.agent.IAndroidAgent;
+import fr.utc.nf28.moka.io.agent.IAndroidAgent;
 import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.ui.base.MokaUpActivity;
 import fr.utc.nf28.moka.util.JadeUtils;

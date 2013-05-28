@@ -3,7 +3,7 @@ package fr.utc.nf28.moka.util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import fr.utc.nf28.moka.agent.A2ATransaction;
+import fr.utc.nf28.moka.io.agent.A2ATransaction;
 
 /**
  * a JSON serializer/deserializer that uses Jackson

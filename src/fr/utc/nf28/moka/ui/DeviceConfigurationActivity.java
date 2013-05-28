@@ -16,7 +16,7 @@ import android.widget.ProgressBar;
 
 import fr.utc.nf28.moka.MokaApplication;
 import fr.utc.nf28.moka.R;
-import fr.utc.nf28.moka.agent.AndroidAgent;
+import fr.utc.nf28.moka.io.agent.AndroidAgent;
 import fr.utc.nf28.moka.util.JadeUtils;
 import jade.android.RuntimeCallback;
 

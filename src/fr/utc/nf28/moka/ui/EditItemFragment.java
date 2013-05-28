@@ -18,7 +18,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 import fr.utc.nf28.moka.R;
-import fr.utc.nf28.moka.agent.IAndroidAgent;
+import fr.utc.nf28.moka.io.agent.IAndroidAgent;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.ui.custom.MoveItemListener;
 import fr.utc.nf28.moka.util.DateUtils;

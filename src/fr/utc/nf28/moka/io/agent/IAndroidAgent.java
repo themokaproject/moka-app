@@ -1,4 +1,4 @@
-package fr.utc.nf28.moka.agent;
+package fr.utc.nf28.moka.io.agent;
 
 /**
  * interface use to communicate with the agent

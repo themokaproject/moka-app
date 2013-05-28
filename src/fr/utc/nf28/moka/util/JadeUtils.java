@@ -2,7 +2,7 @@ package fr.utc.nf28.moka.util;
 
 import java.util.UUID;
 
-import fr.utc.nf28.moka.agent.IAndroidAgent;
+import fr.utc.nf28.moka.io.agent.IAndroidAgent;
 import jade.core.MicroRuntime;
 import jade.wrapper.ControllerException;
 

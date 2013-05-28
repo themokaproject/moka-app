@@ -3,7 +3,7 @@ package fr.utc.nf28.moka.ui;
 import android.os.Bundle;
 
 import fr.utc.nf28.moka.R;
-import fr.utc.nf28.moka.agent.IAndroidAgent;
+import fr.utc.nf28.moka.io.agent.IAndroidAgent;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.ui.base.MokaUpActivity;
 import fr.utc.nf28.moka.util.JadeUtils;
