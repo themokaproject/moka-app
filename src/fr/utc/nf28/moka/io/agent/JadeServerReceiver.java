@@ -4,6 +4,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import java.io.IOException;
+
+import fr.utc.nf28.moka.util.JSONParserUtils;
+import fr.utc.nf28.moka.util.JadeUtils;
+
 public class JadeServerReceiver extends BroadcastReceiver {
 
 	/**
@@ -30,8 +35,18 @@ public class JadeServerReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		if (intent.hasExtra(EXTRA_JADE_REQUEST)) {
-			//TODO check if it's a item creation or another callback
-			mInterface.onNewItem(intent.getStringExtra(EXTRA_JADE_REQUEST));
+			try {
+				final A2ATransaction request =
+						JSONParserUtils.deserializeA2ATransaction(intent.getStringExtra(EXTRA_JADE_REQUEST));
+				final String type = request.getType();
+				if (type.equals(JadeUtils.TRANSACTION_TYPE_ITEM_CREATION_SUCCESS)) {
+					//TODO call creation success callback
+				} else if (type.equals(JadeUtils.TRANSACTION_TYPE_REFRESH_CURRENT_ITEMS)) {
+					//TODO call refresh current items callback
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 	}
