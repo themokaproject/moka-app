@@ -90,4 +90,14 @@ public class JadeUtils {
 	 * moveItem transaction
 	 */
 	public static final String TRANSACTION_TYPE_MOVE_ITEM = "moveItem";
+
+	/**
+	 * creation success transaction
+	 */
+	public static final String TRANSACTION_TYPE_ITEM_CREATION_SUCCESS = "creationSuccess";
+
+	/**
+	 * refresh current items transaction
+	 */
+	public static final String TRANSACTION_TYPE_REFRESH_CURRENT_ITEMS = "refreshCurrentItems";
 }
