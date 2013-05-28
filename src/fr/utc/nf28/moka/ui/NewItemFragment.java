@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.SurfaceView;
 import android.view.View;
@@ -18,10 +17,10 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 import fr.utc.nf28.moka.R;
-import fr.utc.nf28.moka.io.agent.IAndroidAgent;
 import fr.utc.nf28.moka.data.ComputerItem;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.data.MokaType;
+import fr.utc.nf28.moka.io.agent.IAndroidAgent;
 import fr.utc.nf28.moka.ui.custom.MoveItemListener;
 import fr.utc.nf28.moka.util.JadeUtils;
 
@@ -35,7 +34,6 @@ public class NewItemFragment extends SherlockFragment {
 
 	public NewItemFragment(MokaType selectedType) {
 		mSelectedType = selectedType;
-		Log.i(TAG, mSelectedType.getName());
 	}
 
 	public static NewItemFragment newInstance(MokaType selectedType) {
