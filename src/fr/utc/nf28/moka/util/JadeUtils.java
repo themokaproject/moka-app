@@ -37,7 +37,7 @@ public class JadeUtils {
 		}
 
 		@Override
-		public void createItem() {
+		public void createItem(String type) {
 		}
 
 		@Override

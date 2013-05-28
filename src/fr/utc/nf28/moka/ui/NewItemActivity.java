@@ -35,6 +35,6 @@ public class NewItemActivity extends MokaUpActivity {
 
 		// test dynamic communication
 		final IAndroidAgent agent = JadeUtils.getAndroidAgentInterface();
-		agent.createItem();
+		agent.createItem("umlClass");
 	}
 }

@@ -13,8 +13,10 @@ public interface IAndroidAgent {
 
 	/**
 	 * create new item on platform
+	 *
+	 * @param type item type (uml, text, img)
 	 */
-	public void createItem();
+	public void createItem(String type);
 
 	/**
 	 * delete item on platform
