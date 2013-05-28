@@ -22,12 +22,7 @@ public class ReceptionBehaviour extends CyclicBehaviour {
 	public void action() {
 		final ACLMessage message = myAgent.receive(MessageTemplate.MatchPerformative(ACLMessage.REQUEST));
 		if (message != null) {
-			try {
-				final A2ATransaction request = JSONParserUtils.deserializeA2ATransaction(message.getContent());
-				((AndroidAgent)myAgent).sendBroadcastMessage(request);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			((AndroidAgent)myAgent).sendBroadcastMessage(message.getContent());
 		} else {
 			block();
 		}

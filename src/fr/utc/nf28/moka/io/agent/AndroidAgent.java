@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import fr.utc.nf28.moka.util.JSONParserUtils;
@@ -49,6 +50,8 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 		} catch (JsonProcessingException e) {
 			Log.e(TAG, "connectPlatform failed : JsonProcessingException");
 			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -59,6 +62,8 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 			sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_CREATION), json);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -68,6 +73,8 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 			final String json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction(JadeUtils.TRANSACTION_TYPE_DELETE_ITEM, itemId));
 			sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_CREATION), json);
 		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -82,6 +89,8 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 			final String json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction(JadeUtils.TRANSACTION_TYPE_MOVE_ITEM, mRequest));
 			sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_ITEM_MOVEMENT), json);
 		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -99,9 +108,9 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 	 *
 	 * @param request request from SMA
 	 */
-	public void sendBroadcastMessage(final A2ATransaction request) {
+	public void sendBroadcastMessage(final String request) {
 		final Intent i = new Intent(JadeServerReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER);
-		//i.putExtra(JadeServerReceiver.EXTRA_JADE_SERVER_MESSAGE, content);
+		i.putExtra(JadeServerReceiver.EXTRA_JADE_REQUEST, request);
 		LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
 	}
 }

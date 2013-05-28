@@ -13,7 +13,8 @@ public class JadeServerReceiver extends BroadcastReceiver {
 	/**
 	 * intent extra for callback content
 	 */
-	public static final String EXTRA_JADE_SERVER_MESSAGE = "callbackContentFromJadeServer";
+	public static final String EXTRA_JADE_REQUEST = "requestFromSma";
+
 	private final IJadeServerReceiver mInterface;
 
 	/**
@@ -28,9 +29,9 @@ public class JadeServerReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		if (intent.hasExtra(EXTRA_JADE_SERVER_MESSAGE)) {
+		if (intent.hasExtra(EXTRA_JADE_REQUEST)) {
 			//TODO check if it's a item creation or another callback
-			mInterface.onNewItem(intent.getStringExtra(EXTRA_JADE_SERVER_MESSAGE));
+			mInterface.onNewItem(intent.getStringExtra(EXTRA_JADE_REQUEST));
 		}
 
 	}
