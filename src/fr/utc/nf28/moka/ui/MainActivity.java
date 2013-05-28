@@ -184,8 +184,13 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 	}
 
 	@Override
-	public void onNewItem(String content) {
-		Crouton.makeText(this, "From server : " + content, CroutonUtils.INFO_MOKA_STYLE).show();
+	public void onItemCreationSuccess(int id) {
+
+	}
+
+	@Override
+	public void onNewItemCreated() {
+		Crouton.makeText(this, "Please refresh your current list.", CroutonUtils.INFO_MOKA_STYLE).show();
 	}
 
 	/**
