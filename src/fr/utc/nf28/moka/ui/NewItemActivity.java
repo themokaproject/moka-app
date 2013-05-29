@@ -1,12 +1,16 @@
 package fr.utc.nf28.moka.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.actionbarsherlock.app.ActionBar;
 
 import fr.utc.nf28.moka.R;
-import fr.utc.nf28.moka.io.agent.IAndroidAgent;
+import fr.utc.nf28.moka.data.ComputerType;
+import fr.utc.nf28.moka.data.MediaType;
 import fr.utc.nf28.moka.data.MokaType;
+import fr.utc.nf28.moka.data.TextType;
+import fr.utc.nf28.moka.io.agent.IAndroidAgent;
 import fr.utc.nf28.moka.ui.base.MokaUpActivity;
 import fr.utc.nf28.moka.util.JadeUtils;
 
@@ -26,15 +30,27 @@ public class NewItemActivity extends MokaUpActivity {
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setTitle(getResources().getString(R.string.new_item_actionbar_title));
 
-		if (savedInstanceState == null) {
+		if (savedInstanceState == null & getIntent().hasExtra(ARG_TYPE)) {
+
+			//retrieve MokaType from intent
+			final MokaType type = (MokaType) getIntent().getExtras().getParcelable(ARG_TYPE);
+
+			//add fragment
 			getSupportFragmentManager()
 					.beginTransaction()
-					.add(R.id.new_item_container, NewItemFragment.newInstance((MokaType) getIntent().getExtras().getParcelable(ARG_TYPE)))
+					.add(R.id.new_item_container, NewItemFragment.newInstance(type))
 					.commit();
 
-			final IAndroidAgent agent = JadeUtils.getAndroidAgentInterface();
 			//TODO dynamic get the right item type
-			agent.createItem("umlClass");
+			//send creation request to the SMA
+			final IAndroidAgent agent = JadeUtils.getAndroidAgentInterface();
+			if (type instanceof ComputerType) {
+				agent.createItem("umlClass");
+			} else if (type instanceof TextType) {
+
+			} else if (type instanceof MediaType) {
+
+			}
 		}
 	}
 }
