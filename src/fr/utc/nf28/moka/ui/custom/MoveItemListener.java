@@ -54,6 +54,7 @@ public abstract class MoveItemListener implements View.OnTouchListener {
 				if (direction % 10 != 0) mLastXDist = currentXDist;
 				if (direction >= 10) mLastYDist = currentYDist;
 				Log.i(TAG, "resize || direction : " + String.valueOf(direction));
+				resize(direction);
 			}
 		}
 
