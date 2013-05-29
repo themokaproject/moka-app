@@ -31,6 +31,11 @@ public class NewItemActivity extends MokaUpActivity implements IJadeServerReceiv
 	 */
 	private JadeServerReceiver mJadeServerReceiver;
 
+	/**
+	 * type of the item
+	 */
+	private String mType;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -55,12 +60,11 @@ public class NewItemActivity extends MokaUpActivity implements IJadeServerReceiv
 					.add(R.id.new_item_container, NewItemFragment.newInstance(type))
 					.commit();
 
-			//send creation request to the SMA
-			final IAndroidAgent agent = JadeUtils.getAndroidAgentInterface();
+
 			if (type instanceof ComputerType.UmlType) {
-				agent.createItem(ComputerType.UmlType.KEY_TYPE);
+				mType=ComputerType.UmlType.KEY_TYPE;
 			} else if (type instanceof TextType.PostItType) {
-				agent.createItem(TextType.PostItType.KEY_TYPE);
+				mType=TextType.PostItType.KEY_TYPE;
 			} else {
 				Crouton.makeText(this, "implémenter création pour " + type.getClass().toString(),
 						CroutonUtils.INFO_MOKA_STYLE).show();
@@ -73,6 +77,12 @@ public class NewItemActivity extends MokaUpActivity implements IJadeServerReceiv
 		super.onResume();
 		LocalBroadcastManager.getInstance(this).registerReceiver(mJadeServerReceiver,
 				new IntentFilter(JadeServerReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER));
+
+		//send creation request to the SMA
+		if(mType!=null){
+			final IAndroidAgent agent = JadeUtils.getAndroidAgentInterface();
+			agent.createItem(mType);
+		}
 	}
 
 	@Override
