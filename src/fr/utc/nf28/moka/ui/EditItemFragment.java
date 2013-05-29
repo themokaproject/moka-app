@@ -18,8 +18,8 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 import fr.utc.nf28.moka.R;
-import fr.utc.nf28.moka.io.agent.IAndroidAgent;
 import fr.utc.nf28.moka.data.MokaItem;
+import fr.utc.nf28.moka.io.agent.IAndroidAgent;
 import fr.utc.nf28.moka.ui.custom.MoveItemListener;
 import fr.utc.nf28.moka.util.DateUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
@@ -123,15 +123,9 @@ public class EditItemFragment extends SherlockFragment {
 		switch (item.getItemId()) {
 			case R.id.menu_delete:
 				final Resources resources = getResources();
-				final StringBuilder sb = new StringBuilder();
-				sb.append(resources.getString(R.string.delete_confirmation_message));
-				sb.append(" ");
-				sb.append(mSelectedItem.getTitle());
-				sb.append(" ?");
-				// TODO: use string variables
 				new AlertDialog.Builder(getSherlockActivity())
 						.setTitle(resources.getString(R.string.delete_confirmation_title))
-						.setMessage(sb.toString())
+						.setMessage(String.format(resources.getString(R.string.delete_confirmation_message), mSelectedItem.getTitle()))
 						.setPositiveButton(resources.getString(R.string.delete_confirmation_ok), new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialogInterface, int which) {

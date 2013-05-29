@@ -23,7 +23,7 @@
     <string name="history_entry_list_empty_text">Aucun historique n\'est associé à cet élément</string>
 
     <string name="delete_confirmation_title">Confirmation</string>
-    <string name="delete_confirmation_message">Êtes-vous sûr(e) de vouloir supprimer</string>
+    <string name="delete_confirmation_message">Êtes-vous sûr(e) de vouloir supprimer %1$s ?</string>
     <string name="delete_confirmation_ok">OK</string>
     <string name="delete_confirmation_cancel">Annuler</string>
 
