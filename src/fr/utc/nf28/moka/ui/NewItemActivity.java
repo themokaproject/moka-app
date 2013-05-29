@@ -12,6 +12,7 @@ import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.data.TextType;
 import fr.utc.nf28.moka.io.agent.IAndroidAgent;
 import fr.utc.nf28.moka.io.agent.IJadeServerReceiver;
+import fr.utc.nf28.moka.io.agent.JadeServerReceiver;
 import fr.utc.nf28.moka.ui.base.MokaUpActivity;
 import fr.utc.nf28.moka.util.CroutonUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
@@ -22,11 +23,19 @@ public class NewItemActivity extends MokaUpActivity implements IJadeServerReceiv
 	public static final String ARG_TYPE = "arg_type";
 	private static final String TAG = makeLogTag(NewItemActivity.class);
 
+	/**
+	 * broadcast receiver use to catch agent callback
+	 */
+	private JadeServerReceiver mJadeServerReceiver;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.new_item_activity);
+
+		//create new receiver
+		mJadeServerReceiver = new JadeServerReceiver(this);
 
 		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
@@ -56,6 +65,15 @@ public class NewItemActivity extends MokaUpActivity implements IJadeServerReceiv
 		}
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+	}
 
 	@Override
 	public void onItemCreationSuccess(int id) {
