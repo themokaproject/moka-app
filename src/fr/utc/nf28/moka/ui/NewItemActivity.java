@@ -1,7 +1,6 @@
 package fr.utc.nf28.moka.ui;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import com.actionbarsherlock.app.ActionBar;
 
@@ -44,12 +43,10 @@ public class NewItemActivity extends MokaUpActivity {
 			//TODO dynamic get the right item type
 			//send creation request to the SMA
 			final IAndroidAgent agent = JadeUtils.getAndroidAgentInterface();
-			if (type instanceof ComputerType) {
-				agent.createItem("umlClass");
-			} else if (type instanceof TextType) {
-
-			} else if (type instanceof MediaType) {
-
+			if (type instanceof ComputerType.UmlType) {
+				agent.createItem(ComputerType.UmlType.KEY_TYPE);
+			} else if (type instanceof TextType.PostItType) {
+				agent.createItem(TextType.PostItType.KEY_TYPE);
 			}
 		}
 	}
