@@ -54,6 +54,11 @@ public class JadeUtils {
 		}
 
 		@Override
+		public void resizeItem(int itemId, int direction) {
+
+		}
+
+		@Override
 		public void lockItem() {
 		}
 

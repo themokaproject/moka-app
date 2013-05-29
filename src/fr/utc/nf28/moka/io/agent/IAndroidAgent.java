@@ -29,6 +29,11 @@ public interface IAndroidAgent {
 	public void moveItem(int itemId, int direction, int velocity);
 
 	/**
+	 * resize item
+	 */
+	public void resizeItem(int itemId, int direction);
+
+	/**
 	 * lock item for edition
 	 */
 	public void lockItem();

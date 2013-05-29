@@ -96,6 +96,21 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 	}
 
 	@Override
+	public void resizeItem(int itemId, int direction) {
+		mRequest.clear();
+		try {
+			mRequest.put("itemId", itemId);
+			mRequest.put("direction", direction);
+			final String json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction(JadeUtils.TRANSACTION_TYPE_RESIZE_ITEM, mRequest));
+			sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_ITEM_RESIZING), json);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
 	public void lockItem() {
 	}
 
