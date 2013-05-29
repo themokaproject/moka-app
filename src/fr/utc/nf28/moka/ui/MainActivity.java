@@ -171,7 +171,8 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == EDIT_ITEM_REQUEST) {
 			if (resultCode == EditItemActivity.RESULT_DELETE) {
-				Crouton.makeText(this, "L'élément a été correctement supprimé", CroutonUtils.INFO_MOKA_STYLE).show(); // TODO: fetch from strings
+				Crouton.makeText(this, getResources().getString(R.string.item_deletion_success),
+						CroutonUtils.INFO_MOKA_STYLE).show();
 			}
 		}
 	}
@@ -180,7 +181,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 	public void onItemCreationSuccess(int id) {
 		//start only if item creation succeed
 		final Intent detailIntent = new Intent(this, NewItemActivity.class);
-		//TODO need to retreive the type of last selected item ? or should we transfer it in transaction ?
+		//TODO need to retrieve the type of last selected item ? or should we transfer it in transaction ?
 		detailIntent.putExtra(NewItemActivity.ARG_TYPE,
 				new ComputerType.UmlType("Diagramme UML", "Description d'un diagramme UML"));
 		startActivity(detailIntent);
