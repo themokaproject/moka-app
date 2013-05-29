@@ -136,4 +136,5 @@ public abstract class MoveItemListener implements View.OnTouchListener {
 	}
 
 	public abstract void move(int direction, int velocity);
+	public abstract void resize(int direction);
 }
