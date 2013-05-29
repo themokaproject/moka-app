@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.actionbarsherlock.app.ActionBar;
 
+import de.keyboardsurfer.android.widget.crouton.Crouton;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.ComputerType;
 import fr.utc.nf28.moka.data.MediaType;
@@ -11,6 +12,7 @@ import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.data.TextType;
 import fr.utc.nf28.moka.io.agent.IAndroidAgent;
 import fr.utc.nf28.moka.ui.base.MokaUpActivity;
+import fr.utc.nf28.moka.util.CroutonUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
@@ -47,6 +49,9 @@ public class NewItemActivity extends MokaUpActivity {
 				agent.createItem(ComputerType.UmlType.KEY_TYPE);
 			} else if (type instanceof TextType.PostItType) {
 				agent.createItem(TextType.PostItType.KEY_TYPE);
+			}else{
+				Crouton.makeText(this, "implémenter création pour "+type.getClass().toString(),
+						CroutonUtils.INFO_MOKA_STYLE).show();
 			}
 		}
 	}
