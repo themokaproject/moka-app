@@ -40,7 +40,6 @@ public abstract class MoveItemListener implements View.OnTouchListener {
 	private boolean twoPointers(final MotionEvent motionEvent) {
 		final int action = motionEvent.getAction();
 		if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
-			Log.i(TAG, "action_up reset");
 			reset();
 			return true;
 		}
@@ -61,7 +60,6 @@ public abstract class MoveItemListener implements View.OnTouchListener {
 				if (direction != 0) {
 					if (direction % 10 != 0) mLastXDist = currentXDist;
 					if (direction >= 10) mLastYDist = currentYDist;
-					Log.i(TAG, "resize || direction : " + String.valueOf(direction));
 					resize(direction);
 				}
 			}
@@ -95,7 +93,6 @@ public abstract class MoveItemListener implements View.OnTouchListener {
 	private boolean onePointer(final MotionEvent motionEvent) {
 		final int action = motionEvent.getAction();
 		if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
-			Log.i(TAG, "action_up reset");
 			reset();
 			return true;
 		}
