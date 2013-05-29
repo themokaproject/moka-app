@@ -31,6 +31,11 @@ public class JadeUtils {
 	 * name for Jade skill registering of CreationAgent
 	 */
 	public static final String JADE_SKILL_NAME_CREATION = "CreationAgentSkillName";
+	/**
+	 * name for Jade item resizing skill
+	 */
+	public static final String JADE_SKILL_NAME_ITEM_RESIZING = "ItemResizingSkillName";
+
 	private static final IAndroidAgent sDummyAndroidAgentInterface = new IAndroidAgent() {
 		@Override
 		public void connectPlatform(String firstName, String lastName, String ip) {
