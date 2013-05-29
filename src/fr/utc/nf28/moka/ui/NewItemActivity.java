@@ -1,8 +1,11 @@
 package fr.utc.nf28.moka.ui;
 
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.MenuItem;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
@@ -19,7 +22,7 @@ import fr.utc.nf28.moka.util.JadeUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
-public class NewItemActivity extends MokaUpActivity implements IJadeServerReceiver{
+public class NewItemActivity extends MokaUpActivity implements IJadeServerReceiver {
 	public static final String ARG_TYPE = "arg_type";
 	private static final String TAG = makeLogTag(NewItemActivity.class);
 
@@ -68,16 +71,24 @@ public class NewItemActivity extends MokaUpActivity implements IJadeServerReceiv
 	@Override
 	protected void onResume() {
 		super.onResume();
+		LocalBroadcastManager.getInstance(this).registerReceiver(mJadeServerReceiver,
+				new IntentFilter(JadeServerReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER));
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
+		LocalBroadcastManager.getInstance(this).unregisterReceiver(mJadeServerReceiver);
 	}
 
 	@Override
 	public void onItemCreationSuccess(int id) {
-		Crouton.makeText(this, "id from server :" + String.valueOf(id)+". Ready for edition.",
+		Crouton.makeText(this, "id from server :" + String.valueOf(id) + ". Ready for edition.",
 				Style.CONFIRM).show();
 		//TODO enable edition
 	}
