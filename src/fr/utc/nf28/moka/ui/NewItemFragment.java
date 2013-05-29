@@ -69,6 +69,11 @@ public class NewItemFragment extends SherlockFragment {
 			public void move(int direction, int velocity) {
 				mAgent.moveItem(mNewItem.getId(), direction, velocity);
 			}
+
+			@Override
+			public void resize(int direction) {
+				mAgent.resizeItem(mNewItem.getId(), direction);
+			}
 		});
 
 		mNewItem = new ComputerItem.UmlItem("Diagramme UML"); // TODO: create accordingly to selected type
