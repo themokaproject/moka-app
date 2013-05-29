@@ -86,27 +86,24 @@ public class NewItemFragment extends SherlockFragment {
 		switch (item.getItemId()) {
 			case R.id.menu_delete:
 				final Resources resources = getResources();
-				final StringBuilder sb = new StringBuilder();
-				sb.append(resources.getString(R.string.delete_confirmation_message));
-				sb.append(" ");
-				sb.append(mNewItem.getTitle());
-				sb.append(" ?");
-				// TODO: use string variables
 				new AlertDialog.Builder(getSherlockActivity())
 						.setTitle(resources.getString(R.string.delete_confirmation_title))
-						.setMessage(sb.toString())
-						.setPositiveButton(resources.getString(R.string.delete_confirmation_ok), new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialogInterface, int which) {
-								// TODO: call the DeleteAgent
-								getSherlockActivity().finish();
-							}
-						})
-						.setNegativeButton(resources.getString(R.string.delete_confirmation_cancel), new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialogInterface, int which) {
-							}
-						})
+						.setMessage(String.format(resources.getString(R.string.delete_confirmation_message),
+								mNewItem.getTitle()))
+						.setPositiveButton(resources.getString(R.string.delete_confirmation_ok),
+								new DialogInterface.OnClickListener() {
+									@Override
+									public void onClick(DialogInterface dialogInterface, int which) {
+										// TODO: call the delete agent
+										getSherlockActivity().finish();
+									}
+								})
+						.setNegativeButton(resources.getString(R.string.delete_confirmation_cancel),
+								new DialogInterface.OnClickListener() {
+									@Override
+									public void onClick(DialogInterface dialogInterface, int which) {
+									}
+								})
 						.show();
 				return true;
 			default:

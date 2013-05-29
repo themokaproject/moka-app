@@ -125,18 +125,21 @@ public class EditItemFragment extends SherlockFragment {
 				final Resources resources = getResources();
 				new AlertDialog.Builder(getSherlockActivity())
 						.setTitle(resources.getString(R.string.delete_confirmation_title))
-						.setMessage(String.format(resources.getString(R.string.delete_confirmation_message), mSelectedItem.getTitle()))
-						.setPositiveButton(resources.getString(R.string.delete_confirmation_ok), new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialogInterface, int which) {
-								mCallbacks.onItemDeletion(mSelectedItem);
-							}
-						})
-						.setNegativeButton(resources.getString(R.string.delete_confirmation_cancel), new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialogInterface, int which) {
-							}
-						})
+						.setMessage(String.format(resources.getString(R.string.delete_confirmation_message),
+								mSelectedItem.getTitle()))
+						.setPositiveButton(resources.getString(R.string.delete_confirmation_ok),
+								new DialogInterface.OnClickListener() {
+									@Override
+									public void onClick(DialogInterface dialogInterface, int which) {
+										mCallbacks.onItemDeletion(mSelectedItem);
+									}
+								})
+						.setNegativeButton(resources.getString(R.string.delete_confirmation_cancel),
+								new DialogInterface.OnClickListener() {
+									@Override
+									public void onClick(DialogInterface dialogInterface, int which) {
+									}
+								})
 						.show();
 				return true;
 			default:
