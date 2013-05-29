@@ -123,6 +123,9 @@
     <!-- NewItemActivity -->
     <string name="new_item_actionbar_title">Nouvel élément</string>
 
+    <!-- EditItemFragment -->
+    <string name="item_info_creation">Créé par %1$s le %2$s</string>
+
     <!-- Configuration Preferences -->
     <string name="category_wireless">Wifi</string>
     <string name="category_jade">Jade</string>
