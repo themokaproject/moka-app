@@ -31,11 +31,6 @@ public class NewItemActivity extends MokaUpActivity implements IJadeServerReceiv
 	 */
 	private JadeServerReceiver mJadeServerReceiver;
 
-	/**
-	 * type of the item
-	 */
-	private String mType;
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -51,24 +46,12 @@ public class NewItemActivity extends MokaUpActivity implements IJadeServerReceiv
 
 		if (savedInstanceState == null & getIntent().hasExtra(ARG_TYPE)) {
 
-			//retrieve MokaType from intent
-			final MokaType type = (MokaType) getIntent().getExtras().getParcelable(ARG_TYPE);
-
 			//add fragment
 			getSupportFragmentManager()
 					.beginTransaction()
 					.add(R.id.new_item_container, NewItemFragment.newInstance(type))
 					.commit();
 
-
-			if (type instanceof ComputerType.UmlType) {
-				mType=ComputerType.UmlType.KEY_TYPE;
-			} else if (type instanceof TextType.PostItType) {
-				mType=TextType.PostItType.KEY_TYPE;
-			} else {
-				Crouton.makeText(this, "implémenter création pour " + type.getClass().toString(),
-						CroutonUtils.INFO_MOKA_STYLE).show();
-			}
 		}
 	}
 
@@ -78,10 +61,19 @@ public class NewItemActivity extends MokaUpActivity implements IJadeServerReceiv
 		LocalBroadcastManager.getInstance(this).registerReceiver(mJadeServerReceiver,
 				new IntentFilter(JadeServerReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER));
 
-		//send creation request to the SMA
-		if(mType!=null){
+		if(getIntent().hasExtra(ARG_TYPE)){
+			//retrieve MokaType from intent
+			final MokaType type = (MokaType) getIntent().getExtras().getParcelable(ARG_TYPE);
+			//send creation request to the SMA
 			final IAndroidAgent agent = JadeUtils.getAndroidAgentInterface();
-			agent.createItem(mType);
+			if (type instanceof ComputerType.UmlType) {
+				agent.createItem(ComputerType.UmlType.KEY_TYPE);
+			} else if (type instanceof TextType.PostItType) {
+				agent.createItem(TextType.PostItType.KEY_TYPE);
+			} else {
+				Crouton.makeText(this, "implémenter création pour " + type.getClass().toString(),
+						CroutonUtils.INFO_MOKA_STYLE).show();
+			}
 		}
 	}
 
