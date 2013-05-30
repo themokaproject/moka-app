@@ -45,26 +45,19 @@ import fr.utc.nf28.moka.util.SharedPreferencesUtils;
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class MainActivity extends SherlockFragmentActivity implements ActionBar.TabListener,
-		TypeListFragment.Callbacks, CurrentItemListFragment.Callbacks, IJadeServerReceiver {
+		TypeListFragment.Callbacks, CurrentItemListFragment.Callbacks {
 	private static final String TAG = makeLogTag(MainActivity.class);
 	private static final int EDIT_ITEM_REQUEST = 0;
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	private ViewPager mViewPager;
-	/**
-	 * broadcast receiver use to catch agent callback
-	 */
-	private JadeServerReceiver mJadeServerReceiver;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.main);
-
-		//create new receiver
-		mJadeServerReceiver = new JadeServerReceiver(this);
 
 		// ActionBar setup
 		final ActionBar actionBar = getSupportActionBar();
@@ -114,14 +107,11 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 	@Override
 	protected void onResume() {
 		super.onResume();
-		LocalBroadcastManager.getInstance(this).registerReceiver(mJadeServerReceiver,
-				new IntentFilter(JadeServerReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER));
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		LocalBroadcastManager.getInstance(this).unregisterReceiver(mJadeServerReceiver);
 	}
 
 	@Override
@@ -175,21 +165,6 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 						CroutonUtils.INFO_MOKA_STYLE).show();
 			}
 		}
-	}
-
-	@Override
-	public void onItemCreationSuccess(int id) {
-		//start only if item creation succeed
-		final Intent detailIntent = new Intent(this, NewItemActivity.class);
-		//TODO need to retrieve the type of last selected item ? or should we transfer it in transaction ?
-		detailIntent.putExtra(NewItemActivity.ARG_TYPE,
-				new ComputerType.UmlType("Diagramme UML", "Description d'un diagramme UML"));
-		startActivity(detailIntent);
-	}
-
-	@Override
-	public void onRefreshRequest() {
-		Crouton.makeText(this, "Please refresh your current list.", CroutonUtils.INFO_MOKA_STYLE).show();
 	}
 
 	/**
