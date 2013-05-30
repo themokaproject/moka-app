@@ -42,7 +42,7 @@ public class HistoryItemAdapter extends BaseMokaAdapter {
 		}
 
 		final TextView itemName = ViewHolder.get(convertView, R.id.item_name);
-		final HistoryEntry historyEntry = getItem(position);
+		final HistoryEntry historyEntry = getItem(getCount()-1-position);
 		itemName.setText(historyEntry.getAction());
 
 		return convertView;
