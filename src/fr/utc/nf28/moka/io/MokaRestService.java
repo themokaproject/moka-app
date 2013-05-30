@@ -9,4 +9,6 @@ import retrofit.http.GET;
 public interface MokaRestService {
 	@GET("/history")
 	void historyEntries(Callback<List<HistoryEntry>> cb);
+	@GET("/items")
+	void itemsEntries(Callback<List<Object>> cb);
 }
