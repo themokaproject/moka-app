@@ -42,6 +42,7 @@ public class HistoryItemAdapter extends BaseMokaAdapter {
 		}
 
 		final TextView itemName = ViewHolder.get(convertView, R.id.item_name);
+		//TODO invert list on server side ?
 		final HistoryEntry historyEntry = getItem(getCount()-1-position);
 		itemName.setText(historyEntry.getAction());
 

@@ -21,7 +21,6 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.ComputerItem;
-import fr.utc.nf28.moka.data.HistoryEntry;
 import fr.utc.nf28.moka.data.MediaItem;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.data.TextItem;
@@ -145,8 +144,6 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 
 	@Override
 	public void onRefreshRequest() {
-		Crouton.makeText(getSherlockActivity(), "Refresh requested !",
-				CroutonUtils.INFO_MOKA_STYLE).show();
 		refreshCurrentList();
 	}
 
@@ -171,9 +168,13 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 			@Override
 			public void success(List<Object> itemsEntries, Response response) {
 				Log.d(TAG, "success");
-				//TODO implement list update
-				Log.d(TAG,"current item list size :"+itemsEntries.size());
-//				mAdapter.updateHistoryItems(historyEntries);
+				//TODO implement object retrieving
+				final ArrayList<MokaItem> items = new ArrayList<MokaItem>();
+				//TODO invert list on server side ?
+				for(int i =itemsEntries.size()-1;i>=0;i--){
+					items.add(new ComputerItem.UmlItem("Uml_item"+i));
+				}
+				mAdapter.updateCurrentItems(items);
 			}
 
 			@Override
