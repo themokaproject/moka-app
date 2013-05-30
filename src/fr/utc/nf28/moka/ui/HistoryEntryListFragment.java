@@ -21,7 +21,7 @@ import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.HistoryEntry;
 import fr.utc.nf28.moka.io.MokaRestAdapter;
 import fr.utc.nf28.moka.io.MokaRestService;
-import fr.utc.nf28.moka.io.agent.JadeServerReceiver;
+import fr.utc.nf28.moka.io.receiver.MokaReceiver;
 import fr.utc.nf28.moka.io.receiver.RefreshHistoryReceiver;
 import fr.utc.nf28.moka.util.SharedPreferencesUtils;
 import retrofit.Callback;
@@ -76,7 +76,7 @@ public class HistoryEntryListFragment extends SherlockFragment implements Refres
 		super.onResume();
 		refreshHistory();
 		LocalBroadcastManager.getInstance(getSherlockActivity()).registerReceiver(mRefreshHistoryReceiver,
-				new IntentFilter(JadeServerReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER));
+				new IntentFilter(MokaReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER));
 	}
 
 	@Override

@@ -14,8 +14,8 @@ import fr.utc.nf28.moka.data.ComputerType;
 import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.data.TextType;
 import fr.utc.nf28.moka.io.agent.IAndroidAgent;
-import fr.utc.nf28.moka.io.agent.JadeServerReceiver;
 import fr.utc.nf28.moka.io.receiver.CreationReceiver;
+import fr.utc.nf28.moka.io.receiver.MokaReceiver;
 import fr.utc.nf28.moka.ui.base.MokaUpActivity;
 import fr.utc.nf28.moka.util.CroutonUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
@@ -76,7 +76,7 @@ public class NewItemActivity extends MokaUpActivity implements CreationReceiver.
 	protected void onResume() {
 		super.onResume();
 		LocalBroadcastManager.getInstance(this).registerReceiver(mJadeServerReceiver,
-				new IntentFilter(JadeServerReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER));
+				new IntentFilter(MokaReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER));
 
 		//send creation request to the SMA
 		if (mType != null) {

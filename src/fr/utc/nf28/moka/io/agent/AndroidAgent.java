@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import java.io.IOException;
 import java.util.HashMap;
 
+import fr.utc.nf28.moka.io.receiver.MokaReceiver;
 import fr.utc.nf28.moka.util.JSONParserUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
 
@@ -119,13 +120,13 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 	}
 
 	/**
-	 * use to send message to the activity which register a JadeServerReceiver
+	 * use to send message to the activity which register a MokaReceiver
 	 *
 	 * @param request request from SMA
 	 */
 	public void sendBroadcastMessage(final String request) {
-		final Intent i = new Intent(JadeServerReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER);
-		i.putExtra(JadeServerReceiver.EXTRA_JADE_REQUEST, request);
+		final Intent i = new Intent(MokaReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER);
+		i.putExtra(MokaReceiver.EXTRA_JADE_REQUEST, request);
 		LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
 	}
 }

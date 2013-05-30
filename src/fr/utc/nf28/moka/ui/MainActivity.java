@@ -1,7 +1,6 @@
 package fr.utc.nf28.moka.ui;
 
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
@@ -12,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.Html;
@@ -32,12 +30,9 @@ import org.xml.sax.XMLReader;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import fr.utc.nf28.moka.R;
-import fr.utc.nf28.moka.data.ComputerType;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.io.agent.IAndroidAgent;
-import fr.utc.nf28.moka.io.agent.IJadeServerReceiver;
-import fr.utc.nf28.moka.io.agent.JadeServerReceiver;
 import fr.utc.nf28.moka.util.CroutonUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
 import fr.utc.nf28.moka.util.SharedPreferencesUtils;

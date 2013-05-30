@@ -6,7 +6,7 @@ public abstract class MokaReceiver extends BroadcastReceiver {
 	/**
 	 * identify broadcast message
 	 */
-	public static final String INTENT_FILTER_JADE_SERVER_RECEIVER = "fr.utc.nf28.moka.io.agent.JadeServerReceiver";
+	public static final String INTENT_FILTER_JADE_SERVER_RECEIVER = "fr.utc.nf28.moka.io.agent.MokaReceiver";
 	/**
 	 * intent extra for callback content
 	 */
