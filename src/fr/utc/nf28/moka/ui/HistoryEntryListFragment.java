@@ -1,7 +1,9 @@
 package fr.utc.nf28.moka.ui;
 
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,8 @@ import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.HistoryEntry;
 import fr.utc.nf28.moka.io.MokaRestAdapter;
 import fr.utc.nf28.moka.io.MokaRestService;
+import fr.utc.nf28.moka.io.agent.JadeServerReceiver;
+import fr.utc.nf28.moka.io.receiver.RefreshHistoryReceiver;
 import fr.utc.nf28.moka.util.SharedPreferencesUtils;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -26,7 +30,7 @@ import retrofit.client.Response;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
-public class HistoryEntryListFragment extends SherlockFragment {
+public class HistoryEntryListFragment extends SherlockFragment implements RefreshHistoryReceiver.OnRefreshHistoryListener {
 	private static final String DEFAULT_REST_SERVER_IP = "192.168.1.6";
 	private static final String TAG = makeLogTag(HistoryEntryListFragment.class);
 	private HistoryItemAdapter mAdapter;
@@ -34,6 +38,8 @@ public class HistoryEntryListFragment extends SherlockFragment {
 	private ProgressBar mProgressBar;
 
 	private String mRestUrlHistory;
+
+	private RefreshHistoryReceiver mRefreshHistoryReceiver;
 
 	public HistoryEntryListFragment() {
 	}
@@ -59,6 +65,8 @@ public class HistoryEntryListFragment extends SherlockFragment {
 		mRestUrlHistory = "http://" + PreferenceManager.getDefaultSharedPreferences(getSherlockActivity())
 				.getString(SharedPreferencesUtils.KEY_PREF_IP, DEFAULT_REST_SERVER_IP) + "/moka";
 
+		mRefreshHistoryReceiver = new RefreshHistoryReceiver(this);
+
 
 		return rootView;
 	}
@@ -67,6 +75,14 @@ public class HistoryEntryListFragment extends SherlockFragment {
 	public void onResume() {
 		super.onResume();
 		refreshHistory();
+		LocalBroadcastManager.getInstance(getSherlockActivity()).registerReceiver(mRefreshHistoryReceiver,
+				new IntentFilter(JadeServerReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER));
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		LocalBroadcastManager.getInstance(getSherlockActivity()).unregisterReceiver(mRefreshHistoryReceiver);
 	}
 
 	/**
@@ -87,5 +103,10 @@ public class HistoryEntryListFragment extends SherlockFragment {
 				Crouton.makeText(getSherlockActivity(), getResources().getString(R.string.network_error), Style.ALERT).show();
 			}
 		});
+	}
+
+	@Override
+	public void onRefreshRequest() {
+		refreshHistory();
 	}
 }
