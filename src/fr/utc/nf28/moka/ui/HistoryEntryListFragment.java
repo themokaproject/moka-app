@@ -59,10 +59,14 @@ public class HistoryEntryListFragment extends SherlockFragment {
 		mRestUrlHistory = "http://" + PreferenceManager.getDefaultSharedPreferences(getSherlockActivity())
 				.getString(SharedPreferencesUtils.KEY_PREF_IP, DEFAULT_REST_SERVER_IP) + "/moka";
 
-		// TODO: ProgessBar
-		refreshHistory();
 
 		return rootView;
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		refreshHistory();
 	}
 
 	/**
