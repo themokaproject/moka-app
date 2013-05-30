@@ -15,6 +15,7 @@ import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockFragment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
@@ -164,15 +165,19 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 	 */
 	public void refreshCurrentList() {
 		final MokaRestService mokaRestService = MokaRestAdapter.getInstance(mRestUrlRoot).create(MokaRestService.class);
-		mokaRestService.itemsEntries(new Callback<List<Object>>() {
+		mokaRestService.itemsEntries(new Callback<List<HashMap<String, Object>>>() {
 			@Override
-			public void success(List<Object> itemsEntries, Response response) {
+			public void success(List<HashMap<String, Object>> itemsEntries, Response response) {
 				Log.d(TAG, "success");
 				//TODO implement object retrieving
 				final ArrayList<MokaItem> items = new ArrayList<MokaItem>();
 				//TODO invert list on server side ?
 				for(int i =itemsEntries.size()-1;i>=0;i--){
-					items.add(new ComputerItem.UmlItem("Uml_item"+i));
+					final HashMap<String, Object> item = itemsEntries.get(i);
+					int itemId = ((Double)item.get("id")).intValue();
+					MokaItem mokaItem = new ComputerItem.UmlItem("Uml_item"+String.valueOf(itemId));
+					mokaItem.setId(itemId);
+					items.add(mokaItem);
 				}
 				mAdapter.updateCurrentItems(items);
 			}

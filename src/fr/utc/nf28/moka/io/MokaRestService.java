@@ -1,5 +1,6 @@
 package fr.utc.nf28.moka.io;
 
+import java.util.HashMap;
 import java.util.List;
 
 import fr.utc.nf28.moka.data.HistoryEntry;
@@ -10,5 +11,5 @@ public interface MokaRestService {
 	@GET("/history")
 	void historyEntries(Callback<List<HistoryEntry>> cb);
 	@GET("/items")
-	void itemsEntries(Callback<List<Object>> cb);
+	void itemsEntries(Callback<List<HashMap<String, Object>>> cb);
 }
