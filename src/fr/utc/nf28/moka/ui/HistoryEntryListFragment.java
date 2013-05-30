@@ -15,10 +15,10 @@ import java.util.List;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
-import fr.utc.nf28.moka.io.MokaRestAdapter;
-import fr.utc.nf28.moka.io.MokaRestService;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.HistoryEntry;
+import fr.utc.nf28.moka.io.MokaRestAdapter;
+import fr.utc.nf28.moka.io.MokaRestService;
 import fr.utc.nf28.moka.util.SharedPreferencesUtils;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -32,6 +32,8 @@ public class HistoryEntryListFragment extends SherlockFragment {
 	private HistoryItemAdapter mAdapter;
 	private ListView mListView;
 	private ProgressBar mProgressBar;
+
+	private String mRestUrlHistory;
 
 	public HistoryEntryListFragment() {
 	}
@@ -54,11 +56,20 @@ public class HistoryEntryListFragment extends SherlockFragment {
 		mListView.setAdapter(mAdapter);
 
 		// Launch the background task to retrieve history entries from the RESTful server
-		final String API_URL = "http://" + PreferenceManager.getDefaultSharedPreferences(getSherlockActivity())
+		mRestUrlHistory = "http://" + PreferenceManager.getDefaultSharedPreferences(getSherlockActivity())
 				.getString(SharedPreferencesUtils.KEY_PREF_IP, DEFAULT_REST_SERVER_IP) + "/moka";
 
 		// TODO: ProgessBar
-		final MokaRestService mokaRestService = MokaRestAdapter.getInstance(API_URL).create(MokaRestService.class);
+		refreshHistory();
+
+		return rootView;
+	}
+
+	/**
+	 * get the current history from the rest server
+	 */
+	public void refreshHistory() {
+		final MokaRestService mokaRestService = MokaRestAdapter.getInstance(mRestUrlHistory).create(MokaRestService.class);
 		mokaRestService.historyEntries(new Callback<List<HistoryEntry>>() {
 			@Override
 			public void success(List<HistoryEntry> historyEntries, Response response) {
@@ -72,7 +83,5 @@ public class HistoryEntryListFragment extends SherlockFragment {
 				Crouton.makeText(getSherlockActivity(), getResources().getString(R.string.network_error), Style.ALERT).show();
 			}
 		});
-
-		return rootView;
 	}
 }
