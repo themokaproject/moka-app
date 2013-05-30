@@ -27,12 +27,11 @@ import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 public class NewItemActivity extends MokaUpActivity implements CreationReceiver.OnCreationCallbackListener, EditItemFragment.Callbacks {
 	public static final String ARG_TYPE = "arg_type";
 	private static final String TAG = makeLogTag(NewItemActivity.class);
-
+	private final IntentFilter mIntentFilter = new IntentFilter(MokaReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER);
 	/**
 	 * broadcast receiver use to catch agent callback
 	 */
 	private CreationReceiver mJadeServerReceiver;
-
 	/**
 	 * type of the item
 	 */
@@ -77,8 +76,7 @@ public class NewItemActivity extends MokaUpActivity implements CreationReceiver.
 	@Override
 	protected void onResume() {
 		super.onResume();
-		LocalBroadcastManager.getInstance(this).registerReceiver(mJadeServerReceiver,
-				new IntentFilter(MokaReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER));
+		LocalBroadcastManager.getInstance(this).registerReceiver(mJadeServerReceiver, mIntentFilter);
 
 		//send creation request to the SMA
 		if (mType != null) {
@@ -103,7 +101,7 @@ public class NewItemActivity extends MokaUpActivity implements CreationReceiver.
 		Crouton.makeText(this, "id from server :" + String.valueOf(id) + ". Ready for editing.",
 				Style.CONFIRM).show();
 		//TODO use the real type
-		MokaItem item = new ComputerItem.UmlItem("Uml_item" + String.valueOf(id));
+		final MokaItem item = new ComputerItem.UmlItem("Uml_item" + String.valueOf(id));
 		item.setId(id);
 		getSupportFragmentManager()
 				.beginTransaction()
@@ -113,7 +111,6 @@ public class NewItemActivity extends MokaUpActivity implements CreationReceiver.
 
 	@Override
 	public void onError() {
-
 	}
 
 	@Override

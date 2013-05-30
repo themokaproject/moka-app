@@ -34,6 +34,7 @@ public class HistoryEntryListFragment extends SherlockFragment implements Refres
 		Callback<List<HistoryEntry>> {
 	private static final String DEFAULT_REST_SERVER_IP = "192.168.1.6";
 	private static final String TAG = makeLogTag(HistoryEntryListFragment.class);
+	private final IntentFilter mIntentFilter = new IntentFilter(MokaReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER);
 	private HistoryItemAdapter mAdapter;
 	private ListView mListView;
 	private ProgressBar mProgressBar;
@@ -73,8 +74,7 @@ public class HistoryEntryListFragment extends SherlockFragment implements Refres
 	public void onResume() {
 		super.onResume();
 		refreshHistory();
-		LocalBroadcastManager.getInstance(getSherlockActivity()).registerReceiver(mRefreshHistoryReceiver,
-				new IntentFilter(MokaReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER));
+		LocalBroadcastManager.getInstance(getSherlockActivity()).registerReceiver(mRefreshHistoryReceiver, mIntentFilter);
 	}
 
 	@Override
