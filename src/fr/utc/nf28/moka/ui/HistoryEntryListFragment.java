@@ -30,16 +30,15 @@ import retrofit.client.Response;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
-public class HistoryEntryListFragment extends SherlockFragment implements RefreshHistoryReceiver.OnRefreshHistoryListener {
+public class HistoryEntryListFragment extends SherlockFragment implements RefreshHistoryReceiver.OnRefreshHistoryListener,
+		Callback<List<HistoryEntry>> {
 	private static final String DEFAULT_REST_SERVER_IP = "192.168.1.6";
 	private static final String TAG = makeLogTag(HistoryEntryListFragment.class);
 	private HistoryItemAdapter mAdapter;
 	private ListView mListView;
 	private ProgressBar mProgressBar;
-
-	private String mRestUrlHistory;
-
 	private RefreshHistoryReceiver mRefreshHistoryReceiver;
+	private MokaRestService mMokaRestService;
 
 	public HistoryEntryListFragment() {
 	}
@@ -62,11 +61,10 @@ public class HistoryEntryListFragment extends SherlockFragment implements Refres
 		mListView.setAdapter(mAdapter);
 
 		// Launch the background task to retrieve history entries from the RESTful server
-		mRestUrlHistory = "http://" + PreferenceManager.getDefaultSharedPreferences(getSherlockActivity())
+		final String API_URL = "http://" + PreferenceManager.getDefaultSharedPreferences(getSherlockActivity())
 				.getString(SharedPreferencesUtils.KEY_PREF_IP, DEFAULT_REST_SERVER_IP) + "/moka";
-
+		mMokaRestService = MokaRestAdapter.getInstance(API_URL).create(MokaRestService.class);
 		mRefreshHistoryReceiver = new RefreshHistoryReceiver(this);
-
 
 		return rootView;
 	}
@@ -89,24 +87,23 @@ public class HistoryEntryListFragment extends SherlockFragment implements Refres
 	 * get the current history from the rest server
 	 */
 	public void refreshHistory() {
-		final MokaRestService mokaRestService = MokaRestAdapter.getInstance(mRestUrlHistory).create(MokaRestService.class);
-		mokaRestService.historyEntries(new Callback<List<HistoryEntry>>() {
-			@Override
-			public void success(List<HistoryEntry> historyEntries, Response response) {
-				Log.d(TAG, "success");
-				mAdapter.updateHistoryItems(historyEntries);
-			}
-
-			@Override
-			public void failure(RetrofitError retrofitError) {
-				Log.d(TAG, "REST call failure === " + retrofitError.toString());
-				Crouton.makeText(getSherlockActivity(), getResources().getString(R.string.network_error), Style.ALERT).show();
-			}
-		});
+		mMokaRestService.historyEntries(this);
 	}
 
 	@Override
 	public void onRefreshRequest() {
 		refreshHistory();
+	}
+
+	@Override
+	public void success(List<HistoryEntry> historyEntries, Response response) {
+		Log.d(TAG, "success");
+		mAdapter.updateHistoryItems(historyEntries);
+	}
+
+	@Override
+	public void failure(RetrofitError retrofitError) {
+		Log.d(TAG, "REST call failure === " + retrofitError.toString());
+		Crouton.makeText(getSherlockActivity(), getResources().getString(R.string.network_error), Style.ALERT).show();
 	}
 }
