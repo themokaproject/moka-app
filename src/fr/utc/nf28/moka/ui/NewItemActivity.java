@@ -14,22 +14,22 @@ import fr.utc.nf28.moka.data.ComputerType;
 import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.data.TextType;
 import fr.utc.nf28.moka.io.agent.IAndroidAgent;
-import fr.utc.nf28.moka.io.agent.IJadeServerReceiver;
 import fr.utc.nf28.moka.io.agent.JadeServerReceiver;
+import fr.utc.nf28.moka.io.receiver.CreationReceiver;
 import fr.utc.nf28.moka.ui.base.MokaUpActivity;
 import fr.utc.nf28.moka.util.CroutonUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
-public class NewItemActivity extends MokaUpActivity implements IJadeServerReceiver {
+public class NewItemActivity extends MokaUpActivity implements CreationReceiver.OnCreationCallbackListener {
 	public static final String ARG_TYPE = "arg_type";
 	private static final String TAG = makeLogTag(NewItemActivity.class);
 
 	/**
 	 * broadcast receiver use to catch agent callback
 	 */
-	private JadeServerReceiver mJadeServerReceiver;
+	private CreationReceiver mJadeServerReceiver;
 
 	/**
 	 * type of the item
@@ -43,7 +43,7 @@ public class NewItemActivity extends MokaUpActivity implements IJadeServerReceiv
 		setContentView(R.layout.new_item_activity);
 
 		//create new receiver
-		mJadeServerReceiver = new JadeServerReceiver(this);
+		mJadeServerReceiver = new CreationReceiver(this);
 
 		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
@@ -62,9 +62,9 @@ public class NewItemActivity extends MokaUpActivity implements IJadeServerReceiv
 
 
 			if (type instanceof ComputerType.UmlType) {
-				mType=ComputerType.UmlType.KEY_TYPE;
+				mType = ComputerType.UmlType.KEY_TYPE;
 			} else if (type instanceof TextType.PostItType) {
-				mType=TextType.PostItType.KEY_TYPE;
+				mType = TextType.PostItType.KEY_TYPE;
 			} else {
 				Crouton.makeText(this, "implémenter création pour " + type.getClass().toString(),
 						CroutonUtils.INFO_MOKA_STYLE).show();
@@ -79,7 +79,7 @@ public class NewItemActivity extends MokaUpActivity implements IJadeServerReceiv
 				new IntentFilter(JadeServerReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER));
 
 		//send creation request to the SMA
-		if(mType!=null){
+		if (mType != null) {
 			final IAndroidAgent agent = JadeUtils.getAndroidAgentInterface();
 			agent.createItem(mType);
 		}
@@ -97,14 +97,14 @@ public class NewItemActivity extends MokaUpActivity implements IJadeServerReceiv
 	}
 
 	@Override
-	public void onItemCreationSuccess(int id) {
-		Crouton.makeText(this, "id from server :" + String.valueOf(id) + ". Ready for edition.",
+	public void onSuccess(int id) {
+		Crouton.makeText(this, "id from server :" + String.valueOf(id) + ". Ready for editing.",
 				Style.CONFIRM).show();
 		//TODO enable edition
 	}
 
 	@Override
-	public void onRefreshRequest() {
+	public void onError() {
 
 	}
 }
