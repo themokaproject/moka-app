@@ -1,7 +1,9 @@
 package fr.utc.nf28.moka.ui;
 
 import android.app.Activity;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +15,19 @@ import com.actionbarsherlock.app.SherlockFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.keyboardsurfer.android.widget.crouton.Crouton;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.ComputerItem;
 import fr.utc.nf28.moka.data.MediaItem;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.data.TextItem;
+import fr.utc.nf28.moka.io.agent.JadeServerReceiver;
+import fr.utc.nf28.moka.io.receiver.RefreshItemReceiver;
+import fr.utc.nf28.moka.util.CroutonUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
-public class CurrentItemListFragment extends SherlockFragment implements AdapterView.OnItemClickListener {
+public class CurrentItemListFragment extends SherlockFragment implements AdapterView.OnItemClickListener,RefreshItemReceiver.OnRefreshItemListener {
 	private static final String TAG = makeLogTag(CurrentItemListFragment.class);
 	/**
 	 * A dummy implementation of the {@link Callbacks} interface that does
@@ -39,6 +45,11 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 	 * clicks.
 	 */
 	private Callbacks mCallbacks = sDummyCallbacks;
+
+	/**
+	 * Receiver
+	 */
+	private RefreshItemReceiver mRefreshItemReceiver;
 
 	public CurrentItemListFragment() {
 	}
@@ -71,6 +82,8 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 		mItems.add(new TextItem.PlainTextItem("Texte"));
 		mItems.add(new TextItem.ListItem("Liste"));
 		mItems.add(new TextItem.PostItItem("Post-it"));
+
+		mRefreshItemReceiver = new RefreshItemReceiver(this);
 	}
 
 	@Override
@@ -96,8 +109,27 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 	}
 
 	@Override
+	public void onResume() {
+		super.onResume();
+		LocalBroadcastManager.getInstance(getSherlockActivity()).registerReceiver(mRefreshItemReceiver,
+				new IntentFilter(JadeServerReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER));
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		LocalBroadcastManager.getInstance(getSherlockActivity()).unregisterReceiver(mRefreshItemReceiver);
+	}
+
+	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 		mCallbacks.onItemSelected(mAdapter.getItem(position));
+	}
+
+	@Override
+	public void onRefreshRequest() {
+		Crouton.makeText(getSherlockActivity(), "Refresh requested !",
+				CroutonUtils.INFO_MOKA_STYLE).show();
 	}
 
 	/**
