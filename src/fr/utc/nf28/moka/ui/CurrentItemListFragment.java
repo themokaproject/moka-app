@@ -29,7 +29,6 @@ import fr.utc.nf28.moka.io.MokaRestAdapter;
 import fr.utc.nf28.moka.io.MokaRestService;
 import fr.utc.nf28.moka.io.receiver.MokaReceiver;
 import fr.utc.nf28.moka.io.receiver.RefreshItemReceiver;
-import fr.utc.nf28.moka.util.CroutonUtils;
 import fr.utc.nf28.moka.util.SharedPreferencesUtils;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -37,7 +36,7 @@ import retrofit.client.Response;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
-public class CurrentItemListFragment extends SherlockFragment implements AdapterView.OnItemClickListener,RefreshItemReceiver.OnRefreshItemListener {
+public class CurrentItemListFragment extends SherlockFragment implements AdapterView.OnItemClickListener, RefreshItemReceiver.OnRefreshItemListener {
 	private static final String DEFAULT_REST_SERVER_IP = "192.168.1.6"; //TODO same as Jade main container ? doublon in HistoryEntryListFragment
 	private static final String TAG = makeLogTag(CurrentItemListFragment.class);
 	/**
@@ -49,6 +48,7 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 		public void onItemSelected(MokaItem item) {
 		}
 	};
+	private final IntentFilter mIntentFilter = new IntentFilter(MokaReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER);
 	private final List<MokaItem> mItems = new ArrayList<MokaItem>(10);
 	private CurrentItemAdapter mAdapter;
 	/**
@@ -56,12 +56,10 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 	 * clicks.
 	 */
 	private Callbacks mCallbacks = sDummyCallbacks;
-
 	/**
 	 * Receiver
 	 */
 	private RefreshItemReceiver mRefreshItemReceiver;
-
 	private String mRestUrlRoot;
 
 	public CurrentItemListFragment() {
@@ -128,8 +126,7 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 	public void onResume() {
 		super.onResume();
 		refreshCurrentList();
-		LocalBroadcastManager.getInstance(getSherlockActivity()).registerReceiver(mRefreshItemReceiver,
-				new IntentFilter(MokaReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER));
+		LocalBroadcastManager.getInstance(getSherlockActivity()).registerReceiver(mRefreshItemReceiver, mIntentFilter);
 	}
 
 	@Override
@@ -149,18 +146,6 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 	}
 
 	/**
-	 * A callback interface that all activities containing this fragment must
-	 * implement. This mechanism allows activities to be notified of item
-	 * selections.
-	 */
-	public interface Callbacks {
-		/**
-		 * Callback for when an item has been selected.
-		 */
-		public void onItemSelected(MokaItem item);
-	}
-
-	/**
 	 * get the current history from the rest server
 	 */
 	public void refreshCurrentList() {
@@ -172,10 +157,10 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 				//TODO implement object retrieving
 				final ArrayList<MokaItem> items = new ArrayList<MokaItem>();
 				//TODO invert list on server side ?
-				for(int i =itemsEntries.size()-1;i>=0;i--){
+				for (int i = itemsEntries.size() - 1; i >= 0; i--) {
 					final HashMap<String, Object> item = itemsEntries.get(i);
-					int itemId = ((Double)item.get("id")).intValue();
-					MokaItem mokaItem = new ComputerItem.UmlItem("Uml_item"+String.valueOf(itemId));
+					int itemId = ((Double) item.get("id")).intValue();
+					MokaItem mokaItem = new ComputerItem.UmlItem("Uml_item" + String.valueOf(itemId));
 					mokaItem.setId(itemId);
 					items.add(mokaItem);
 				}
@@ -188,5 +173,17 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 				Crouton.makeText(getSherlockActivity(), getResources().getString(R.string.network_error), Style.ALERT).show();
 			}
 		});
+	}
+
+	/**
+	 * A callback interface that all activities containing this fragment must
+	 * implement. This mechanism allows activities to be notified of item
+	 * selections.
+	 */
+	public interface Callbacks {
+		/**
+		 * Callback for when an item has been selected.
+		 */
+		public void onItemSelected(MokaItem item);
 	}
 }
