@@ -42,7 +42,7 @@ public class JadeServerReceiver extends BroadcastReceiver {
 				if (type.equals(JadeUtils.TRANSACTION_TYPE_ITEM_CREATION_SUCCESS)) {
 					mInterface.onItemCreationSuccess((Integer)request.getContent());
 				} else if (type.equals(JadeUtils.TRANSACTION_TYPE_REFRESH_CURRENT_ITEMS)) {
-					mInterface.onNewItemCreated();
+					mInterface.onRefreshRequest();
 				}
 			} catch (IOException e) {
 				e.printStackTrace();

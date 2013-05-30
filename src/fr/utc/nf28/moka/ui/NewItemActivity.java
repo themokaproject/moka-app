@@ -104,7 +104,7 @@ public class NewItemActivity extends MokaUpActivity implements IJadeServerReceiv
 	}
 
 	@Override
-	public void onNewItemCreated() {
+	public void onRefreshRequest() {
 
 	}
 }

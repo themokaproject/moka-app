@@ -15,5 +15,5 @@ public interface IJadeServerReceiver {
 	 * call when jade server request Android device to refresh
 	 * current items list due to a new item creation
 	 */
-	public void onNewItemCreated();
+	public void onRefreshRequest();
 }
