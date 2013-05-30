@@ -21,7 +21,7 @@ import fr.utc.nf28.moka.data.ComputerItem;
 import fr.utc.nf28.moka.data.MediaItem;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.data.TextItem;
-import fr.utc.nf28.moka.io.agent.JadeServerReceiver;
+import fr.utc.nf28.moka.io.receiver.MokaReceiver;
 import fr.utc.nf28.moka.io.receiver.RefreshItemReceiver;
 import fr.utc.nf28.moka.util.CroutonUtils;
 
@@ -112,7 +112,7 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 	public void onResume() {
 		super.onResume();
 		LocalBroadcastManager.getInstance(getSherlockActivity()).registerReceiver(mRefreshItemReceiver,
-				new IntentFilter(JadeServerReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER));
+				new IntentFilter(MokaReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER));
 	}
 
 	@Override
