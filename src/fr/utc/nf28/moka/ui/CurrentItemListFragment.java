@@ -22,9 +22,7 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.ComputerItem;
-import fr.utc.nf28.moka.data.MediaItem;
 import fr.utc.nf28.moka.data.MokaItem;
-import fr.utc.nf28.moka.data.TextItem;
 import fr.utc.nf28.moka.io.MokaRestAdapter;
 import fr.utc.nf28.moka.io.MokaRestService;
 import fr.utc.nf28.moka.io.receiver.MokaReceiver;
@@ -50,7 +48,6 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 		}
 	};
 	private final IntentFilter mIntentFilter = new IntentFilter(MokaReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER);
-	private final List<MokaItem> mItems = new ArrayList<MokaItem>(10);
 	private CurrentItemAdapter mAdapter;
 	/**
 	 * The fragment's current callback object, which is notified of list item
@@ -87,14 +84,6 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 		// Fragment configuration
 		setHasOptionsMenu(true);
 
-		mItems.add(new MediaItem.ImageItem("Image"));
-		mItems.add(new MediaItem.VideoItem("Vidéo"));
-		mItems.add(new MediaItem.WebItem("Web"));
-		mItems.add(new ComputerItem.UmlItem("Diagramme UML"));
-		mItems.add(new TextItem.PlainTextItem("Texte"));
-		mItems.add(new TextItem.ListItem("Liste"));
-		mItems.add(new TextItem.PostItItem("Post-it"));
-
 		mRefreshItemReceiver = new RefreshItemReceiver(this);
 
 		// TODO: display ProgressBar + refact with {@link HistoryEntryListFragment}
@@ -111,7 +100,6 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 		listView.setOnItemClickListener(this);
 		listView.setEmptyView(rootView.findViewById(android.R.id.empty));
 		mAdapter = new CurrentItemAdapter(getSherlockActivity());
-		mAdapter.updateCurrentItems(mItems);
 		listView.setAdapter(mAdapter);
 
 		return rootView;
