@@ -31,7 +31,7 @@ public class CreationReceiver extends MokaReceiver {
 				final A2ATransaction request =
 						JSONParserUtils.deserializeA2ATransaction(intent.getStringExtra(EXTRA_JADE_REQUEST));
 				final String type = request.getType();
-				if (type.equals(JadeUtils.TRANSACTION_TYPE_ITEM_CREATION_SUCCESS)) {
+				if (JadeUtils.TRANSACTION_TYPE_ITEM_CREATION_SUCCESS.equals(type)) {
 					mInterface.onSuccess((Integer) request.getContent());
 				}
 			} catch (IOException e) {
