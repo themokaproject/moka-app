@@ -13,9 +13,9 @@ public class RefreshItemReceiver extends MokaReceiver {
 
 	private OnRefreshItemListener mInterface;
 
-	public RefreshItemReceiver(OnRefreshItemListener i){
+	public RefreshItemReceiver(OnRefreshItemListener i) {
 		super();
-		mInterface=i;
+		mInterface = i;
 	}
 
 	@Override
@@ -25,7 +25,7 @@ public class RefreshItemReceiver extends MokaReceiver {
 				final A2ATransaction request =
 						JSONParserUtils.deserializeA2ATransaction(intent.getStringExtra(EXTRA_JADE_REQUEST));
 				final String type = request.getType();
-				if (type.equals(JadeUtils.TRANSACTION_TYPE_REFRESH_CURRENT_ITEMS)) {
+				if (JadeUtils.TRANSACTION_TYPE_REFRESH_CURRENT_ITEMS.equals(type)) {
 					mInterface.onRefreshRequest();
 				}
 			} catch (IOException e) {

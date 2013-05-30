@@ -12,9 +12,9 @@ import fr.utc.nf28.moka.util.JadeUtils;
 
 public class RefreshHistoryReceiver extends MokaReceiver {
 
-	 private OnRefreshHistoryListener mInterface;
+	private OnRefreshHistoryListener mInterface;
 
-	public RefreshHistoryReceiver(OnRefreshHistoryListener i ){
+	public RefreshHistoryReceiver(OnRefreshHistoryListener i) {
 		super();
 		mInterface = i;
 	}
@@ -26,7 +26,8 @@ public class RefreshHistoryReceiver extends MokaReceiver {
 				final A2ATransaction request =
 						JSONParserUtils.deserializeA2ATransaction(intent.getStringExtra(EXTRA_JADE_REQUEST));
 				final String type = request.getType();
-				if (type.equals(JadeUtils.TRANSACTION_TYPE_REFRESH_CURRENT_ITEMS) || type.equals(JadeUtils.TRANSACTION_TYPE_REFRESH_HISTORY)) {
+				if (JadeUtils.TRANSACTION_TYPE_REFRESH_CURRENT_ITEMS.equals(type) ||
+						JadeUtils.TRANSACTION_TYPE_REFRESH_HISTORY.equals(type)) {
 					mInterface.onRefreshRequest();
 				}
 			} catch (IOException e) {
