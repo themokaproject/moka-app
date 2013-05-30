@@ -112,6 +112,11 @@ public class JadeUtils {
 	public static final String TRANSACTION_TYPE_REFRESH_CURRENT_ITEMS = "refreshCurrentItems";
 
 	/**
+	 * refresh history
+	 */
+	public static final String TRANSACTION_TYPE_REFRESH_HISTORY = "refreshHistory";
+
+	/**
 	 * resizeItem transaction
 	 */
 	public static final String TRANSACTION_TYPE_RESIZE_ITEM = "resizeItem";
