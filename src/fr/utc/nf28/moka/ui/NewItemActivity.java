@@ -10,7 +10,9 @@ import com.actionbarsherlock.view.MenuItem;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.utc.nf28.moka.R;
+import fr.utc.nf28.moka.data.ComputerItem;
 import fr.utc.nf28.moka.data.ComputerType;
+import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.data.TextType;
 import fr.utc.nf28.moka.io.agent.IAndroidAgent;
@@ -22,7 +24,7 @@ import fr.utc.nf28.moka.util.JadeUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
-public class NewItemActivity extends MokaUpActivity implements CreationReceiver.OnCreationCallbackListener {
+public class NewItemActivity extends MokaUpActivity implements CreationReceiver.OnCreationCallbackListener, EditItemFragment.Callbacks {
 	public static final String ARG_TYPE = "arg_type";
 	private static final String TAG = makeLogTag(NewItemActivity.class);
 
@@ -100,11 +102,25 @@ public class NewItemActivity extends MokaUpActivity implements CreationReceiver.
 	public void onSuccess(int id) {
 		Crouton.makeText(this, "id from server :" + String.valueOf(id) + ". Ready for editing.",
 				Style.CONFIRM).show();
-		//TODO enable edition
+		//TODO use the real type
+		MokaItem item = new ComputerItem.UmlItem("Uml_item" + String.valueOf(id));
+		item.setId(id);
+		getSupportFragmentManager()
+				.beginTransaction()
+				.replace(R.id.new_item_container, EditItemFragment.newInstance(item))
+				.commit();
 	}
 
 	@Override
 	public void onError() {
 
+	}
+
+	@Override
+	public void onItemDeletion(MokaItem item) {
+		final IAndroidAgent agent = JadeUtils.getAndroidAgentInterface();
+		agent.deleteItem(item.getId());
+		setResult(EditItemActivity.RESULT_DELETE);
+		finish();
 	}
 }

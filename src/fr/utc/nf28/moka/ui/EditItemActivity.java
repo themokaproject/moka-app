@@ -33,7 +33,6 @@ public class EditItemActivity extends MokaUpActivity implements EditItemFragment
 
 	@Override
 	public void onItemDeletion(MokaItem item) {
-		// TODO: call the DeleteAgent
 		final IAndroidAgent agent = JadeUtils.getAndroidAgentInterface();
 		agent.deleteItem(item.getId());
 		setResult(EditItemActivity.RESULT_DELETE);
