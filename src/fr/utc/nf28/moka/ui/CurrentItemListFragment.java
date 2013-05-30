@@ -36,7 +36,8 @@ import retrofit.client.Response;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
-public class CurrentItemListFragment extends SherlockFragment implements AdapterView.OnItemClickListener, RefreshItemReceiver.OnRefreshItemListener {
+public class CurrentItemListFragment extends SherlockFragment implements AdapterView.OnItemClickListener,
+		RefreshItemReceiver.OnRefreshItemListener, Callback<List<HashMap<String, Object>>> {
 	private static final String DEFAULT_REST_SERVER_IP = "192.168.1.6"; //TODO same as Jade main container ? doublon in HistoryEntryListFragment
 	private static final String TAG = makeLogTag(CurrentItemListFragment.class);
 	/**
@@ -60,7 +61,7 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 	 * Receiver
 	 */
 	private RefreshItemReceiver mRefreshItemReceiver;
-	private String mRestUrlRoot;
+	private MokaRestService mMokaRestService;
 
 	public CurrentItemListFragment() {
 	}
@@ -96,8 +97,10 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 
 		mRefreshItemReceiver = new RefreshItemReceiver(this);
 
-		mRestUrlRoot = "http://" + PreferenceManager.getDefaultSharedPreferences(getSherlockActivity())
+		// TODO: display ProgressBar + refact with {@link HistoryEntryListFragment}
+		final String API_URL = "http://" + PreferenceManager.getDefaultSharedPreferences(getSherlockActivity())
 				.getString(SharedPreferencesUtils.KEY_PREF_IP, DEFAULT_REST_SERVER_IP) + "/moka";
+		mMokaRestService = MokaRestAdapter.getInstance(API_URL).create(MokaRestService.class);
 	}
 
 	@Override
@@ -149,30 +152,30 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 	 * get the current history from the rest server
 	 */
 	public void refreshCurrentList() {
-		final MokaRestService mokaRestService = MokaRestAdapter.getInstance(mRestUrlRoot).create(MokaRestService.class);
-		mokaRestService.itemsEntries(new Callback<List<HashMap<String, Object>>>() {
-			@Override
-			public void success(List<HashMap<String, Object>> itemsEntries, Response response) {
-				Log.d(TAG, "success");
-				//TODO implement object retrieving
-				final ArrayList<MokaItem> items = new ArrayList<MokaItem>();
-				//TODO invert list on server side ?
-				for (int i = itemsEntries.size() - 1; i >= 0; i--) {
-					final HashMap<String, Object> item = itemsEntries.get(i);
-					final int itemId = ((Double) item.get("id")).intValue();
-					final MokaItem mokaItem = new ComputerItem.UmlItem("Uml_item" + String.valueOf(itemId));
-					mokaItem.setId(itemId);
-					items.add(mokaItem);
-				}
-				mAdapter.updateCurrentItems(items);
-			}
+		mMokaRestService.itemsEntries(this);
+	}
 
-			@Override
-			public void failure(RetrofitError retrofitError) {
-				Log.d(TAG, "REST call failure === " + retrofitError.toString());
-				Crouton.makeText(getSherlockActivity(), getResources().getString(R.string.network_error), Style.ALERT).show();
-			}
-		});
+	@Override
+	public void success(List<HashMap<String, Object>> itemEntries, Response response) {
+		Log.d(TAG, "success");
+		//TODO implement object retrieving
+		final int nbItems = itemEntries.size();
+		final ArrayList<MokaItem> items = new ArrayList<MokaItem>(nbItems);
+		//TODO invert list on server side ?
+		for (int i = nbItems - 1; i >= 0; i--) {
+			final HashMap<String, Object> item = itemEntries.get(i);
+			final int itemId = ((Double) item.get("id")).intValue();
+			final MokaItem mokaItem = new ComputerItem.UmlItem("Uml_item" + String.valueOf(itemId));
+			mokaItem.setId(itemId);
+			items.add(mokaItem);
+		}
+		mAdapter.updateCurrentItems(items);
+	}
+
+	@Override
+	public void failure(RetrofitError retrofitError) {
+		Log.d(TAG, "REST call failure === " + retrofitError.toString());
+		Crouton.makeText(getSherlockActivity(), getResources().getString(R.string.network_error), Style.ALERT).show();
 	}
 
 	/**

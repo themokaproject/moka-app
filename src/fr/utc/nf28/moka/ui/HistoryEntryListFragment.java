@@ -62,6 +62,8 @@ public class HistoryEntryListFragment extends SherlockFragment implements Refres
 		mListView.setAdapter(mAdapter);
 
 		// Launch the background task to retrieve history entries from the RESTful server
+
+		// TODO: display ProgressBar + refact with {@link CurrentItemListFragment}
 		final String API_URL = "http://" + PreferenceManager.getDefaultSharedPreferences(getSherlockActivity())
 				.getString(SharedPreferencesUtils.KEY_PREF_IP, DEFAULT_REST_SERVER_IP) + "/moka";
 		mMokaRestService = MokaRestAdapter.getInstance(API_URL).create(MokaRestService.class);
