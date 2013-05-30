@@ -159,8 +159,8 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 				//TODO invert list on server side ?
 				for (int i = itemsEntries.size() - 1; i >= 0; i--) {
 					final HashMap<String, Object> item = itemsEntries.get(i);
-					int itemId = ((Double) item.get("id")).intValue();
-					MokaItem mokaItem = new ComputerItem.UmlItem("Uml_item" + String.valueOf(itemId));
+					final int itemId = ((Double) item.get("id")).intValue();
+					final MokaItem mokaItem = new ComputerItem.UmlItem("Uml_item" + String.valueOf(itemId));
 					mokaItem.setId(itemId);
 					items.add(mokaItem);
 				}
