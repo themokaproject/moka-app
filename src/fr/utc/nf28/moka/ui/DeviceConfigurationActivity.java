@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
@@ -65,8 +66,15 @@ public class DeviceConfigurationActivity extends Activity {
 					mProgressConnexion.setVisibility(View.GONE);
 					mCheckConnexion.setVisibility(View.VISIBLE);
 					mProgressIp.setVisibility(View.VISIBLE);
-					//TODO remove after dev-period. Choose WPA2 or WEP
-					configureWifiWPA2();
+					//TODO remove after dev-period.
+					if (((ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE)).getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected()) {
+						((MokaApplication) getApplication()).startJadePlatform(mMainContainerIp,
+								Integer.valueOf(mMainContainerPort),
+								mContainerCallback);
+					} else {
+						//TODO remove after dev-period. Choose WPA2 or WEP
+						configureWifiWPA2();
+					}
 					break;
 				case WifiManager.WIFI_STATE_ENABLING:
 					//wifi Enabling
@@ -200,6 +208,7 @@ public class DeviceConfigurationActivity extends Activity {
 
 
 		Log.i(TAG, "activity start with ssid = " + mSSID + " and pwd = " + mPWD);
+
 		enableWifi();
 	}
 
