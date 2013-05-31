@@ -18,16 +18,9 @@
 
 <resources>
 
-    <style name="Theme.Moka" parent="@style/Theme.Sherlock.Light">
-        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle.Moka</item>
-        <item name="android:actionBarStyle">@style/ActionBar.Solid.Moka</item>
-        <item name="android:actionBarTabTextStyle">@style/ActionBar.TabText.UVweb</item>
-        <item name="android:windowBackground">@android:color/white</item>
-    </style>
-
-    <style name="ActionBar.Solid.Moka" parent="@style/Widget.Sherlock.Light.ActionBar.Solid">
-        <item name="android:background">@drawable/ab_solid_moka</item>
-        <item name="android:navigationMode">tabMode</item>
+    <style name="ActionBar.TabText.UVweb" parent="@style/Widget.Sherlock.Light.ActionBar.TabText">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/tab_text_size</item>
     </style>
 
 </resources>
