@@ -65,7 +65,7 @@ public class HistoryEntryListFragment extends SherlockFragment implements Refres
 
 		// TODO: display ProgressBar + refact with {@link CurrentItemListFragment}
 		final String API_URL = "http://" + PreferenceManager.getDefaultSharedPreferences(getSherlockActivity())
-				.getString(SharedPreferencesUtils.KEY_PREF_IP, DEFAULT_REST_SERVER_IP) + "/moka";
+				.getString(SharedPreferencesUtils.KEY_PREF_IP, DEFAULT_REST_SERVER_IP) + "/api";
 		mMokaRestService = MokaRestAdapter.getInstance(API_URL).create(MokaRestService.class);
 		mRefreshHistoryReceiver = new RefreshHistoryReceiver(this);
 
