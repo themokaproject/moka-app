@@ -12,6 +12,7 @@ import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.ComputerItem;
 import fr.utc.nf28.moka.data.ComputerType;
+import fr.utc.nf28.moka.data.MediaType;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.data.TextType;
@@ -66,7 +67,9 @@ public class NewItemActivity extends MokaUpActivity implements CreationReceiver.
 				mType = ComputerType.UmlType.KEY_TYPE;
 			} else if (type instanceof TextType.PostItType) {
 				mType = TextType.PostItType.KEY_TYPE;
-			} else {
+			} else if (type instanceof MediaType.ImageType) {
+                mType = MediaType.ImageType.KEY_TYPE;
+            } else {
 				Crouton.makeText(this, "implémenter création pour " + type.getClass().toString(),
 						CroutonUtils.INFO_MOKA_STYLE).show();
 			}
