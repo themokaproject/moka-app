@@ -68,8 +68,8 @@ public class NewItemActivity extends MokaUpActivity implements CreationReceiver.
 			} else if (type instanceof TextType.PostItType) {
 				mType = TextType.PostItType.KEY_TYPE;
 			} else if (type instanceof MediaType.ImageType) {
-                mType = MediaType.ImageType.KEY_TYPE;
-            } else {
+				mType = MediaType.ImageType.KEY_TYPE;
+			} else {
 				Crouton.makeText(this, "implémenter création pour " + type.getClass().toString(),
 						CroutonUtils.INFO_MOKA_STYLE).show();
 			}

@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
@@ -18,6 +17,7 @@ import android.widget.ProgressBar;
 import fr.utc.nf28.moka.MokaApplication;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.io.agent.AndroidAgent;
+import fr.utc.nf28.moka.util.ConnectionUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
 import jade.android.RuntimeCallback;
 
@@ -44,10 +44,11 @@ public class DeviceConfigurationActivity extends Activity {
 	 * Log for Logcat
 	 */
 	private static final String TAG = makeLogTag(DeviceConfigurationActivity.class);
+	private final IntentFilter mIntentFilter = new IntentFilter();
 	/**
 	 * Use to receive broadcast from wifi and network
 	 */
-	private final BroadcastReceiver MokaWifiStateChangedReceiver = new BroadcastReceiver() {
+	private final BroadcastReceiver mMokaWifiStateChangedReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			final int extraWifiState = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE,
@@ -67,7 +68,7 @@ public class DeviceConfigurationActivity extends Activity {
 					mCheckConnexion.setVisibility(View.VISIBLE);
 					mProgressIp.setVisibility(View.VISIBLE);
 					//TODO remove after dev-period.
-					if (((ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE)).getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected()) {
+					if (ConnectionUtils.isOnline(DeviceConfigurationActivity.this)) {
 						((MokaApplication) getApplication()).startJadePlatform(mMainContainerIp,
 								Integer.valueOf(mMainContainerPort),
 								mContainerCallback);
@@ -209,6 +210,9 @@ public class DeviceConfigurationActivity extends Activity {
 
 		Log.i(TAG, "activity start with ssid = " + mSSID + " and pwd = " + mPWD);
 
+		mIntentFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+		mIntentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+
 		enableWifi();
 	}
 
@@ -283,16 +287,14 @@ public class DeviceConfigurationActivity extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		unregisterReceiver(MokaWifiStateChangedReceiver);
+		unregisterReceiver(mMokaWifiStateChangedReceiver);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
+
 		//Register receiver
-		final IntentFilter myIntentFilter = new IntentFilter();
-		myIntentFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
-		myIntentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-		registerReceiver(MokaWifiStateChangedReceiver, myIntentFilter);
+		registerReceiver(mMokaWifiStateChangedReceiver, mIntentFilter);
 	}
 }
