@@ -28,7 +28,6 @@
     <string name="delete_confirmation_cancel">Annuler</string>
 
     <!-- TypeListFragment -->
-    <string name="main_class_spinner_title">Choisir une catégorie</string>
     <string name="type_image_content_description">Description du type</string>
 
     <!-- Type titles -->

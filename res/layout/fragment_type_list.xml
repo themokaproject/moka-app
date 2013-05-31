@@ -5,22 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:background="@drawable/ab_solid_moka"
         android:paddingTop="8dp"
         android:paddingBottom="8dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/main_class_spinner_title"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:textSize="16sp"
-            android:textStyle="bold" />
 
         <Spinner
             android:layout_width="wrap_content"
@@ -28,7 +18,7 @@
             android:id="@+id/spinner"
             android:layout_gravity="center" />
 
-    </LinearLayout>
+    </FrameLayout>
 
     <com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView
         android:id="@+id/grid"
