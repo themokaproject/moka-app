@@ -139,4 +139,20 @@ public class JadeUtils {
 	 * lock transaction
 	 */
 	public static final String TRANSACTION_TYPE_LOCK_ITEM = "lockItem";
+
+	/**
+	 * lock success
+	 */
+	public static final String TRANSACTION_TYPE_LOCK_ITEM_SUCCESS = "lockItemSuccess";
+
+	/**
+	 * item already locked
+	 */
+	public static final String TRANSACTION_TYPE_LOCK_ITEM_ALREADY = "lockItemAlready";
+
+	/**
+	 * lock error
+	 */
+	public static final String TRANSACTION_TYPE_LOCK_ITEM_ERROR = "lockItemError";
+
 }
