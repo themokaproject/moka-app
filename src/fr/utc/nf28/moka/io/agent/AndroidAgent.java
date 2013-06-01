@@ -116,6 +116,17 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 	}
 
 	@Override
+	public void unlockItem(int itemId) {
+		try {
+			final String json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction(JadeUtils.TRANSACTION_TYPE_UNLOCK_ITEM,itemId));
+			sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_LOCKING),json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Override
 	public void editItem() {
 	}
 

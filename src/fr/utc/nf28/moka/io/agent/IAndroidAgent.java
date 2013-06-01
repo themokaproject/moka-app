@@ -39,6 +39,13 @@ public interface IAndroidAgent {
 	public void lockItem();
 
 	/**
+	 * unlock item after edition
+	 *
+	 * @param itemId item id
+	 */
+	public void unlockItem(int itemId);
+
+	/**
 	 * send real time modification
 	 */
 	public void editItem();

@@ -153,6 +153,12 @@ public class EditItemFragment extends SherlockFragment {
 	}
 
 	@Override
+	public void onPause() {
+		super.onPause();
+		mAgent.unlockItem(mSelectedItem.getId());
+	}
+
+	@Override
 	public void onDetach() {
 		// Reset the active callbacks interface to the dummy implementation.
 		mCallbacks = sDummyCallbacks;

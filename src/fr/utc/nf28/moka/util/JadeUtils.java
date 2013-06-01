@@ -67,6 +67,11 @@ public class JadeUtils {
 		}
 
 		@Override
+		public void unlockItem(int itemId) {
+
+		}
+
+		@Override
 		public void editItem() {
 		}
 	};
