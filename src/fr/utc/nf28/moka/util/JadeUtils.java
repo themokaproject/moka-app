@@ -63,7 +63,7 @@ public class JadeUtils {
 		}
 
 		@Override
-		public void lockItem() {
+		public void lockItem(int itemId) {
 		}
 
 		@Override
