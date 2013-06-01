@@ -1,26 +1,41 @@
 package fr.utc.nf28.moka.ui;
 
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.utc.nf28.moka.R;
-import fr.utc.nf28.moka.io.agent.IAndroidAgent;
 import fr.utc.nf28.moka.data.MokaItem;
+import fr.utc.nf28.moka.io.agent.IAndroidAgent;
+import fr.utc.nf28.moka.io.receiver.LockingReceiver;
+import fr.utc.nf28.moka.io.receiver.MokaReceiver;
 import fr.utc.nf28.moka.ui.base.MokaUpActivity;
+import fr.utc.nf28.moka.util.CroutonUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
-public class EditItemActivity extends MokaUpActivity implements EditItemFragment.Callbacks {
+public class EditItemActivity extends MokaUpActivity implements EditItemFragment.Callbacks, LockingReceiver.OnLockingListener {
 	public static final String ARG_ITEM = "arg_item";
 	public static final int RESULT_DELETE = RESULT_FIRST_USER + 1;
 	private static final String TAG = makeLogTag(EditItemActivity.class);
 	private MokaItem mSelectedItem;
+	private final IntentFilter mIntentFilter = new IntentFilter(MokaReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER);
+
+	/**
+	 * Broadcast receiver used to catch locking callback from SMA
+	 */
+	private LockingReceiver mLockingReceiver;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.edit_item_activity);
+
+		mLockingReceiver = new LockingReceiver(this);
 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -37,11 +52,20 @@ public class EditItemActivity extends MokaUpActivity implements EditItemFragment
 	@Override
 	protected void onResume() {
 		super.onResume();
-		//send creation request to the SMA
+
+		LocalBroadcastManager.getInstance(this).registerReceiver(mLockingReceiver, mIntentFilter);
+
+		//send locking request to the SMA
 		if (mSelectedItem != null) {
 			final IAndroidAgent agent = JadeUtils.getAndroidAgentInterface();
 			agent.lockItem(mSelectedItem.getId());
 		}
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		LocalBroadcastManager.getInstance(this).unregisterReceiver(mLockingReceiver);
 	}
 
 	@Override
@@ -50,5 +74,23 @@ public class EditItemActivity extends MokaUpActivity implements EditItemFragment
 		agent.deleteItem(item.getId());
 		setResult(EditItemActivity.RESULT_DELETE);
 		finish();
+	}
+
+	@Override
+	public void onSuccess() {
+		Crouton.makeText(this, "Element locké pour vous ! ",
+				Style.CONFIRM).show();
+	}
+
+	@Override
+	public void onAlreadyLocked(String lockerName) {
+		Crouton.makeText(this, "Element déjà locké par " + lockerName,
+				CroutonUtils.INFO_MOKA_STYLE).show();
+	}
+
+	@Override
+	public void onError() {
+		Crouton.makeText(this, "locking error ",
+				Style.ALERT).show();
 	}
 }
