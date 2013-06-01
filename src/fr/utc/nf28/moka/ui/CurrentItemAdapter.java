@@ -45,7 +45,7 @@ public class CurrentItemAdapter extends BaseMokaAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
-			convertView = mLayoutInflater.inflate(R.layout.current_item, null);
+			convertView = mLayoutInflater.inflate(R.layout.current_item, parent, false);
 		}
 
 		final TextView itemName = ViewHolder.get(convertView, R.id.item_name);
@@ -57,7 +57,8 @@ public class CurrentItemAdapter extends BaseMokaAdapter {
 		itemCreationDate.setText(DateUtils.getFormattedDate(item.getCreationDate()));
 		Picasso.with(mContext)
 				.load(item.getType().getResId())
-				.resizeDimen(R.dimen.list_current_item_type_picture_width_height, R.dimen.list_current_item_type_picture_width_height)
+				.resizeDimen(R.dimen.list_current_item_type_picture_width_height,
+						R.dimen.list_current_item_type_picture_width_height)
 				.into(itemImage);
 
 		return convertView;

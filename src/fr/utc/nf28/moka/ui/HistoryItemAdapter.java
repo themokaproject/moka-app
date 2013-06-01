@@ -39,7 +39,7 @@ public class HistoryItemAdapter extends BaseMokaAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
-			convertView = mLayoutInflater.inflate(R.layout.history_item, null);
+			convertView = mLayoutInflater.inflate(R.layout.history_item, parent, false);
 		}
 
 		final TextView itemName = ViewHolder.get(convertView, R.id.item_name);

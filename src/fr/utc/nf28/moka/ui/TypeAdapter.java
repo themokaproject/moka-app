@@ -101,7 +101,7 @@ public class TypeAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
-			convertView = mLayoutInflater.inflate(R.layout.type, null);
+			convertView = mLayoutInflater.inflate(R.layout.type, parent, false);
 		}
 
 		final TextView itemName = ViewHolder.get(convertView, R.id.item_name);
@@ -143,7 +143,7 @@ public class TypeAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 	@Override
 	public View getHeaderView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
-			convertView = mLayoutInflater.inflate(R.layout.header_class_grid, null);
+			convertView = mLayoutInflater.inflate(R.layout.header_class_grid, parent, false);
 		}
 
 		final TextView sectionName = ViewHolder.get(convertView, R.id.header_text);

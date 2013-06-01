@@ -2,11 +2,11 @@ package fr.utc.nf28.moka.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -21,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -33,6 +32,7 @@ import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.io.agent.IAndroidAgent;
+import fr.utc.nf28.moka.ui.base.MokaDialogFragment;
 import fr.utc.nf28.moka.util.CroutonUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
 import fr.utc.nf28.moka.util.SharedPreferencesUtils;
@@ -115,6 +115,9 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 			case R.id.menu_licenses:
 				startActivity(new Intent(this, LicensesActivity.class));
 				return true;
+			case R.id.menu_about:
+				AboutDialogFragment.newInstance().show(getSupportFragmentManager(), "about_dialog");
+				return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -192,7 +195,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		}
 	}
 
-	static class DescriptionDialogFragment extends SherlockDialogFragment {
+	static class DescriptionDialogFragment extends MokaDialogFragment {
 		private static final String ARG_TITLE = "title";
 		private static final String ARG_DESCRIPTION = "description";
 		private static final String ARG_RES_ID = "res_id";
@@ -210,19 +213,13 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		}
 
 		@Override
-		public void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-
-			setStyle(DialogFragment.STYLE_NO_TITLE, android.R.style.Theme_DeviceDefault_Light_Dialog);
-		}
-
-		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			final Bundle arguments = getArguments();
 
-			final View rootView = inflater.inflate(R.layout.fragment_dialog, null);
+			final View rootView = inflater.inflate(R.layout.fragment_dialog_type_info, container, false);
 			((TextView) rootView.findViewById(R.id.dialog_title)).setText(arguments.getString(ARG_TITLE));
-			((TextView) rootView.findViewById(R.id.type_description)).setText(Html.fromHtml(arguments.getString(ARG_DESCRIPTION), null, mTagHandler));
+			((TextView) rootView.findViewById(R.id.type_description))
+					.setText(Html.fromHtml(arguments.getString(ARG_DESCRIPTION), null, mTagHandler));
 			((ImageView) rootView.findViewById(R.id.type_image)).setImageResource(arguments.getInt(ARG_RES_ID));
 
 			return rootView;
@@ -248,6 +245,24 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 					}
 				}
 			}
+		}
+	}
+
+	static class AboutDialogFragment extends MokaDialogFragment {
+		static AboutDialogFragment newInstance() {
+			return new AboutDialogFragment();
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+			final Resources resources = getResources();
+
+			final View rootView = inflater.inflate(R.layout.fragment_dialog_about, container, false);
+			((TextView) rootView.findViewById(R.id.dialog_title)).setText(resources.getString(R.string.about_moka));
+			((TextView) rootView.findViewById(R.id.about_credits))
+					.setText(Html.fromHtml(resources.getString(R.string.credits)));
+
+			return rootView;
 		}
 	}
 

@@ -13,7 +13,19 @@
     <string name="delete">Supprimer</string>
     <string name="validate">Valider</string>
     <string name="licenses">Licences open source</string>
+    <string name="about">À propos</string>
     <string name="settings">Paramètres</string>
+
+    <!-- About dialog -->
+    <string name="about_moka">À propos de Moka</string>
+    <string name="moka_website">http://themokaproject.github.io/</string>
+    <string name="credits"><![CDATA[<p>
+            Credits go to Thomas Barthélémy <a href="https://github.com/tbarthel-fr">https://github.com/tbarthel-fr</a>,
+            Vincent Barthélémy <a href="https://github.com/vbarthel-fr">https://github.com/vbarthel-fr</a>,
+            Thomas Keunebroek <a href="https://github.com/tkeunebr">https://github.com/tkeunebr</a>
+            and Alexandre Masciulli <a href="https://github.com/amasciul">https://github.com/amasciul</a>.
+          </p>]]>
+    </string>
 
     <string name="search_hint">Rechercher un élément</string>
 
