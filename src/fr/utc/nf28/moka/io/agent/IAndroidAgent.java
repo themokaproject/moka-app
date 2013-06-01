@@ -36,7 +36,7 @@ public interface IAndroidAgent {
 	/**
 	 * lock item for edition
 	 */
-	public void lockItem();
+	public void lockItem(int itemId);
 
 	/**
 	 * unlock item after edition

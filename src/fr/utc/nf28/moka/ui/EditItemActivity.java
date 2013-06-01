@@ -14,6 +14,7 @@ public class EditItemActivity extends MokaUpActivity implements EditItemFragment
 	public static final String ARG_ITEM = "arg_item";
 	public static final int RESULT_DELETE = RESULT_FIRST_USER + 1;
 	private static final String TAG = makeLogTag(EditItemActivity.class);
+	private MokaItem mSelectedItem;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -23,11 +24,23 @@ public class EditItemActivity extends MokaUpActivity implements EditItemFragment
 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+		mSelectedItem = (MokaItem) getIntent().getExtras().getParcelable(ARG_ITEM);
+
 		if (savedInstanceState == null) {
 			getSupportFragmentManager()
 					.beginTransaction()
-					.add(R.id.edit_item_container, EditItemFragment.newInstance((MokaItem) getIntent().getExtras().getParcelable(ARG_ITEM)))
+					.add(R.id.edit_item_container, EditItemFragment.newInstance(mSelectedItem))
 					.commit();
+		}
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		//send creation request to the SMA
+		if (mSelectedItem != null) {
+			final IAndroidAgent agent = JadeUtils.getAndroidAgentInterface();
+			agent.lockItem(mSelectedItem.getId());
 		}
 	}
 
