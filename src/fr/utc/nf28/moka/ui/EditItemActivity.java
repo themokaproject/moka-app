@@ -21,9 +21,8 @@ public class EditItemActivity extends MokaUpActivity implements EditItemFragment
 	public static final String ARG_ITEM = "arg_item";
 	public static final int RESULT_DELETE = RESULT_FIRST_USER + 1;
 	private static final String TAG = makeLogTag(EditItemActivity.class);
-	private MokaItem mSelectedItem;
 	private final IntentFilter mIntentFilter = new IntentFilter(MokaReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER);
-
+	private MokaItem mSelectedItem;
 	/**
 	 * Broadcast receiver used to catch locking callback from SMA
 	 */
@@ -39,7 +38,7 @@ public class EditItemActivity extends MokaUpActivity implements EditItemFragment
 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-		mSelectedItem = (MokaItem) getIntent().getExtras().getParcelable(ARG_ITEM);
+		mSelectedItem = getIntent().getExtras().getParcelable(ARG_ITEM);
 
 		if (savedInstanceState == null) {
 			getSupportFragmentManager()
