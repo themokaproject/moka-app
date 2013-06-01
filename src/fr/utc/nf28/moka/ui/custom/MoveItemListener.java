@@ -1,8 +1,8 @@
 package fr.utc.nf28.moka.ui.custom;
 
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewParent;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
@@ -17,14 +17,19 @@ public abstract class MoveItemListener implements View.OnTouchListener {
 
 	@Override
 	public boolean onTouch(View view, MotionEvent motionEvent) {
-
-		if (motionEvent.getPointerCount() == 1) {
-			return onePointer(motionEvent);
-		} else if (motionEvent.getPointerCount() == 2) {
-			return twoPointers(motionEvent);
+		final ViewParent parent = view.getParent();
+		if (parent != null) {
+			parent.requestDisallowInterceptTouchEvent(true);
 		}
-
-		return false;
+		final int pointerCount = motionEvent.getPointerCount();
+		switch (pointerCount) {
+			case 1:
+				return onePointer(motionEvent);
+			case 2:
+				return twoPointers(motionEvent);
+			default:
+				return false;
+		}
 	}
 
 	/*
@@ -47,7 +52,7 @@ public abstract class MoveItemListener implements View.OnTouchListener {
 		final float currentXDist = Math.abs(motionEvent.getX(0) - motionEvent.getX(1));
 		final float currentYDist = Math.abs(motionEvent.getY(0) - motionEvent.getY(1));
 
-		if(action == MotionEvent.ACTION_MOVE) {
+		if (action == MotionEvent.ACTION_MOVE) {
 			if (mLastXDist == -1f && mLastYDist == -1f) {
 				mLastXDist = currentXDist;
 				mLastYDist = currentYDist;
@@ -100,7 +105,7 @@ public abstract class MoveItemListener implements View.OnTouchListener {
 		final float currentX = motionEvent.getX();
 		final float currentY = motionEvent.getY();
 
-		if(action == MotionEvent.ACTION_MOVE) {
+		if (action == MotionEvent.ACTION_MOVE) {
 			if (mLastX == -1f || mLastY == -1f) {
 				mLastX = currentX;
 				mLastY = currentY;
@@ -145,5 +150,6 @@ public abstract class MoveItemListener implements View.OnTouchListener {
 	}
 
 	public abstract void move(int direction, int velocity);
+
 	public abstract void resize(int direction);
 }
