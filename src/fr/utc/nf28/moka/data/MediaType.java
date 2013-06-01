@@ -2,10 +2,11 @@ package fr.utc.nf28.moka.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import fr.utc.nf28.moka.R;
 
 public abstract class MediaType extends MokaType implements Parcelable {
-	private static final String TYPE_NAME = "Média";
+	private static String TYPE_NAME = MediaType.class.getSimpleName();
 
 	public MediaType(String name, String description, int resId) {
 		super(name, description, resId, TYPE_NAME);
@@ -13,6 +14,10 @@ public abstract class MediaType extends MokaType implements Parcelable {
 
 	protected MediaType(Parcel in) {
 		super(in);
+	}
+
+	public static void setTypeName(String typeName) {
+		TYPE_NAME = typeName;
 	}
 
 	public static class ImageType extends MediaType implements Parcelable {

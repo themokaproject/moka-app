@@ -42,22 +42,41 @@ public class MokaApplication extends Application {
 		super.onCreate();
 
 		final Resources resources = getResources();
+
+		MediaType.setTypeName(resources.getString(R.string.type_category_media));
+		TextType.setTypeName(resources.getString(R.string.type_category_text));
+		ComputerType.setTypeName(resources.getString(R.string.type_category_computer));
+
 		MOKA_TYPES = new HashMap<String, MokaType>() {
 			{
 				put(MediaType.ImageType.KEY_TYPE, new MediaType.ImageType(
-						resources.getString(R.string.image_type_title), resources.getString(R.string.image_type_description)));
+						resources.getString(R.string.image_type_title),
+						resources.getString(R.string.image_type_description))
+				);
 				put(MediaType.VideoType.KEY_TYPE, new MediaType.VideoType(
-						resources.getString(R.string.video_type_title), resources.getString(R.string.video_type_description)));
+						resources.getString(R.string.video_type_title),
+						resources.getString(R.string.video_type_description))
+				);
 				put(MediaType.WebType.KEY_TYPE, new MediaType.WebType(
-						resources.getString(R.string.web_page_type_title), resources.getString(R.string.web_page_type_description)));
+						resources.getString(R.string.web_page_type_title),
+						resources.getString(R.string.web_page_type_description))
+				);
 				put(TextType.PlainTextType.KEY_TYPE, new TextType.PlainTextType(
-						resources.getString(R.string.image_type_title), resources.getString(R.string.plain_text_type_description)));
+						resources.getString(R.string.image_type_title),
+						resources.getString(R.string.plain_text_type_description))
+				);
 				put(TextType.ListType.KEY_TYPE, new TextType.ListType(
-						resources.getString(R.string.list_type_title), resources.getString(R.string.list_type_description)));
+						resources.getString(R.string.list_type_title),
+						resources.getString(R.string.list_type_description))
+				);
 				put(TextType.PostItType.KEY_TYPE, new TextType.PostItType(
-						resources.getString(R.string.post_it_type_title), resources.getString(R.string.post_it_type_description)));
+						resources.getString(R.string.post_it_type_title),
+						resources.getString(R.string.post_it_type_description))
+				);
 				put(ComputerType.UmlType.KEY_TYPE, new ComputerType.UmlType(
-						resources.getString(R.string.uml_type_title), resources.getString(R.string.uml_type_description)));
+						resources.getString(R.string.uml_type_title),
+						resources.getString(R.string.uml_type_description))
+				);
 			}
 		};
 
