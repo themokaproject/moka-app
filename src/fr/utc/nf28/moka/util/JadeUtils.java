@@ -124,4 +124,14 @@ public class JadeUtils {
 	 * resizeItem transaction
 	 */
 	public static final String TRANSACTION_TYPE_RESIZE_ITEM = "resizeItem";
+
+	/**
+	 * unlock transaction
+	 */
+	public static final String TRANSACTION_TYPE_UNLOCK_ITEM = "unlockItem";
+
+	/**
+	 * lock transaction
+	 */
+	public static final String TRANSACTION_TYPE_LOCK_ITEM = "lockItem";
 }
