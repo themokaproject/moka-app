@@ -5,4 +5,13 @@
     android:id="@+id/new_item_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:ignore="MergeRootFrame" />
+    tools:ignore="MergeRootFrame">
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?android:attr/android:progressBarStyle"
+        android:layout_gravity="center" />
+
+</FrameLayout>

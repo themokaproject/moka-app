@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -88,7 +87,7 @@ public class EditItemFragment extends SherlockFragment {
 		final TextView itemCategory = (TextView) rootView.findViewById(R.id.item_category);
 		final TextView itemCreator = (TextView) rootView.findViewById(R.id.item_creator);
 		final ImageView itemImage = (ImageView) rootView.findViewById(R.id.item_image);
-		final SurfaceView canvasMoveItem = (SurfaceView) rootView.findViewById(R.id.canvas_move_item);
+		final View canvasMoveItem = rootView.findViewById(R.id.canvas_move_item);
 
 		itemName.setText(mSelectedItem.getTitle());
 		itemType.setText(mSelectedItem.getType().getName());

@@ -1,11 +1,12 @@
 package fr.utc.nf28.moka.ui;
 
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.view.View;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.MenuItem;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
@@ -16,11 +17,9 @@ import fr.utc.nf28.moka.data.MediaType;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.data.TextType;
-import fr.utc.nf28.moka.io.agent.IAndroidAgent;
 import fr.utc.nf28.moka.io.receiver.CreationReceiver;
 import fr.utc.nf28.moka.io.receiver.MokaReceiver;
 import fr.utc.nf28.moka.ui.base.MokaUpActivity;
-import fr.utc.nf28.moka.util.CroutonUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
@@ -33,10 +32,6 @@ public class NewItemActivity extends MokaUpActivity implements CreationReceiver.
 	 * broadcast receiver use to catch agent callback
 	 */
 	private CreationReceiver mJadeServerReceiver;
-	/**
-	 * type of the item
-	 */
-	private String mType;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -51,28 +46,25 @@ public class NewItemActivity extends MokaUpActivity implements CreationReceiver.
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setTitle(getResources().getString(R.string.new_item_actionbar_title));
 
-		if (savedInstanceState == null & getIntent().hasExtra(ARG_TYPE)) {
-
+		final Intent intent = getIntent();
+		if (savedInstanceState == null && intent.hasExtra(ARG_TYPE)) {
 			//retrieve MokaType from intent
-			final MokaType type = (MokaType) getIntent().getExtras().getParcelable(ARG_TYPE);
-
-			//add fragment
-			getSupportFragmentManager()
-					.beginTransaction()
-					.add(R.id.new_item_container, NewItemFragment.newInstance(type))
-					.commit();
-
-
+			final MokaType type = intent.getExtras().getParcelable(ARG_TYPE);
+			final String typeName;
 			if (type instanceof ComputerType.UmlType) {
-				mType = ComputerType.UmlType.KEY_TYPE;
+				typeName = ComputerType.UmlType.KEY_TYPE;
 			} else if (type instanceof TextType.PostItType) {
-				mType = TextType.PostItType.KEY_TYPE;
+				typeName = TextType.PostItType.KEY_TYPE;
 			} else if (type instanceof MediaType.ImageType) {
-				mType = MediaType.ImageType.KEY_TYPE;
+				typeName = MediaType.ImageType.KEY_TYPE;
 			} else {
-				Crouton.makeText(this, "implémenter création pour " + type.getClass().toString(),
-						CroutonUtils.INFO_MOKA_STYLE).show();
+				Crouton.makeText(this, getResources().getString(R.string.item_not_supported_yet), Style.ALERT).show();
+				findViewById(R.id.progress).setVisibility(View.GONE);
+				return;
 			}
+
+			//send creation request to the SMA
+			JadeUtils.getAndroidAgentInterface().createItem(typeName);
 		}
 	}
 
@@ -80,17 +72,6 @@ public class NewItemActivity extends MokaUpActivity implements CreationReceiver.
 	protected void onResume() {
 		super.onResume();
 		LocalBroadcastManager.getInstance(this).registerReceiver(mJadeServerReceiver, mIntentFilter);
-
-		//send creation request to the SMA
-		if (mType != null) {
-			final IAndroidAgent agent = JadeUtils.getAndroidAgentInterface();
-			agent.createItem(mType);
-		}
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
@@ -106,20 +87,23 @@ public class NewItemActivity extends MokaUpActivity implements CreationReceiver.
 		//TODO use the real type
 		final MokaItem item = new ComputerItem.UmlItem("Uml_item" + String.valueOf(id));
 		item.setId(id);
+		findViewById(R.id.progress).setVisibility(View.GONE);
 		getSupportFragmentManager()
 				.beginTransaction()
-				.replace(R.id.new_item_container, EditItemFragment.newInstance(item))
+				.setCustomAnimations(R.anim.slow_fade_in, R.anim.slow_fade_out)
+				.replace(android.R.id.content, EditItemFragment.newInstance(item))
 				.commit();
 	}
 
 	@Override
 	public void onError() {
+		Crouton.makeText(this, getResources().getString(R.string.network_error), Style.ALERT).show();
+		findViewById(R.id.progress).setVisibility(View.GONE);
 	}
 
 	@Override
 	public void onItemDeletion(MokaItem item) {
-		final IAndroidAgent agent = JadeUtils.getAndroidAgentInterface();
-		agent.deleteItem(item.getId());
+		JadeUtils.getAndroidAgentInterface().deleteItem(item.getId());
 		setResult(EditItemActivity.RESULT_DELETE);
 		finish();
 	}

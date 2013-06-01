@@ -192,6 +192,7 @@
     <string name="change_success_port">JADE port enregistré.</string>
     <string name="network_error">Serveur déconnecté ou réseau indisponible</string>
     <string name="item_deletion_success">L\'élément a été correctement supprimé</string>
+    <string name="item_not_supported_yet">Ce type d\'élément n\'est pas encore pris en charge</string>
 
     <!-- Welcome Activity -->
     <string name="welcome">Bienvenue sur Moka</string>
