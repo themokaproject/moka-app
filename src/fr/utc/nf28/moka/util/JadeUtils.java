@@ -35,6 +35,10 @@ public class JadeUtils {
 	 * name for Jade item resizing skill
 	 */
 	public static final String JADE_SKILL_NAME_ITEM_RESIZING = "ItemResizingSkillName";
+	/**
+	 * name for Jade locking skill
+	 */
+	public static final String JADE_SKILL_NAME_LOCKING = "LockingSkillName";
 
 	private static final IAndroidAgent sDummyAndroidAgentInterface = new IAndroidAgent() {
 		@Override
