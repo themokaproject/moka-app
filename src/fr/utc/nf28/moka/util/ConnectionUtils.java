@@ -9,7 +9,7 @@ import de.keyboardsurfer.android.widget.crouton.Style;
 /**
  * A helper class used to determine the current network state, i.e. online or not online
  */
-public class ConnectionUtils {
+public final class ConnectionUtils {
 	public static final Style NETWORK_ERROR_STYLE = Style.ALERT;
 
 	public static boolean isOnline(Context context) {

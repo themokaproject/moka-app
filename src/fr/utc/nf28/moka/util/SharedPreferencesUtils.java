@@ -1,6 +1,6 @@
 package fr.utc.nf28.moka.util;
 
-public class SharedPreferencesUtils {
+public final class SharedPreferencesUtils {
 	/**
 	 * wifi ssid
 	 */

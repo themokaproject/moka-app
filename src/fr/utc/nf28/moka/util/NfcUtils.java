@@ -14,7 +14,7 @@ import java.nio.charset.Charset;
 /**
  * Utils to write and read NFC tag
  */
-public class NfcUtils {
+public final class NfcUtils {
 	/**
 	 * result code : tag made read only
 	 */

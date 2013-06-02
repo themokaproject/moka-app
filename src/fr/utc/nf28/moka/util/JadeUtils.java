@@ -6,7 +6,7 @@ import fr.utc.nf28.moka.io.agent.IAndroidAgent;
 import jade.core.MicroRuntime;
 import jade.wrapper.ControllerException;
 
-public class JadeUtils {
+public final class JadeUtils {
 	/**
 	 * Agent name for AndroidAgent. Unique name based on UUID
 	 */
@@ -39,7 +39,58 @@ public class JadeUtils {
 	 * name for Jade locking skill
 	 */
 	public static final String JADE_SKILL_NAME_LOCKING = "LockingSkillName";
-
+	/**
+	 * connection transaction
+	 */
+	public static final String TRANSACTION_TYPE_CONNECTION = "connection";
+	/**
+	 * addItem transaction
+	 */
+	public static final String TRANSACTION_TYPE_ADD_ITEM = "addItem";
+	/**
+	 * deleteItem transaction
+	 */
+	public static final String TRANSACTION_TYPE_DELETE_ITEM = "deleteItem";
+	/**
+	 * moveItem transaction
+	 */
+	public static final String TRANSACTION_TYPE_MOVE_ITEM = "moveItem";
+	/**
+	 * creation success transaction
+	 */
+	public static final String TRANSACTION_TYPE_ITEM_CREATION_SUCCESS = "creationSuccess";
+	/**
+	 * refresh current items transaction
+	 */
+	public static final String TRANSACTION_TYPE_REFRESH_CURRENT_ITEMS = "refreshCurrentItems";
+	/**
+	 * refresh history
+	 */
+	public static final String TRANSACTION_TYPE_REFRESH_HISTORY = "refreshHistory";
+	/**
+	 * resizeItem transaction
+	 */
+	public static final String TRANSACTION_TYPE_RESIZE_ITEM = "resizeItem";
+	/**
+	 * unlock transaction
+	 */
+	public static final String TRANSACTION_TYPE_UNLOCK_ITEM = "unlockItem";
+	/**
+	 * lock transaction
+	 */
+	public static final String TRANSACTION_TYPE_LOCK_ITEM = "lockItem";
+	/**
+	 * lock success
+	 */
+	public static final String TRANSACTION_TYPE_LOCK_ITEM_SUCCESS = "lockItemSuccess";
+	/**
+	 * item already locked
+	 */
+	public static final String TRANSACTION_TYPE_LOCK_ITEM_ALREADY = "lockItemAlready";
+	/**
+	 * lock error
+	 */
+	public static final String TRANSACTION_TYPE_LOCK_ITEM_ERROR = "lockItemError";
 	private static final IAndroidAgent sDummyAndroidAgentInterface = new IAndroidAgent() {
 		@Override
 		public void connectPlatform(String firstName, String lastName, String ip) {
@@ -68,7 +119,6 @@ public class JadeUtils {
 
 		@Override
 		public void unlockItem(int itemId) {
-
 		}
 
 		@Override
@@ -89,70 +139,4 @@ public class JadeUtils {
 			return sDummyAndroidAgentInterface;
 		}
 	}
-
-	/**
-	 * connection transaction
-	 */
-	public static final String TRANSACTION_TYPE_CONNECTION = "connection";
-
-	/**
-	 * addItem transaction
-	 */
-	public static final String TRANSACTION_TYPE_ADD_ITEM = "addItem";
-
-	/**
-	 * deleteItem transaction
-	 */
-	public static final String TRANSACTION_TYPE_DELETE_ITEM = "deleteItem";
-
-	/**
-	 * moveItem transaction
-	 */
-	public static final String TRANSACTION_TYPE_MOVE_ITEM = "moveItem";
-
-	/**
-	 * creation success transaction
-	 */
-	public static final String TRANSACTION_TYPE_ITEM_CREATION_SUCCESS = "creationSuccess";
-
-	/**
-	 * refresh current items transaction
-	 */
-	public static final String TRANSACTION_TYPE_REFRESH_CURRENT_ITEMS = "refreshCurrentItems";
-
-	/**
-	 * refresh history
-	 */
-	public static final String TRANSACTION_TYPE_REFRESH_HISTORY = "refreshHistory";
-
-	/**
-	 * resizeItem transaction
-	 */
-	public static final String TRANSACTION_TYPE_RESIZE_ITEM = "resizeItem";
-
-	/**
-	 * unlock transaction
-	 */
-	public static final String TRANSACTION_TYPE_UNLOCK_ITEM = "unlockItem";
-
-	/**
-	 * lock transaction
-	 */
-	public static final String TRANSACTION_TYPE_LOCK_ITEM = "lockItem";
-
-	/**
-	 * lock success
-	 */
-	public static final String TRANSACTION_TYPE_LOCK_ITEM_SUCCESS = "lockItemSuccess";
-
-	/**
-	 * item already locked
-	 */
-	public static final String TRANSACTION_TYPE_LOCK_ITEM_ALREADY = "lockItemAlready";
-
-	/**
-	 * lock error
-	 */
-	public static final String TRANSACTION_TYPE_LOCK_ITEM_ERROR = "lockItemError";
-
 }

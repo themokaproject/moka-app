@@ -17,7 +17,7 @@ import fr.utc.nf28.moka.io.agent.A2ATransaction;
 /**
  * a JSON serializer/deserializer that uses Jackson
  */
-public class JSONParserUtils {
+public final class JSONParserUtils {
 	private static final ObjectMapper sMapper = new ObjectMapper();
 
 	public static String serializeA2ATransaction(final A2ATransaction transaction) throws IOException {
