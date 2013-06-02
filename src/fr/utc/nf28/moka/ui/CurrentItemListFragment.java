@@ -158,11 +158,12 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 			final HashMap<String, Object> item = itemEntries.get(i);
 			final int itemId = ((Double) item.get("id")).intValue();
 			MokaItem mokaItem = null;
-			if (item.get("type").equals("umlClass")) {
+			final String type = (String) item.get("type");
+			if (String.valueOf("umlClass").equals(type)) {
 				mokaItem = new ComputerItem.UmlItem("Uml " + String.valueOf(itemId));
-			} else if (item.get("type").equals("image")) {
+			} else if (String.valueOf("image").equals(type)) {
 				mokaItem = new MediaItem.ImageItem("Image " + String.valueOf(itemId));
-			} else if (item.get("type").equals("post-it")) {
+			} else if (String.valueOf("post-it").equals(type)) {
 				mokaItem = new TextItem.PostItItem("Post_it " + String.valueOf(itemId));
 			}
 			if (mokaItem != null) {
