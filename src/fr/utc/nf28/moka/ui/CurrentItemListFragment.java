@@ -2,6 +2,7 @@ package fr.utc.nf28.moka.ui;
 
 import android.app.Activity;
 import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
@@ -14,6 +15,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 import fr.utc.nf28.moka.R;
@@ -155,15 +157,7 @@ public class CurrentItemListFragment extends BasePagerFragment implements Adapte
 
 	@Override
 	public void success(Response res, Response response) {
-		try {
-			final List<MokaItem> items = JSONParserUtils.deserializeItemEntries(
-					HttpHelper.convertStreamToString(res.getBody().in())
-			);
-			resetUi();
-			mAdapter.updateCurrentItems(items);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		new ParseCurrentItemListTask().execute(response);
 	}
 
 	@Override
@@ -183,5 +177,24 @@ public class CurrentItemListFragment extends BasePagerFragment implements Adapte
 		 * Callback for when an item has been selected.
 		 */
 		public void onItemSelected(MokaItem item);
+	}
+
+	final class ParseCurrentItemListTask extends AsyncTask<Response, Void, List<MokaItem>> {
+		@Override
+		protected List<MokaItem> doInBackground(Response... params) {
+			try {
+				return JSONParserUtils.deserializeItemEntries(
+						HttpHelper.convertStreamToString(params[0].getBody().in())
+				);
+			} catch (IOException e) {
+				return Collections.emptyList();
+			}
+		}
+
+		@Override
+		protected void onPostExecute(List<MokaItem> currentItems) {
+			resetUi();
+			mAdapter.updateCurrentItems(currentItems);
+		}
 	}
 }

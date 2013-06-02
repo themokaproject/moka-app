@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -48,10 +49,10 @@ public final class JSONParserUtils {
 		MokaItem result = null;
 
 		//retrieve common stuff
-		String type = rootNode.path("type").asText();
-		String title = rootNode.path("title").asText();
-		int id = rootNode.path("id").asInt();
-		String creationDate = rootNode.path("creationDate").asText();
+		final String type = rootNode.path("type").asText();
+		final String title = rootNode.path("title").asText();
+		final int id = rootNode.path("id").asInt();
+		final String creationDate = rootNode.path("creationDate").asText();
 
 		if ("umlClass".equals(type)) {
 			result = new ComputerItem.UmlItem(title);
@@ -72,9 +73,10 @@ public final class JSONParserUtils {
 	}
 
 	public static List<MokaItem> deserializeItemEntries(final String json) throws IOException {
-		List<MokaItem> result = new ArrayList<MokaItem>();
-		JsonNode rootNode = sMapper.readTree(json);
+		final JsonNode rootNode = sMapper.readTree(json);
+		List<MokaItem> result = Collections.emptyList();
 		if (rootNode.isArray()) {
+			result = new ArrayList<MokaItem>(rootNode.size());
 			for (Iterator<JsonNode> iter = rootNode.elements(); iter.hasNext(); ) {
 				final MokaItem item = deserializeItemEntry(iter.next());
 				if (item != null) {
