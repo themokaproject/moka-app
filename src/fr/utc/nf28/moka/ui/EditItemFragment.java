@@ -50,6 +50,7 @@ public class EditItemFragment extends SherlockFragment implements LockingReceive
 	private float mLastY = -1f;
 	private Callbacks mCallbacks;
 	private final IntentFilter mIntentFilter = new IntentFilter(MokaReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER);
+	private View mCanvasMoveItem;
 
 	/**
 	 * Broadcast receiver used to catch locking callback from SMA
@@ -102,7 +103,8 @@ public class EditItemFragment extends SherlockFragment implements LockingReceive
 		final TextView itemCategory = (TextView) rootView.findViewById(R.id.item_category);
 		final TextView itemCreator = (TextView) rootView.findViewById(R.id.item_creator);
 		final ImageView itemImage = (ImageView) rootView.findViewById(R.id.item_image);
-		final View canvasMoveItem = rootView.findViewById(R.id.canvas_move_item);
+		mCanvasMoveItem = rootView.findViewById(R.id.canvas_move_item);
+		mCanvasMoveItem.setVisibility(View.GONE);
 
 		itemName.setText(mSelectedItem.getTitle());
 		itemType.setText(mSelectedItem.getType().getName());
@@ -110,7 +112,7 @@ public class EditItemFragment extends SherlockFragment implements LockingReceive
 		itemCreator.setText(String.format(getResources().getString(R.string.item_info_creation),
 				mSelectedItem.getCreatorName(), DateUtils.getFormattedDate(mSelectedItem.getCreationDate())));
 		itemImage.setImageResource(mSelectedItem.getType().getResId());
-		canvasMoveItem.setOnTouchListener(new MoveItemListener() {
+		mCanvasMoveItem.setOnTouchListener(new MoveItemListener() {
 			@Override
 			public void move(int direction, int velocity) {
 				mAgent.moveItem(mSelectedItem.getId(), direction, velocity);
@@ -192,6 +194,8 @@ public class EditItemFragment extends SherlockFragment implements LockingReceive
 		//TODO display full fragment
 		Crouton.makeText(getSherlockActivity(), "Element locké pour vous ! ",
 				Style.CONFIRM).show();
+		//TODO animation ?
+		mCanvasMoveItem.setVisibility(View.VISIBLE);
 	}
 
 	@Override
