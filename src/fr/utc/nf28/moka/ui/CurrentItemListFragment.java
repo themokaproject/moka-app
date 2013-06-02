@@ -12,21 +12,18 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.actionbarsherlock.app.SherlockFragment;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.ComputerItem;
 import fr.utc.nf28.moka.data.MediaItem;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.data.TextItem;
-import fr.utc.nf28.moka.io.MokaRestAdapter;
+import fr.utc.nf28.moka.ui.base.BasePagerFragment;
+import fr.utc.nf28.moka.util.MokaRestHelper;
 import fr.utc.nf28.moka.io.MokaRestService;
 import fr.utc.nf28.moka.io.receiver.MokaReceiver;
 import fr.utc.nf28.moka.io.receiver.RefreshItemReceiver;
@@ -37,7 +34,7 @@ import retrofit.client.Response;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
-public class CurrentItemListFragment extends SherlockFragment implements AdapterView.OnItemClickListener,
+public class CurrentItemListFragment extends BasePagerFragment implements AdapterView.OnItemClickListener,
 		RefreshItemReceiver.OnRefreshItemListener, Callback<List<HashMap<String, Object>>> {
 	private static final String DEFAULT_REST_SERVER_IP = "192.168.1.6"; //TODO same as Jade main container ? doublon in HistoryEntryListFragment
 	private static final String TAG = makeLogTag(CurrentItemListFragment.class);
@@ -92,7 +89,7 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 		// TODO: display ProgressBar + refact with {@link HistoryEntryListFragment}
 		final String API_URL = "http://" + PreferenceManager.getDefaultSharedPreferences(getSherlockActivity())
 				.getString(SharedPreferencesUtils.KEY_PREF_IP, DEFAULT_REST_SERVER_IP) + "/api";
-		mMokaRestService = MokaRestAdapter.getInstance(API_URL).create(MokaRestService.class);
+		mMokaRestService = MokaRestHelper.getMokaRestService(API_URL);
 	}
 
 	@Override
@@ -176,7 +173,7 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 	@Override
 	public void failure(RetrofitError retrofitError) {
 		Log.d(TAG, "REST call failure === " + retrofitError.toString());
-		Crouton.makeText(getSherlockActivity(), getResources().getString(R.string.network_error), Style.ALERT).show();
+		handleNetworkError();
 	}
 
 	/**

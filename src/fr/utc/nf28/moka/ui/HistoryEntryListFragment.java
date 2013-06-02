@@ -11,15 +11,12 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
-import com.actionbarsherlock.app.SherlockFragment;
-
 import java.util.List;
 
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.HistoryEntry;
-import fr.utc.nf28.moka.io.MokaRestAdapter;
+import fr.utc.nf28.moka.ui.base.BasePagerFragment;
+import fr.utc.nf28.moka.util.MokaRestHelper;
 import fr.utc.nf28.moka.io.MokaRestService;
 import fr.utc.nf28.moka.io.receiver.MokaReceiver;
 import fr.utc.nf28.moka.io.receiver.RefreshHistoryReceiver;
@@ -30,7 +27,7 @@ import retrofit.client.Response;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
-public class HistoryEntryListFragment extends SherlockFragment implements RefreshHistoryReceiver.OnRefreshHistoryListener,
+public class HistoryEntryListFragment extends BasePagerFragment implements RefreshHistoryReceiver.OnRefreshHistoryListener,
 		Callback<List<HistoryEntry>> {
 	private static final String DEFAULT_REST_SERVER_IP = "192.168.1.6";
 	private static final String TAG = makeLogTag(HistoryEntryListFragment.class);
@@ -66,7 +63,7 @@ public class HistoryEntryListFragment extends SherlockFragment implements Refres
 		// TODO: display ProgressBar + refact with {@link CurrentItemListFragment}
 		final String API_URL = "http://" + PreferenceManager.getDefaultSharedPreferences(getSherlockActivity())
 				.getString(SharedPreferencesUtils.KEY_PREF_IP, DEFAULT_REST_SERVER_IP) + "/api";
-		mMokaRestService = MokaRestAdapter.getInstance(API_URL).create(MokaRestService.class);
+		mMokaRestService = MokaRestHelper.getMokaRestService(API_URL);
 		mRefreshHistoryReceiver = new RefreshHistoryReceiver(this);
 
 		return rootView;
@@ -106,6 +103,6 @@ public class HistoryEntryListFragment extends SherlockFragment implements Refres
 	@Override
 	public void failure(RetrofitError retrofitError) {
 		Log.d(TAG, "REST call failure === " + retrofitError.toString());
-		Crouton.makeText(getSherlockActivity(), getResources().getString(R.string.network_error), Style.ALERT).show();
+		handleNetworkError();
 	}
 }
