@@ -3,8 +3,10 @@ package fr.utc.nf28.moka.ui;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,16 +18,21 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.io.agent.IAndroidAgent;
+import fr.utc.nf28.moka.io.receiver.LockingReceiver;
+import fr.utc.nf28.moka.io.receiver.MokaReceiver;
 import fr.utc.nf28.moka.ui.custom.MoveItemListener;
+import fr.utc.nf28.moka.util.CroutonUtils;
 import fr.utc.nf28.moka.util.DateUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
-public class EditItemFragment extends SherlockFragment {
+public class EditItemFragment extends SherlockFragment implements LockingReceiver.OnLockingListener {
 	/**
 	 * A dummy implementation of the {@link Callbacks} interface that does
 	 * nothing. Used only when this fragment is not attached to an activity.
@@ -42,6 +49,12 @@ public class EditItemFragment extends SherlockFragment {
 	private float mLastX = -1f;
 	private float mLastY = -1f;
 	private Callbacks mCallbacks;
+	private final IntentFilter mIntentFilter = new IntentFilter(MokaReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER);
+
+	/**
+	 * Broadcast receiver used to catch locking callback from SMA
+	 */
+	private LockingReceiver mLockingReceiver;
 
 	public EditItemFragment(MokaItem selectedItem) {
 		if (selectedItem == null) {
@@ -76,6 +89,8 @@ public class EditItemFragment extends SherlockFragment {
 
 		// Fragment configuration
 		setHasOptionsMenu(true);
+
+		mLockingReceiver = new LockingReceiver(this);
 	}
 
 	@Override
@@ -155,6 +170,13 @@ public class EditItemFragment extends SherlockFragment {
 	public void onPause() {
 		super.onPause();
 		mAgent.unlockItem(mSelectedItem.getId());
+		LocalBroadcastManager.getInstance(getSherlockActivity()).unregisterReceiver(mLockingReceiver);
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		LocalBroadcastManager.getInstance(getSherlockActivity()).registerReceiver(mLockingReceiver, mIntentFilter);
 	}
 
 	@Override
@@ -164,6 +186,28 @@ public class EditItemFragment extends SherlockFragment {
 
 		super.onDetach();
 	}
+
+	@Override
+	public void onSuccess() {
+		//TODO display full fragment
+		Crouton.makeText(getSherlockActivity(), "Element locké pour vous ! ",
+				Style.CONFIRM).show();
+	}
+
+	@Override
+	public void onAlreadyLocked(String lockerName) {
+		//TODO display fragment without edition possibility
+		Crouton.makeText(getSherlockActivity(), "Element déjà locké par " + lockerName,
+				CroutonUtils.INFO_MOKA_STYLE).show();
+	}
+
+	@Override
+	public void onError() {
+		//TODO display error or return ?
+		Crouton.makeText(getSherlockActivity(), "locking error ",
+				Style.ALERT).show();
+	}
+
 
 	/**
 	 * A callback interface that all activities containing this fragment must
