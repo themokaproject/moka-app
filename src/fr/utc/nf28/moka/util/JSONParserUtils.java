@@ -1,7 +1,5 @@
 package fr.utc.nf28.moka.util;
 
-import android.util.Log;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -78,7 +76,10 @@ public final class JSONParserUtils {
 		JsonNode rootNode = sMapper.readTree(json);
 		if (rootNode.isArray()) {
 			for (Iterator<JsonNode> iter = rootNode.elements(); iter.hasNext(); ) {
-				result.add(deserializeItemEntry(iter.next()));
+				final MokaItem item = deserializeItemEntry(iter.next());
+				if (item != null) {
+					result.add(item);
+				}
 			}
 		}
 		return result;
