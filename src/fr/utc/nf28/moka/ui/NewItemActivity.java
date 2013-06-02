@@ -34,7 +34,6 @@ public class NewItemActivity extends MokaUpActivity implements CreationReceiver.
 	 * broadcast receiver use to catch agent callback
 	 */
 	private CreationReceiver mJadeServerReceiver;
-
 	private MokaItem mNewItem;
 
 	@Override

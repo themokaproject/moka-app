@@ -154,16 +154,15 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 		final ArrayList<MokaItem> items = new ArrayList<MokaItem>(nbItems);
 		//TODO invert list on server side ?
 		Collections.reverse(itemEntries);
-		for (int i = 0; i < itemEntries.size(); i++) {
-			final HashMap<String, Object> item = itemEntries.get(i);
+		for (HashMap<String, Object> item : itemEntries) {
 			final int itemId = ((Double) item.get("id")).intValue();
 			MokaItem mokaItem = null;
 			final String type = (String) item.get("type");
-			if (String.valueOf("umlClass").equals(type)) {
+			if ("umlClass".equals(type)) {
 				mokaItem = new ComputerItem.UmlItem("Uml " + String.valueOf(itemId));
-			} else if (String.valueOf("image").equals(type)) {
+			} else if ("image".equals(type)) {
 				mokaItem = new MediaItem.ImageItem("Image " + String.valueOf(itemId));
-			} else if (String.valueOf("post-it").equals(type)) {
+			} else if ("post-it".equals(type)) {
 				mokaItem = new TextItem.PostItItem("Post_it " + String.valueOf(itemId));
 			}
 			if (mokaItem != null) {
