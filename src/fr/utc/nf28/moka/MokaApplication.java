@@ -62,7 +62,7 @@ public class MokaApplication extends Application {
 						resources.getString(R.string.web_page_type_description))
 				);
 				put(TextType.PlainTextType.KEY_TYPE, new TextType.PlainTextType(
-						resources.getString(R.string.image_type_title),
+						resources.getString(R.string.plain_text_type_title),
 						resources.getString(R.string.plain_text_type_description))
 				);
 				put(TextType.ListType.KEY_TYPE, new TextType.ListType(
