@@ -15,11 +15,11 @@ import java.util.List;
 
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.HistoryEntry;
-import fr.utc.nf28.moka.ui.base.BasePagerFragment;
-import fr.utc.nf28.moka.util.MokaRestHelper;
 import fr.utc.nf28.moka.io.MokaRestService;
 import fr.utc.nf28.moka.io.receiver.MokaReceiver;
 import fr.utc.nf28.moka.io.receiver.RefreshHistoryReceiver;
+import fr.utc.nf28.moka.ui.base.BasePagerFragment;
+import fr.utc.nf28.moka.util.MokaRestHelper;
 import fr.utc.nf28.moka.util.SharedPreferencesUtils;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -33,10 +33,10 @@ public class HistoryEntryListFragment extends BasePagerFragment implements Refre
 	private static final String TAG = makeLogTag(HistoryEntryListFragment.class);
 	private final IntentFilter mIntentFilter = new IntentFilter(MokaReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER);
 	private HistoryItemAdapter mAdapter;
-	private ListView mListView;
 	private ProgressBar mProgressBar;
 	private RefreshHistoryReceiver mRefreshHistoryReceiver;
 	private MokaRestService mMokaRestService;
+	private ListView mListView;
 
 	public HistoryEntryListFragment() {
 	}
@@ -58,13 +58,14 @@ public class HistoryEntryListFragment extends BasePagerFragment implements Refre
 		mAdapter = new HistoryItemAdapter(getSherlockActivity());
 		mListView.setAdapter(mAdapter);
 
-		// Launch the background task to retrieve history entries from the RESTful server
+		mRefreshHistoryReceiver = new RefreshHistoryReceiver(this);
 
+		// Launch the background task to retrieve history entries from the RESTful server
 		// TODO: display ProgressBar + refact with {@link CurrentItemListFragment}
 		final String API_URL = "http://" + PreferenceManager.getDefaultSharedPreferences(getSherlockActivity())
 				.getString(SharedPreferencesUtils.KEY_PREF_IP, DEFAULT_REST_SERVER_IP) + "/api";
 		mMokaRestService = MokaRestHelper.getMokaRestService(API_URL);
-		mRefreshHistoryReceiver = new RefreshHistoryReceiver(this);
+		refreshHistory();
 
 		return rootView;
 	}
@@ -72,7 +73,6 @@ public class HistoryEntryListFragment extends BasePagerFragment implements Refre
 	@Override
 	public void onResume() {
 		super.onResume();
-		refreshHistory();
 		LocalBroadcastManager.getInstance(getSherlockActivity()).registerReceiver(mRefreshHistoryReceiver, mIntentFilter);
 	}
 
@@ -85,8 +85,15 @@ public class HistoryEntryListFragment extends BasePagerFragment implements Refre
 	/**
 	 * get the current history from the rest server
 	 */
-	public void refreshHistory() {
+	private void refreshHistory() {
+		mProgressBar.setVisibility(View.VISIBLE);
+		mListView.getEmptyView().setVisibility(View.GONE);
 		mMokaRestService.historyEntries(this);
+	}
+
+	private void resetUi() {
+		mProgressBar.setVisibility(View.GONE);
+		mListView.getEmptyView().setVisibility(View.VISIBLE);
 	}
 
 	@Override
@@ -97,12 +104,14 @@ public class HistoryEntryListFragment extends BasePagerFragment implements Refre
 	@Override
 	public void success(List<HistoryEntry> historyEntries, Response response) {
 		Log.d(TAG, "success");
+		resetUi();
 		mAdapter.updateHistoryItems(historyEntries);
 	}
 
 	@Override
 	public void failure(RetrofitError retrofitError) {
 		Log.d(TAG, "REST call failure === " + retrofitError.toString());
+		resetUi();
 		handleNetworkError();
 	}
 }

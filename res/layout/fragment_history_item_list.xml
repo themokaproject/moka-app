@@ -3,7 +3,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center">
 
     <ListView
         android:id="@android:id/list"
@@ -11,15 +12,16 @@
         android:layout_height="match_parent"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
+        android:visibility="gone"
         android:scrollbarStyle="outsideOverlay" />
 
     <ProgressBar
         android:id="@+id/progress"
         android:layout_width="wrap_content"
-        android:layout_height="0dip"
-        android:layout_weight="1"
-        android:layout_gravity="center"
-        android:visibility="gone" />
+        android:layout_height="wrap_content"
+        style="?android:attr/android:progressBarStyleLarge"
+        android:visibility="gone"
+        android:layout_gravity="center" />
 
     <TextView
         android:id="@android:id/empty"
@@ -31,6 +33,7 @@
         android:layout_marginRight="32dp"
         android:layout_gravity="center"
         android:gravity="center"
+        android:visibility="gone"
         android:text="@string/history_entry_list_empty_text" />
 
 </LinearLayout>

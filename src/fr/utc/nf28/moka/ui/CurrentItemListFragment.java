@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,11 +23,11 @@ import fr.utc.nf28.moka.data.ComputerItem;
 import fr.utc.nf28.moka.data.MediaItem;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.data.TextItem;
-import fr.utc.nf28.moka.ui.base.BasePagerFragment;
-import fr.utc.nf28.moka.util.MokaRestHelper;
 import fr.utc.nf28.moka.io.MokaRestService;
 import fr.utc.nf28.moka.io.receiver.MokaReceiver;
 import fr.utc.nf28.moka.io.receiver.RefreshItemReceiver;
+import fr.utc.nf28.moka.ui.base.BasePagerFragment;
+import fr.utc.nf28.moka.util.MokaRestHelper;
 import fr.utc.nf28.moka.util.SharedPreferencesUtils;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -59,6 +60,8 @@ public class CurrentItemListFragment extends BasePagerFragment implements Adapte
 	 */
 	private RefreshItemReceiver mRefreshItemReceiver;
 	private MokaRestService mMokaRestService;
+	private ListView mListView;
+	private ProgressBar mProgressBar;
 
 	public CurrentItemListFragment() {
 	}
@@ -83,24 +86,29 @@ public class CurrentItemListFragment extends BasePagerFragment implements Adapte
 
 		// Fragment configuration
 		setHasOptionsMenu(true);
-
-		mRefreshItemReceiver = new RefreshItemReceiver(this);
-
-		// TODO: display ProgressBar + refact with {@link HistoryEntryListFragment}
-		final String API_URL = "http://" + PreferenceManager.getDefaultSharedPreferences(getSherlockActivity())
-				.getString(SharedPreferencesUtils.KEY_PREF_IP, DEFAULT_REST_SERVER_IP) + "/api";
-		mMokaRestService = MokaRestHelper.getMokaRestService(API_URL);
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		final View rootView = inflater.inflate(R.layout.fragment_current_item_list, container, false);
 
-		final ListView listView = (ListView) rootView.findViewById(android.R.id.list);
-		listView.setOnItemClickListener(this);
-		listView.setEmptyView(rootView.findViewById(android.R.id.empty));
+		mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress);
+
+		mListView = (ListView) rootView.findViewById(android.R.id.list);
+		mListView.setOnItemClickListener(this);
+		mListView.setEmptyView(rootView.findViewById(android.R.id.empty));
 		mAdapter = new CurrentItemAdapter(getSherlockActivity());
-		listView.setAdapter(mAdapter);
+		mListView.setAdapter(mAdapter);
+
+		mRefreshItemReceiver = new RefreshItemReceiver(this);
+
+		// Launch the background task to retrieve history entries from the RESTful server
+		// TODO: display ProgressBar + refact with {@link HistoryEntryListFragment}
+		final String API_URL = "http://" + PreferenceManager.getDefaultSharedPreferences(getSherlockActivity())
+				.getString(SharedPreferencesUtils.KEY_PREF_IP, DEFAULT_REST_SERVER_IP) + "/api";
+		mMokaRestService = MokaRestHelper.getMokaRestService(API_URL);
+
+		refreshCurrentList();
 
 		return rootView;
 	}
@@ -116,7 +124,6 @@ public class CurrentItemListFragment extends BasePagerFragment implements Adapte
 	@Override
 	public void onResume() {
 		super.onResume();
-		refreshCurrentList();
 		LocalBroadcastManager.getInstance(getSherlockActivity()).registerReceiver(mRefreshItemReceiver, mIntentFilter);
 	}
 
@@ -137,10 +144,17 @@ public class CurrentItemListFragment extends BasePagerFragment implements Adapte
 	}
 
 	/**
-	 * get the current history from the rest server
+	 * get the current item list from the rest server
 	 */
-	public void refreshCurrentList() {
+	private void refreshCurrentList() {
+		mProgressBar.setVisibility(View.VISIBLE);
+		mListView.getEmptyView().setVisibility(View.GONE);
 		mMokaRestService.itemsEntries(this);
+	}
+
+	private void resetUi() {
+		mProgressBar.setVisibility(View.GONE);
+		mListView.getEmptyView().setVisibility(View.VISIBLE);
 	}
 
 	@Override
@@ -167,12 +181,14 @@ public class CurrentItemListFragment extends BasePagerFragment implements Adapte
 				items.add(mokaItem);
 			}
 		}
+		resetUi();
 		mAdapter.updateCurrentItems(items);
 	}
 
 	@Override
 	public void failure(RetrofitError retrofitError) {
 		Log.d(TAG, "REST call failure === " + retrofitError.toString());
+		resetUi();
 		handleNetworkError();
 	}
 
