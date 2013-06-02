@@ -4,6 +4,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import fr.utc.nf28.moka.data.ComputerItem;
 import fr.utc.nf28.moka.data.MediaItem;
@@ -65,6 +68,19 @@ public class JSONParserUtils {
 		if (result != null) {
 			result.setId(id);
 			result.setCreationDate(creationDate);
+		}
+
+		return result;
+	}
+
+	public static List<MokaItem> deserializeItemEntries(final String json) throws IOException {
+		List<MokaItem> result = new ArrayList<MokaItem>();
+		JsonNode rootNode = sMapper.readTree(json);
+
+		if (rootNode.isArray()) {
+			for (Iterator<JsonNode> iter = rootNode.elements(); iter.hasNext(); ) {
+				result.add(deserializeItemEntry(iter.next().asText()));
+			}
 		}
 
 		return result;
