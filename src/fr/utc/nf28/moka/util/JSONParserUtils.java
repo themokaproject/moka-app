@@ -63,6 +63,8 @@ public final class JSONParserUtils {
 		} else if ("post-it".equals(type)) {
 			result = new TextItem.PostItItem(title);
 			//retrieve post-it specific stuff
+		} else if ("video".equals(type)) {
+			result = new MediaItem.VideoItem(title);
 		}
 
 		if (result != null) {
