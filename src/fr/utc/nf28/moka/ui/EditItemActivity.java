@@ -74,7 +74,7 @@ public class EditItemActivity extends MokaUpActivity implements EditItemFragment
 	public void onSuccess() {
 		//TODO display full fragment
 		Crouton.makeText(this, "Element locké pour vous ! ", Style.CONFIRM).show();
-		findViewById(R.id.progress).setVisibility(View.GONE);
+		resetUi();
 		getSupportFragmentManager()
 				.beginTransaction()
 				.setCustomAnimations(R.anim.slow_fade_in, R.anim.slow_fade_out)
@@ -86,11 +86,17 @@ public class EditItemActivity extends MokaUpActivity implements EditItemFragment
 	public void onAlreadyLocked(String lockerName) {
 		//TODO display fragment without edition possibility
 		Crouton.makeText(this, "Element déjà locké par " + lockerName, CroutonUtils.INFO_MOKA_STYLE).show();
+		resetUi();
 	}
 
 	@Override
 	public void onError() {
 		//TODO display error or return ?
 		Crouton.makeText(this, "locking error ", Style.ALERT).show();
+		resetUi();
+	}
+
+	private void resetUi() {
+		findViewById(R.id.progress).setVisibility(View.GONE);
 	}
 }
