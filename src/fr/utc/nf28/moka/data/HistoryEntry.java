@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 public class HistoryEntry implements Parcelable {
 	public static final Parcelable.Creator<HistoryEntry> CREATOR = new Parcelable.Creator<HistoryEntry>() {
 		public HistoryEntry createFromParcel(Parcel in) {
@@ -17,13 +19,21 @@ public class HistoryEntry implements Parcelable {
 	};
 	@SerializedName("action")
 	private String mAction;
+	@SerializedName("date")
+	private String mDate;
 
-	public HistoryEntry(String action) {
+	public HistoryEntry(String action, String date) {
 		mAction = action;
+		mDate = date;
+	}
+
+	public HistoryEntry(String action, Date date) {
+		this(action, date.toString());
 	}
 
 	protected HistoryEntry(Parcel in) {
 		mAction = in.readString();
+		mDate = in.readString();
 	}
 
 	public String getAction() {
@@ -34,6 +44,18 @@ public class HistoryEntry implements Parcelable {
 		mAction = action;
 	}
 
+	public String getDate() {
+		return mDate;
+	}
+
+	public void setDate(Date date) {
+		mDate = date.toString();
+	}
+
+	public void setDate(String date) {
+		mDate = date;
+	}
+
 	@Override
 	public int describeContents() {
 		return 0;
@@ -42,5 +64,6 @@ public class HistoryEntry implements Parcelable {
 	@Override
 	public void writeToParcel(Parcel parcel, int flags) {
 		parcel.writeString(mAction);
+		parcel.writeString(mDate);
 	}
 }

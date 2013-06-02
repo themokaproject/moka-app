@@ -48,7 +48,7 @@ public class CurrentItemAdapter extends BaseMokaAdapter {
 			convertView = mLayoutInflater.inflate(R.layout.current_item, parent, false);
 		}
 
-		final TextView itemName = ViewHolder.get(convertView, R.id.item_name);
+		final TextView itemName = ViewHolder.get(convertView, R.id.history_name);
 		final TextView itemCreationDate = ViewHolder.get(convertView, R.id.item_creation_date);
 		final ImageView itemImage = ViewHolder.get(convertView, R.id.item_image);
 

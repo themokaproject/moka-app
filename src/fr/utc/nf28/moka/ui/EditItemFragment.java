@@ -98,7 +98,7 @@ public class EditItemFragment extends SherlockFragment implements LockingReceive
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		final View rootView = inflater.inflate(R.layout.fragment_edit_item, container, false);
 
-		final TextView itemName = (TextView) rootView.findViewById(R.id.item_name);
+		final TextView itemName = (TextView) rootView.findViewById(R.id.history_name);
 		final TextView itemType = (TextView) rootView.findViewById(R.id.item_type);
 		final TextView itemCategory = (TextView) rootView.findViewById(R.id.item_category);
 		final TextView itemCreator = (TextView) rootView.findViewById(R.id.item_creator);

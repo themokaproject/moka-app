@@ -104,7 +104,7 @@ public class TypeAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 			convertView = mLayoutInflater.inflate(R.layout.type, parent, false);
 		}
 
-		final TextView itemName = ViewHolder.get(convertView, R.id.item_name);
+		final TextView itemName = ViewHolder.get(convertView, R.id.history_name);
 		final ImageView itemImage = ViewHolder.get(convertView, R.id.item_image);
 		final MokaType item = getItem(position);
 		itemName.setText(item.getName());
