@@ -3,7 +3,7 @@ package fr.utc.nf28.moka.util;
 import fr.utc.nf28.moka.io.MokaRestService;
 import retrofit.RestAdapter;
 
-public class MokaRestHelper {
+public final class MokaRestHelper {
 	private static RestAdapter sAdapterInstance = null;
 	private static MokaRestService sMokaRestServiceInstance = null;
 
