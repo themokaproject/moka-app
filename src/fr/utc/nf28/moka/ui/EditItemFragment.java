@@ -104,7 +104,6 @@ public class EditItemFragment extends SherlockFragment implements LockingReceive
 		final TextView itemCreator = (TextView) rootView.findViewById(R.id.item_creator);
 		final ImageView itemImage = (ImageView) rootView.findViewById(R.id.item_image);
 		mCanvasMoveItem = rootView.findViewById(R.id.canvas_move_item);
-		mCanvasMoveItem.setVisibility(View.GONE);
 
 		itemName.setText(mSelectedItem.getTitle());
 		itemType.setText(mSelectedItem.getType().getName());
@@ -194,8 +193,6 @@ public class EditItemFragment extends SherlockFragment implements LockingReceive
 		//TODO display full fragment
 		Crouton.makeText(getSherlockActivity(), "Element locké pour vous ! ",
 				Style.CONFIRM).show();
-		//TODO animation ?
-		mCanvasMoveItem.setVisibility(View.VISIBLE);
 	}
 
 	@Override
