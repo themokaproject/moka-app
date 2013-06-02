@@ -15,6 +15,7 @@ import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockFragment;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,7 +23,9 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.ComputerItem;
+import fr.utc.nf28.moka.data.MediaItem;
 import fr.utc.nf28.moka.data.MokaItem;
+import fr.utc.nf28.moka.data.TextItem;
 import fr.utc.nf28.moka.io.MokaRestAdapter;
 import fr.utc.nf28.moka.io.MokaRestService;
 import fr.utc.nf28.moka.io.receiver.MokaReceiver;
@@ -150,12 +153,22 @@ public class CurrentItemListFragment extends SherlockFragment implements Adapter
 		final int nbItems = itemEntries.size();
 		final ArrayList<MokaItem> items = new ArrayList<MokaItem>(nbItems);
 		//TODO invert list on server side ?
-		for (int i = nbItems - 1; i >= 0; i--) {
+		Collections.reverse(itemEntries);
+		for (int i = 0; i < itemEntries.size(); i++) {
 			final HashMap<String, Object> item = itemEntries.get(i);
 			final int itemId = ((Double) item.get("id")).intValue();
-			final MokaItem mokaItem = new ComputerItem.UmlItem("Uml_item" + String.valueOf(itemId));
-			mokaItem.setId(itemId);
-			items.add(mokaItem);
+			MokaItem mokaItem = null;
+			if (item.get("type").equals("umlClass")) {
+				mokaItem = new ComputerItem.UmlItem("Uml " + String.valueOf(itemId));
+			} else if (item.get("type").equals("image")) {
+				mokaItem = new MediaItem.ImageItem("Image " + String.valueOf(itemId));
+			} else if (item.get("type").equals("post-it")) {
+				mokaItem = new TextItem.PostItItem("Post_it " + String.valueOf(itemId));
+			}
+			if (mokaItem != null) {
+				mokaItem.setId(itemId);
+				items.add(mokaItem);
+			}
 		}
 		mAdapter.updateCurrentItems(items);
 	}
