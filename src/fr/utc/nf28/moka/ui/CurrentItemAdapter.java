@@ -53,7 +53,8 @@ public class CurrentItemAdapter extends BaseMokaAdapter {
 
 		final MokaItem item = getItem(position);
 		itemName.setText(item.getTitle());
-		itemCreationDate.setText(item.getCreationDate());
+		itemCreationDate.setText(String.format(mContext.getResources().getString(R.string.current_item_date_format),
+				item.getCreationDate()));
 		Picasso.with(mContext)
 				.load(item.getType().getResId())
 				.resizeDimen(R.dimen.list_current_item_type_picture_width_height,
