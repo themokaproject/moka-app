@@ -13,9 +13,11 @@ import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.ComputerItem;
 import fr.utc.nf28.moka.data.ComputerType;
+import fr.utc.nf28.moka.data.MediaItem;
 import fr.utc.nf28.moka.data.MediaType;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.data.MokaType;
+import fr.utc.nf28.moka.data.TextItem;
 import fr.utc.nf28.moka.data.TextType;
 import fr.utc.nf28.moka.io.receiver.CreationReceiver;
 import fr.utc.nf28.moka.io.receiver.MokaReceiver;
@@ -32,6 +34,8 @@ public class NewItemActivity extends MokaUpActivity implements CreationReceiver.
 	 * broadcast receiver use to catch agent callback
 	 */
 	private CreationReceiver mJadeServerReceiver;
+
+	private MokaItem mNewItem;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -53,13 +57,17 @@ public class NewItemActivity extends MokaUpActivity implements CreationReceiver.
 			final String typeName;
 			if (type instanceof ComputerType.UmlType) {
 				typeName = ComputerType.UmlType.KEY_TYPE;
+				mNewItem = new ComputerItem.UmlItem("Uml ");
 			} else if (type instanceof TextType.PostItType) {
 				typeName = TextType.PostItType.KEY_TYPE;
+				mNewItem = new TextItem.PostItItem("Post-it ");
 			} else if (type instanceof MediaType.ImageType) {
 				typeName = MediaType.ImageType.KEY_TYPE;
+				mNewItem = new MediaItem.ImageItem("Image ");
 			} else if (type instanceof MediaType.VideoType) {
-                typeName = MediaType.VideoType.KEY_TYPE;
-            } else {
+				typeName = MediaType.VideoType.KEY_TYPE;
+				mNewItem = new MediaItem.VideoItem("Video ");
+			} else {
 				Crouton.makeText(this, getResources().getString(R.string.item_not_supported_yet), Style.ALERT).show();
 				findViewById(R.id.progress).setVisibility(View.GONE);
 				return;
@@ -86,15 +94,16 @@ public class NewItemActivity extends MokaUpActivity implements CreationReceiver.
 	public void onSuccess(int id) {
 		Crouton.makeText(this, "id from server :" + String.valueOf(id) + ". Ready for editing.",
 				Style.CONFIRM).show();
-		//TODO use the real type
-		final MokaItem item = new ComputerItem.UmlItem("Uml_item" + String.valueOf(id));
-		item.setId(id);
-		findViewById(R.id.progress).setVisibility(View.GONE);
-		getSupportFragmentManager()
-				.beginTransaction()
-				.setCustomAnimations(R.anim.slow_fade_in, R.anim.slow_fade_out)
-				.replace(android.R.id.content, EditItemFragment.newInstance(item))
-				.commit();
+		if (mNewItem != null) {
+			mNewItem.setTitle(mNewItem.getTitle() + String.valueOf(id));
+			mNewItem.setId(id);
+			findViewById(R.id.progress).setVisibility(View.GONE);
+			getSupportFragmentManager()
+					.beginTransaction()
+					.setCustomAnimations(R.anim.slow_fade_in, R.anim.slow_fade_out)
+					.replace(android.R.id.content, EditItemFragment.newInstance(mNewItem))
+					.commit();
+		}
 	}
 
 	@Override
