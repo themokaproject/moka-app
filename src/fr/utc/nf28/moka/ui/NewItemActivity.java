@@ -9,6 +9,7 @@ import android.view.View;
 import com.actionbarsherlock.app.ActionBar;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.LifecycleCallback;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.ComputerItem;
@@ -53,6 +54,9 @@ public class NewItemActivity extends MokaUpActivity implements CreationReceiver.
 		if (savedInstanceState == null && intent.hasExtra(ARG_TYPE)) {
 			//retrieve MokaType from intent
 			final MokaType type = intent.getExtras().getParcelable(ARG_TYPE);
+			if (type == null) {
+				throw new IllegalStateException("Selected type cannot be null");
+			}
 			final String typeName;
 			if (type instanceof ComputerType.UmlType) {
 				typeName = ComputerType.UmlType.KEY_TYPE;
@@ -67,8 +71,19 @@ public class NewItemActivity extends MokaUpActivity implements CreationReceiver.
 				typeName = MediaType.VideoType.KEY_TYPE;
 				mNewItem = new MediaItem.VideoItem("Video ");
 			} else {
-				Crouton.makeText(this, getResources().getString(R.string.item_not_supported_yet), Style.ALERT).show();
-				findViewById(R.id.progress).setVisibility(View.GONE);
+				final Crouton crouton = Crouton.makeText(this,
+						getResources().getString(R.string.item_not_supported_yet), Style.ALERT);
+				crouton.setLifecycleCallback(new LifecycleCallback() {
+					@Override
+					public void onDisplayed() {
+						findViewById(R.id.progress).setVisibility(View.GONE);
+					}
+
+					@Override
+					public void onRemoved() {
+					}
+				});
+				crouton.show();
 				return;
 			}
 
@@ -93,16 +108,14 @@ public class NewItemActivity extends MokaUpActivity implements CreationReceiver.
 	public void onSuccess(int id) {
 		Crouton.makeText(this, "id from server :" + String.valueOf(id) + ". Ready for editing.",
 				Style.CONFIRM).show();
-		if (mNewItem != null) {
-			mNewItem.setTitle(mNewItem.getTitle() + String.valueOf(id));
-			mNewItem.setId(id);
-			findViewById(R.id.progress).setVisibility(View.GONE);
-			getSupportFragmentManager()
-					.beginTransaction()
-					.setCustomAnimations(R.anim.slow_fade_in, R.anim.slow_fade_out)
-					.replace(android.R.id.content, EditItemFragment.newInstance(mNewItem))
-					.commit();
-		}
+		mNewItem.setTitle(mNewItem.getTitle() + String.valueOf(id));
+		mNewItem.setId(id);
+		findViewById(R.id.progress).setVisibility(View.GONE);
+		getSupportFragmentManager()
+				.beginTransaction()
+				.setCustomAnimations(R.anim.slow_fade_in, R.anim.slow_fade_out)
+				.replace(android.R.id.content, EditItemFragment.newInstance(mNewItem))
+				.commit();
 	}
 
 	@Override
