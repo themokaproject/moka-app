@@ -31,8 +31,7 @@ public class JSONParserUtils {
 				System.out.println("deserializeA2ATransaction:ClassNotFound : " + contentClassNode.asText());
 				System.out.println("use " + contentClass.toString() + " instead");
 			}
-			Object content = sMapper.treeToValue(contentNode, contentClass);
-			return new A2ATransaction(typeNode.asText(), content);
+			return new A2ATransaction(typeNode.asText(), sMapper.treeToValue(contentNode, contentClass));
 		}
 
 		return null;
