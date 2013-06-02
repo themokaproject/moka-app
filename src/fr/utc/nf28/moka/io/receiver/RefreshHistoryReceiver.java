@@ -11,8 +11,7 @@ import fr.utc.nf28.moka.util.JSONParserUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
 
 public class RefreshHistoryReceiver extends MokaReceiver {
-
-	private OnRefreshHistoryListener mInterface;
+	private final OnRefreshHistoryListener mInterface;
 
 	public RefreshHistoryReceiver(OnRefreshHistoryListener i) {
 		super();

@@ -10,8 +10,7 @@ import fr.utc.nf28.moka.util.JSONParserUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
 
 public class LockingReceiver extends MokaReceiver {
-
-	private OnLockingListener mInterface;
+	private final OnLockingListener mInterface;
 
 	public LockingReceiver(OnLockingListener i) {
 		super();

@@ -11,8 +11,7 @@ import fr.utc.nf28.moka.util.JSONParserUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
 
 public class CreationReceiver extends MokaReceiver {
-
-	private OnCreationCallbackListener mInterface;
+	private final OnCreationCallbackListener mInterface;
 
 	/**
 	 * constructor

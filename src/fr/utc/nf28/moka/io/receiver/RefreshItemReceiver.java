@@ -10,8 +10,7 @@ import fr.utc.nf28.moka.util.JSONParserUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
 
 public class RefreshItemReceiver extends MokaReceiver {
-
-	private OnRefreshItemListener mInterface;
+	private final OnRefreshItemListener mInterface;
 
 	public RefreshItemReceiver(OnRefreshItemListener i) {
 		super();
