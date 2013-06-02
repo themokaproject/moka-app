@@ -110,7 +110,6 @@ public final class JadeUtils {
 
 		@Override
 		public void resizeItem(int itemId, int direction) {
-
 		}
 
 		@Override
