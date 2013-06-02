@@ -13,33 +13,22 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 import fr.utc.nf28.moka.R;
-import fr.utc.nf28.moka.data.ComputerItem;
-import fr.utc.nf28.moka.data.MediaItem;
 import fr.utc.nf28.moka.data.MokaItem;
-import fr.utc.nf28.moka.data.TextItem;
 import fr.utc.nf28.moka.io.MokaRestService;
 import fr.utc.nf28.moka.io.receiver.MokaReceiver;
 import fr.utc.nf28.moka.io.receiver.RefreshItemReceiver;
 import fr.utc.nf28.moka.ui.base.BasePagerFragment;
+import fr.utc.nf28.moka.util.HttpHelper;
 import fr.utc.nf28.moka.util.JSONParserUtils;
 import fr.utc.nf28.moka.util.MokaRestHelper;
 import fr.utc.nf28.moka.util.SharedPreferencesUtils;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import retrofit.mime.TypedInput;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
@@ -164,20 +153,12 @@ public class CurrentItemListFragment extends BasePagerFragment implements Adapte
 		mListView.getEmptyView().setVisibility(View.VISIBLE);
 	}
 
-	private String inputStreamToString(InputStream in) throws IOException {
-		BufferedReader r = new BufferedReader(new InputStreamReader(in));
-		StringBuilder total = new StringBuilder();
-		String line;
-		while ((line = r.readLine()) != null) {
-			total.append(line);
-		}
-		return total.toString();
-	}
-
 	@Override
 	public void success(Response res, Response response) {
 		try {
-			List<MokaItem> items = JSONParserUtils.deserializeItemEntries(inputStreamToString(res.getBody().in()));
+			final List<MokaItem> items = JSONParserUtils.deserializeItemEntries(
+					HttpHelper.convertStreamToString(res.getBody().in())
+			);
 			resetUi();
 			mAdapter.updateCurrentItems(items);
 		} catch (IOException e) {
