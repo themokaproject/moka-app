@@ -3,22 +3,27 @@ package fr.utc.nf28.moka.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.joda.time.DateTime;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.Calendar;
+
+import fr.utc.nf28.moka.util.DateUtils;
 
 public abstract class MokaItem implements Parcelable {
 	public static final int INVALID_ID = -1;
-	private static final String DEFAULT_CREATOR_NAME = MokaItem.class.getSimpleName();
+	private static final String DEFAULT_CREATOR_NAME = MokaItem.class.getSimpleName(); // TODO: remove once server has creator name
 	private int mId = INVALID_ID;
 	private String mTitle;
 	private MokaType mType;
 	private String mCreatorName;
-	private DateTime mCreationDate;
+	@SerializedName("creationDate")
+	private String mCreationDate;
 
 	public MokaItem(String title, MokaType type) {
-		this(title, type, DEFAULT_CREATOR_NAME, new DateTime());
+		this(title, type, DEFAULT_CREATOR_NAME, DateUtils.getFormattedDate(Calendar.getInstance().getTime()));
 	}
 
-	public MokaItem(String title, MokaType type, String creatorName, DateTime creationDate) {
+	public MokaItem(String title, MokaType type, String creatorName, String creationDate) {
 		mTitle = title;
 		mType = type;
 		mCreatorName = creatorName;
@@ -30,10 +35,7 @@ public abstract class MokaItem implements Parcelable {
 		mTitle = in.readString();
 		mType = in.readParcelable(MokaType.class.getClassLoader());
 		mCreatorName = in.readString();
-		final long millis = in.readLong();
-		if (millis != -1) {
-			mCreationDate = new DateTime(millis);
-		}
+		mCreationDate = in.readString();
 	}
 
 	public int getId() {
@@ -68,12 +70,12 @@ public abstract class MokaItem implements Parcelable {
 		mCreatorName = creatorName;
 	}
 
-	public DateTime getCreationDate() {
+	public String getCreationDate() {
 		return mCreationDate;
 	}
 
-	public void setCreationDate(DateTime date) {
-		mCreationDate = date;
+	public void setCreationDate(String creationDate) {
+		mCreationDate = creationDate;
 	}
 
 	@Override
@@ -87,10 +89,6 @@ public abstract class MokaItem implements Parcelable {
 		parcel.writeString(mTitle);
 		parcel.writeParcelable(mType, flags);
 		parcel.writeString(mCreatorName);
-		if (mCreationDate != null) {
-			parcel.writeLong(mCreationDate.getMillis());
-		} else {
-			parcel.writeLong(-1);
-		}
+		parcel.writeString(mCreationDate);
 	}
 }

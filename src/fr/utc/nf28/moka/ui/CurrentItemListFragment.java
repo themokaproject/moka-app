@@ -177,6 +177,7 @@ public class CurrentItemListFragment extends BasePagerFragment implements Adapte
 			}
 			if (mokaItem != null) {
 				mokaItem.setId(itemId);
+				mokaItem.setCreationDate((String) item.get("creationDate"));
 				items.add(mokaItem);
 			}
 		}

@@ -42,6 +42,9 @@
     <!-- TypeListFragment -->
     <string name="type_image_content_description">Description du type</string>
 
+    <!-- HistoryListFragment -->
+    <string name="history_entry_date_format">Le %1$s</string>
+
     <!-- Type titles -->
     <string name="image_type_title">Image</string>
     <string name="video_type_title">Vidéo</string>

@@ -5,8 +5,6 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Date;
-
 public class HistoryEntry implements Parcelable {
 	public static final Parcelable.Creator<HistoryEntry> CREATOR = new Parcelable.Creator<HistoryEntry>() {
 		public HistoryEntry createFromParcel(Parcel in) {
@@ -27,10 +25,6 @@ public class HistoryEntry implements Parcelable {
 		mDate = date;
 	}
 
-	public HistoryEntry(String action, Date date) {
-		this(action, date.toString());
-	}
-
 	protected HistoryEntry(Parcel in) {
 		mAction = in.readString();
 		mDate = in.readString();
@@ -46,10 +40,6 @@ public class HistoryEntry implements Parcelable {
 
 	public String getDate() {
 		return mDate;
-	}
-
-	public void setDate(Date date) {
-		mDate = date.toString();
 	}
 
 	public void setDate(String date) {

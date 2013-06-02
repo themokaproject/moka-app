@@ -15,7 +15,6 @@ import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.ui.base.BaseMokaAdapter;
 import fr.utc.nf28.moka.ui.base.ViewHolder;
-import fr.utc.nf28.moka.util.DateUtils;
 
 public class CurrentItemAdapter extends BaseMokaAdapter {
 	private final Context mContext;
@@ -54,7 +53,7 @@ public class CurrentItemAdapter extends BaseMokaAdapter {
 
 		final MokaItem item = getItem(position);
 		itemName.setText(item.getTitle());
-		itemCreationDate.setText(DateUtils.getFormattedDate(item.getCreationDate()));
+		itemCreationDate.setText(item.getCreationDate());
 		Picasso.with(mContext)
 				.load(item.getType().getResId())
 				.resizeDimen(R.dimen.list_current_item_type_picture_width_height,

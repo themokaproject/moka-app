@@ -1,13 +1,12 @@
 package fr.utc.nf28.moka.util;
 
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class DateUtils {
-	private static final DateTimeFormatter sDateFormatter = DateTimeFormat.forPattern("dd/MM/yy");
+	private static final SimpleDateFormat sDateFormat = new SimpleDateFormat("dd/MM/yyyy à HH:mm:ss");
 
-	public static String getFormattedDate(DateTime d) {
-		return d.toString(sDateFormatter);
+	public static String getFormattedDate(Date d) {
+		return sDateFormat.format(d);
 	}
 }

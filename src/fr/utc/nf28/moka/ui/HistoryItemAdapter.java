@@ -14,10 +14,13 @@ import fr.utc.nf28.moka.ui.base.BaseMokaAdapter;
 import fr.utc.nf28.moka.ui.base.ViewHolder;
 
 public class HistoryItemAdapter extends BaseMokaAdapter {
+	private final Context mContext;
 	private List<HistoryEntry> mHistoryEntries = Collections.emptyList();
 
 	public HistoryItemAdapter(Context context) {
 		super(context);
+
+		mContext = context;
 	}
 
 	public void updateHistoryItems(List<HistoryEntry> historyEntries) {
@@ -46,7 +49,8 @@ public class HistoryItemAdapter extends BaseMokaAdapter {
 		final TextView historyDate = ViewHolder.get(convertView, R.id.history_date);
 		final HistoryEntry historyEntry = getItem(position);
 		historyName.setText(historyEntry.getAction());
-		historyDate.setText(historyEntry.getDate());
+		historyDate.setText(String.format(mContext.getResources().getString(R.string.history_entry_date_format),
+				historyEntry.getDate()));
 
 		return convertView;
 	}

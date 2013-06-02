@@ -27,7 +27,6 @@ import fr.utc.nf28.moka.io.receiver.LockingReceiver;
 import fr.utc.nf28.moka.io.receiver.MokaReceiver;
 import fr.utc.nf28.moka.ui.custom.MoveItemListener;
 import fr.utc.nf28.moka.util.CroutonUtils;
-import fr.utc.nf28.moka.util.DateUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
@@ -46,12 +45,11 @@ public class EditItemFragment extends SherlockFragment implements LockingReceive
 	private static final int MOVE_NOISE = 10;
 	private final MokaItem mSelectedItem;
 	private final IAndroidAgent mAgent = JadeUtils.getAndroidAgentInterface();
+	private final IntentFilter mIntentFilter = new IntentFilter(MokaReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER);
 	private float mLastX = -1f;
 	private float mLastY = -1f;
 	private Callbacks mCallbacks;
-	private final IntentFilter mIntentFilter = new IntentFilter(MokaReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER);
 	private View mCanvasMoveItem;
-
 	/**
 	 * Broadcast receiver used to catch locking callback from SMA
 	 */
@@ -109,7 +107,7 @@ public class EditItemFragment extends SherlockFragment implements LockingReceive
 		itemType.setText(mSelectedItem.getType().getName());
 		itemCategory.setText(mSelectedItem.getType().getCategoryName());
 		itemCreator.setText(String.format(getResources().getString(R.string.item_info_creation),
-				mSelectedItem.getCreatorName(), DateUtils.getFormattedDate(mSelectedItem.getCreationDate())));
+				mSelectedItem.getCreatorName(), mSelectedItem.getCreationDate()));
 		itemImage.setImageResource(mSelectedItem.getType().getResId());
 		mCanvasMoveItem.setOnTouchListener(new MoveItemListener() {
 			@Override
