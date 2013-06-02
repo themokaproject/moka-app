@@ -27,8 +27,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/connexion"
             android:gravity="center|left"
-            android:layout_alignParentEnd="false"
-            android:layout_alignParentStart="false"
             android:padding="16dp">
 
             <TextView
