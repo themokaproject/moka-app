@@ -108,8 +108,6 @@ public class CurrentItemListFragment extends BasePagerFragment implements Adapte
 				.getString(SharedPreferencesUtils.KEY_PREF_IP, DEFAULT_REST_SERVER_IP) + "/api";
 		mMokaRestService = MokaRestHelper.getMokaRestService(API_URL);
 
-		refreshCurrentList();
-
 		return rootView;
 	}
 
@@ -124,6 +122,7 @@ public class CurrentItemListFragment extends BasePagerFragment implements Adapte
 	@Override
 	public void onResume() {
 		super.onResume();
+		refreshCurrentList();
 		LocalBroadcastManager.getInstance(getSherlockActivity()).registerReceiver(mRefreshItemReceiver, mIntentFilter);
 	}
 

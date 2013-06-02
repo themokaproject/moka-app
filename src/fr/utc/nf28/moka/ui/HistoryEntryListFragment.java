@@ -65,7 +65,6 @@ public class HistoryEntryListFragment extends BasePagerFragment implements Refre
 		final String API_URL = "http://" + PreferenceManager.getDefaultSharedPreferences(getSherlockActivity())
 				.getString(SharedPreferencesUtils.KEY_PREF_IP, DEFAULT_REST_SERVER_IP) + "/api";
 		mMokaRestService = MokaRestHelper.getMokaRestService(API_URL);
-		refreshHistory();
 
 		return rootView;
 	}
@@ -73,6 +72,7 @@ public class HistoryEntryListFragment extends BasePagerFragment implements Refre
 	@Override
 	public void onResume() {
 		super.onResume();
+		refreshHistory();
 		LocalBroadcastManager.getInstance(getSherlockActivity()).registerReceiver(mRefreshHistoryReceiver, mIntentFilter);
 	}
 
