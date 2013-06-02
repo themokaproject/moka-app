@@ -1,5 +1,7 @@
 package fr.utc.nf28.moka.util;
 
+import android.util.Log;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -44,23 +46,22 @@ public class JSONParserUtils {
 		return null;
 	}
 
-	public static MokaItem deserializeItemEntry(final String json) throws IOException {
+	public static MokaItem deserializeItemEntry(final JsonNode rootNode) throws IOException {
 		MokaItem result = null;
-		JsonNode rootNode = sMapper.readTree(json);
 
 		//retrieve common stuff
-		String className = rootNode.path("className").asText();
+		String type = rootNode.path("type").asText();
 		String title = rootNode.path("title").asText();
 		int id = rootNode.path("id").asInt();
 		String creationDate = rootNode.path("creationDate").asText();
 
-		if ("umlClass".equals(className)) {
+		if ("umlClass".equals(type)) {
 			result = new ComputerItem.UmlItem(title);
 			//retrieve uml specific stuff
-		} else if ("image".equals(className)) {
+		} else if ("image".equals(type)) {
 			result = new MediaItem.ImageItem(title);
 			//retrieve image specific stuff
-		} else if ("post-it".equals(className)) {
+		} else if ("post-it".equals(type)) {
 			result = new TextItem.PostItItem(title);
 			//retrieve post-it specific stuff
 		}
@@ -69,20 +70,17 @@ public class JSONParserUtils {
 			result.setId(id);
 			result.setCreationDate(creationDate);
 		}
-
 		return result;
 	}
 
 	public static List<MokaItem> deserializeItemEntries(final String json) throws IOException {
 		List<MokaItem> result = new ArrayList<MokaItem>();
 		JsonNode rootNode = sMapper.readTree(json);
-
 		if (rootNode.isArray()) {
 			for (Iterator<JsonNode> iter = rootNode.elements(); iter.hasNext(); ) {
-				result.add(deserializeItemEntry(iter.next().asText()));
+				result.add(deserializeItemEntry(iter.next()));
 			}
 		}
-
 		return result;
 	}
 

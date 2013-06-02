@@ -13,6 +13,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -27,16 +33,18 @@ import fr.utc.nf28.moka.io.MokaRestService;
 import fr.utc.nf28.moka.io.receiver.MokaReceiver;
 import fr.utc.nf28.moka.io.receiver.RefreshItemReceiver;
 import fr.utc.nf28.moka.ui.base.BasePagerFragment;
+import fr.utc.nf28.moka.util.JSONParserUtils;
 import fr.utc.nf28.moka.util.MokaRestHelper;
 import fr.utc.nf28.moka.util.SharedPreferencesUtils;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedInput;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class CurrentItemListFragment extends BasePagerFragment implements AdapterView.OnItemClickListener,
-		RefreshItemReceiver.OnRefreshItemListener, Callback<List<HashMap<String, Object>>> {
+		RefreshItemReceiver.OnRefreshItemListener, Callback<Response> {
 	private static final String DEFAULT_REST_SERVER_IP = "192.168.1.6"; //TODO same as Jade main container ? doublon in HistoryEntryListFragment
 	private static final String TAG = makeLogTag(CurrentItemListFragment.class);
 	/**
@@ -156,33 +164,25 @@ public class CurrentItemListFragment extends BasePagerFragment implements Adapte
 		mListView.getEmptyView().setVisibility(View.VISIBLE);
 	}
 
-	@Override
-	public void success(List<HashMap<String, Object>> itemEntries, Response response) {
-		Log.d(TAG, "success");
-		//TODO implement object retrieving
-		final int nbItems = itemEntries.size();
-		final ArrayList<MokaItem> items = new ArrayList<MokaItem>(nbItems);
-		//TODO invert list on server side ?
-		Collections.reverse(itemEntries);
-		for (HashMap<String, Object> item : itemEntries) {
-			final int itemId = ((Double) item.get("id")).intValue();
-			MokaItem mokaItem = null;
-			final String type = (String) item.get("type");
-			if ("umlClass".equals(type)) {
-				mokaItem = new ComputerItem.UmlItem("Uml " + String.valueOf(itemId));
-			} else if ("image".equals(type)) {
-				mokaItem = new MediaItem.ImageItem("Image " + String.valueOf(itemId));
-			} else if ("post-it".equals(type)) {
-				mokaItem = new TextItem.PostItItem("Post_it " + String.valueOf(itemId));
-			}
-			if (mokaItem != null) {
-				mokaItem.setId(itemId);
-				mokaItem.setCreationDate((String) item.get("creationDate"));
-				items.add(mokaItem);
-			}
+	private String inputStreamToString(InputStream in) throws IOException {
+		BufferedReader r = new BufferedReader(new InputStreamReader(in));
+		StringBuilder total = new StringBuilder();
+		String line;
+		while ((line = r.readLine()) != null) {
+			total.append(line);
 		}
-		resetUi();
-		mAdapter.updateCurrentItems(items);
+		return total.toString();
+	}
+
+	@Override
+	public void success(Response res, Response response) {
+		try {
+			List<MokaItem> items = JSONParserUtils.deserializeItemEntries(inputStreamToString(res.getBody().in()));
+			resetUi();
+			mAdapter.updateCurrentItems(items);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
