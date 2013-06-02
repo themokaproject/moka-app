@@ -5,6 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 
+import fr.utc.nf28.moka.data.ComputerItem;
+import fr.utc.nf28.moka.data.MediaItem;
+import fr.utc.nf28.moka.data.MokaItem;
+import fr.utc.nf28.moka.data.TextItem;
 import fr.utc.nf28.moka.io.agent.A2ATransaction;
 
 /**
@@ -35,6 +39,35 @@ public class JSONParserUtils {
 		}
 
 		return null;
+	}
+
+	public static MokaItem deserializeItemEntry(final String json) throws IOException {
+		MokaItem result = null;
+		JsonNode rootNode = sMapper.readTree(json);
+
+		//retrieve common stuff
+		String className = rootNode.path("className").asText();
+		String title = rootNode.path("title").asText();
+		int id = rootNode.path("id").asInt();
+		String creationDate = rootNode.path("creationDate").asText();
+
+		if ("umlClass".equals(className)) {
+			result = new ComputerItem.UmlItem(title);
+			//retrieve uml specific stuff
+		} else if ("image".equals(className)) {
+			result = new MediaItem.ImageItem(title);
+			//retrieve image specific stuff
+		} else if ("post-it".equals(className)) {
+			result = new TextItem.PostItItem(title);
+			//retrieve post-it specific stuff
+		}
+
+		if (result != null) {
+			result.setId(id);
+			result.setCreationDate(creationDate);
+		}
+
+		return result;
 	}
 
 }
