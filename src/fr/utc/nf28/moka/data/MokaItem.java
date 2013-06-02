@@ -10,23 +10,20 @@ import java.util.Calendar;
 import fr.utc.nf28.moka.util.DateUtils;
 
 public abstract class MokaItem implements Parcelable {
-	public static final int INVALID_ID = -1;
-	private static final String DEFAULT_CREATOR_NAME = MokaItem.class.getSimpleName(); // TODO: remove once server has creator name
+	private static final int INVALID_ID = -1;
 	private int mId = INVALID_ID;
 	private String mTitle;
 	private MokaType mType;
-	private String mCreatorName;
 	@SerializedName("creationDate")
 	private String mCreationDate;
 
 	public MokaItem(String title, MokaType type) {
-		this(title, type, DEFAULT_CREATOR_NAME, DateUtils.getFormattedDate(Calendar.getInstance().getTime()));
+		this(title, type, DateUtils.getFormattedDate(Calendar.getInstance().getTime()));
 	}
 
-	public MokaItem(String title, MokaType type, String creatorName, String creationDate) {
+	public MokaItem(String title, MokaType type, String creationDate) {
 		mTitle = title;
 		mType = type;
-		mCreatorName = creatorName;
 		mCreationDate = creationDate;
 	}
 
@@ -34,7 +31,6 @@ public abstract class MokaItem implements Parcelable {
 		mId = in.readInt();
 		mTitle = in.readString();
 		mType = in.readParcelable(MokaType.class.getClassLoader());
-		mCreatorName = in.readString();
 		mCreationDate = in.readString();
 	}
 
@@ -62,14 +58,6 @@ public abstract class MokaItem implements Parcelable {
 		mType = type;
 	}
 
-	public String getCreatorName() {
-		return mCreatorName;
-	}
-
-	public void setCreatorName(String creatorName) {
-		mCreatorName = creatorName;
-	}
-
 	public String getCreationDate() {
 		return mCreationDate;
 	}
@@ -88,7 +76,6 @@ public abstract class MokaItem implements Parcelable {
 		parcel.writeInt(mId);
 		parcel.writeString(mTitle);
 		parcel.writeParcelable(mType, flags);
-		parcel.writeString(mCreatorName);
 		parcel.writeString(mCreationDate);
 	}
 }

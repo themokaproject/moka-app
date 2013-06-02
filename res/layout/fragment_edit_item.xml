@@ -75,7 +75,7 @@
                 android:layout_marginTop="8dp"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:text="Créateur"
+                android:text="Date de création"
                 android:textAllCaps="true"
                 android:textColor="@color/holo_blue" />
 
@@ -85,7 +85,7 @@
                 android:background="@color/holo_blue" />
 
             <TextView
-                android:id="@+id/item_creator"
+                android:id="@+id/item_creation_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"

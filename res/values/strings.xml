@@ -42,6 +42,9 @@
     <!-- TypeListFragment -->
     <string name="type_image_content_description">Description du type</string>
 
+    <!-- CurrentItemListFragment -->
+    <string name="current_item_date_format">Créé le %1$s</string>
+
     <!-- HistoryListFragment -->
     <string name="history_entry_date_format">Le %1$s</string>
 
