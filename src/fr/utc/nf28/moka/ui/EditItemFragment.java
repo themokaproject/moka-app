@@ -99,14 +99,14 @@ public class EditItemFragment extends SherlockFragment implements LockingReceive
 		final TextView itemName = (TextView) rootView.findViewById(R.id.history_name);
 		final TextView itemType = (TextView) rootView.findViewById(R.id.item_type);
 		final TextView itemCategory = (TextView) rootView.findViewById(R.id.item_category);
-		final TextView itemCreator = (TextView) rootView.findViewById(R.id.item_creation_date);
+		final TextView itemCreationDate = (TextView) rootView.findViewById(R.id.item_creation_date);
 		final ImageView itemImage = (ImageView) rootView.findViewById(R.id.item_image);
 		mCanvasMoveItem = rootView.findViewById(R.id.canvas_move_item);
 
 		itemName.setText(mSelectedItem.getTitle());
 		itemType.setText(mSelectedItem.getType().getName());
 		itemCategory.setText(mSelectedItem.getType().getCategoryName());
-		itemCreator.setText(mSelectedItem.getCreationDate());
+		itemCreationDate.setText(mSelectedItem.getCreationDate());
 		itemImage.setImageResource(mSelectedItem.getType().getResId());
 		mCanvasMoveItem.setOnTouchListener(new MoveItemListener() {
 			@Override
