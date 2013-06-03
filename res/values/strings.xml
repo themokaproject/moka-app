@@ -126,7 +126,7 @@
     <string name="type_category_text">Texte</string>
     <string name="type_category_media">Média</string>
     <string name="type_category_computer">Informatique</string>
-    <string name="type_category_all">Tout</string>
+    <string name="type_category_all">Afficher tout</string>
     <string-array name="item_classes">
         <item>@string/type_category_text</item>
         <item>@string/type_category_media</item>
