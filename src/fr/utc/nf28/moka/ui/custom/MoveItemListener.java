@@ -47,17 +47,17 @@ public abstract class MoveItemListener implements View.OnTouchListener {
 
 		switch (action) {
 			case MotionEvent.ACTION_POINTER_DOWN:
-				mLastXDist = Math.abs(motionEvent.getX(0) - motionEvent.getX(1));
-				mLastYDist = Math.abs(motionEvent.getY(0) - motionEvent.getY(1));
+				mLastXDist = computeDistance(motionEvent.getX(0), motionEvent.getX(1));
+				mLastYDist = computeDistance(motionEvent.getY(0), motionEvent.getY(1));
 				break;
 
 			case MotionEvent.ACTION_MOVE:
+				final float currentXDist = computeDistance(motionEvent.getX(0), motionEvent.getX(1));
+				final float currentYDist = computeDistance(motionEvent.getY(0), motionEvent.getY(1));
 				if (mLastXDist == -1f || mLastYDist == -1f) {
-					mLastXDist = Math.abs(motionEvent.getX(0) - motionEvent.getX(1));
-					mLastYDist = Math.abs(motionEvent.getY(0) - motionEvent.getY(1));
+					mLastXDist = currentXDist;
+					mLastYDist = currentYDist;
 				} else {
-					final float currentXDist = Math.abs(motionEvent.getX(0) - motionEvent.getX(1));
-					final float currentYDist = Math.abs(motionEvent.getY(0) - motionEvent.getY(1));
 					final float dx = currentXDist - mLastXDist;
 					final float dy = currentYDist - mLastYDist;
 					int direction = computeDirection(dx, dy, RESIZE_NOISE);
@@ -135,6 +135,10 @@ public abstract class MoveItemListener implements View.OnTouchListener {
 		mLastYDist = -1f;
 		mLastX = -1f;
 		mLastY = -1f;
+	}
+
+	private float computeDistance(float p1, float p2) {
+		return Math.abs(p1 - p2);
 	}
 
 	private int computeDirection(float dx, float dy, int noise) {
