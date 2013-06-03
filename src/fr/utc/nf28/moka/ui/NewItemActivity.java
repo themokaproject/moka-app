@@ -106,6 +106,8 @@ public class NewItemActivity extends MokaUpActivity implements CreationReceiver.
 
 	@Override
 	public void onSuccess(int id) {
+		//TODO send the whole new item not just the id
+		//so that we can retrieve the correct title, the correct creation date etc...
 		Crouton.makeText(this, "id from server :" + String.valueOf(id) + ". Ready for editing.",
 				Style.CONFIRM).show();
 		mNewItem.setTitle(mNewItem.getTitle() + String.valueOf(id));
