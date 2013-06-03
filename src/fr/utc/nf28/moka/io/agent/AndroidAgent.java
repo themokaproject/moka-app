@@ -136,7 +136,7 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 	public void editItem(int itemId, String field, String content) {
 		mRequest.clear();
 		try {
-			mRequest.put("id", itemId);
+			mRequest.put("itemId", itemId);
 			mRequest.put("field", field);
 			mRequest.put("content", content);
 			final String json = JSONParserUtils.serializeA2ATransaction(
