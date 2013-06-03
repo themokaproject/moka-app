@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import java.io.IOException;
 
+import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.io.agent.A2ATransaction;
 import fr.utc.nf28.moka.util.JSONParserUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
@@ -31,7 +32,7 @@ public class CreationReceiver extends MokaReceiver {
 						JSONParserUtils.deserializeA2ATransaction(intent.getStringExtra(EXTRA_JADE_REQUEST));
 				final String type = request.getType();
 				if (JadeUtils.TRANSACTION_TYPE_ITEM_CREATION_SUCCESS.equals(type)) {
-					mInterface.onSuccess((Integer) request.getContent());
+					mInterface.onSuccess(JSONParserUtils.deserializeItemEntry((String) request.getContent()));
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -48,9 +49,9 @@ public class CreationReceiver extends MokaReceiver {
 		 * call when jade server inform Android device that a new item
 		 * has been successfully created
 		 *
-		 * @param id item server id
+		 * @param newItem item from server
 		 */
-		public void onSuccess(int id);
+		public void onSuccess(MokaItem newItem);
 
 		/**
 		 * call when creation on server side failed

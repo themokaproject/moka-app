@@ -45,6 +45,10 @@ public final class JSONParserUtils {
 		return null;
 	}
 
+	public static MokaItem deserializeItemEntry(final String json) throws IOException {
+		return deserializeItemEntry(sMapper.readTree(json));
+	}
+
 	public static MokaItem deserializeItemEntry(final JsonNode rootNode) throws IOException {
 		MokaItem result = null;
 
