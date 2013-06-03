@@ -134,7 +134,17 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 
 	@Override
 	public void editItem(int itemId, String field, String content) {
-
+		mRequest.clear();
+		try {
+			mRequest.put("id", itemId);
+			mRequest.put("field", field);
+			mRequest.put("content", content);
+			final String json = JSONParserUtils.serializeA2ATransaction(
+					new A2ATransaction(JadeUtils.TRANSACTION_TYPE_EDIT_ITEM, mRequest));
+			sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_ITEM_EDITING), json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
