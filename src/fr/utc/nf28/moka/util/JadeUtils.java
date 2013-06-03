@@ -129,7 +129,8 @@ public final class JadeUtils {
 		}
 
 		@Override
-		public void editItem() {
+		public void editItem(int itemId, String field, String content) {
+
 		}
 	};
 

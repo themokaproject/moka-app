@@ -47,6 +47,10 @@ public interface IAndroidAgent {
 
 	/**
 	 * send real time modification
+	 *
+	 * @param itemId  id of edited item
+	 * @param field   field which has been edited
+	 * @param content new field content
 	 */
-	public void editItem();
+	public void editItem(int itemId, String field, String content);
 }
