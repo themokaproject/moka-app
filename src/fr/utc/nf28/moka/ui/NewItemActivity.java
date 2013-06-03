@@ -35,7 +35,6 @@ public class NewItemActivity extends MokaUpActivity implements CreationReceiver.
 	 * broadcast receiver use to catch agent callback
 	 */
 	private CreationReceiver mJadeServerReceiver;
-	private MokaItem mNewItem;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -60,16 +59,12 @@ public class NewItemActivity extends MokaUpActivity implements CreationReceiver.
 			final String typeName;
 			if (type instanceof ComputerType.UmlType) {
 				typeName = ComputerType.UmlType.KEY_TYPE;
-				mNewItem = new ComputerItem.UmlItem("Uml ");
 			} else if (type instanceof TextType.PostItType) {
 				typeName = TextType.PostItType.KEY_TYPE;
-				mNewItem = new TextItem.PostItItem("Post-it ");
 			} else if (type instanceof MediaType.ImageType) {
 				typeName = MediaType.ImageType.KEY_TYPE;
-				mNewItem = new MediaItem.ImageItem("Image ");
 			} else if (type instanceof MediaType.VideoType) {
 				typeName = MediaType.VideoType.KEY_TYPE;
-				mNewItem = new MediaItem.VideoItem("Video ");
 			} else {
 				final Crouton crouton = Crouton.makeText(this,
 						getResources().getString(R.string.item_not_supported_yet), Style.ALERT);
@@ -110,12 +105,11 @@ public class NewItemActivity extends MokaUpActivity implements CreationReceiver.
 		//so that we can retrieve the correct title, the correct creation date etc...
 		Crouton.makeText(this, "id from server :" + String.valueOf(newItem.getId()) + ". Ready for editing.",
 				Style.CONFIRM).show();
-		mNewItem = newItem;
 		findViewById(R.id.progress).setVisibility(View.GONE);
 		getSupportFragmentManager()
 				.beginTransaction()
 				.setCustomAnimations(R.anim.slow_fade_in, R.anim.slow_fade_out)
-				.replace(android.R.id.content, EditItemFragment.newInstance(mNewItem))
+				.replace(android.R.id.content, EditItemFragment.newInstance(newItem))
 				.commit();
 	}
 
