@@ -40,6 +40,10 @@ public final class JadeUtils {
 	 */
 	public static final String JADE_SKILL_NAME_LOCKING = "LockingSkillName";
 	/**
+	 * name for Jade editing skill
+	 */
+	public static final String JADE_SKILL_NAME_ITEM_EDITING = "ItemEditingSkillName";
+	/**
 	 * connection transaction
 	 */
 	public static final String TRANSACTION_TYPE_CONNECTION = "connection";
