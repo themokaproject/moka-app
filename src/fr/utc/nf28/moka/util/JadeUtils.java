@@ -56,6 +56,10 @@ public final class JadeUtils {
 	 */
 	public static final String TRANSACTION_TYPE_MOVE_ITEM = "moveItem";
 	/**
+	 * editItem transaction
+	 */
+	public static final String TRANSACTION_TYPE_EDIT_ITEM = "editItem";
+	/**
 	 * creation success transaction
 	 */
 	public static final String TRANSACTION_TYPE_ITEM_CREATION_SUCCESS = "creationSuccess";
