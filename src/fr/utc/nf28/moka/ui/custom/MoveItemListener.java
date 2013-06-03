@@ -43,40 +43,39 @@ public abstract class MoveItemListener implements View.OnTouchListener {
 	*
  	*/
 	private boolean twoPointers(final MotionEvent motionEvent) {
-		final int action = motionEvent.getAction();
-		if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
-			reset();
-			return true;
-		}
+		final int action = motionEvent.getActionMasked();
 
-		final float currentXDist = Math.abs(motionEvent.getX(0) - motionEvent.getX(1));
-		final float currentYDist = Math.abs(motionEvent.getY(0) - motionEvent.getY(1));
+		switch (action) {
+			case MotionEvent.ACTION_POINTER_DOWN:
+				mLastXDist = Math.abs(motionEvent.getX(0) - motionEvent.getX(1));
+				mLastYDist = Math.abs(motionEvent.getY(0) - motionEvent.getY(1));
+				break;
 
-		if (action == MotionEvent.ACTION_MOVE) {
-			if (mLastXDist == -1f && mLastYDist == -1f) {
-				mLastXDist = currentXDist;
-				mLastYDist = currentYDist;
-				return true;
-			} else {
-				final float dx = currentXDist - mLastXDist;
-				final float dy = currentYDist - mLastYDist;
-				int direction = computeDirection(dx, dy, RESIZE_NOISE);
+			case MotionEvent.ACTION_MOVE:
+				if (mLastXDist == -1f || mLastYDist == -1f) {
+					mLastXDist = Math.abs(motionEvent.getX(0) - motionEvent.getX(1));
+					mLastYDist = Math.abs(motionEvent.getY(0) - motionEvent.getY(1));
+				} else {
+					final float currentXDist = Math.abs(motionEvent.getX(0) - motionEvent.getX(1));
+					final float currentYDist = Math.abs(motionEvent.getY(0) - motionEvent.getY(1));
+					final float dx = currentXDist - mLastXDist;
+					final float dy = currentYDist - mLastYDist;
+					int direction = computeDirection(dx, dy, RESIZE_NOISE);
 
-				if (direction != 0) {
-					if (direction % 10 != 0) mLastXDist = currentXDist;
-					if (direction >= 10) mLastYDist = currentYDist;
-					resize(direction);
+					if (direction != 0) {
+						if (direction % 10 != 0) mLastXDist = currentXDist;
+						if (direction >= 10) mLastYDist = currentYDist;
+						resize(direction);
+					}
 				}
-			}
-		}
-		return true;
-	}
+				break;
 
-	private void reset() {
-		mLastXDist = -1f;
-		mLastYDist = -1f;
-		mLastX = -1f;
-		mLastY = -1f;
+			case MotionEvent.ACTION_POINTER_UP:
+				reset();
+				break;
+		}
+
+		return true;
 	}
 
 	/*
@@ -97,34 +96,45 @@ public abstract class MoveItemListener implements View.OnTouchListener {
  	*/
 	private boolean onePointer(final MotionEvent motionEvent) {
 		final int action = motionEvent.getAction();
-		if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
-			reset();
-			return true;
-		}
 
-		final float currentX = motionEvent.getX();
-		final float currentY = motionEvent.getY();
+		switch (action) {
+			case MotionEvent.ACTION_DOWN:
+				mLastX = motionEvent.getX();
+				mLastY = motionEvent.getY();
+				break;
 
-		if (action == MotionEvent.ACTION_MOVE) {
-			if (mLastX == -1f || mLastY == -1f) {
-				mLastX = currentX;
-				mLastY = currentY;
-			} else {
-				final float dx = currentX - mLastX;
-				final float dy = currentY - mLastY;
-				int direction = computeDirection(dx, dy, MOVE_NOISE);
+			case MotionEvent.ACTION_MOVE:
+				if (mLastX == -1f || mLastY == -1f) {
+					mLastX = motionEvent.getX();
+					mLastY = motionEvent.getY();
+				} else {
+					final float dx = motionEvent.getX() - mLastX;
+					final float dy = motionEvent.getY() - mLastY;
+					int direction = computeDirection(dx, dy, MOVE_NOISE);
 
-				if (direction != 0) {
-					if (direction % 10 != 0) mLastX = currentX;
-					if (direction >= 10) mLastY = currentY;
-					final int pseudoVelocity = (int) Math.max(Math.abs(dx / MOVE_NOISE), Math.abs(dy / MOVE_NOISE));
-					move(direction, pseudoVelocity);
+					if (direction != 0) {
+						if (direction % 10 != 0) mLastX = motionEvent.getX();
+						if (direction >= 10) mLastY = motionEvent.getY();
+						final int pseudoVelocity = (int) Math.max(Math.abs(dx / MOVE_NOISE), Math.abs(dy / MOVE_NOISE));
+						move(direction, pseudoVelocity);
+					}
 				}
-			}
-		}
+				break;
 
+			case MotionEvent.ACTION_CANCEL:
+			case MotionEvent.ACTION_UP:
+				reset();
+				break;
+		}
 
 		return true;
+	}
+
+	private void reset() {
+		mLastXDist = -1f;
+		mLastYDist = -1f;
+		mLastX = -1f;
+		mLastY = -1f;
 	}
 
 	private int computeDirection(float dx, float dy, int noise) {
