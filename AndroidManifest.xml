@@ -53,6 +53,14 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
+            android:name=".ui.UploadTestActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
             android:name=".ui.DeviceConfigurationActivity"
             android:screenOrientation="portrait"
             android:parentActivityName=".ui.nfc.NfcActivity">
