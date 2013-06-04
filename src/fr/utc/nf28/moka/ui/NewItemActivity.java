@@ -12,13 +12,10 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.LifecycleCallback;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.utc.nf28.moka.R;
-import fr.utc.nf28.moka.data.ComputerItem;
 import fr.utc.nf28.moka.data.ComputerType;
-import fr.utc.nf28.moka.data.MediaItem;
 import fr.utc.nf28.moka.data.MediaType;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.data.MokaType;
-import fr.utc.nf28.moka.data.TextItem;
 import fr.utc.nf28.moka.data.TextType;
 import fr.utc.nf28.moka.io.receiver.CreationReceiver;
 import fr.utc.nf28.moka.io.receiver.MokaReceiver;
@@ -101,8 +98,6 @@ public class NewItemActivity extends MokaUpActivity implements CreationReceiver.
 
 	@Override
 	public void onSuccess(MokaItem newItem) {
-		//TODO send the whole new item not just the id
-		//so that we can retrieve the correct title, the correct creation date etc...
 		Crouton.makeText(this, "id from server :" + String.valueOf(newItem.getId()) + ". Ready for editing.",
 				Style.CONFIRM).show();
 		findViewById(R.id.progress).setVisibility(View.GONE);

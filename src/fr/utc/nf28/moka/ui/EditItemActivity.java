@@ -72,7 +72,6 @@ public class EditItemActivity extends MokaUpActivity implements EditItemFragment
 
 	@Override
 	public void onSuccess() {
-		//TODO display full fragment
 		Crouton.makeText(this, "Element locké pour vous ! ", Style.CONFIRM).show();
 		resetUi();
 		getSupportFragmentManager()
@@ -84,7 +83,7 @@ public class EditItemActivity extends MokaUpActivity implements EditItemFragment
 
 	@Override
 	public void onAlreadyLocked(String lockerName) {
-		//TODO display fragment without edition possibility
+		//TODO display retry button
 		Crouton.makeText(this, "Element déjà locké par " + lockerName, CroutonUtils.INFO_MOKA_STYLE).show();
 		resetUi();
 	}

@@ -235,7 +235,7 @@ public class DeviceConfigurationActivity extends Activity {
 	 */
 	private void configureWifiWPA2() {
 		Log.i(TAG, "configureWifi");
-		final WifiConfiguration mWifiConfig = new WifiConfiguration(); // TODO: recycle WifiConfiguration object?
+		final WifiConfiguration mWifiConfig = new WifiConfiguration();
 		mWifiConfig.SSID = "\"" + mSSID + "\"";
 		mWifiConfig.priority = 40;
 		mWifiConfig.preSharedKey = "\"" + mPWD + "\"";
@@ -260,7 +260,7 @@ public class DeviceConfigurationActivity extends Activity {
 	 */
 	private void configureWifiWEP() {
 		Log.i(TAG, "configureWifi");
-		final WifiConfiguration mWifiConfig = new WifiConfiguration(); // TODO: recycle WifiConfiguration object?
+		final WifiConfiguration mWifiConfig = new WifiConfiguration();
 		mWifiConfig.SSID = "\"" + mSSID + "\"";
 		mWifiConfig.priority = 40;
 		mWifiConfig.status = WifiConfiguration.Status.ENABLED;
