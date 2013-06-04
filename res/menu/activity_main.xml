@@ -14,4 +14,11 @@
         android:showAsAction="never"
         android:orderInCategory="9999"
         android:title="@string/about" />
+
+    <item
+        android:id="@+id/upload_test"
+        android:icon="@drawable/ic_menu_info_details"
+        android:showAsAction="never"
+        android:orderInCategory="9999"
+        android:title="Upload Test" />
 </menu>

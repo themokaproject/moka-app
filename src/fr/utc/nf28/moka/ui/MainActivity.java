@@ -118,6 +118,9 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 			case R.id.menu_about:
 				AboutDialogFragment.newInstance().show(getSupportFragmentManager(), "about_dialog");
 				return true;
+			case R.id.upload_test:
+				startActivity(new Intent(this,UploadTestActivity.class));
+				return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
