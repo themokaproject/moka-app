@@ -2,8 +2,10 @@ package fr.utc.nf28.moka.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +44,7 @@ public class EditItemFragment extends SherlockFragment {
 	private float mLastY = -1f;
 	private Callbacks mCallbacks;
 	private View mCanvasMoveItem;
+	private MoveItemListener mMoveItemListener;
 
 	public EditItemFragment(MokaItem selectedItem) {
 		if (selectedItem == null) {
@@ -65,6 +68,23 @@ public class EditItemFragment extends SherlockFragment {
 			throw new IllegalStateException(
 					"Activity must implement fragment's callbacks.");
 		}
+
+		mMoveItemListener = new MoveItemListener((SensorManager) activity.getSystemService(Context.SENSOR_SERVICE)) {
+			@Override()
+			public void move(int direction, int velocity) {
+				mAgent.moveItem(mSelectedItem.getId(), direction, velocity);
+			}
+
+			@Override
+			public void resize(int direction) {
+				mAgent.resizeItem(mSelectedItem.getId(), direction);
+			}
+
+			@Override
+			public void rotate(int direction) {
+				mAgent.rotateItem(mSelectedItem.getId(), direction);
+			}
+		};
 
 		mCallbacks = (Callbacks) activity;
 	}
@@ -93,22 +113,7 @@ public class EditItemFragment extends SherlockFragment {
 		itemCategory.setText(mSelectedItem.getType().getCategoryName());
 		itemCreationDate.setText(mSelectedItem.getCreationDate());
 		itemImage.setImageResource(mSelectedItem.getType().getResId());
-		mCanvasMoveItem.setOnTouchListener(new MoveItemListener() {
-			@Override
-			public void move(int direction, int velocity) {
-				mAgent.moveItem(mSelectedItem.getId(), direction, velocity);
-			}
-
-			@Override
-			public void resize(int direction) {
-				mAgent.resizeItem(mSelectedItem.getId(), direction);
-			}
-
-			@Override
-			public void rotate(int direction) {
-				mAgent.rotateItem(mSelectedItem.getId(), direction);
-			}
-		});
+		mCanvasMoveItem.setOnTouchListener(mMoveItemListener);
 
 		return rootView;
 	}

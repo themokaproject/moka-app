@@ -1,24 +1,42 @@
 package fr.utc.nf28.moka.ui.custom;
 
 import android.graphics.PointF;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewParent;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
-public abstract class MoveItemListener implements View.OnTouchListener {
+public abstract class MoveItemListener implements View.OnTouchListener, SensorEventListener {
 	private static final String TAG = makeLogTag(MoveItemListener.class);
-	private static final int MOVE_NOISE = 10;
+	private static final int MOVE_NOISE = 20;
 	private static final int RESIZE_NOISE = 20;
 	private static final double ROTATE_DETECTION = 0.0015d;
-	private static final double ROTATE_NOISE = 0.2d;
+	private static final double ROTATE_NOISE = 0.35d;
 	private float mLastX = -1f;
 	private float mLastY = -1f;
 	private float mLastXDist = -1f;
 	private float mLastYDist = -1f;
 	private double mLastAngle = 999999d;
 	private double mLastComputedAngle = 999999d;
+
+	private final SensorManager mSensorManager;
+	private final Sensor mAccelerometer;
+	private float mLastXAxis = 99999f;
+	private float mLastYAxis = 99999f;
+	private static final float SENSOR_NOISE = 2.0f;
+	private boolean isFirst = true;
+
+	public MoveItemListener(SensorManager sm) {
+		super();
+		mSensorManager = sm;
+		mAccelerometer = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+	}
+
 
 	@Override
 	public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -37,8 +55,35 @@ public abstract class MoveItemListener implements View.OnTouchListener {
 		}
 	}
 
+	@Override
+	public void onSensorChanged(SensorEvent sensorEvent) {
+		if(mLastXAxis == 99999f || mLastYAxis == 99999f) {
+			mLastXAxis = sensorEvent.values[0];
+			mLastYAxis = sensorEvent.values[1];
+		}else if(isFirst){
+			mLastXAxis = sensorEvent.values[0];
+			mLastYAxis = sensorEvent.values[1];
+			isFirst = false;
+		}else{
+			final float dx = sensorEvent.values[0] - mLastXAxis;
+			final float dy = sensorEvent.values[1] - mLastYAxis;
+			int direction = computeDirection(dx, dy, SENSOR_NOISE);
+
+			if (direction != 0) {
+				if (direction % 10 != 0) mLastXAxis = sensorEvent.values[0];
+				if (direction >= 10) mLastYAxis = sensorEvent.values[1];
+				rotate(direction);
+			}
+		}
+	}
+
+	@Override
+	public void onAccuracyChanged(Sensor sensor, int i) {
+	}
+
 
 	private boolean twoPointers(final MotionEvent motionEvent) {
+		resetSensor();
 		final int action = motionEvent.getActionMasked();
 		switch (action) {
 			case MotionEvent.ACTION_POINTER_DOWN:
@@ -59,6 +104,8 @@ public abstract class MoveItemListener implements View.OnTouchListener {
 		final int action = motionEvent.getAction();
 		switch (action) {
 			case MotionEvent.ACTION_DOWN:
+				mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+				break;
 			case MotionEvent.ACTION_MOVE:
 				handleMovement(motionEvent);
 				break;
@@ -78,6 +125,14 @@ public abstract class MoveItemListener implements View.OnTouchListener {
 		mLastY = -1f;
 		mLastAngle = 99999d;
 		mLastComputedAngle = 99999d;
+		resetSensor();
+	}
+
+	public void resetSensor(){
+		isFirst = true;
+		mLastXAxis = 99999f;
+		mLastYAxis = 99999f;
+		mSensorManager.unregisterListener(this);
 	}
 
 	/*
@@ -129,9 +184,9 @@ public abstract class MoveItemListener implements View.OnTouchListener {
 			if (ROTATE_NOISE < Math.abs(angle - mLastComputedAngle)) {
 				int direction = 0;
 				if (angle < mLastAngle) {
-					direction = 1;
+					direction = 100;
 				} else {
-					direction = 2;
+					direction = 200;
 				}
 				mLastComputedAngle = angle;
 				rotate(direction);
@@ -171,6 +226,7 @@ public abstract class MoveItemListener implements View.OnTouchListener {
 			int direction = computeDirection(dx, dy, MOVE_NOISE);
 
 			if (direction != 0) {
+				resetSensor();
 				if (direction % 10 != 0) mLastX = motionEvent.getX();
 				if (direction >= 10) mLastY = motionEvent.getY();
 				final int pseudoVelocity = (int) Math.max(Math.abs(dx / MOVE_NOISE), Math.abs(dy / MOVE_NOISE));
@@ -229,7 +285,7 @@ public abstract class MoveItemListener implements View.OnTouchListener {
 		return Math.abs(p1 - p2);
 	}
 
-	private int computeDirection(float dx, float dy, int noise) {
+	private int computeDirection(float dx, float dy, float noise) {
 		int direction = 0;
 
 		if (Math.abs(dx) >= noise) {
