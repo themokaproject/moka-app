@@ -47,8 +47,7 @@ public class EditItemFragment extends SherlockFragment {
 		if (selectedItem == null) {
 			throw new IllegalStateException("Selected item cannot be null");
 		}
-
-		mSelectedItem = selectedItem; 
+		mSelectedItem = selectedItem;
 	}
 
 	public static EditItemFragment newInstance(MokaItem selectedItem) {
