@@ -36,6 +36,10 @@ public final class JadeUtils {
 	 */
 	public static final String JADE_SKILL_NAME_ITEM_RESIZING = "ItemResizingSkillName";
 	/**
+	 * name for Jade item rotating skill
+	 */
+	public static final String JADE_SKILL_NAME_ITEM_ROTATING = "ItemRotatingSkillName";
+	/**
 	 * name for Jade locking skill
 	 */
 	public static final String JADE_SKILL_NAME_LOCKING = "LockingSkillName";
@@ -80,6 +84,10 @@ public final class JadeUtils {
 	 */
 	public static final String TRANSACTION_TYPE_RESIZE_ITEM = "resizeItem";
 	/**
+	 * rotateItem transaction
+	 */
+	public static final String TRANSACTION_TYPE_ROTATE_ITEM = "rotateItem";
+	/**
 	 * unlock transaction
 	 */
 	public static final String TRANSACTION_TYPE_UNLOCK_ITEM = "unlockItem";
@@ -118,6 +126,11 @@ public final class JadeUtils {
 
 		@Override
 		public void resizeItem(int itemId, int direction) {
+		}
+
+		@Override
+		public void rotateItem(int itemId, int direction) {
+
 		}
 
 		@Override

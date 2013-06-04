@@ -104,6 +104,11 @@ public class EditItemFragment extends SherlockFragment {
 			public void resize(int direction) {
 				mAgent.resizeItem(mSelectedItem.getId(), direction);
 			}
+
+			@Override
+			public void rotate(int direction) {
+				mAgent.rotateItem(mSelectedItem.getId(), direction);
+			}
 		});
 
 		return rootView;

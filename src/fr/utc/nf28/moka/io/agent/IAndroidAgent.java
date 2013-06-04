@@ -32,6 +32,11 @@ public interface IAndroidAgent {
 	public void resizeItem(int itemId, int direction);
 
 	/**
+	 * rotate item
+	 */
+	public void rotateItem(int itemId, int direction);
+
+	/**
 	 * lock item for edition
 	 */
 	public void lockItem(int itemId);
