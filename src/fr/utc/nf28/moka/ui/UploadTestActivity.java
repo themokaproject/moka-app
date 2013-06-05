@@ -83,6 +83,7 @@ public class UploadTestActivity extends SherlockActivity implements CreationRece
 				Crouton.makeText(this, "image saved",
 						Style.CONFIRM).show();
 
+				//TODO reduce picture size before upload
 				mMokaRestService.uploadPicture(mItemId, new TypedFile("image/jpeg", getTempPictureFile()), this);
 
 			} else if (resultCode == RESULT_CANCELED) {
