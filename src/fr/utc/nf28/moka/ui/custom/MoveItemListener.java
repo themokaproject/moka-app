@@ -14,9 +14,9 @@ import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 public abstract class MoveItemListener implements View.OnTouchListener, SensorEventListener {
 	private static final String TAG = makeLogTag(MoveItemListener.class);
 	private static final int MOVE_NOISE = 20;
-	private static final int RESIZE_NOISE = 20;
-	private static final double ROTATE_DETECTION = 0.0015d;
-	private static final double ROTATE_NOISE = 0.35d;
+	private static final int RESIZE_NOISE = 25;
+	private static final double ROTATE_DETECTION = 0.0010d;
+	private static final double ROTATE_NOISE = 0.25d;
 	private float mLastX = -1f;
 	private float mLastY = -1f;
 	private float mLastXDist = -1f;
@@ -190,7 +190,10 @@ public abstract class MoveItemListener implements View.OnTouchListener, SensorEv
 				}
 				mLastComputedAngle = angle;
 				rotate(direction);
+				mLastXAxis = computeDistance(motionEvent.getX(0), motionEvent.getX(1));
+				mLastYDist = computeDistance(motionEvent.getY(0), motionEvent.getY(1));
 			}
+
 			mLastAngle = angle;
 			handle = true;
 		}
