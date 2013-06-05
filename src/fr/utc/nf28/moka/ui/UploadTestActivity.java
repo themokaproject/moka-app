@@ -3,6 +3,7 @@ package fr.utc.nf28.moka.ui;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -27,6 +28,7 @@ import fr.utc.nf28.moka.io.receiver.MokaReceiver;
 import fr.utc.nf28.moka.util.CroutonUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
 import fr.utc.nf28.moka.util.MokaRestHelper;
+import fr.utc.nf28.moka.util.PictureUtils;
 import fr.utc.nf28.moka.util.SharedPreferencesUtils;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -48,6 +50,7 @@ public class UploadTestActivity extends SherlockActivity implements CreationRece
 	//upload stuff
 	private MokaRestService mMokaRestService;
 	private static final String DEFAULT_REST_SERVER_IP = "192.168.1.6";
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -83,8 +86,8 @@ public class UploadTestActivity extends SherlockActivity implements CreationRece
 				Crouton.makeText(this, "image saved",
 						Style.CONFIRM).show();
 
-				//TODO reduce picture size before upload
-				mMokaRestService.uploadPicture(mItemId, new TypedFile("image/jpeg", getTempPictureFile()), this);
+				new ResizeTask().execute(getTempPictureFile());
+
 
 			} else if (resultCode == RESULT_CANCELED) {
 				Crouton.makeText(this, "image capture canceled",
@@ -158,6 +161,16 @@ public class UploadTestActivity extends SherlockActivity implements CreationRece
 	@Override
 	public void failure(RetrofitError retrofitError) {
 		Log.d("DEBUG", "retrofit failed ");
+	}
+
+	private class ResizeTask extends AsyncTask<File, Void, Void> {
+		@Override
+		protected Void doInBackground(File... params) {
+			final File image = params[0];
+			PictureUtils.resize(image, PictureUtils.PICTURE_SIZE_LR);
+			mMokaRestService.uploadPicture(mItemId, new TypedFile("image/jpeg", image), UploadTestActivity.this);
+			return null;
+		}
 	}
 
 }
