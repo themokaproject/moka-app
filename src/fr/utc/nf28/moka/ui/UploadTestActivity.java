@@ -50,6 +50,7 @@ public class UploadTestActivity extends SherlockActivity implements CreationRece
 	//upload stuff
 	private MokaRestService mMokaRestService;
 	private static final String DEFAULT_REST_SERVER_IP = "192.168.1.6";
+	private String API_URL;
 
 
 	@Override
@@ -68,8 +69,10 @@ public class UploadTestActivity extends SherlockActivity implements CreationRece
 				startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
 			}
 		});
-		final String API_URL = "http://" + PreferenceManager.getDefaultSharedPreferences(this)
+
+		API_URL = "http://" + PreferenceManager.getDefaultSharedPreferences(this)
 				.getString(SharedPreferencesUtils.KEY_PREF_IP, DEFAULT_REST_SERVER_IP) + "/api";
+
 		mMokaRestService = MokaRestHelper.getMokaRestService(API_URL);
 
 		mJadeCreationReceiver = new CreationReceiver(this);
@@ -156,6 +159,9 @@ public class UploadTestActivity extends SherlockActivity implements CreationRece
 	@Override
 	public void success(Response response, Response response2) {
 		Log.d("DEBUG", "retrofit success ");
+		//TODO notify editAgent
+		JadeUtils.getAndroidAgentInterface().editItem(mItemId, "url", API_URL + "/image/" + mItemId);
+
 	}
 
 	@Override
