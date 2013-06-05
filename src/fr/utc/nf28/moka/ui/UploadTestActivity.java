@@ -82,6 +82,7 @@ public class UploadTestActivity extends SherlockActivity implements CreationRece
 			if (resultCode == RESULT_OK) {
 				Crouton.makeText(this, "image saved",
 						Style.CONFIRM).show();
+
 				mMokaRestService.uploadPicture(mItemId, new TypedFile("image/jpeg", getTempPictureFile()), this);
 
 			} else if (resultCode == RESULT_CANCELED) {
