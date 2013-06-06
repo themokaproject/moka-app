@@ -137,8 +137,7 @@
     <!-- Start Activity -->
     <string name="info_nfc_text">Touchez un tag NFC Moka</string>
     <string name="info_no_nfc_text">NFC non disponible. Veuillez vérifier vos paramètres.</string>
-    <string name="start_button_manual">Configuration manuelle</string>
-    <string name="start_button_skip">Skip</string>
+    <string name="start_button_manual">Connexion</string>
     <string name="logo_description">Logo de l\'application</string>
 
     <!-- NewItemActivity -->

@@ -37,12 +37,6 @@
             android:layout_gravity="center"
             android:layout_margin="10dp" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/skip"
-            android:text="@string/start_button_skip" />
-
     </LinearLayout>
 
 </ScrollView>

@@ -18,9 +18,8 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
-import fr.utc.nf28.moka.ui.DeviceConfigurationActivity;
-import fr.utc.nf28.moka.ui.MainActivity;
 import fr.utc.nf28.moka.R;
+import fr.utc.nf28.moka.ui.DeviceConfigurationActivity;
 import fr.utc.nf28.moka.ui.SettingsActivity;
 import fr.utc.nf28.moka.ui.WelcomeActivity;
 import fr.utc.nf28.moka.util.CroutonUtils;
@@ -46,14 +45,6 @@ public class NfcActivity extends SherlockActivity {
 			startActivity(new Intent(NfcActivity.this, WelcomeActivity.class));
 			finish();
 		}
-
-		findViewById(R.id.skip).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				startActivity(new Intent(NfcActivity.this, MainActivity.class));
-				finish();
-			}
-		});
 
 		findViewById(R.id.manuel).setOnClickListener(new View.OnClickListener() {
 			@Override
