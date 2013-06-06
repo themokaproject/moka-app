@@ -64,7 +64,7 @@ public class NewItemActivity extends MokaUpActivity implements CreationReceiver.
 			} else if (type instanceof MediaType.VideoType) {
 				typeName = MediaType.VideoType.KEY_TYPE;
 			} else if (type instanceof MediaType.WebType) {
-				typeName = MediaType.VideoType.KEY_TYPE;
+				typeName = MediaType.WebType.KEY_TYPE;
 			} else {
 				final Crouton crouton = Crouton.makeText(this,
 						getResources().getString(R.string.item_not_supported_yet), Style.ALERT);

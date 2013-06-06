@@ -69,6 +69,8 @@ public final class JSONParserUtils {
 			//retrieve post-it specific stuff
 		} else if ("video".equals(type)) {
 			result = new MediaItem.VideoItem(title);
+		} else if ("iframe".equals(type)){
+			result = new MediaItem.WebItem(title);
 		}
 
 		if (result != null) {

@@ -85,7 +85,7 @@ public abstract class MediaType extends MokaType implements Parcelable {
 	}
 
 	public static class WebType extends MediaType implements Parcelable {
-		public static final String KEY_TYPE = "web";
+		public static final String KEY_TYPE = "iframe";
 		public static final Parcelable.Creator<WebType> CREATOR = new Parcelable.Creator<WebType>() {
 			public WebType createFromParcel(Parcel in) {
 				return new WebType(in);
