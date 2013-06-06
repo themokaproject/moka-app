@@ -25,7 +25,9 @@ public abstract class MokaType implements Parcelable, Comparable<MokaType> {
 		mDescription = in.readString();
 		mResId = in.readInt();
 		mCategoryName = in.readString();
-		in.readList(mItemData, ItemData.class.getClassLoader());
+		if (in.readLong() != -1) {
+			in.readList(mItemData, ItemData.class.getClassLoader());
+		}
 	}
 
 	public String getName() {
@@ -86,7 +88,10 @@ public abstract class MokaType implements Parcelable, Comparable<MokaType> {
 		parcel.writeInt(mResId);
 		parcel.writeString(mCategoryName);
 		if (mItemData != null) {
+			parcel.writeLong(0);
 			parcel.writeList(mItemData);
+		} else {
+			parcel.writeLong(-1);
 		}
 	}
 }
