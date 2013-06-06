@@ -2,7 +2,6 @@ package fr.utc.nf28.moka.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import fr.utc.nf28.moka.R;
 
 import java.util.ArrayList;
@@ -47,11 +46,11 @@ public abstract class TextType extends MokaType implements Parcelable {
 			super(in);
 		}
 
-        @Override
-        public List<ItemData> getItemsData() {
-            return null;
-        }
-    }
+		@Override
+		public List<ItemData> getItemsData() {
+			return null;
+		}
+	}
 
 	public static class ListType extends TextType implements Parcelable {
 		public static final String KEY_TYPE = "list";
@@ -77,11 +76,11 @@ public abstract class TextType extends MokaType implements Parcelable {
 			super(in);
 		}
 
-        @Override
-        public List<ItemData> getItemsData() {
-            return null;
-        }
-    }
+		@Override
+		public List<ItemData> getItemsData() {
+			return null;
+		}
+	}
 
 	public static class PostItType extends TextType implements Parcelable {
 		public static final String KEY_TYPE = "post-it";
@@ -107,11 +106,12 @@ public abstract class TextType extends MokaType implements Parcelable {
 			super(in);
 		}
 
-        @Override
-        public List<ItemData> getItemsData() {
-            final List<ItemData> datas = new ArrayList<ItemData>();
-            datas.add(new ItemData("title"));
-            return datas;
-        }
-    }
+		@Override
+		public List<ItemData> getItemsData() {
+			final List<ItemData> datas = new ArrayList<ItemData>();
+			datas.add(new ItemData("title"));
+			datas.add(new ItemData("content"));
+			return datas;
+		}
+	}
 }
