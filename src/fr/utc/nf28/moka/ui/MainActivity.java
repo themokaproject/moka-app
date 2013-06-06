@@ -35,6 +35,7 @@ import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.io.agent.IAndroidAgent;
 import fr.utc.nf28.moka.ui.base.MokaDialogFragment;
+import fr.utc.nf28.moka.ui.nfc.NfcActivity;
 import fr.utc.nf28.moka.util.CroutonUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
 import fr.utc.nf28.moka.util.SharedPreferencesUtils;
@@ -134,6 +135,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 									public void onClick(DialogInterface dialogInterface, int which) {
 										JadeUtils.getAndroidAgentInterface().logout();
 										// TODO: ProgressBar + callback + disconnect Service + finish()
+										startActivity(new Intent(MainActivity.this, NfcActivity.class));
 										finish();
 									}
 								})
