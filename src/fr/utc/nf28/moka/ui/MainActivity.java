@@ -1,5 +1,7 @@
 package fr.utc.nf28.moka.ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -119,12 +121,30 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 				AboutDialogFragment.newInstance().show(getSupportFragmentManager(), "about_dialog");
 				return true;
 			case R.id.upload_test:
-				startActivity(new Intent(this,UploadTestActivity.class));
+				startActivity(new Intent(this, UploadTestActivity.class));
 				return true;
-            case R.id.logout:
-                final IAndroidAgent interfaceAgent = JadeUtils.getAndroidAgentInterface();
-                interfaceAgent.logout();
-                return true;
+			case R.id.logout:
+				final Resources resources = getResources();
+				new AlertDialog.Builder(this)
+						.setTitle(resources.getString(R.string.logout_confirmation_title))
+						.setMessage(resources.getString(R.string.logout_confirmation_message))
+						.setPositiveButton(resources.getString(R.string.logout_confirmation_ok),
+								new DialogInterface.OnClickListener() {
+									@Override
+									public void onClick(DialogInterface dialogInterface, int which) {
+										JadeUtils.getAndroidAgentInterface().logout();
+										// TODO: ProgressBar + callback + disconnect Service + finish()
+										finish();
+									}
+								})
+						.setNegativeButton(resources.getString(R.string.logout_confirmation_cancel),
+								new DialogInterface.OnClickListener() {
+									@Override
+									public void onClick(DialogInterface dialogInterface, int which) {
+									}
+								})
+						.show();
+				return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}

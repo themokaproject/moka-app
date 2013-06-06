@@ -18,7 +18,8 @@ import fr.utc.nf28.moka.util.JadeUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
-public class EditItemActivity extends MokaUpActivity implements EditItemFragment.Callbacks, LockingReceiver.OnLockingListener {
+public class EditItemActivity extends MokaUpActivity implements EditItemFragment.Callbacks,
+		LockingReceiver.OnLockingListener {
 	public static final String ARG_ITEM = "arg_item";
 	public static final int RESULT_DELETE = RESULT_FIRST_USER + 1;
 	private static final String TAG = makeLogTag(EditItemActivity.class);

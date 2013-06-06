@@ -15,6 +15,7 @@
     <string name="licenses">Licences open source</string>
     <string name="about">À propos</string>
     <string name="settings">Paramètres</string>
+    <string name="logout">Se déconnecter</string>
 
     <!-- About dialog -->
     <string name="about_moka">À propos de Moka</string>
@@ -208,6 +209,12 @@
     <string name="welcome_instruction">Entrez votre nom et votre prénom.</string>
     <string name="welcome_tuto">Lancer un tutoriel</string>
     <string name="welcome_moka">Accéder à Moka</string>
+
+    <!-- Main Activity -->
+    <string name="logout_confirmation_title">Confirmation</string>
+    <string name="logout_confirmation_message">Êtes-vous sûr(e) de vouloir vous déconnecter ?</string>
+    <string name="logout_confirmation_ok">OK</string>
+    <string name="logout_confirmation_cancel">Annuler</string>
 
 </resources>
 

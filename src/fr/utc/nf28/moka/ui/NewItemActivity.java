@@ -24,7 +24,8 @@ import fr.utc.nf28.moka.util.JadeUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
-public class NewItemActivity extends MokaUpActivity implements CreationReceiver.OnCreationCallbackListener, EditItemFragment.Callbacks {
+public class NewItemActivity extends MokaUpActivity implements CreationReceiver.OnCreationCallbackListener,
+		EditItemFragment.Callbacks {
 	public static final String ARG_TYPE = "arg_type";
 	private static final String TAG = makeLogTag(NewItemActivity.class);
 	private final IntentFilter mIntentFilter = new IntentFilter(MokaReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER);
