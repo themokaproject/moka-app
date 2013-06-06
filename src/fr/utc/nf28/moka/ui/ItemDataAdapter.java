@@ -7,12 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Toast;
+
+import java.util.List;
+
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.ItemData;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.util.JadeUtils;
-
-import java.util.List;
 
 public class ItemDataAdapter {
 	private final LayoutInflater mLayoutInflater;
@@ -95,6 +98,13 @@ public class ItemDataAdapter {
 
 				@Override
 				public void afterTextChanged(Editable editable) {
+				}
+			});
+			final ImageButton uploadButton = (ImageButton) rootView.findViewById(R.id.item_data_upload);
+			uploadButton.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					Toast.makeText(mLayoutInflater.getContext(), "TODO: implem", Toast.LENGTH_LONG).show();
 				}
 			});
 			return rootView;

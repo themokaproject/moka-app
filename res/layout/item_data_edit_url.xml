@@ -34,9 +34,10 @@
             android:id="@+id/item_data_upload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/item_data_url"
-            android:src="@drawable/logo_type_list"
-            android:paddingLeft="16dp" />
+            android:src="@drawable/ic_action_capture"
+            android:paddingLeft="16dp"
+            android:layout_toRightOf="@id/item_data_url"
+            android:layout_alignParentTop="true" />
 
     </RelativeLayout>
 
