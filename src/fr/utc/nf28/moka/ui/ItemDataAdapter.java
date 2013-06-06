@@ -21,10 +21,16 @@ import fr.utc.nf28.moka.data.TextType;
 import fr.utc.nf28.moka.util.JadeUtils;
 
 public class ItemDataAdapter {
+	private static final Callbacks sDummyCallbacks = new Callbacks() {
+		@Override
+		public void onTitleChanged(String field, String title) {
+		}
+	};
 	private final LayoutInflater mLayoutInflater;
 	private final MokaItem mCurrentItem;
 	private final ViewGroup mParent;
 	private List<ItemData> mItemsData;
+	private Callbacks mCallbacks = sDummyCallbacks;
 
 	public ItemDataAdapter(Context context, MokaItem currentItem, ViewGroup parent) {
 		mLayoutInflater = LayoutInflater.from(context);
@@ -35,6 +41,14 @@ public class ItemDataAdapter {
 	public void updateItemsData(List<ItemData> itemDatas) {
 		mItemsData = itemDatas;
 		notifyDataSetChanged();
+	}
+
+	public void setCallbacks(Callbacks callbacks) {
+		mCallbacks = callbacks;
+	}
+
+	public void resetCallbacks() {
+		mCallbacks = sDummyCallbacks;
 	}
 
 	private void notifyDataSetChanged() {
@@ -58,7 +72,7 @@ public class ItemDataAdapter {
 
 				@Override
 				public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-					JadeUtils.getAndroidAgentInterface().editItem(mCurrentItem.getId(), field, charSequence.toString());
+					mCallbacks.onTitleChanged(field, charSequence.toString());
 				}
 
 				@Override
@@ -113,5 +127,9 @@ public class ItemDataAdapter {
 			return rootView;
 		}
 		return null;
+	}
+
+	public interface Callbacks {
+		public void onTitleChanged(String field, String title);
 	}
 }

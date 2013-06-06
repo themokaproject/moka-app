@@ -25,7 +25,7 @@ import fr.utc.nf28.moka.util.JadeUtils;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
-public class EditItemFragment extends SherlockFragment {
+public class EditItemFragment extends SherlockFragment implements ItemDataAdapter.Callbacks {
 	/**
 	 * A dummy implementation of the {@link Callbacks} interface that does
 	 * nothing. Used only when this fragment is not attached to an activity.
@@ -39,6 +39,7 @@ public class EditItemFragment extends SherlockFragment {
 	private final MokaItem mSelectedItem;
 	private final IAndroidAgent mAgent = JadeUtils.getAndroidAgentInterface();
 	private Callbacks mCallbacks;
+	private ItemDataAdapter mItemDataAdapter;
 
 	public EditItemFragment(MokaItem selectedItem) {
 		if (selectedItem == null) {
@@ -79,9 +80,10 @@ public class EditItemFragment extends SherlockFragment {
 		final View rootView = inflater.inflate(R.layout.fragment_edit_item, container, false);
 
 		final MokaType type = mSelectedItem.getType();
-		final ItemDataAdapter itemDataAdapter = new ItemDataAdapter(getSherlockActivity(), mSelectedItem,
+		mItemDataAdapter = new ItemDataAdapter(getSherlockActivity(), mSelectedItem,
 				(ViewGroup) rootView.findViewById(R.id.item_data_fields));
-		itemDataAdapter.updateItemsData(type.getItemData());
+		mItemDataAdapter.setCallbacks(this);
+		mItemDataAdapter.updateItemsData(type.getItemData());
 
 		final TextView itemType = (TextView) rootView.findViewById(R.id.item_type);
 		final TextView itemCategory = (TextView) rootView.findViewById(R.id.item_category);
@@ -158,8 +160,17 @@ public class EditItemFragment extends SherlockFragment {
 	public void onDetach() {
 		// Reset the active callbacks interface to the dummy implementation.
 		mCallbacks = sDummyCallbacks;
+		mItemDataAdapter.resetCallbacks();
 		mAgent.unlockItem(mSelectedItem.getId());
+
 		super.onDetach();
+	}
+
+	@Override
+	public void onTitleChanged(String field, String title) {
+		mSelectedItem.setTitle(title);
+		JadeUtils.getAndroidAgentInterface().editItem(mSelectedItem.getId(), field, title);
+		getSherlockActivity().getSupportActionBar().setTitle(title);
 	}
 
 	/**
