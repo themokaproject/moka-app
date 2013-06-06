@@ -147,7 +147,7 @@ public class CurrentItemListFragment extends BasePagerFragment implements Adapte
 	private void refreshCurrentList() {
 		mProgressBar.setVisibility(View.VISIBLE);
 		mListView.getEmptyView().setVisibility(View.GONE);
-		mMokaRestService.itemsEntries(this);
+		mMokaRestService.itemsEntries(String.valueOf(System.currentTimeMillis()), this);
 	}
 
 	private void resetUi() {

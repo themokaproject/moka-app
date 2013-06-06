@@ -88,7 +88,7 @@ public class HistoryEntryListFragment extends BasePagerFragment implements Refre
 	private void refreshHistory() {
 		mProgressBar.setVisibility(View.VISIBLE);
 		mListView.getEmptyView().setVisibility(View.GONE);
-		mMokaRestService.historyEntries(this);
+		mMokaRestService.historyEntries(String.valueOf(System.currentTimeMillis()), this);
 	}
 
 	private void resetUi() {
