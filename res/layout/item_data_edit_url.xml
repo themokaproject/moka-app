@@ -17,13 +17,27 @@
         android:layout_height="2dp"
         android:background="@color/holo_blue" />
 
-    <EditText
-        android:id="@+id/item_data_url"
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/item_info_url"
-        android:textSize="16sp"
-        android:ems="12" />
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/item_data_url"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/item_info_url"
+            android:textSize="16sp"
+            android:ems="12" />
+
+        <ImageButton
+            android:id="@+id/item_data_upload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/item_data_url"
+            android:src="@drawable/logo_type_list"
+            android:paddingLeft="16dp" />
+
+    </RelativeLayout>
 
 </merge>
