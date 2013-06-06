@@ -3,9 +3,9 @@ package fr.utc.nf28.moka.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import fr.utc.nf28.moka.R;
-
 import java.util.List;
+
+import fr.utc.nf28.moka.R;
 
 public abstract class ComputerType extends MokaType implements Parcelable {
 	private static String TYPE_NAME = ComputerType.class.getSimpleName();
@@ -46,9 +46,9 @@ public abstract class ComputerType extends MokaType implements Parcelable {
 			super(in);
 		}
 
-        @Override
-        public List<ItemData> getItemsData() {
-            return null;
-        }
-    }
+		@Override
+		public List<ItemData> getItemsData() {
+			return null;
+		}
+	}
 }

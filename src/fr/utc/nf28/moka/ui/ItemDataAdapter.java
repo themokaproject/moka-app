@@ -14,7 +14,10 @@ import java.util.List;
 
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.ItemData;
+import fr.utc.nf28.moka.data.MediaType;
 import fr.utc.nf28.moka.data.MokaItem;
+import fr.utc.nf28.moka.data.MokaType;
+import fr.utc.nf28.moka.data.TextType;
 import fr.utc.nf28.moka.util.JadeUtils;
 
 public class ItemDataAdapter {
@@ -44,7 +47,7 @@ public class ItemDataAdapter {
 	}
 
 	private View getView(final String field) {
-		if ("title".equals(field)) {
+		if (MokaType.KEY_TITLE.equals(field)) {
 			final View rootView = mLayoutInflater.inflate(R.layout.item_data_edit_title, mParent, true);
 			final EditText editText = (EditText) rootView.findViewById(R.id.item_data_title);
 			editText.setText(mCurrentItem.getTitle());
@@ -64,7 +67,7 @@ public class ItemDataAdapter {
 			});
 			return rootView;
 		}
-		if ("content".equals(field)) {
+		if (TextType.KEY_CONTENT.equals(field)) {
 			final View rootView = mLayoutInflater.inflate(R.layout.item_data_edit_content, mParent, true);
 			final EditText editText = (EditText) rootView.findViewById(R.id.item_data_content);
 			editText.addTextChangedListener(new TextWatcher() {
@@ -83,7 +86,7 @@ public class ItemDataAdapter {
 			});
 			return rootView;
 		}
-		if ("url".equals(field)) {
+		if (MediaType.KEY_URL.equals(field)) {
 			final View rootView = mLayoutInflater.inflate(R.layout.item_data_edit_url, mParent, true);
 			final EditText editText = (EditText) rootView.findViewById(R.id.item_data_url);
 			editText.addTextChangedListener(new TextWatcher() {

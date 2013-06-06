@@ -2,12 +2,14 @@ package fr.utc.nf28.moka.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import fr.utc.nf28.moka.R;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import fr.utc.nf28.moka.R;
+
 public abstract class MediaType extends MokaType implements Parcelable {
+	public static final String KEY_URL = "url";
 	private static String TYPE_NAME = MediaType.class.getSimpleName();
 
 	public MediaType(String name, String description, int resId) {
@@ -48,10 +50,10 @@ public abstract class MediaType extends MokaType implements Parcelable {
 
 		@Override
 		public List<ItemData> getItemsData() {
-			final List<ItemData> itemDatas = new ArrayList<ItemData>();
-			itemDatas.add(new ItemData("title"));
-			itemDatas.add(new ItemData("url"));
-			return itemDatas;
+			if (mItemData == null) {
+				mItemData = Arrays.asList(new ItemData(KEY_TITLE), new ItemData(KEY_URL));
+			}
+			return mItemData;
 		}
 	}
 
@@ -81,7 +83,10 @@ public abstract class MediaType extends MokaType implements Parcelable {
 
 		@Override
 		public List<ItemData> getItemsData() {
-			return null;
+			if (mItemData == null) {
+				mItemData = Arrays.asList(new ItemData(KEY_TITLE), new ItemData(KEY_URL));
+			}
+			return mItemData;
 		}
 	}
 
@@ -111,7 +116,10 @@ public abstract class MediaType extends MokaType implements Parcelable {
 
 		@Override
 		public List<ItemData> getItemsData() {
-			return null;
+			if (mItemData == null) {
+				mItemData = Arrays.asList(new ItemData(KEY_TITLE), new ItemData(KEY_URL));
+			}
+			return mItemData;
 		}
 	}
 }

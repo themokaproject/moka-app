@@ -6,9 +6,11 @@ import android.os.Parcelable;
 import java.util.List;
 
 public abstract class MokaType implements Parcelable, Comparable<MokaType> {
+	public static final String KEY_TITLE = "title";
 	protected String mDescription;
 	protected int mResId;
 	protected String mCategoryName;
+	protected List<ItemData> mItemData;
 	private String mName;
 
 	public MokaType(String name, String description, int resId, String categoryName) {
@@ -23,6 +25,7 @@ public abstract class MokaType implements Parcelable, Comparable<MokaType> {
 		mDescription = in.readString();
 		mResId = in.readInt();
 		mCategoryName = in.readString();
+		in.readList(mItemData, ItemData.class.getClassLoader());
 	}
 
 	public String getName() {
@@ -57,7 +60,7 @@ public abstract class MokaType implements Parcelable, Comparable<MokaType> {
 		mCategoryName = categoryName;
 	}
 
-    public abstract List<ItemData> getItemsData();
+	public abstract List<ItemData> getItemsData();
 
 	@Override
 	public int compareTo(MokaType other) {
@@ -75,5 +78,8 @@ public abstract class MokaType implements Parcelable, Comparable<MokaType> {
 		parcel.writeString(mDescription);
 		parcel.writeInt(mResId);
 		parcel.writeString(mCategoryName);
+		if (mItemData != null) {
+			parcel.writeList(mItemData);
+		}
 	}
 }
