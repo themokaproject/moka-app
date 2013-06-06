@@ -148,6 +148,7 @@
     <!-- Item Data -->
     <string name="item_info_title">Titre</string>
     <string name="item_info_content">Contenu</string>
+    <string name="item_info_url">URL</string>
 
     <!-- Configuration Preferences -->
     <string name="category_wireless">Wifi</string>

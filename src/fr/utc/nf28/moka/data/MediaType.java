@@ -2,9 +2,9 @@ package fr.utc.nf28.moka.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import fr.utc.nf28.moka.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class MediaType extends MokaType implements Parcelable {
@@ -46,11 +46,14 @@ public abstract class MediaType extends MokaType implements Parcelable {
 			super(in);
 		}
 
-        @Override
-        public List<ItemData> getItemsData() {
-            return null;
-        }
-    }
+		@Override
+		public List<ItemData> getItemsData() {
+			final List<ItemData> itemDatas = new ArrayList<ItemData>();
+			itemDatas.add(new ItemData("title"));
+			itemDatas.add(new ItemData("url"));
+			return itemDatas;
+		}
+	}
 
 	public static class VideoType extends MediaType implements Parcelable {
 		public static final String KEY_TYPE = "video";
@@ -76,11 +79,11 @@ public abstract class MediaType extends MokaType implements Parcelable {
 			super(in);
 		}
 
-        @Override
-        public List<ItemData> getItemsData() {
-            return null;
-        }
-    }
+		@Override
+		public List<ItemData> getItemsData() {
+			return null;
+		}
+	}
 
 	public static class WebType extends MediaType implements Parcelable {
 		public static final String KEY_TYPE = "web";
@@ -106,9 +109,9 @@ public abstract class MediaType extends MokaType implements Parcelable {
 			super(in);
 		}
 
-        @Override
-        public List<ItemData> getItemsData() {
-            return null;
-        }
-    }
+		@Override
+		public List<ItemData> getItemsData() {
+			return null;
+		}
+	}
 }

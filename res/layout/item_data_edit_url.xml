@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:text="@string/item_info_url"
+        android:textAllCaps="true"
+        android:textColor="@color/holo_blue" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/holo_blue" />
+
+    <EditText
+        android:id="@+id/item_data_url"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/item_info_url"
+        android:textSize="16sp"
+        android:ems="12" />
+
+</merge>
