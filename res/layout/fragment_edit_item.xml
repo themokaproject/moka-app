@@ -100,13 +100,13 @@
         <View
             android:id="@+id/canvas_move_item"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="320dp"
             android:layout_below="@id/item_data_fields"
             android:layout_alignLeft="@id/item_data_fields"
             android:layout_alignRight="@id/item_image"
             android:layout_alignParentBottom="true"
             android:background="@color/card_grey"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="32dp" />
 
     </RelativeLayout>
 
