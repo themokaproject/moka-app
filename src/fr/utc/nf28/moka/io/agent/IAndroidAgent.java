@@ -9,6 +9,11 @@ public interface IAndroidAgent {
 	 */
 	public void connectPlatform(String firstName, String lastName, String ip);
 
+    /**
+     * logout
+     */
+    public void logout();
+
 	/**
 	 * create new item on platform
 	 *

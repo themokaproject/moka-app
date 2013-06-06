@@ -51,6 +51,10 @@ public final class JadeUtils {
 	 * connection transaction
 	 */
 	public static final String TRANSACTION_TYPE_CONNECTION = "connection";
+    /**
+     * logout transaction
+     */
+    public static final String TRANSACTION_TYPE_LOGOUT = "logout";
 	/**
 	 * addItem transaction
 	 */
@@ -112,7 +116,11 @@ public final class JadeUtils {
 		public void connectPlatform(String firstName, String lastName, String ip) {
 		}
 
-		@Override
+        @Override
+        public void logout() {
+        }
+
+        @Override
 		public void createItem(String type) {
 		}
 

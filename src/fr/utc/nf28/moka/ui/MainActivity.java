@@ -121,6 +121,10 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 			case R.id.upload_test:
 				startActivity(new Intent(this,UploadTestActivity.class));
 				return true;
+            case R.id.logout:
+                final IAndroidAgent interfaceAgent = JadeUtils.getAndroidAgentInterface();
+                interfaceAgent.logout();
+                return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
