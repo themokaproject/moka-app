@@ -3,6 +3,7 @@ package fr.utc.nf28.moka.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Arrays;
 import java.util.List;
 
 import fr.utc.nf28.moka.R;
@@ -47,8 +48,8 @@ public abstract class ComputerType extends MokaType implements Parcelable {
 		}
 
 		@Override
-		public List<ItemData> getItemsData() {
-			return null;
+		public List<ItemData> fillItemData() {
+			return Arrays.asList(new ItemData(KEY_TITLE));
 		}
 	}
 }

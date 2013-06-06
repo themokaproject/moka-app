@@ -10,10 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.data.MokaType;
@@ -79,7 +81,7 @@ public class EditItemFragment extends SherlockFragment {
 		final MokaType type = mSelectedItem.getType();
 		final ItemDataAdapter itemDataAdapter = new ItemDataAdapter(getSherlockActivity(), mSelectedItem,
 				(ViewGroup) rootView.findViewById(R.id.item_data_fields));
-		itemDataAdapter.updateItemsData(type.getItemsData());
+		itemDataAdapter.updateItemsData(type.getItemData());
 
 		final TextView itemType = (TextView) rootView.findViewById(R.id.item_type);
 		final TextView itemCategory = (TextView) rootView.findViewById(R.id.item_category);

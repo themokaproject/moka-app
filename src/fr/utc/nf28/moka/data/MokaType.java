@@ -10,7 +10,7 @@ public abstract class MokaType implements Parcelable, Comparable<MokaType> {
 	protected String mDescription;
 	protected int mResId;
 	protected String mCategoryName;
-	protected List<ItemData> mItemData;
+	private List<ItemData> mItemData;
 	private String mName;
 
 	public MokaType(String name, String description, int resId, String categoryName) {
@@ -60,7 +60,14 @@ public abstract class MokaType implements Parcelable, Comparable<MokaType> {
 		mCategoryName = categoryName;
 	}
 
-	public abstract List<ItemData> getItemsData();
+	public List<ItemData> getItemData() {
+		if (mItemData == null) {
+			mItemData = fillItemData();
+		}
+		return mItemData;
+	}
+
+	protected abstract List<ItemData> fillItemData();
 
 	@Override
 	public int compareTo(MokaType other) {
