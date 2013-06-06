@@ -69,7 +69,7 @@ public class EditItemFragment extends SherlockFragment {
 					"Activity must implement fragment's callbacks.");
 		}
 
-		mMoveItemListener = new MoveItemListener((SensorManager) activity.getSystemService(Context.SENSOR_SERVICE)) {
+		mMoveItemListener = new MoveItemListener() {
 			@Override()
 			public void move(int direction, int velocity) {
 				mAgent.moveItem(mSelectedItem.getId(), direction, velocity);
