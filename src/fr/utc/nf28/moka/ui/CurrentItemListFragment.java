@@ -186,7 +186,6 @@ public class CurrentItemListFragment extends BasePagerFragment implements Adapte
 				final List<MokaItem> currentItems = JSONParserUtils.deserializeItemEntries(
 						HttpHelper.convertStreamToString(params[0].getBody().in())
 				);
-				Collections.reverse(currentItems); // TODO: implement server-side
 				return currentItems;
 			} catch (IOException e) {
 				return Collections.emptyList();
