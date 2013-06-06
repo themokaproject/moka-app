@@ -44,7 +44,6 @@ public class EditItemFragment extends SherlockFragment {
 	private float mLastY = -1f;
 	private Callbacks mCallbacks;
 	private View mCanvasMoveItem;
-	private MoveItemListener mMoveItemListener;
 
 	public EditItemFragment(MokaItem selectedItem) {
 		if (selectedItem == null) {
@@ -69,22 +68,6 @@ public class EditItemFragment extends SherlockFragment {
 					"Activity must implement fragment's callbacks.");
 		}
 
-		mMoveItemListener = new MoveItemListener() {
-			@Override()
-			public void move(int direction, int velocity) {
-				mAgent.moveItem(mSelectedItem.getId(), direction, velocity);
-			}
-
-			@Override
-			public void resize(int direction) {
-				mAgent.resizeItem(mSelectedItem.getId(), direction);
-			}
-
-			@Override
-			public void rotate(int direction) {
-				mAgent.rotateItem(mSelectedItem.getId(), direction);
-			}
-		};
 
 		mCallbacks = (Callbacks) activity;
 	}
@@ -113,7 +96,22 @@ public class EditItemFragment extends SherlockFragment {
 		itemCategory.setText(mSelectedItem.getType().getCategoryName());
 		itemCreationDate.setText(mSelectedItem.getCreationDate());
 		itemImage.setImageResource(mSelectedItem.getType().getResId());
-		mCanvasMoveItem.setOnTouchListener(mMoveItemListener);
+		mCanvasMoveItem.setOnTouchListener(new MoveItemListener() {
+            @Override()
+            public void move(int direction, int velocity) {
+                mAgent.moveItem(mSelectedItem.getId(), direction, velocity);
+            }
+
+            @Override
+            public void resize(int direction) {
+                mAgent.resizeItem(mSelectedItem.getId(), direction);
+            }
+
+            @Override
+            public void rotate(int direction) {
+                mAgent.rotateItem(mSelectedItem.getId(), direction);
+            }
+        });
 
 		return rootView;
 	}
