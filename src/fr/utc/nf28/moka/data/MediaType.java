@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import fr.utc.nf28.moka.R;
 
+import java.util.List;
+
 public abstract class MediaType extends MokaType implements Parcelable {
 	private static String TYPE_NAME = MediaType.class.getSimpleName();
 
@@ -43,7 +45,12 @@ public abstract class MediaType extends MokaType implements Parcelable {
 		protected ImageType(Parcel in) {
 			super(in);
 		}
-	}
+
+        @Override
+        public List<ItemData> getItemsData() {
+            return null;
+        }
+    }
 
 	public static class VideoType extends MediaType implements Parcelable {
 		public static final String KEY_TYPE = "video";
@@ -68,7 +75,12 @@ public abstract class MediaType extends MokaType implements Parcelable {
 		protected VideoType(Parcel in) {
 			super(in);
 		}
-	}
+
+        @Override
+        public List<ItemData> getItemsData() {
+            return null;
+        }
+    }
 
 	public static class WebType extends MediaType implements Parcelable {
 		public static final String KEY_TYPE = "web";
@@ -93,5 +105,10 @@ public abstract class MediaType extends MokaType implements Parcelable {
 		protected WebType(Parcel in) {
 			super(in);
 		}
-	}
+
+        @Override
+        public List<ItemData> getItemsData() {
+            return null;
+        }
+    }
 }

@@ -3,6 +3,8 @@ package fr.utc.nf28.moka.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 public abstract class MokaType implements Parcelable, Comparable<MokaType> {
 	protected String mDescription;
 	protected int mResId;
@@ -54,6 +56,8 @@ public abstract class MokaType implements Parcelable, Comparable<MokaType> {
 	public void setCategoryName(String categoryName) {
 		mCategoryName = categoryName;
 	}
+
+    public abstract List<ItemData> getItemsData();
 
 	@Override
 	public int compareTo(MokaType other) {

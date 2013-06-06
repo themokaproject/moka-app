@@ -146,6 +146,8 @@
 
     <!-- EditItemFragment -->
     <string name="item_info_creation">Créé par %1$s le %2$s</string>
+    <!-- Item Data -->
+    <string name="item_info_title">Titre</string>
 
     <!-- Configuration Preferences -->
     <string name="category_wireless">Wifi</string>
