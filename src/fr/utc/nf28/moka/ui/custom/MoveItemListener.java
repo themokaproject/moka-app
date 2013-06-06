@@ -1,13 +1,11 @@
 package fr.utc.nf28.moka.ui.custom;
 
 import android.graphics.PointF;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewParent;
+
+import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
+import com.nineoldandroids.view.ViewHelper;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
@@ -23,32 +21,32 @@ public abstract class MoveItemListener implements View.OnTouchListener {
 	private float mLastYDist = -1f;
 	private double mLastAngle = 999999d;
 	private double mLastComputedAngle = 999999d;
-
+	private View mCanvas;
+	private boolean animate = true;
 
 	public MoveItemListener() {
 		super();
 	}
 
-
 	@Override
 	public boolean onTouch(View view, MotionEvent motionEvent) {
-		final ViewParent parent = view.getParent();
-		if (parent != null) {
-			parent.requestDisallowInterceptTouchEvent(true);
-		}
+		view.getParent().requestDisallowInterceptTouchEvent(true);
+		mCanvas = view;
 		final int pointerCount = motionEvent.getPointerCount();
 		switch (pointerCount) {
 			case 1:
+				ObjectAnimator.ofFloat(view, "alpha", 1f).start();
+				animate = false;
 				return onePointer(motionEvent);
 			case 2:
+				if (animate) {
+					ViewHelper.setAlpha(view, 1f);
+				}
 				return twoPointers(motionEvent);
 			default:
 				return false;
 		}
 	}
-
-
-
 
 	private boolean twoPointers(final MotionEvent motionEvent) {
 		final int action = motionEvent.getActionMasked();
@@ -59,7 +57,6 @@ public abstract class MoveItemListener implements View.OnTouchListener {
 					handleResizing(motionEvent);
 				}
 				break;
-
 			case MotionEvent.ACTION_POINTER_UP:
 				reset();
 				break;
@@ -75,7 +72,6 @@ public abstract class MoveItemListener implements View.OnTouchListener {
 			case MotionEvent.ACTION_MOVE:
 				handleMovement(motionEvent);
 				break;
-
 			case MotionEvent.ACTION_CANCEL:
 			case MotionEvent.ACTION_UP:
 				reset();
@@ -91,6 +87,9 @@ public abstract class MoveItemListener implements View.OnTouchListener {
 		mLastY = -1f;
 		mLastAngle = 99999d;
 		mLastComputedAngle = 99999d;
+		ObjectAnimator.ofFloat(mCanvas, "alpha", 0.6f).start();
+		mCanvas = null;
+		animate = true;
 	}
 
 	/*
@@ -127,10 +126,9 @@ public abstract class MoveItemListener implements View.OnTouchListener {
 
 	private boolean handleRotation(final MotionEvent motionEvent) {
 		PointF point1 = makePointF(motionEvent, 0);
-		PointF point2 = makePointF(motionEvent, 1);
-		PointF middle = computeMiddle(point1, point2);
+		final PointF point2 = makePointF(motionEvent, 1);
+		final PointF middle = computeMiddle(point1, point2);
 		point1 = changeOrigin(point1, middle);
-		point2 = changeOrigin(point2, middle);
 		double angle = computeAngle(point1);
 		boolean handle = false;
 
@@ -140,7 +138,7 @@ public abstract class MoveItemListener implements View.OnTouchListener {
 			mLastComputedAngle = angle;
 		} else if (ROTATE_DETECTION < Math.abs(angle - mLastAngle)) {
 			if (ROTATE_NOISE < Math.abs(angle - mLastComputedAngle)) {
-				int direction = 0;
+				int direction;
 				if (angle < mLastAngle) {
 					direction = 100;
 				} else {
@@ -158,7 +156,6 @@ public abstract class MoveItemListener implements View.OnTouchListener {
 
 		return handle;
 	}
-
 
 	/*
 	*	MOVE
@@ -184,7 +181,7 @@ public abstract class MoveItemListener implements View.OnTouchListener {
 		} else {
 			final float dx = motionEvent.getX() - mLastX;
 			final float dy = motionEvent.getY() - mLastY;
-			int direction = computeDirection(dx, dy, MOVE_NOISE);
+			final int direction = computeDirection(dx, dy, MOVE_NOISE);
 
 			if (direction != 0) {
 				if (direction % 10 != 0) mLastX = motionEvent.getX();
@@ -198,18 +195,13 @@ public abstract class MoveItemListener implements View.OnTouchListener {
 	}
 
 	private boolean isAngleSwitchValid(double angle1, double angle2) {
-		if (((Math.abs(angle1) > 3) && (Math.abs(angle2) < 1))
-				|| ((Math.abs(angle2) > 3) && (Math.abs(angle1) < 1))) {
-			return false;
-		} else {
-			return true;
-		}
+		return !(((Math.abs(angle1) > 3) && (Math.abs(angle2) < 1))
+				|| ((Math.abs(angle2) > 3) && (Math.abs(angle1) < 1)));
 	}
 
 	private PointF makePointF(final MotionEvent motionEvent, int pointerId) {
 		return new PointF(motionEvent.getX(pointerId), motionEvent.getY(pointerId));
 	}
-
 
 	private double computeAngle(final PointF point) {
 		double angle = 0;
@@ -228,14 +220,14 @@ public abstract class MoveItemListener implements View.OnTouchListener {
 	}
 
 	private PointF computeMiddle(final PointF point1, final PointF point2) {
-		PointF middle = new PointF();
+		final PointF middle = new PointF();
 		middle.x = (point1.x + point2.x) / 2;
 		middle.y = (point1.y + point2.y) / 2;
 		return middle;
 	}
 
 	private PointF changeOrigin(final PointF oldCoordinates, final PointF newOrigin) {
-		PointF newCoordinates = new PointF();
+		final PointF newCoordinates = new PointF();
 		newCoordinates.x = oldCoordinates.x - newOrigin.x;
 		newCoordinates.y = oldCoordinates.y - newOrigin.y;
 		return newCoordinates;
