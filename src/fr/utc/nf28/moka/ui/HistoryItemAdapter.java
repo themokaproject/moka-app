@@ -24,7 +24,6 @@ public class HistoryItemAdapter extends BaseMokaAdapter {
 	}
 
 	public void updateHistoryItems(List<HistoryEntry> historyEntries) {
-		Collections.reverse(historyEntries); //TODO invert list on server side
 		mHistoryEntries = historyEntries;
 		notifyDataSetChanged();
 	}
