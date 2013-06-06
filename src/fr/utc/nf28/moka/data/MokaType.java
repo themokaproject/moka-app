@@ -3,6 +3,7 @@ package fr.utc.nf28.moka.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class MokaType implements Parcelable, Comparable<MokaType> {
@@ -26,6 +27,7 @@ public abstract class MokaType implements Parcelable, Comparable<MokaType> {
 		mResId = in.readInt();
 		mCategoryName = in.readString();
 		if (in.readLong() != -1) {
+			mItemData = new ArrayList<ItemData>();
 			in.readList(mItemData, ItemData.class.getClassLoader());
 		}
 	}
