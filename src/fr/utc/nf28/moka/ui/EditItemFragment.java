@@ -10,14 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.MokaItem;
+import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.io.agent.IAndroidAgent;
 import fr.utc.nf28.moka.ui.custom.MoveItemListener;
 import fr.utc.nf28.moka.util.JadeUtils;
@@ -77,9 +76,10 @@ public class EditItemFragment extends SherlockFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		final View rootView = inflater.inflate(R.layout.fragment_edit_item, container, false);
 
+		final MokaType type = mSelectedItem.getType();
 		final ItemDataAdapter itemDataAdapter = new ItemDataAdapter(getSherlockActivity(), mSelectedItem,
 				(ViewGroup) rootView.findViewById(R.id.item_data_fields));
-		itemDataAdapter.updateItemsData(mSelectedItem.getType().getItemsData());
+		itemDataAdapter.updateItemsData(type.getItemsData());
 
 		final TextView itemType = (TextView) rootView.findViewById(R.id.item_type);
 		final TextView itemCategory = (TextView) rootView.findViewById(R.id.item_category);
@@ -87,10 +87,10 @@ public class EditItemFragment extends SherlockFragment {
 		final ImageView itemImage = (ImageView) rootView.findViewById(R.id.item_image);
 		final View canvasMoveItem = rootView.findViewById(R.id.canvas_move_item);
 
-		itemType.setText(mSelectedItem.getType().getName());
-		itemCategory.setText(mSelectedItem.getType().getCategoryName());
+		itemType.setText(type.getName());
+		itemCategory.setText(type.getCategoryName());
 		itemCreationDate.setText(mSelectedItem.getCreationDate());
-		itemImage.setImageResource(mSelectedItem.getType().getResId());
+		itemImage.setImageResource(type.getResId());
 		canvasMoveItem.setOnTouchListener(new MoveItemListener() {
 			@Override()
 			public void move(int direction, int velocity) {
