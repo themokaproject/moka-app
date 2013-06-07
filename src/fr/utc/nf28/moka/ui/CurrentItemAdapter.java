@@ -57,6 +57,7 @@ public class CurrentItemAdapter extends BaseMokaAdapter {
 				item.getCreationDate()));
 		Picasso.with(mContext)
 				.load(item.getType().getResId())
+				.placeholder(null)
 				.resizeDimen(R.dimen.list_current_item_type_picture_width_height,
 						R.dimen.list_current_item_type_picture_width_height)
 				.into(itemImage);

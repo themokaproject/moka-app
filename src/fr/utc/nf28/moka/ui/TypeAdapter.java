@@ -110,6 +110,7 @@ public class TypeAdapter extends BaseMokaAdapter implements StickyGridHeadersSim
 		itemName.setText(item.getName());
 		Picasso.with(mContext)
 				.load(item.getResId())
+				.placeholder(null)
 				.resizeDimen(R.dimen.list_type_picture_width_height, R.dimen.list_type_picture_width_height)
 				.into(itemImage);
 
