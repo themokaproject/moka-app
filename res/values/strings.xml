@@ -204,6 +204,10 @@
     <string name="item_deletion_success">L\'élément a été correctement supprimé</string>
     <string name="item_not_supported_yet">Ce type d\'élément n\'est pas encore pris en charge</string>
 
+    <!-- Progress messages -->
+    <string name="progress_dialog_upload_image_title">Chargement en cours</string>
+    <string name="progress_dialog_upload_image_message">Redimensionnement et upload de l\'image en cours&#8230;</string>
+
     <!-- Welcome Activity -->
     <string name="welcome">Bienvenue sur Moka</string>
     <string name="welcome_instruction">Entrez votre nom et votre prénom.</string>

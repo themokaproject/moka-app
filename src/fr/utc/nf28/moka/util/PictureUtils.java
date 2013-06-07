@@ -3,6 +3,8 @@ package fr.utc.nf28.moka.util;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,7 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class PictureUtils {
-
+	private static final String TEMP_IMAGE_NAME = "moka_upload_temp.jpg";
 	/**
 	 * hight resolution
 	 */
@@ -23,6 +25,7 @@ public class PictureUtils {
 	 * low resolution
 	 */
 	public static float PICTURE_SIZE_LR = 800;
+	private static File sTempFile;
 
 	/**
 	 * Allowed user to resize the temp Picture
@@ -37,16 +40,20 @@ public class PictureUtils {
 			final Bitmap realImage = BitmapFactory.decodeFile(image.getAbsolutePath());
 			final Bitmap newImage = scaleDown(realImage, size, true);
 
+			FileOutputStream fos = null;
 			try {
-				FileOutputStream fos = new FileOutputStream(image);
-				if (fos != null) {
-					newImage.compress(Bitmap.CompressFormat.JPEG, 90, fos);
-					fos.close();
-				}
+				fos = new FileOutputStream(image);
+				newImage.compress(Bitmap.CompressFormat.JPEG, 90, fos);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
+			} finally {
+				if (fos != null) {
+					try {
+						fos.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		}
 	}
@@ -61,13 +68,31 @@ public class PictureUtils {
 	 */
 	private static Bitmap scaleDown(Bitmap realImage, float maxImageSize, boolean filter) {
 		final float ratio = Math.min(
-				(float) maxImageSize / realImage.getWidth(),
-				(float) maxImageSize / realImage.getHeight());
-		final int width = Math.round((float) ratio * realImage.getWidth());
-		final int height = Math.round((float) ratio * realImage.getHeight());
+				maxImageSize / realImage.getWidth(),
+				maxImageSize / realImage.getHeight());
+		final int width = Math.round(ratio * realImage.getWidth());
+		final int height = Math.round(ratio * realImage.getHeight());
+		return Bitmap.createScaledBitmap(realImage, width, height, filter);
+	}
 
-		final Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, width,
-				height, filter);
-		return newBitmap;
+	/**
+	 * Create a File for saving our temp image
+	 */
+	public static File getTempPictureFile() {
+		if (sTempFile == null) {
+			final File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+					Environment.DIRECTORY_PICTURES), "Moka");
+
+			// Create the storage directory if it does not exist
+			if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
+				Log.d("Moka", "failed to create directory");
+				return new File("/"); // TODO: handle the case better
+			}
+
+			// Create a temp image file name
+			sTempFile = new File(mediaStorageDir.getPath() + File.separator + TEMP_IMAGE_NAME);
+		}
+
+		return sTempFile;
 	}
 }

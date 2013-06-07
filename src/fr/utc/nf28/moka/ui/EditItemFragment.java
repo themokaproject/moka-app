@@ -2,12 +2,19 @@ package fr.utc.nf28.moka.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,12 +23,25 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
+import java.io.File;
+import java.lang.ref.WeakReference;
+
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.utc.nf28.moka.R;
+import fr.utc.nf28.moka.data.MediaType;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.io.agent.IAndroidAgent;
 import fr.utc.nf28.moka.ui.custom.MoveItemListener;
 import fr.utc.nf28.moka.util.JadeUtils;
+import fr.utc.nf28.moka.util.MokaRestHelper;
+import fr.utc.nf28.moka.util.PictureUtils;
+import fr.utc.nf28.moka.util.SharedPreferencesUtils;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import retrofit.mime.TypedFile;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
@@ -36,10 +56,12 @@ public class EditItemFragment extends SherlockFragment implements ItemDataAdapte
 		}
 	};
 	private static final String TAG = makeLogTag(EditItemFragment.class);
+	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST = Activity.RESULT_FIRST_USER + 1;
 	private final MokaItem mSelectedItem;
 	private final IAndroidAgent mAgent = JadeUtils.getAndroidAgentInterface();
 	private Callbacks mCallbacks;
 	private ItemDataAdapter mItemDataAdapter;
+	private EditText mViewToUpdate;
 
 	public EditItemFragment(MokaItem selectedItem) {
 		if (selectedItem == null) {
@@ -173,6 +195,45 @@ public class EditItemFragment extends SherlockFragment implements ItemDataAdapte
 		getSherlockActivity().getSupportActionBar().setTitle(title);
 	}
 
+	@Override
+	public void onUploadPicture(EditText viewToUpdate) {
+		mViewToUpdate = viewToUpdate;
+		final Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(PictureUtils.getTempPictureFile()));
+		startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST);
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST) {
+			if (resultCode == Activity.RESULT_OK) {
+				final String API_URL = "http://" + PreferenceManager.getDefaultSharedPreferences(getSherlockActivity())
+						.getString(SharedPreferencesUtils.KEY_PREF_IP, "") + "/api"; // TODO: refact with the other Fragments
+
+				final int itemId = mSelectedItem.getId();
+				new UploadImageTask(API_URL, itemId, new Callback<Response>() {
+					@Override
+					public void success(Response response, Response response2) {
+						final String generatedUri = API_URL + "/image/" + mSelectedItem.getId();
+						JadeUtils.getAndroidAgentInterface().editItem(itemId, MediaType.ImageType.KEY_URL, generatedUri);
+						if (mViewToUpdate != null) {
+							mViewToUpdate.setText(generatedUri);
+							mViewToUpdate = null;
+						}
+					}
+
+					@Override
+					public void failure(RetrofitError retrofitError) {
+					}
+				}, this).execute(PictureUtils.getTempPictureFile());
+			} else if (resultCode != Activity.RESULT_CANCELED) {
+				Crouton.makeText(getSherlockActivity(), getResources().getString(R.string.network_error),
+						Style.ALERT).show();
+				mViewToUpdate = null;
+			}
+		}
+	}
+
 	/**
 	 * A callback interface that all activities containing this fragment must
 	 * implement.
@@ -182,5 +243,61 @@ public class EditItemFragment extends SherlockFragment implements ItemDataAdapte
 		 * Callback for when an item has been deleted.
 		 */
 		public void onItemDeletion(MokaItem item);
+	}
+
+	private static class UploadImageTask extends AsyncTask<File, Void, File> {
+		private final String mApiUrl;
+		private final int mItemId;
+		private final Callback<Response> mRetrofitCallbacks;
+		private final WeakReference<EditItemFragment> mUi;
+		private WeakReference<ProgressDialog> mProgressDialog;
+
+		public UploadImageTask(String apiUrl, int itemId, Callback<Response> retrofitCallbacks, EditItemFragment ui) {
+			mApiUrl = apiUrl;
+			mItemId = itemId;
+			mRetrofitCallbacks = retrofitCallbacks;
+			mUi = new WeakReference<EditItemFragment>(ui);
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+
+			final EditItemFragment ui = mUi.get();
+			if (ui != null) {
+				final Resources resources = ui.getResources();
+				mProgressDialog = new WeakReference<ProgressDialog>(
+						ProgressDialog.show(
+								ui.getSherlockActivity(),
+								resources.getString(R.string.progress_dialog_upload_image_title),
+								resources.getString(R.string.progress_dialog_upload_image_message),
+								true,
+								false)
+				);
+			}
+		}
+
+		@Override
+		protected File doInBackground(File... params) {
+			final File image = params[0];
+			PictureUtils.resize(image, PictureUtils.PICTURE_SIZE_LR);
+			return image;
+		}
+
+		@Override
+		protected void onPostExecute(File result) {
+			super.onPostExecute(result);
+
+			MokaRestHelper.getMokaRestService(mApiUrl).uploadPicture(mItemId,
+					new TypedFile("image/jpeg", result), mRetrofitCallbacks);
+
+			final EditItemFragment ui = mUi.get();
+			if (ui != null) {
+				final ProgressDialog progressDialog = mProgressDialog.get();
+				if (progressDialog != null) {
+					progressDialog.dismiss();
+				}
+			}
+		}
 	}
 }

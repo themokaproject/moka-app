@@ -224,7 +224,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		}
 	}
 
-	static class DescriptionDialogFragment extends MokaDialogFragment {
+	private static class DescriptionDialogFragment extends MokaDialogFragment {
 		private static final String ARG_TITLE = "title";
 		private static final String ARG_DESCRIPTION = "description";
 		private static final String ARG_RES_ID = "res_id";
@@ -254,7 +254,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 			return rootView;
 		}
 
-		static class ListTagHandler implements Html.TagHandler {
+		private static class ListTagHandler implements Html.TagHandler {
 			boolean first = true;
 
 			@Override
@@ -277,7 +277,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		}
 	}
 
-	static class AboutDialogFragment extends MokaDialogFragment {
+	private static class AboutDialogFragment extends MokaDialogFragment {
 		static AboutDialogFragment newInstance() {
 			return new AboutDialogFragment();
 		}

@@ -20,7 +20,6 @@ public interface MokaRestService {
 	@GET("/item/list")
 	void itemsEntries(@Query("date") String date, Callback<Response> cb);
 
-
 	@POST("/image/{id}")
 	@Multipart
 	void uploadPicture(@Path("id") int itemId, @Part("file") TypedFile uploadFile, Callback<Response> cb);

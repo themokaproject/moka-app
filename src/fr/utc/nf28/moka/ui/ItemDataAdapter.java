@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -24,6 +23,10 @@ public class ItemDataAdapter {
 	private static final Callbacks sDummyCallbacks = new Callbacks() {
 		@Override
 		public void onTitleChanged(String field, String title) {
+		}
+
+		@Override
+		public void onUploadPicture(EditText viewToUpdate) {
 		}
 	};
 	private final LayoutInflater mLayoutInflater;
@@ -121,7 +124,7 @@ public class ItemDataAdapter {
 			uploadButton.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					Toast.makeText(mLayoutInflater.getContext(), "TODO: implem", Toast.LENGTH_LONG).show();
+					mCallbacks.onUploadPicture(editText);
 				}
 			});
 			return rootView;
@@ -131,5 +134,7 @@ public class ItemDataAdapter {
 
 	public interface Callbacks {
 		public void onTitleChanged(String field, String title);
+
+		public void onUploadPicture(EditText viewToUpdate);
 	}
 }
