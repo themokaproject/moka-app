@@ -227,7 +227,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		private static final String ARG_RES_ID = "res_id";
 		private final Html.TagHandler mTagHandler = new ListTagHandler();
 
-		static DescriptionDialogFragment newInstance(String title, String description, int resId) {
+		public static DescriptionDialogFragment newInstance(String title, String description, int resId) {
 			final DescriptionDialogFragment f = new DescriptionDialogFragment();
 			final Bundle args = new Bundle();
 			args.putString(ARG_TITLE, title);
@@ -275,7 +275,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 	}
 
 	private static class AboutDialogFragment extends MokaDialogFragment {
-		static AboutDialogFragment newInstance() {
+		public static AboutDialogFragment newInstance() {
 			return new AboutDialogFragment();
 		}
 
