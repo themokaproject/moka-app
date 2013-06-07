@@ -2,18 +2,17 @@ package fr.utc.nf28.moka.util;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.utc.nf28.moka.data.ComputerItem;
+import fr.utc.nf28.moka.data.MediaItem;
+import fr.utc.nf28.moka.data.MokaItem;
+import fr.utc.nf28.moka.data.TextItem;
+import fr.utc.nf28.moka.io.agent.A2ATransaction;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-
-import fr.utc.nf28.moka.data.ComputerItem;
-import fr.utc.nf28.moka.data.MediaItem;
-import fr.utc.nf28.moka.data.MokaItem;
-import fr.utc.nf28.moka.data.TextItem;
-import fr.utc.nf28.moka.io.agent.A2ATransaction;
 
 /**
  * a JSON serializer/deserializer that uses Jackson
@@ -35,9 +34,7 @@ public final class JSONParserUtils {
 			Class contentClass = Object.class;
 			try {
 				contentClass = Class.forName(contentClassNode.asText());
-			} catch (ClassNotFoundException e) {
-				System.out.println("deserializeA2ATransaction:ClassNotFound : " + contentClassNode.asText());
-				System.out.println("use " + contentClass.toString() + " instead");
+			} catch (ClassNotFoundException ignored) {
 			}
 			return new A2ATransaction(typeNode.asText(), sMapper.treeToValue(contentNode, contentClass));
 		}
@@ -69,7 +66,7 @@ public final class JSONParserUtils {
 			//retrieve post-it specific stuff
 		} else if ("video".equals(type)) {
 			result = new MediaItem.VideoItem(title);
-		} else if ("iframe".equals(type)){
+		} else if ("iframe".equals(type)) {
 			result = new MediaItem.WebItem(title);
 		}
 

@@ -2,7 +2,6 @@ package fr.utc.nf28.moka.ui;
 
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,26 +9,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-
-import java.util.List;
-
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.HistoryEntry;
 import fr.utc.nf28.moka.io.MokaRestService;
 import fr.utc.nf28.moka.io.receiver.MokaReceiver;
 import fr.utc.nf28.moka.io.receiver.RefreshHistoryReceiver;
 import fr.utc.nf28.moka.ui.base.BasePagerFragment;
+import fr.utc.nf28.moka.util.HttpHelper;
 import fr.utc.nf28.moka.util.MokaRestHelper;
-import fr.utc.nf28.moka.util.SharedPreferencesUtils;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+
+import java.util.List;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class HistoryEntryListFragment extends BasePagerFragment implements RefreshHistoryReceiver.OnRefreshHistoryListener,
 		Callback<List<HistoryEntry>> {
-	private static final String DEFAULT_REST_SERVER_IP = "192.168.1.6";
 	private static final String TAG = makeLogTag(HistoryEntryListFragment.class);
 	private final IntentFilter mIntentFilter = new IntentFilter(MokaReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER);
 	private HistoryItemAdapter mAdapter;
@@ -62,9 +59,7 @@ public class HistoryEntryListFragment extends BasePagerFragment implements Refre
 
 		// Launch the background task to retrieve history entries from the RESTful server
 		// TODO: refact with {@link CurrentItemListFragment}
-		final String API_URL = "http://" + PreferenceManager.getDefaultSharedPreferences(getSherlockActivity())
-				.getString(SharedPreferencesUtils.KEY_PREF_IP, DEFAULT_REST_SERVER_IP) + "/api";
-		mMokaRestService = MokaRestHelper.getMokaRestService(API_URL);
+		mMokaRestService = MokaRestHelper.getMokaRestService(HttpHelper.getMokaApiUrl(getSherlockActivity()));
 
 		return rootView;
 	}

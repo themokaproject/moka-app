@@ -5,15 +5,40 @@ import android.os.Parcelable;
 import fr.utc.nf28.moka.MokaApplication;
 
 public abstract class MediaItem extends MokaItem implements Parcelable {
+	protected String mUrl;
+
 	public MediaItem(String title, MokaType type) {
+		this(title, type, "");
+	}
+
+	public MediaItem(String title, MokaType type, String url) {
 		super(title, type);
+		setUrl(url);
 	}
 
 	protected MediaItem(Parcel in) {
 		super(in);
+		mUrl = in.readString();
 	}
 
-	public static class ImageItem extends MediaItem implements Parcelable {
+	public String getUrl() {
+		return mUrl;
+	}
+
+	public void setUrl(String url) {
+		mUrl = url;
+		updateDefaultTypeUrl(url);
+	}
+
+	protected abstract void updateDefaultTypeUrl(String url);
+
+	@Override
+	public void writeToParcel(Parcel parcel, int flags) {
+		super.writeToParcel(parcel, flags);
+		parcel.writeString(mUrl);
+	}
+
+	public static final class ImageItem extends MediaItem implements Parcelable {
 		public static final Parcelable.Creator<ImageItem> CREATOR = new Parcelable.Creator<ImageItem>() {
 			public ImageItem createFromParcel(Parcel in) {
 				return new ImageItem(in);
@@ -31,9 +56,14 @@ public abstract class MediaItem extends MokaItem implements Parcelable {
 		protected ImageItem(Parcel in) {
 			super(in);
 		}
+
+		@Override
+		protected void updateDefaultTypeUrl(String url) {
+			// TODO: update corresponding type default value
+		}
 	}
 
-	public static class VideoItem extends MediaItem implements Parcelable {
+	public static final class VideoItem extends MediaItem implements Parcelable {
 		public static final Parcelable.Creator<VideoItem> CREATOR = new Parcelable.Creator<VideoItem>() {
 			public VideoItem createFromParcel(Parcel in) {
 				return new VideoItem(in);
@@ -51,9 +81,13 @@ public abstract class MediaItem extends MokaItem implements Parcelable {
 		protected VideoItem(Parcel in) {
 			super(in);
 		}
+
+		@Override
+		protected void updateDefaultTypeUrl(String url) {
+		}
 	}
 
-	public static class WebItem extends MediaItem implements Parcelable {
+	public static final class WebItem extends MediaItem implements Parcelable {
 		public static final Parcelable.Creator<WebItem> CREATOR = new Parcelable.Creator<WebItem>() {
 			public WebItem createFromParcel(Parcel in) {
 				return new WebItem(in);
@@ -70,6 +104,10 @@ public abstract class MediaItem extends MokaItem implements Parcelable {
 
 		protected WebItem(Parcel in) {
 			super(in);
+		}
+
+		@Override
+		protected void updateDefaultTypeUrl(String url) {
 		}
 	}
 }

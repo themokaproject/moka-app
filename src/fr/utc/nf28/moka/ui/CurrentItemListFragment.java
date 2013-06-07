@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,11 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.io.MokaRestService;
@@ -27,16 +21,18 @@ import fr.utc.nf28.moka.ui.base.BasePagerFragment;
 import fr.utc.nf28.moka.util.HttpHelper;
 import fr.utc.nf28.moka.util.JSONParserUtils;
 import fr.utc.nf28.moka.util.MokaRestHelper;
-import fr.utc.nf28.moka.util.SharedPreferencesUtils;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class CurrentItemListFragment extends BasePagerFragment implements AdapterView.OnItemClickListener,
 		RefreshItemReceiver.OnRefreshItemListener, Callback<Response> {
-	private static final String DEFAULT_REST_SERVER_IP = "192.168.1.6"; //TODO same as Jade main container ? doublon in HistoryEntryListFragment
 	private static final String TAG = makeLogTag(CurrentItemListFragment.class);
 	/**
 	 * A dummy implementation of the {@link Callbacks} interface that does
@@ -103,9 +99,7 @@ public class CurrentItemListFragment extends BasePagerFragment implements Adapte
 
 		// Launch the background task to retrieve history entries from the RESTful server
 		// TODO: refact with {@link HistoryEntryListFragment}
-		final String API_URL = "http://" + PreferenceManager.getDefaultSharedPreferences(getSherlockActivity())
-				.getString(SharedPreferencesUtils.KEY_PREF_IP, DEFAULT_REST_SERVER_IP) + "/api";
-		mMokaRestService = MokaRestHelper.getMokaRestService(API_URL);
+		mMokaRestService = MokaRestHelper.getMokaRestService(HttpHelper.getMokaApiUrl(getSherlockActivity()));
 
 		return rootView;
 	}

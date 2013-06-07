@@ -26,7 +26,7 @@ public class ItemDataAdapter {
 		}
 
 		@Override
-		public void onUploadPicture(String field, EditText viewToUpdate) {
+		public void onUploadRequested(String field, EditText viewToUpdate) {
 		}
 	};
 	private final LayoutInflater mLayoutInflater;
@@ -67,8 +67,8 @@ public class ItemDataAdapter {
 			final EditText editText = (EditText) rootView.findViewById(R.id.item_data_content);
 			editText.addTextChangedListener(new MokaTextWatcher() {
 				@Override
-				public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-					mCallbacks.onContentChanged(field, charSequence.toString());
+				public void onTextChanged(String newText) {
+					mCallbacks.onContentChanged(field, newText);
 				}
 			});
 			return rootView;
@@ -78,8 +78,8 @@ public class ItemDataAdapter {
 			final EditText editText = (EditText) rootView.findViewById(R.id.item_data_url);
 			editText.addTextChangedListener(new MokaTextWatcher() {
 				@Override
-				public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-					mCallbacks.onUrlChanged(field, charSequence.toString());
+				public void onTextChanged(String newText) {
+					mCallbacks.onUrlChanged(field, newText);
 				}
 			});
 			return rootView;
@@ -89,15 +89,15 @@ public class ItemDataAdapter {
 			final EditText editText = (EditText) rootView.findViewById(R.id.item_data_url);
 			editText.addTextChangedListener(new MokaTextWatcher() {
 				@Override
-				public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-					mCallbacks.onUrlChanged(MediaType.KEY_URL, charSequence.toString());
+				public void onTextChanged(String newText) {
+					mCallbacks.onUrlChanged(MediaType.KEY_URL, newText);
 				}
 			});
 			final ImageButton uploadButton = (ImageButton) rootView.findViewById(R.id.item_data_upload);
 			uploadButton.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					mCallbacks.onUploadPicture(field, editText);
+					mCallbacks.onUploadRequested(field, editText);
 				}
 			});
 			return rootView;
@@ -110,7 +110,7 @@ public class ItemDataAdapter {
 
 		public void onUrlChanged(String field, String url);
 
-		public void onUploadPicture(String field, EditText viewToUpdate);
+		public void onUploadRequested(String field, EditText viewToUpdate);
 	}
 
 	static abstract class MokaTextWatcher implements TextWatcher {
@@ -119,10 +119,14 @@ public class ItemDataAdapter {
 		}
 
 		@Override
-		public abstract void onTextChanged(CharSequence charSequence, int start, int before, int count);
+		public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+			onTextChanged(charSequence.toString());
+		}
 
 		@Override
 		public void afterTextChanged(Editable editable) {
 		}
+
+		public abstract void onTextChanged(String newText);
 	}
 }

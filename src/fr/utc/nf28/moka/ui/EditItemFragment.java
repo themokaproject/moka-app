@@ -9,7 +9,6 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,10 +28,10 @@ import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.io.agent.IAndroidAgent;
 import fr.utc.nf28.moka.ui.custom.MoveItemListener;
+import fr.utc.nf28.moka.util.HttpHelper;
 import fr.utc.nf28.moka.util.JadeUtils;
 import fr.utc.nf28.moka.util.MokaRestHelper;
 import fr.utc.nf28.moka.util.PictureUtils;
-import fr.utc.nf28.moka.util.SharedPreferencesUtils;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -116,11 +115,10 @@ public class EditItemFragment extends SherlockFragment implements ItemDataAdapte
 		itemTitle.setText(mSelectedItem.getTitle());
 		itemTitle.addTextChangedListener(new ItemDataAdapter.MokaTextWatcher() {
 			@Override
-			public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-				final String title = charSequence.toString();
-				mSelectedItem.setTitle(title);
-				mAgent.editItem(mSelectedItem.getId(), MokaType.KEY_TITLE, title);
-				getSherlockActivity().getSupportActionBar().setTitle(title);
+			public void onTextChanged(String newText) {
+				getSherlockActivity().getSupportActionBar().setTitle(newText);
+				mSelectedItem.setTitle(newText);
+				mAgent.editItem(mSelectedItem.getId(), MokaType.KEY_TITLE, newText);
 			}
 		});
 		canvasMoveItem.setOnTouchListener(new MoveItemListener() {
@@ -210,7 +208,7 @@ public class EditItemFragment extends SherlockFragment implements ItemDataAdapte
 	}
 
 	@Override
-	public void onUploadPicture(String field, EditText viewToUpdate) {
+	public void onUploadRequested(String field, EditText viewToUpdate) {
 		mViewToUpdate = viewToUpdate;
 		final Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(PictureUtils.getTempPictureFile()));
@@ -221,8 +219,8 @@ public class EditItemFragment extends SherlockFragment implements ItemDataAdapte
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST) {
 			if (resultCode == Activity.RESULT_OK) {
-				final String API_URL = "http://" + PreferenceManager.getDefaultSharedPreferences(getSherlockActivity())
-						.getString(SharedPreferencesUtils.KEY_PREF_IP, "") + "/api"; // TODO: refact with the other Fragments
+
+				final String API_URL = HttpHelper.getMokaApiUrl(getSherlockActivity());
 
 				final int itemId = mSelectedItem.getId();
 				new UploadImageTask(API_URL, itemId, new Callback<Response>() {
