@@ -80,7 +80,7 @@ public abstract class TextType extends MokaType implements Parcelable {
 
 		@Override
 		public List<ItemData> fillItemData() {
-			return Arrays.asList(new ItemData(KEY_TITLE), new ItemData(KEY_CONTENT));
+			return Arrays.asList(new ItemData(KEY_CONTENT));
 		}
 	}
 
@@ -110,7 +110,7 @@ public abstract class TextType extends MokaType implements Parcelable {
 
 		@Override
 		public List<ItemData> fillItemData() {
-			return Arrays.asList(new ItemData(KEY_TITLE), new ItemData(KEY_CONTENT));
+			return Arrays.asList(new ItemData(KEY_CONTENT));
 		}
 	}
 }

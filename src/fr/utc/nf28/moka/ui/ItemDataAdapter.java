@@ -9,16 +9,14 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import fr.utc.nf28.moka.R;
-import fr.utc.nf28.moka.data.*;
+import fr.utc.nf28.moka.data.ItemData;
+import fr.utc.nf28.moka.data.MediaType;
+import fr.utc.nf28.moka.data.TextType;
 
 import java.util.List;
 
 public class ItemDataAdapter {
 	private static final Callbacks sDummyCallbacks = new Callbacks() {
-		@Override
-		public void onTitleChanged(String field, String title) {
-		}
-
 		@Override
 		public void onContentChanged(String field, String content) {
 		}
@@ -32,14 +30,12 @@ public class ItemDataAdapter {
 		}
 	};
 	private final LayoutInflater mLayoutInflater;
-	private final MokaItem mCurrentItem;
 	private final ViewGroup mParent;
 	private List<ItemData> mItemsData;
 	private Callbacks mCallbacks = sDummyCallbacks;
 
-	public ItemDataAdapter(Context context, MokaItem currentItem, ViewGroup parent) {
+	public ItemDataAdapter(Context context, ViewGroup parent) {
 		mLayoutInflater = LayoutInflater.from(context);
-		mCurrentItem = currentItem;
 		mParent = parent;
 	}
 
@@ -66,18 +62,6 @@ public class ItemDataAdapter {
 	}
 
 	private View getView(final String field) {
-		if (MokaType.KEY_TITLE.equals(field)) {
-			final View rootView = mLayoutInflater.inflate(R.layout.item_data_edit_title, mParent, true);
-			final EditText editText = (EditText) rootView.findViewById(R.id.item_data_title);
-			editText.setText(mCurrentItem.getTitle());
-			editText.addTextChangedListener(new MokaTextWatcher() {
-				@Override
-				public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-					mCallbacks.onTitleChanged(field, charSequence.toString());
-				}
-			});
-			return rootView;
-		}
 		if (TextType.KEY_CONTENT.equals(field)) {
 			final View rootView = mLayoutInflater.inflate(R.layout.item_data_edit_content, mParent, true);
 			final EditText editText = (EditText) rootView.findViewById(R.id.item_data_content);
@@ -122,8 +106,6 @@ public class ItemDataAdapter {
 	}
 
 	public interface Callbacks {
-		public void onTitleChanged(String field, String title);
-
 		public void onContentChanged(String field, String content);
 
 		public void onUrlChanged(String field, String url);
@@ -131,7 +113,7 @@ public class ItemDataAdapter {
 		public void onUploadPicture(String field, EditText viewToUpdate);
 	}
 
-	private static abstract class MokaTextWatcher implements TextWatcher {
+	static abstract class MokaTextWatcher implements TextWatcher {
 		@Override
 		public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
 		}

@@ -50,7 +50,7 @@ public abstract class MediaType extends MokaType implements Parcelable {
 
 		@Override
 		public List<ItemData> fillItemData() {
-			return Arrays.asList(new ItemData(KEY_TITLE), new ItemData(KEY_URL_UPLOAD));
+			return Arrays.asList(new ItemData(KEY_URL_UPLOAD));
 		}
 	}
 
@@ -80,7 +80,7 @@ public abstract class MediaType extends MokaType implements Parcelable {
 
 		@Override
 		public List<ItemData> fillItemData() {
-			return Arrays.asList(new ItemData(KEY_TITLE), new ItemData(KEY_URL));
+			return Arrays.asList(new ItemData(KEY_URL));
 		}
 	}
 
@@ -110,7 +110,7 @@ public abstract class MediaType extends MokaType implements Parcelable {
 
 		@Override
 		public List<ItemData> fillItemData() {
-			return Arrays.asList(new ItemData(KEY_TITLE), new ItemData(KEY_URL));
+			return Arrays.asList(new ItemData(KEY_URL));
 		}
 	}
 }

@@ -101,21 +101,28 @@ public class EditItemFragment extends SherlockFragment implements ItemDataAdapte
 		final View rootView = inflater.inflate(R.layout.fragment_edit_item, container, false);
 
 		final MokaType type = mSelectedItem.getType();
-		mItemDataAdapter = new ItemDataAdapter(getSherlockActivity(), mSelectedItem,
-				(ViewGroup) rootView.findViewById(R.id.item_data_fields));
-		mItemDataAdapter.setCallbacks(this);
-		mItemDataAdapter.updateItemsData(type.getItemData());
 
 		final TextView itemType = (TextView) rootView.findViewById(R.id.item_type);
 		final TextView itemCategory = (TextView) rootView.findViewById(R.id.item_category);
 		final TextView itemCreationDate = (TextView) rootView.findViewById(R.id.item_creation_date);
 		final ImageView itemImage = (ImageView) rootView.findViewById(R.id.item_image);
+		final EditText itemTitle = (EditText) rootView.findViewById(R.id.item_data_title);
 		final View canvasMoveItem = rootView.findViewById(R.id.canvas_move_item);
 
 		itemType.setText(type.getName());
 		itemCategory.setText(type.getCategoryName());
 		itemCreationDate.setText(mSelectedItem.getCreationDate());
 		itemImage.setImageResource(type.getResId());
+		itemTitle.setText(mSelectedItem.getTitle());
+		itemTitle.addTextChangedListener(new ItemDataAdapter.MokaTextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+				final String title = charSequence.toString();
+				mSelectedItem.setTitle(title);
+				mAgent.editItem(mSelectedItem.getId(), MokaType.KEY_TITLE, title);
+				getSherlockActivity().getSupportActionBar().setTitle(title);
+			}
+		});
 		canvasMoveItem.setOnTouchListener(new MoveItemListener() {
 			@Override()
 			public void move(int direction, int velocity) {
@@ -132,6 +139,11 @@ public class EditItemFragment extends SherlockFragment implements ItemDataAdapte
 				mAgent.rotateItem(mSelectedItem.getId(), direction);
 			}
 		});
+
+		mItemDataAdapter = new ItemDataAdapter(getSherlockActivity(),
+				(ViewGroup) rootView.findViewById(R.id.item_data_fields));
+		mItemDataAdapter.setCallbacks(this);
+		mItemDataAdapter.updateItemsData(type.getItemData());
 
 		return rootView;
 	}
@@ -188,20 +200,13 @@ public class EditItemFragment extends SherlockFragment implements ItemDataAdapte
 	}
 
 	@Override
-	public void onTitleChanged(String field, String title) {
-		mSelectedItem.setTitle(title);
-		JadeUtils.getAndroidAgentInterface().editItem(mSelectedItem.getId(), field, title);
-		getSherlockActivity().getSupportActionBar().setTitle(title);
-	}
-
-	@Override
 	public void onContentChanged(String field, String content) {
-		JadeUtils.getAndroidAgentInterface().editItem(mSelectedItem.getId(), field, content);
+		mAgent.editItem(mSelectedItem.getId(), field, content);
 	}
 
 	@Override
 	public void onUrlChanged(String field, String url) {
-		JadeUtils.getAndroidAgentInterface().editItem(mSelectedItem.getId(), field, url);
+		mAgent.editItem(mSelectedItem.getId(), field, url);
 	}
 
 	@Override
@@ -224,7 +229,7 @@ public class EditItemFragment extends SherlockFragment implements ItemDataAdapte
 					@Override
 					public void success(Response response, Response response2) {
 						final String generatedUri = API_URL + "/image/" + mSelectedItem.getId();
-						JadeUtils.getAndroidAgentInterface().editItem(itemId, MediaType.ImageType.KEY_URL, generatedUri);
+						mAgent.editItem(itemId, MediaType.ImageType.KEY_URL, generatedUri);
 						if (mViewToUpdate != null) {
 							mViewToUpdate.setText(generatedUri);
 							mViewToUpdate = null;
