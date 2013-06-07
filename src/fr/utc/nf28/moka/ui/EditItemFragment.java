@@ -46,6 +46,7 @@ import retrofit.mime.TypedFile;
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class EditItemFragment extends SherlockFragment implements ItemDataAdapter.Callbacks {
+	public static final int RESULT_DELETE = Activity.RESULT_FIRST_USER + 1;
 	/**
 	 * A dummy implementation of the {@link Callbacks} interface that does
 	 * nothing. Used only when this fragment is not attached to an activity.
@@ -56,7 +57,7 @@ public class EditItemFragment extends SherlockFragment implements ItemDataAdapte
 		}
 	};
 	private static final String TAG = makeLogTag(EditItemFragment.class);
-	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST = Activity.RESULT_FIRST_USER + 1;
+	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST = RESULT_DELETE + 1;
 	private final MokaItem mSelectedItem;
 	private final IAndroidAgent mAgent = JadeUtils.getAndroidAgentInterface();
 	private Callbacks mCallbacks;

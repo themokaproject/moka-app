@@ -21,7 +21,6 @@ import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 public class EditItemActivity extends MokaUpActivity implements EditItemFragment.Callbacks,
 		LockingReceiver.OnLockingListener {
 	public static final String ARG_ITEM = "arg_item";
-	public static final int RESULT_DELETE = RESULT_FIRST_USER + 1;
 	private static final String TAG = makeLogTag(EditItemActivity.class);
 	private final IntentFilter mIntentFilter = new IntentFilter(MokaReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER);
 	private MokaItem mSelectedItem;
@@ -67,7 +66,7 @@ public class EditItemActivity extends MokaUpActivity implements EditItemFragment
 	@Override
 	public void onItemDeletion(MokaItem item) {
 		JadeUtils.getAndroidAgentInterface().deleteItem(item.getId());
-		setResult(EditItemActivity.RESULT_DELETE);
+		setResult(EditItemFragment.RESULT_DELETE);
 		finish();
 	}
 

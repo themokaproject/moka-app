@@ -165,7 +165,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 	public void onTypeSelected(MokaType type) {
 		final Intent detailIntent = new Intent(this, NewItemActivity.class);
 		detailIntent.putExtra(NewItemActivity.ARG_TYPE, type);
-		startActivity(detailIntent);
+		startActivityForResult(detailIntent, EDIT_ITEM_REQUEST);
 
 	}
 
@@ -184,7 +184,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == EDIT_ITEM_REQUEST) {
-			if (resultCode == EditItemActivity.RESULT_DELETE) {
+			if (resultCode == EditItemFragment.RESULT_DELETE) {
 				Crouton.makeText(this, getResources().getString(R.string.item_deletion_success),
 						CroutonUtils.INFO_MOKA_STYLE).show();
 			}

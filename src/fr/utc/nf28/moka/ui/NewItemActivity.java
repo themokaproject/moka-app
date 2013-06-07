@@ -120,7 +120,7 @@ public class NewItemActivity extends MokaUpActivity implements CreationReceiver.
 	@Override
 	public void onItemDeletion(MokaItem item) {
 		JadeUtils.getAndroidAgentInterface().deleteItem(item.getId());
-		setResult(EditItemActivity.RESULT_DELETE);
+		setResult(EditItemFragment.RESULT_DELETE);
 		finish();
 	}
 }
