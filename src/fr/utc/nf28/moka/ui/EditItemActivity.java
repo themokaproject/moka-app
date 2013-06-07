@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.view.ViewStub;
-import android.widget.Toast;
-
+import android.widget.Button;
+import android.widget.ProgressBar;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.utc.nf28.moka.R;
@@ -25,7 +25,9 @@ public class EditItemActivity extends MokaUpActivity implements EditItemFragment
 	public static final String ARG_ITEM = "arg_item";
 	private static final String TAG = makeLogTag(EditItemActivity.class);
 	private final IntentFilter mIntentFilter = new IntentFilter(MokaReceiver.INTENT_FILTER_JADE_SERVER_RECEIVER);
+	private Button mButtonRetry;
 	private MokaItem mSelectedItem;
+	private ProgressBar mProgressBar;
 	/**
 	 * Broadcast receiver used to catch locking callback from SMA
 	 */
@@ -37,12 +39,14 @@ public class EditItemActivity extends MokaUpActivity implements EditItemFragment
 
 		setContentView(R.layout.edit_item_activity);
 
+		mProgressBar = (ProgressBar) findViewById(R.id.progress);
+
 		mLockingReceiver = new LockingReceiver(this);
 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		final Intent intent = getIntent();
-		if (savedInstanceState == null && intent.hasExtra(ARG_ITEM)) {
+		if (intent.hasExtra(ARG_ITEM)) {
 			mSelectedItem = intent.getExtras().getParcelable(ARG_ITEM);
 			if (mSelectedItem == null) {
 				throw new IllegalStateException("Selected item cannot be null");
@@ -74,7 +78,7 @@ public class EditItemActivity extends MokaUpActivity implements EditItemFragment
 
 	@Override
 	public void onSuccess() {
-		Crouton.makeText(this, "Element locké pour vous ! ", Style.CONFIRM).show();
+		Crouton.makeText(this, "Element locké pour vous ! ", Style.CONFIRM).show(); // TODO: stringify
 		resetUi();
 		getSupportFragmentManager()
 				.beginTransaction()
@@ -85,25 +89,46 @@ public class EditItemActivity extends MokaUpActivity implements EditItemFragment
 
 	@Override
 	public void onAlreadyLocked(String lockerName) {
-		//TODO display retry button
 		Crouton.makeText(this, "Element déjà locké par " + lockerName, CroutonUtils.INFO_MOKA_STYLE).show();
-		resetUi();
-		((ViewStub) findViewById(R.id.retry)).inflate();
+		// TODO: stringify
+		mProgressBar.setVisibility(View.GONE);
+		showRetryButton();
 	}
 
 	@Override
 	public void onError() {
-		//TODO display error or return ?
-		Crouton.makeText(this, "locking error ", Style.ALERT).show();
-		resetUi();
-		((ViewStub) findViewById(R.id.retry)).inflate();
+		Crouton.makeText(this, "locking error ", Style.ALERT).show(); // TODO: stringify
+		mProgressBar.setVisibility(View.GONE);
+		showRetryButton();
 	}
 
 	private void resetUi() {
-		findViewById(R.id.progress).setVisibility(View.GONE);
+		mProgressBar.setVisibility(View.GONE);
+		mProgressBar = null;
+		if (mButtonRetry != null) {
+			mButtonRetry.setVisibility(View.GONE);
+			mButtonRetry = null;
+		}
+	}
+
+	private void showRetryButton() {
+		if (mButtonRetry == null) {
+			final ViewStub retryStub = (ViewStub) findViewById(R.id.retry);
+			retryStub.setOnInflateListener(new ViewStub.OnInflateListener() {
+				@Override
+				public void onInflate(ViewStub viewStub, View view) {
+					mButtonRetry = (Button) view;
+				}
+			});
+			retryStub.inflate();
+		} else {
+			mButtonRetry.setVisibility(View.VISIBLE);
+		}
 	}
 
 	public void retry(View v) {
-		Toast.makeText(this, "TODO: implem", Toast.LENGTH_SHORT).show();
+		mButtonRetry.setVisibility(View.GONE);
+		mProgressBar.setVisibility(View.VISIBLE);
+		JadeUtils.getAndroidAgentInterface().lockItem(mSelectedItem.getId());
 	}
 }
