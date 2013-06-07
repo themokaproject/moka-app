@@ -12,5 +12,5 @@ Licensed under the Beerware License:
 
 <pre>
 You can do whatever you want with this stuff.
-If we meet some day, and you think this stuff is worth it, you can buy me/us a beer in return.
+If we meet some day, and you think this stuff is worth it, you can buy us a beer (or basically anything else) in return.
 </pre>
