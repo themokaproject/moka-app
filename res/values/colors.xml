@@ -2,6 +2,6 @@
 
 <resources>
     <color name="holo_blue">#33b5e5</color>
-    <color name="card_grey">#e8e8e8</color>
+    <color name="card_grey">#ececec</color>
     <color name="moka_brown">#7d321a</color>
 </resources>
