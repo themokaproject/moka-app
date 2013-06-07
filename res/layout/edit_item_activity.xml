@@ -14,4 +14,11 @@
         style="?android:attr/android:progressBarStyleLarge"
         android:layout_gravity="center" />
 
+    <ViewStub
+        android:id="@+id/retry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout="@layout/btn_retry"
+        android:layout_gravity="center" />
+
 </FrameLayout>

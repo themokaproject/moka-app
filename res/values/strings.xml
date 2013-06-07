@@ -143,6 +143,8 @@
 
     <!-- NewItemActivity -->
     <string name="new_item_actionbar_title">Nouvel élément</string>
+    <!-- EditItemActivity -->
+    <string name="lock_error_retry_btn_title">Réessayer</string>
 
     <!-- EditItemFragment -->
     <string name="item_info_creation">Créé par %1$s le %2$s</string>

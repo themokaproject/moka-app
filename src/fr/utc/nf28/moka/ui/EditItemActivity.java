@@ -5,6 +5,8 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
+import android.view.ViewStub;
+import android.widget.Toast;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
@@ -86,6 +88,7 @@ public class EditItemActivity extends MokaUpActivity implements EditItemFragment
 		//TODO display retry button
 		Crouton.makeText(this, "Element déjà locké par " + lockerName, CroutonUtils.INFO_MOKA_STYLE).show();
 		resetUi();
+		((ViewStub) findViewById(R.id.retry)).inflate();
 	}
 
 	@Override
@@ -93,9 +96,14 @@ public class EditItemActivity extends MokaUpActivity implements EditItemFragment
 		//TODO display error or return ?
 		Crouton.makeText(this, "locking error ", Style.ALERT).show();
 		resetUi();
+		((ViewStub) findViewById(R.id.retry)).inflate();
 	}
 
 	private void resetUi() {
 		findViewById(R.id.progress).setVisibility(View.GONE);
+	}
+
+	public void retry(View v) {
+		Toast.makeText(this, "TODO: implem", Toast.LENGTH_SHORT).show();
 	}
 }
