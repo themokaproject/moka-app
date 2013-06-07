@@ -17,15 +17,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-
-import java.io.File;
-import java.lang.ref.WeakReference;
-
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.utc.nf28.moka.R;
@@ -42,6 +37,9 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.mime.TypedFile;
+
+import java.io.File;
+import java.lang.ref.WeakReference;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
@@ -197,7 +195,17 @@ public class EditItemFragment extends SherlockFragment implements ItemDataAdapte
 	}
 
 	@Override
-	public void onUploadPicture(EditText viewToUpdate) {
+	public void onContentChanged(String field, String content) {
+		JadeUtils.getAndroidAgentInterface().editItem(mSelectedItem.getId(), field, content);
+	}
+
+	@Override
+	public void onUrlChanged(String field, String url) {
+		JadeUtils.getAndroidAgentInterface().editItem(mSelectedItem.getId(), field, url);
+	}
+
+	@Override
+	public void onUploadPicture(String field, EditText viewToUpdate) {
 		mViewToUpdate = viewToUpdate;
 		final Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(PictureUtils.getTempPictureFile()));

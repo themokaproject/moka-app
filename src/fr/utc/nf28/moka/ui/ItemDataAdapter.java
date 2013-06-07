@@ -8,16 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import fr.utc.nf28.moka.R;
+import fr.utc.nf28.moka.data.*;
 
 import java.util.List;
-
-import fr.utc.nf28.moka.R;
-import fr.utc.nf28.moka.data.ItemData;
-import fr.utc.nf28.moka.data.MediaType;
-import fr.utc.nf28.moka.data.MokaItem;
-import fr.utc.nf28.moka.data.MokaType;
-import fr.utc.nf28.moka.data.TextType;
-import fr.utc.nf28.moka.util.JadeUtils;
 
 public class ItemDataAdapter {
 	private static final Callbacks sDummyCallbacks = new Callbacks() {
@@ -26,7 +20,15 @@ public class ItemDataAdapter {
 		}
 
 		@Override
-		public void onUploadPicture(EditText viewToUpdate) {
+		public void onContentChanged(String field, String content) {
+		}
+
+		@Override
+		public void onUrlChanged(String field, String url) {
+		}
+
+		@Override
+		public void onUploadPicture(String field, EditText viewToUpdate) {
 		}
 	};
 	private final LayoutInflater mLayoutInflater;
@@ -68,18 +70,10 @@ public class ItemDataAdapter {
 			final View rootView = mLayoutInflater.inflate(R.layout.item_data_edit_title, mParent, true);
 			final EditText editText = (EditText) rootView.findViewById(R.id.item_data_title);
 			editText.setText(mCurrentItem.getTitle());
-			editText.addTextChangedListener(new TextWatcher() {
-				@Override
-				public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
-				}
-
+			editText.addTextChangedListener(new MokaTextWatcher() {
 				@Override
 				public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
 					mCallbacks.onTitleChanged(field, charSequence.toString());
-				}
-
-				@Override
-				public void afterTextChanged(Editable editable) {
 				}
 			});
 			return rootView;
@@ -87,18 +81,10 @@ public class ItemDataAdapter {
 		if (TextType.KEY_CONTENT.equals(field)) {
 			final View rootView = mLayoutInflater.inflate(R.layout.item_data_edit_content, mParent, true);
 			final EditText editText = (EditText) rootView.findViewById(R.id.item_data_content);
-			editText.addTextChangedListener(new TextWatcher() {
-				@Override
-				public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
-				}
-
+			editText.addTextChangedListener(new MokaTextWatcher() {
 				@Override
 				public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-					JadeUtils.getAndroidAgentInterface().editItem(mCurrentItem.getId(), field, charSequence.toString());
-				}
-
-				@Override
-				public void afterTextChanged(Editable editable) {
+					mCallbacks.onContentChanged(field, charSequence.toString());
 				}
 			});
 			return rootView;
@@ -106,25 +92,28 @@ public class ItemDataAdapter {
 		if (MediaType.KEY_URL.equals(field)) {
 			final View rootView = mLayoutInflater.inflate(R.layout.item_data_edit_url, mParent, true);
 			final EditText editText = (EditText) rootView.findViewById(R.id.item_data_url);
-			editText.addTextChangedListener(new TextWatcher() {
-				@Override
-				public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
-				}
-
+			editText.addTextChangedListener(new MokaTextWatcher() {
 				@Override
 				public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-					JadeUtils.getAndroidAgentInterface().editItem(mCurrentItem.getId(), field, charSequence.toString());
+					mCallbacks.onUrlChanged(field, charSequence.toString());
 				}
-
+			});
+			return rootView;
+		}
+		if (MediaType.ImageType.KEY_URL_UPLOAD.equals(field)) {
+			final View rootView = mLayoutInflater.inflate(R.layout.item_data_edit_url_upload, mParent, true);
+			final EditText editText = (EditText) rootView.findViewById(R.id.item_data_url);
+			editText.addTextChangedListener(new MokaTextWatcher() {
 				@Override
-				public void afterTextChanged(Editable editable) {
+				public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+					mCallbacks.onUrlChanged(MediaType.KEY_URL, charSequence.toString());
 				}
 			});
 			final ImageButton uploadButton = (ImageButton) rootView.findViewById(R.id.item_data_upload);
 			uploadButton.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					mCallbacks.onUploadPicture(editText);
+					mCallbacks.onUploadPicture(field, editText);
 				}
 			});
 			return rootView;
@@ -135,6 +124,23 @@ public class ItemDataAdapter {
 	public interface Callbacks {
 		public void onTitleChanged(String field, String title);
 
-		public void onUploadPicture(EditText viewToUpdate);
+		public void onContentChanged(String field, String content);
+
+		public void onUrlChanged(String field, String url);
+
+		public void onUploadPicture(String field, EditText viewToUpdate);
+	}
+
+	private static abstract class MokaTextWatcher implements TextWatcher {
+		@Override
+		public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+		}
+
+		@Override
+		public abstract void onTextChanged(CharSequence charSequence, int start, int before, int count);
+
+		@Override
+		public void afterTextChanged(Editable editable) {
+		}
 	}
 }

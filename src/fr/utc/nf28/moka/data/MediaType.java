@@ -2,11 +2,10 @@ package fr.utc.nf28.moka.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import fr.utc.nf28.moka.R;
 
 import java.util.Arrays;
 import java.util.List;
-
-import fr.utc.nf28.moka.R;
 
 public abstract class MediaType extends MokaType implements Parcelable {
 	public static final String KEY_URL = "url";
@@ -26,6 +25,7 @@ public abstract class MediaType extends MokaType implements Parcelable {
 
 	public static class ImageType extends MediaType implements Parcelable {
 		public static final String KEY_TYPE = "image";
+		public static final String KEY_URL_UPLOAD = "url_upload";
 		public static final Parcelable.Creator<ImageType> CREATOR = new Parcelable.Creator<ImageType>() {
 			public ImageType createFromParcel(Parcel in) {
 				return new ImageType(in);
@@ -50,7 +50,7 @@ public abstract class MediaType extends MokaType implements Parcelable {
 
 		@Override
 		public List<ItemData> fillItemData() {
-			return Arrays.asList(new ItemData(KEY_TITLE), new ItemData(KEY_URL));
+			return Arrays.asList(new ItemData(KEY_TITLE), new ItemData(KEY_URL_UPLOAD));
 		}
 	}
 
