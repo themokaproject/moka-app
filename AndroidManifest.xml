@@ -78,6 +78,14 @@
             android:name=".ui.WelcomeActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.TutoCollectionActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".ui.WelcomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.WelcomeActivity" />
+        </activity>
+        <activity
             android:name=".ui.nfc.NfcActivity"
             android:screenOrientation="portrait">
             <intent-filter>
