@@ -7,11 +7,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-
 import fr.utc.nf28.moka.R;
+import fr.utc.nf28.moka.ui.base.MokaUpActivity;
 
-public class TutoCollectionActivity extends SherlockFragmentActivity {
+public class TutoCollectionActivity extends MokaUpActivity {
 
 	private TutoCollectionPagerAdapter mTutoCollectionPagerAdapter;
 
@@ -24,7 +23,7 @@ public class TutoCollectionActivity extends SherlockFragmentActivity {
 
 		mTutoCollectionPagerAdapter = new TutoCollectionPagerAdapter(getSupportFragmentManager());
 
-		mViewPager = (ViewPager)findViewById(R.id.tuto_pager);
+		mViewPager = (ViewPager) findViewById(R.id.tuto_pager);
 		mViewPager.setAdapter(mTutoCollectionPagerAdapter);
 	}
 
@@ -42,19 +41,34 @@ public class TutoCollectionActivity extends SherlockFragmentActivity {
 		public Fragment getItem(int i) {
 			Fragment fragment = new TutoCollectionFragment();
 			Bundle args = new Bundle();
-			args.putInt(TutoCollectionFragment.ARG_IMG, i + 1); // Our object is just an integer :-P
+			args.putInt(TutoCollectionFragment.ARG_DRAWABLE, R.drawable.logo);
 			fragment.setArguments(args);
 			return fragment;
 		}
 
 		@Override
 		public int getCount() {
-			return 5;
+			return 6;
 		}
 
 		@Override
 		public CharSequence getPageTitle(int position) {
-			return "OBJECT " + (position + 1);
+			switch (position) {
+				case 0:
+					return "Connexion";
+				case 1:
+					return "Vue principale";
+				case 2:
+					return "Creation";
+				case 3:
+					return "Items en cours";
+				case 4:
+					return "Edition";
+				case 5:
+					return "Déplacement";
+				default:
+					return "tuto " + (position + 1);
+			}
 		}
 	}
 
