@@ -13,7 +13,7 @@ import fr.utc.nf28.moka.data.ItemData;
 import fr.utc.nf28.moka.data.MediaType;
 import fr.utc.nf28.moka.data.TextType;
 
-import java.util.List;
+import java.util.Map;
 
 public class ItemDataAdapter {
 	private static final Callbacks sDummyCallbacks = new Callbacks() {
@@ -31,7 +31,7 @@ public class ItemDataAdapter {
 	};
 	private final LayoutInflater mLayoutInflater;
 	private final ViewGroup mParent;
-	private List<ItemData> mItemsData;
+	private Map<String, ItemData> mItemsData;
 	private Callbacks mCallbacks = sDummyCallbacks;
 
 	public ItemDataAdapter(Context context, ViewGroup parent) {
@@ -39,7 +39,7 @@ public class ItemDataAdapter {
 		mParent = parent;
 	}
 
-	public void updateItemsData(List<ItemData> itemDatas) {
+	public void updateItemsData(Map<String, ItemData> itemDatas) {
 		mItemsData = itemDatas;
 		notifyDataSetChanged();
 	}
@@ -56,37 +56,40 @@ public class ItemDataAdapter {
 		if (mItemsData == null) {
 			return;
 		}
-		for (ItemData itemData : mItemsData) {
-			getView(itemData.getField());
+		for (Map.Entry<String, ItemData> itemData : mItemsData.entrySet()) {
+			getView(itemData.getKey(), itemData.getValue());
 		}
 	}
 
-	private View getView(final String field) {
-		if (TextType.KEY_CONTENT.equals(field)) {
+	private View getView(final String fielKey, ItemData itemData) {
+		if (TextType.KEY_CONTENT.equals(fielKey)) {
 			final View rootView = mLayoutInflater.inflate(R.layout.item_data_edit_content, mParent, true);
 			final EditText editText = (EditText) rootView.findViewById(R.id.item_data_content);
+			editText.setText(itemData.getTextValue());
 			editText.addTextChangedListener(new MokaTextWatcher() {
 				@Override
 				public void onTextChanged(String newText) {
-					mCallbacks.onContentChanged(field, newText);
+					mCallbacks.onContentChanged(fielKey, newText);
 				}
 			});
 			return rootView;
 		}
-		if (MediaType.KEY_URL.equals(field)) {
+		if (MediaType.KEY_URL.equals(fielKey)) {
 			final View rootView = mLayoutInflater.inflate(R.layout.item_data_edit_url, mParent, true);
 			final EditText editText = (EditText) rootView.findViewById(R.id.item_data_url);
+			editText.setText(itemData.getTextValue());
 			editText.addTextChangedListener(new MokaTextWatcher() {
 				@Override
 				public void onTextChanged(String newText) {
-					mCallbacks.onUrlChanged(field, newText);
+					mCallbacks.onUrlChanged(fielKey, newText);
 				}
 			});
 			return rootView;
 		}
-		if (MediaType.ImageType.KEY_URL_UPLOAD.equals(field)) {
+		if (MediaType.ImageType.KEY_URL_UPLOAD.equals(fielKey)) {
 			final View rootView = mLayoutInflater.inflate(R.layout.item_data_edit_url_upload, mParent, true);
 			final EditText editText = (EditText) rootView.findViewById(R.id.item_data_url);
+			editText.setText(itemData.getTextValue());
 			editText.addTextChangedListener(new MokaTextWatcher() {
 				@Override
 				public void onTextChanged(String newText) {
@@ -97,7 +100,7 @@ public class ItemDataAdapter {
 			uploadButton.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					mCallbacks.onUploadRequested(field, editText);
+					mCallbacks.onUploadRequested(fielKey, editText);
 				}
 			});
 			return rootView;

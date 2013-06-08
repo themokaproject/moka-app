@@ -11,7 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class PictureUtils {
+public final class ImageUtils {
 	private static final String TEMP_IMAGE_NAME = "moka_upload_temp.jpg";
 	/**
 	 * hight resolution

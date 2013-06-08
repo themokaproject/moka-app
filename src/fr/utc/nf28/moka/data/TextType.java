@@ -2,11 +2,10 @@ package fr.utc.nf28.moka.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.util.Arrays;
-import java.util.List;
-
 import fr.utc.nf28.moka.R;
+import fr.utc.nf28.moka.util.MapUtils;
+
+import java.util.Map;
 
 public abstract class TextType extends MokaType implements Parcelable {
 	public static final String KEY_CONTENT = "content";
@@ -49,7 +48,7 @@ public abstract class TextType extends MokaType implements Parcelable {
 		}
 
 		@Override
-		public List<ItemData> fillItemData() {
+		public Map<String, ItemData> fillItemData() {
 			return null;
 		}
 	}
@@ -79,8 +78,9 @@ public abstract class TextType extends MokaType implements Parcelable {
 		}
 
 		@Override
-		public List<ItemData> fillItemData() {
-			return Arrays.asList(new ItemData(KEY_CONTENT));
+		public Map<String, ItemData> fillItemData() {
+			//return Arrays.asList(new ItemData(KEY_CONTENT));
+			return MapUtils.asMap(KEY_CONTENT, new ItemData());
 		}
 	}
 
@@ -109,8 +109,8 @@ public abstract class TextType extends MokaType implements Parcelable {
 		}
 
 		@Override
-		public List<ItemData> fillItemData() {
-			return Arrays.asList(new ItemData(KEY_CONTENT));
+		public Map<String, ItemData> fillItemData() {
+			return MapUtils.asMap(KEY_CONTENT, new ItemData());
 		}
 	}
 }

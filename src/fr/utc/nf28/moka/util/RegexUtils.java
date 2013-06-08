@@ -2,7 +2,7 @@ package fr.utc.nf28.moka.util;
 
 import java.util.regex.Pattern;
 
-public class RegexUtils {
+public final class RegexUtils {
 	private static final String REGEX_IP_ADDRESS =
 			"^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
 					"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +

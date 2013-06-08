@@ -2,18 +2,16 @@ package fr.utc.nf28.moka.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import com.google.gson.annotations.SerializedName;
+import fr.utc.nf28.moka.util.DateUtils;
 
 import java.util.Calendar;
 
-import fr.utc.nf28.moka.util.DateUtils;
-
 public abstract class MokaItem implements Parcelable {
 	private static final int INVALID_ID = -1;
+	protected MokaType mType;
 	private int mId = INVALID_ID;
 	private String mTitle;
-	private MokaType mType;
 	@SerializedName("creationDate")
 	private String mCreationDate;
 
@@ -65,6 +63,8 @@ public abstract class MokaItem implements Parcelable {
 	public void setCreationDate(String creationDate) {
 		mCreationDate = creationDate;
 	}
+
+	public abstract void update(String field, String newValue);
 
 	@Override
 	public int describeContents() {

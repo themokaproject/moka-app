@@ -2,10 +2,7 @@ package fr.utc.nf28.moka.util;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.utc.nf28.moka.data.ComputerItem;
-import fr.utc.nf28.moka.data.MediaItem;
-import fr.utc.nf28.moka.data.MokaItem;
-import fr.utc.nf28.moka.data.TextItem;
+import fr.utc.nf28.moka.data.*;
 import fr.utc.nf28.moka.io.agent.A2ATransaction;
 
 import java.io.IOException;
@@ -51,23 +48,27 @@ public final class JSONParserUtils {
 
 		//retrieve common stuff
 		final String type = rootNode.path("type").asText();
-		final String title = rootNode.path("title").asText();
+		final String title = rootNode.path(MokaType.KEY_TITLE).asText();
 		final int id = rootNode.path("id").asInt();
 		final String creationDate = rootNode.path("creationDate").asText();
 
-		if ("umlClass".equals(type)) {
+		if (ComputerType.UmlType.KEY_TYPE.equals(type)) {
 			result = new ComputerItem.UmlItem(title);
 			//retrieve uml specific stuff
-		} else if ("image".equals(type)) {
+		} else if (MediaType.ImageType.KEY_TYPE.equals(type)) {
 			result = new MediaItem.ImageItem(title);
+			result.update(MediaType.KEY_URL, rootNode.path(MediaType.KEY_URL).asText());
 			//retrieve image specific stuff
-		} else if ("post-it".equals(type)) {
-			result = new TextItem.PostItItem(title);
-			//retrieve post-it specific stuff
-		} else if ("video".equals(type)) {
+		} else if (MediaType.VideoType.KEY_TYPE.equals(type)) {
 			result = new MediaItem.VideoItem(title);
-		} else if ("iframe".equals(type)) {
+			result.update(MediaType.KEY_URL, rootNode.path(MediaType.KEY_URL).asText());
+		} else if (MediaType.WebType.KEY_TYPE.equals(type)) {
 			result = new MediaItem.WebItem(title);
+			result.update(MediaType.KEY_URL, rootNode.path(MediaType.KEY_URL).asText());
+		} else if (TextType.PostItType.KEY_TYPE.equals(type)) {
+			result = new TextItem.PostItItem(title);
+			result.update(TextType.KEY_CONTENT, rootNode.path(TextType.KEY_CONTENT).asText());
+			//retrieve post-it specific stuff
 		}
 
 		if (result != null) {

@@ -29,9 +29,9 @@ import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.io.agent.IAndroidAgent;
 import fr.utc.nf28.moka.ui.custom.MoveItemListener;
 import fr.utc.nf28.moka.util.HttpHelper;
+import fr.utc.nf28.moka.util.ImageUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
 import fr.utc.nf28.moka.util.MokaRestHelper;
-import fr.utc.nf28.moka.util.PictureUtils;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -199,11 +199,13 @@ public class EditItemFragment extends SherlockFragment implements ItemDataAdapte
 
 	@Override
 	public void onContentChanged(String field, String content) {
+		mSelectedItem.update(field, content);
 		mAgent.editItem(mSelectedItem.getId(), field, content);
 	}
 
 	@Override
 	public void onUrlChanged(String field, String url) {
+		mSelectedItem.update(field, url);
 		mAgent.editItem(mSelectedItem.getId(), field, url);
 	}
 
@@ -211,7 +213,7 @@ public class EditItemFragment extends SherlockFragment implements ItemDataAdapte
 	public void onUploadRequested(String field, EditText viewToUpdate) {
 		mViewToUpdate = viewToUpdate;
 		final Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(PictureUtils.getTempPictureFile()));
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(ImageUtils.getTempPictureFile()));
 		startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST);
 	}
 
@@ -220,14 +222,15 @@ public class EditItemFragment extends SherlockFragment implements ItemDataAdapte
 		if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST) {
 			if (resultCode == Activity.RESULT_OK) {
 
-				final String API_URL = HttpHelper.getMokaApiUrl(getSherlockActivity());
+				final String apiUrl = HttpHelper.getMokaApiUrl(getSherlockActivity());
 
 				final int itemId = mSelectedItem.getId();
-				new UploadImageTask(API_URL, itemId, new Callback<Response>() {
+				new UploadImageTask(apiUrl, itemId, new Callback<Response>() {
 					@Override
 					public void success(Response response, Response response2) {
-						final String generatedUri = API_URL + "/image/" + mSelectedItem.getId();
-						mAgent.editItem(itemId, MediaType.ImageType.KEY_URL, generatedUri);
+						final String generatedUri = apiUrl + "/image/" + itemId;
+						mSelectedItem.update(MediaType.KEY_URL, generatedUri);
+						mAgent.editItem(itemId, MediaType.KEY_URL, generatedUri);
 						if (mViewToUpdate != null) {
 							mViewToUpdate.setText(generatedUri);
 							mViewToUpdate = null;
@@ -237,7 +240,7 @@ public class EditItemFragment extends SherlockFragment implements ItemDataAdapte
 					@Override
 					public void failure(RetrofitError retrofitError) {
 					}
-				}, this).execute(PictureUtils.getTempPictureFile());
+				}, this).execute(ImageUtils.getTempPictureFile());
 			} else if (resultCode != Activity.RESULT_CANCELED) {
 				Crouton.makeText(getSherlockActivity(), getResources().getString(R.string.network_error),
 						Style.ALERT).show();
@@ -292,7 +295,7 @@ public class EditItemFragment extends SherlockFragment implements ItemDataAdapte
 		@Override
 		protected File doInBackground(File... params) {
 			final File image = params[0];
-			PictureUtils.resize(image, PictureUtils.PICTURE_SIZE_LR);
+			ImageUtils.resize(image, ImageUtils.PICTURE_SIZE_LR);
 			return image;
 		}
 

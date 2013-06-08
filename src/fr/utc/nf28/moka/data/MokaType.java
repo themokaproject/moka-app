@@ -3,15 +3,15 @@ package fr.utc.nf28.moka.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class MokaType implements Parcelable, Comparable<MokaType> {
 	public static final String KEY_TITLE = "title";
 	protected String mDescription;
 	protected int mResId;
 	protected String mCategoryName;
-	private List<ItemData> mItemData;
+	private Map<String, ItemData> mItemData;
 	private String mName;
 
 	public MokaType(String name, String description, int resId, String categoryName) {
@@ -26,9 +26,10 @@ public abstract class MokaType implements Parcelable, Comparable<MokaType> {
 		mDescription = in.readString();
 		mResId = in.readInt();
 		mCategoryName = in.readString();
-		if (in.readLong() != -1) {
-			mItemData = new ArrayList<ItemData>();
-			in.readList(mItemData, ItemData.class.getClassLoader());
+		final int size = in.readInt();
+		if (size != -1) {
+			mItemData = new HashMap<String, ItemData>(size);
+			in.readMap(mItemData, ItemData.class.getClassLoader());
 		}
 	}
 
@@ -64,14 +65,18 @@ public abstract class MokaType implements Parcelable, Comparable<MokaType> {
 		mCategoryName = categoryName;
 	}
 
-	public List<ItemData> getItemData() {
+	public Map<String, ItemData> getItemData() {
 		if (mItemData == null) {
 			mItemData = fillItemData();
 		}
 		return mItemData;
 	}
 
-	protected abstract List<ItemData> fillItemData();
+	public ItemData getFieldValue(String key) {
+		return getItemData().get(key);
+	}
+
+	protected abstract Map<String, ItemData> fillItemData();
 
 	@Override
 	public int compareTo(MokaType other) {
@@ -90,10 +95,10 @@ public abstract class MokaType implements Parcelable, Comparable<MokaType> {
 		parcel.writeInt(mResId);
 		parcel.writeString(mCategoryName);
 		if (mItemData != null) {
-			parcel.writeLong(0);
-			parcel.writeList(mItemData);
+			parcel.writeInt(mItemData.size());
+			parcel.writeMap(mItemData);
 		} else {
-			parcel.writeLong(-1);
+			parcel.writeInt(-1);
 		}
 	}
 }

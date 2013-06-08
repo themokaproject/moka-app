@@ -13,6 +13,10 @@ public abstract class ComputerItem extends MokaItem implements Parcelable {
 		super(in);
 	}
 
+	@Override
+	public void update(String field, String newValue) {
+	}
+
 	public static class UmlItem extends ComputerItem implements Parcelable {
 		public static final Creator<UmlItem> CREATOR = new Creator<UmlItem>() {
 			public UmlItem createFromParcel(Parcel in) {

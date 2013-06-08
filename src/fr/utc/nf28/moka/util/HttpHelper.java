@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class HttpHelper {
+public final class HttpHelper {
 	private static String sApiUrl;
 
 	public static String convertStreamToString(InputStream is) throws IOException {

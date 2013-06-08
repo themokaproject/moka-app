@@ -3,9 +3,9 @@ package fr.utc.nf28.moka.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 import fr.utc.nf28.moka.R;
+import fr.utc.nf28.moka.util.MapUtils;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Map;
 
 public abstract class MediaType extends MokaType implements Parcelable {
 	public static final String KEY_URL = "url";
@@ -49,8 +49,8 @@ public abstract class MediaType extends MokaType implements Parcelable {
 		}
 
 		@Override
-		public List<ItemData> fillItemData() {
-			return Arrays.asList(new ItemData(KEY_URL_UPLOAD));
+		public Map<String, ItemData> fillItemData() {
+			return MapUtils.asMap(KEY_URL_UPLOAD, new ItemData());
 		}
 	}
 
@@ -79,8 +79,8 @@ public abstract class MediaType extends MokaType implements Parcelable {
 		}
 
 		@Override
-		public List<ItemData> fillItemData() {
-			return Arrays.asList(new ItemData(KEY_URL));
+		public Map<String, ItemData> fillItemData() {
+			return MapUtils.asMap(KEY_URL, new ItemData());
 		}
 	}
 
@@ -109,8 +109,8 @@ public abstract class MediaType extends MokaType implements Parcelable {
 		}
 
 		@Override
-		public List<ItemData> fillItemData() {
-			return Arrays.asList(new ItemData(KEY_URL));
+		public Map<String, ItemData> fillItemData() {
+			return MapUtils.asMap(KEY_URL, new ItemData());
 		}
 	}
 }

@@ -5,7 +5,7 @@ import android.os.Parcelable;
 import fr.utc.nf28.moka.MokaApplication;
 
 public abstract class MediaItem extends MokaItem implements Parcelable {
-	protected String mUrl;
+	private String mUrl;
 
 	public MediaItem(String title, MokaType type) {
 		this(title, type, "");
@@ -27,10 +27,17 @@ public abstract class MediaItem extends MokaItem implements Parcelable {
 
 	public void setUrl(String url) {
 		mUrl = url;
-		updateDefaultTypeUrl(url);
+		updateTypeValueUrl(url);
 	}
 
-	protected abstract void updateDefaultTypeUrl(String url);
+	@Override
+	public void update(String field, String newValue) {
+		if (MediaType.KEY_URL.equals(field)) {
+			setUrl(newValue);
+		}
+	}
+
+	protected abstract void updateTypeValueUrl(String url);
 
 	@Override
 	public void writeToParcel(Parcel parcel, int flags) {
@@ -58,8 +65,8 @@ public abstract class MediaItem extends MokaItem implements Parcelable {
 		}
 
 		@Override
-		protected void updateDefaultTypeUrl(String url) {
-			// TODO: update corresponding type default value
+		protected void updateTypeValueUrl(String url) {
+			mType.getFieldValue(MediaType.ImageType.KEY_URL_UPLOAD).setTextValue(url);
 		}
 	}
 
@@ -83,7 +90,8 @@ public abstract class MediaItem extends MokaItem implements Parcelable {
 		}
 
 		@Override
-		protected void updateDefaultTypeUrl(String url) {
+		protected void updateTypeValueUrl(String url) {
+			mType.getFieldValue(MediaType.KEY_URL).setTextValue(url);
 		}
 	}
 
@@ -107,7 +115,8 @@ public abstract class MediaItem extends MokaItem implements Parcelable {
 		}
 
 		@Override
-		protected void updateDefaultTypeUrl(String url) {
+		protected void updateTypeValueUrl(String url) {
+			mType.getFieldValue(MediaType.KEY_URL).setTextValue(url);
 		}
 	}
 }

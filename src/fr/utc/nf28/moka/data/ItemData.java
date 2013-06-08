@@ -13,33 +13,26 @@ public class ItemData implements Parcelable {
 			return new ItemData[size];
 		}
 	};
-	private final String mField;
-	private String mValue;
+	private String mTextValue;
 
-	public ItemData(String field) {
-		this(field, "");
+	public ItemData() {
+		this("");
 	}
 
-	public ItemData(String field, String value) {
-		mField = field;
-		mValue = value;
+	public ItemData(String textValue) {
+		mTextValue = textValue;
 	}
 
 	protected ItemData(Parcel in) {
-		mField = in.readString();
-		mValue = in.readString();
+		mTextValue = in.readString();
 	}
 
-	public String getField() {
-		return mField;
+	public String getTextValue() {
+		return mTextValue;
 	}
 
-	public String getValue() {
-		return mValue;
-	}
-
-	public void setValue(String value) {
-		mValue = value;
+	public void setTextValue(String textValue) {
+		mTextValue = textValue;
 	}
 
 	@Override
@@ -49,7 +42,6 @@ public class ItemData implements Parcelable {
 
 	@Override
 	public void writeToParcel(Parcel parcel, int flags) {
-		parcel.writeString(mField);
-		parcel.writeString(mValue);
+		parcel.writeString(mTextValue);
 	}
 }

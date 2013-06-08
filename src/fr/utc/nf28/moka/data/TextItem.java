@@ -5,13 +5,38 @@ import android.os.Parcelable;
 import fr.utc.nf28.moka.MokaApplication;
 
 public abstract class TextItem extends MokaItem implements Parcelable {
+	private String mContent;
+
 	public TextItem(String title, MokaType type) {
+		this(title, type, "");
+	}
+
+	public TextItem(String title, MokaType type, String content) {
 		super(title, type);
+		setContent(content);
 	}
 
 	protected TextItem(Parcel in) {
 		super(in);
 	}
+
+	public String getContent() {
+		return mContent;
+	}
+
+	public void setContent(String content) {
+		mContent = content;
+		updateTypeValueContent(content);
+	}
+
+	@Override
+	public void update(String field, String newValue) {
+		if (TextType.KEY_CONTENT.equals(field)) {
+			setContent(newValue);
+		}
+	}
+
+	protected abstract void updateTypeValueContent(String content);
 
 	public static class PlainTextItem extends TextItem implements Parcelable {
 		public static final Creator<PlainTextItem> CREATOR = new Creator<PlainTextItem>() {
@@ -30,6 +55,10 @@ public abstract class TextItem extends MokaItem implements Parcelable {
 
 		protected PlainTextItem(Parcel in) {
 			super(in);
+		}
+
+		@Override
+		protected void updateTypeValueContent(String content) {
 		}
 	}
 
@@ -51,6 +80,10 @@ public abstract class TextItem extends MokaItem implements Parcelable {
 		protected ListItem(Parcel in) {
 			super(in);
 		}
+
+		@Override
+		protected void updateTypeValueContent(String content) {
+		}
 	}
 
 	public static class PostItItem extends TextItem implements Parcelable {
@@ -70,6 +103,11 @@ public abstract class TextItem extends MokaItem implements Parcelable {
 
 		protected PostItItem(Parcel in) {
 			super(in);
+		}
+
+		@Override
+		protected void updateTypeValueContent(String content) {
+			mType.getFieldValue(TextType.KEY_CONTENT).setTextValue(content);
 		}
 	}
 }
