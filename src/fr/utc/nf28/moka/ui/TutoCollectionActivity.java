@@ -45,6 +45,9 @@ public class TutoCollectionActivity extends MokaUpActivity {
 				case 0:
 					args.putInt(TutoCollectionFragment.ARG_DRAWABLE, R.drawable.tuto_connexion);
 					break;
+				case 1:
+					args.putInt(TutoCollectionFragment.ARG_DRAWABLE, R.drawable.tuto_connexion_plateforme);
+					break;
 				default:
 					args.putInt(TutoCollectionFragment.ARG_DRAWABLE, R.drawable.logo);
 					break;
@@ -64,7 +67,7 @@ public class TutoCollectionActivity extends MokaUpActivity {
 				case 0:
 					return "Connexion";
 				case 1:
-					return "Vue principale";
+					return "Apparition";
 				case 2:
 					return "Creation";
 				case 3:
