@@ -31,6 +31,13 @@ public class WelcomeActivity extends SherlockActivity {
 		fName.setHint(R.string.first_name);
 		lName.setHint(R.string.name);
 
+		findViewById(R.id.welcome_start_tuto).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(WelcomeActivity.this, TutoCollectionActivity.class));
+			}
+		});
+
 		findViewById(R.id.welcome_start_moka).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
