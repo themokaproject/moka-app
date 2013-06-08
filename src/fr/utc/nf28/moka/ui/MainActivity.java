@@ -21,14 +21,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-
-import org.xml.sax.XMLReader;
-
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.MokaItem;
@@ -36,9 +32,11 @@ import fr.utc.nf28.moka.data.MokaType;
 import fr.utc.nf28.moka.io.agent.IAndroidAgent;
 import fr.utc.nf28.moka.ui.base.MokaDialogFragment;
 import fr.utc.nf28.moka.ui.nfc.NfcActivity;
+import fr.utc.nf28.moka.util.ConnectionUtils;
 import fr.utc.nf28.moka.util.CroutonUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
 import fr.utc.nf28.moka.util.SharedPreferencesUtils;
+import org.xml.sax.XMLReader;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
@@ -310,6 +308,12 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 			super.onPostExecute(ipString);
 
 			final IAndroidAgent interfaceAgent = JadeUtils.getAndroidAgentInterface();
+			if (interfaceAgent == null) {
+				// Sometimes, Jade is completely out
+				Crouton.makeText(MainActivity.this, getResources().getString(R.string.network_error),
+						ConnectionUtils.NETWORK_ERROR_STYLE).show();
+				return;
+			}
 			final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
 			final String firstName = prefs.getString(SharedPreferencesUtils.KEY_PREF_FIRST_NAME, getString(R.string.unknown_firstname));
 			final String lastName = prefs.getString(SharedPreferencesUtils.KEY_PREF_LAST_NAME, getString(R.string.unknown_lastname));
