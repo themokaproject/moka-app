@@ -2,5 +2,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:id="@+id/tuto_image" />
+    android:id="@+id/tuto_image"
+    android:padding="20dp"/>
 
