@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="max_item_type_picture_width_height">250dp</dimen>
-    <dimen name="move_item_canvas_height">450dp</dimen>
+    <dimen name="move_item_canvas_height">520dp</dimen>
 </resources>
