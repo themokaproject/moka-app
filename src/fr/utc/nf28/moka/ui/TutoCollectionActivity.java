@@ -49,7 +49,10 @@ public class TutoCollectionActivity extends MokaUpActivity {
 					args.putInt(TutoCollectionFragment.ARG_DRAWABLE, R.drawable.tuto_connexion_plateforme);
 					break;
 				case 2:
-					args.putInt(TutoCollectionFragment.ARG_DRAWABLE, R.drawable.tuto_premier_onglet);
+					args.putInt(TutoCollectionFragment.ARG_DRAWABLE, R.drawable.tuto_creation);
+					break;
+				case 3:
+					args.putInt(TutoCollectionFragment.ARG_DRAWABLE, R.drawable.tuto_creation_details);
 					break;
 				default:
 					args.putInt(TutoCollectionFragment.ARG_DRAWABLE, R.drawable.logo);
@@ -74,7 +77,7 @@ public class TutoCollectionActivity extends MokaUpActivity {
 				case 2:
 					return "Creation";
 				case 3:
-					return "Items en cours";
+					return "Détails";
 				case 4:
 					return "Edition";
 				case 5:
