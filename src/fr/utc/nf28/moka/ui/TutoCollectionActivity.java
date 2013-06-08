@@ -48,6 +48,9 @@ public class TutoCollectionActivity extends MokaUpActivity {
 				case 1:
 					args.putInt(TutoCollectionFragment.ARG_DRAWABLE, R.drawable.tuto_connexion_plateforme);
 					break;
+				case 2:
+					args.putInt(TutoCollectionFragment.ARG_DRAWABLE, R.drawable.tuto_premier_onglet);
+					break;
 				default:
 					args.putInt(TutoCollectionFragment.ARG_DRAWABLE, R.drawable.logo);
 					break;
