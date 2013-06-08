@@ -41,7 +41,14 @@ public class TutoCollectionActivity extends MokaUpActivity {
 		public Fragment getItem(int i) {
 			Fragment fragment = new TutoCollectionFragment();
 			Bundle args = new Bundle();
-			args.putInt(TutoCollectionFragment.ARG_DRAWABLE, R.drawable.logo);
+			switch (i) {
+				case 0:
+					args.putInt(TutoCollectionFragment.ARG_DRAWABLE, R.drawable.tuto_connexion);
+					break;
+				default:
+					args.putInt(TutoCollectionFragment.ARG_DRAWABLE, R.drawable.logo);
+					break;
+			}
 			fragment.setArguments(args);
 			return fragment;
 		}
