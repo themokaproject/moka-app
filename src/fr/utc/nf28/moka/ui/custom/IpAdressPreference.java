@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.preference.EditTextPreference;
 import android.util.AttributeSet;
-
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.utc.nf28.moka.R;
@@ -37,7 +36,7 @@ public class IpAdressPreference extends EditTextPreference {
 			} else {
 				Crouton.makeText((Activity) getContext()
 						, getContext().getResources().getString(R.string.change_success_ip)
-						, Style.CONFIRM).show();
+						, Style.INFO).show();
 			}
 		}
 	}

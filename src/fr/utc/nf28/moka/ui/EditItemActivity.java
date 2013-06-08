@@ -78,7 +78,7 @@ public class EditItemActivity extends MokaUpActivity implements EditItemFragment
 
 	@Override
 	public void onSuccess() {
-		Crouton.makeText(this, "Element locké pour vous ! ", Style.CONFIRM).show(); // TODO: stringify
+		Crouton.makeText(this, "Element locké pour vous ! ", Style.INFO).show(); // TODO: stringify
 		resetUi();
 		getSupportFragmentManager()
 				.beginTransaction()

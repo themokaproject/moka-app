@@ -5,18 +5,12 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
-
 import com.actionbarsherlock.app.ActionBar;
-
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.LifecycleCallback;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.utc.nf28.moka.R;
-import fr.utc.nf28.moka.data.ComputerType;
-import fr.utc.nf28.moka.data.MediaType;
-import fr.utc.nf28.moka.data.MokaItem;
-import fr.utc.nf28.moka.data.MokaType;
-import fr.utc.nf28.moka.data.TextType;
+import fr.utc.nf28.moka.data.*;
 import fr.utc.nf28.moka.io.receiver.CreationReceiver;
 import fr.utc.nf28.moka.io.receiver.MokaReceiver;
 import fr.utc.nf28.moka.ui.base.MokaUpActivity;
@@ -101,8 +95,8 @@ public class NewItemActivity extends MokaUpActivity implements CreationReceiver.
 
 	@Override
 	public void onSuccess(MokaItem newItem) {
-		Crouton.makeText(this, "id from server :" + String.valueOf(newItem.getId()) + ". Ready for editing.",
-				Style.CONFIRM).show();
+		Crouton.makeText(this, "id from server: " + String.valueOf(newItem.getId()) + ". Ready for editing.",
+				Style.INFO).show();
 		findViewById(R.id.progress).setVisibility(View.GONE);
 		getSupportFragmentManager()
 				.beginTransaction()

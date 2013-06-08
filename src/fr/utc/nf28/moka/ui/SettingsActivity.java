@@ -12,7 +12,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
-
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.utc.nf28.moka.R;
@@ -162,14 +161,13 @@ public class SettingsActivity extends Activity implements SharedPreferences.OnSh
 	 * @param content
 	 */
 	public void makeTextSuccess(String content) {
-		Crouton.makeText(SettingsActivity.this
-				, content
-				, Style.CONFIRM).show();
+		Crouton.makeText(SettingsActivity.this, content, Style.INFO).show();
 	}
 
 	@Override
 	protected void onDestroy() {
 		Crouton.cancelAllCroutons();
+
 		super.onDestroy();
 	}
 }
