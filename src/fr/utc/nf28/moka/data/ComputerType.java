@@ -22,7 +22,7 @@ public abstract class ComputerType extends MokaType implements Parcelable {
 	}
 
 	public static class UmlType extends ComputerType implements Parcelable {
-		public static final String KEY_TYPE = "UML";
+		public static final String KEY_TYPE = "umlClass";
 		public static final Creator<UmlType> CREATOR = new Creator<UmlType>() {
 			public UmlType createFromParcel(Parcel in) {
 				return new UmlType(in);
