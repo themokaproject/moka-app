@@ -21,10 +21,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.MokaItem;
@@ -36,6 +38,7 @@ import fr.utc.nf28.moka.util.ConnectionUtils;
 import fr.utc.nf28.moka.util.CroutonUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
 import fr.utc.nf28.moka.util.SharedPreferencesUtils;
+
 import org.xml.sax.XMLReader;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
@@ -143,7 +146,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 						.show();
 				return true;
 			case R.id.menu_tuto:
-				startActivity(new Intent(this,TutoCollectionActivity.class));
+				startActivity(new Intent(this, TutoCollectionActivity.class));
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
