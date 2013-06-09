@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.ProgressBar;
+
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.utc.nf28.moka.R;
@@ -78,7 +79,7 @@ public class EditItemActivity extends MokaUpActivity implements EditItemFragment
 
 	@Override
 	public void onSuccess() {
-		Crouton.makeText(this, "Element locké pour vous ! ", Style.INFO).show(); // TODO: stringify
+		Crouton.makeText(this, getResources().getString(R.string.crouton_lock_success), Style.INFO).show();
 		resetUi();
 		getSupportFragmentManager()
 				.beginTransaction()
@@ -89,15 +90,15 @@ public class EditItemActivity extends MokaUpActivity implements EditItemFragment
 
 	@Override
 	public void onAlreadyLocked(String lockerName) {
-		Crouton.makeText(this, "Element déjà locké par " + lockerName, CroutonUtils.INFO_MOKA_STYLE).show();
-		// TODO: stringify
+		Crouton.makeText(this, String.format(getResources().getString(R.string.crouton_lock_failed_format), lockerName),
+				CroutonUtils.INFO_MOKA_STYLE).show();
 		mProgressBar.setVisibility(View.GONE);
 		showRetryButton();
 	}
 
 	@Override
 	public void onError() {
-		Crouton.makeText(this, "locking error ", Style.ALERT).show(); // TODO: stringify
+		Crouton.makeText(this, getResources().getString(R.string.crouton_lock_error), Style.ALERT).show();
 		mProgressBar.setVisibility(View.GONE);
 		showRetryButton();
 	}

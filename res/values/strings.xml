@@ -223,5 +223,10 @@
     <string name="logout_confirmation_ok">OK</string>
     <string name="logout_confirmation_cancel">Annuler</string>
 
+    <!-- Crouton -->
+    <string name="crouton_lock_success">Element locké pour vous !</string>
+    <string name="crouton_lock_failed_format">Element déjà locké par %1$s</string>
+    <string name="crouton_lock_error">Locking error</string>
+
 </resources>
 
