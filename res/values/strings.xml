@@ -16,6 +16,7 @@
     <string name="about">À propos</string>
     <string name="settings">Paramètres</string>
     <string name="logout">Se déconnecter</string>
+    <string name="tutorial">Tutoriel</string>
 
     <!-- About dialog -->
     <string name="about_moka">À propos de Moka</string>

@@ -142,6 +142,9 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 								})
 						.show();
 				return true;
+			case R.id.menu_tuto:
+				startActivity(new Intent(this,TutoCollectionActivity.class));
+				return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
