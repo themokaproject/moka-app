@@ -44,7 +44,8 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 		mRequest.put("lastName", lastName);
 		mRequest.put("firstName", firstName);
 		try {
-			final String json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction(JadeUtils.TRANSACTION_TYPE_CONNECTION, mRequest));
+			final String json = JSONParserUtils.serializeA2ATransaction(
+					new A2ATransaction(JadeUtils.TRANSACTION_TYPE_CONNECTION, mRequest));
 			sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_CONNECTION), json);
 		} catch (JsonProcessingException e) {
 			Log.e(TAG, "connectPlatform failed : JsonProcessingException");
@@ -58,7 +59,8 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 	public void logout() {
 		final String json;
 		try {
-			json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction(JadeUtils.TRANSACTION_TYPE_LOGOUT, ""));
+			json = JSONParserUtils.serializeA2ATransaction(
+					new A2ATransaction(JadeUtils.TRANSACTION_TYPE_LOGOUT, ""));
 			sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_CONNECTION), json);
 			this.doDelete();
 		} catch (IOException e) {
@@ -69,7 +71,8 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 	@Override
 	public void createItem(String type) {
 		try {
-			final String json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction(JadeUtils.TRANSACTION_TYPE_ADD_ITEM, type));
+			final String json = JSONParserUtils.serializeA2ATransaction(
+					new A2ATransaction(JadeUtils.TRANSACTION_TYPE_ADD_ITEM, type));
 			sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_CREATION), json);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
@@ -81,7 +84,8 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 	@Override
 	public void deleteItem(int itemId) {
 		try {
-			final String json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction(JadeUtils.TRANSACTION_TYPE_DELETE_ITEM, itemId));
+			final String json = JSONParserUtils.serializeA2ATransaction(
+					new A2ATransaction(JadeUtils.TRANSACTION_TYPE_DELETE_ITEM, itemId));
 			sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_CREATION), json);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
@@ -97,7 +101,8 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 			mRequest.put("itemId", itemId);
 			mRequest.put("direction", direction);
 			mRequest.put("velocity", velocity);
-			final String json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction(JadeUtils.TRANSACTION_TYPE_MOVE_ITEM, mRequest));
+			final String json = JSONParserUtils.serializeA2ATransaction(
+					new A2ATransaction(JadeUtils.TRANSACTION_TYPE_MOVE_ITEM, mRequest));
 			sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_ITEM_MOVEMENT), json);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
@@ -112,7 +117,8 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 		try {
 			mRequest.put("itemId", itemId);
 			mRequest.put("direction", direction);
-			final String json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction(JadeUtils.TRANSACTION_TYPE_RESIZE_ITEM, mRequest));
+			final String json = JSONParserUtils.serializeA2ATransaction(
+					new A2ATransaction(JadeUtils.TRANSACTION_TYPE_RESIZE_ITEM, mRequest));
 			sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_ITEM_RESIZING), json);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
@@ -127,7 +133,8 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 		try {
 			mRequest.put("itemId", itemId);
 			mRequest.put("direction", direction);
-			final String json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction(JadeUtils.TRANSACTION_TYPE_ROTATE_ITEM, mRequest));
+			final String json = JSONParserUtils.serializeA2ATransaction(
+					new A2ATransaction(JadeUtils.TRANSACTION_TYPE_ROTATE_ITEM, mRequest));
 			sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_ITEM_ROTATING), json);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
@@ -139,7 +146,8 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 	@Override
 	public void lockItem(int itemId) {
 		try {
-			final String json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction(JadeUtils.TRANSACTION_TYPE_LOCK_ITEM, itemId));
+			final String json = JSONParserUtils.serializeA2ATransaction(
+					new A2ATransaction(JadeUtils.TRANSACTION_TYPE_LOCK_ITEM, itemId));
 			sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_LOCKING), json);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -149,7 +157,8 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 	@Override
 	public void unlockItem(int itemId) {
 		try {
-			final String json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction(JadeUtils.TRANSACTION_TYPE_UNLOCK_ITEM, itemId));
+			final String json = JSONParserUtils.serializeA2ATransaction(
+					new A2ATransaction(JadeUtils.TRANSACTION_TYPE_UNLOCK_ITEM, itemId));
 			sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_LOCKING), json);
 		} catch (IOException e) {
 			e.printStackTrace();
