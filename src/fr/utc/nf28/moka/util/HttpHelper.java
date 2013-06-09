@@ -32,6 +32,5 @@ public final class HttpHelper {
 					.toString();
 		}
 		return sApiUrl;
-		// TODO: use real ip adress
 	}
 }
