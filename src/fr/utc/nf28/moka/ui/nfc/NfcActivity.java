@@ -1,5 +1,7 @@
 package fr.utc.nf28.moka.ui.nfc;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -7,16 +9,15 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.ui.DeviceConfigurationActivity;
@@ -33,6 +34,7 @@ public class NfcActivity extends SherlockActivity {
 	private NfcAdapter mNfcAdapter;
 	private SharedPreferences mPrefs;
 
+	@TargetApi(Build.VERSION_CODES.GINGERBREAD_MR1)
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.nfc_activity);
@@ -60,7 +62,8 @@ public class NfcActivity extends SherlockActivity {
 			}
 		});
 
-		mNfcAdapter = NfcAdapter.getDefaultAdapter(getApplicationContext());
+		mNfcAdapter = Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD_MR1 ?
+				NfcAdapter.getDefaultAdapter(getApplicationContext()) : null;
 		if (mNfcAdapter == null || !mNfcAdapter.isEnabled()) {
 			((TextView) findViewById(R.id.info)).setText(R.string.info_no_nfc_text);
 		}
@@ -136,6 +139,7 @@ public class NfcActivity extends SherlockActivity {
 	 * let the activity to claim priority on tag_discover event when
 	 * the activity is displayed
 	 */
+	@SuppressLint("NewApi")
 	private void enableNfcDiscovering() {
 		if (mNfcAdapter != null && mNfcAdapter.isEnabled()) {
 			final PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
@@ -148,6 +152,7 @@ public class NfcActivity extends SherlockActivity {
 	/**
 	 * restore nfc priority
 	 */
+	@SuppressLint("NewApi")
 	private void disableNfcDiscovering() {
 		if (mNfcAdapter != null && mNfcAdapter.isEnabled()) {
 			mNfcAdapter.disableForegroundDispatch(this);
