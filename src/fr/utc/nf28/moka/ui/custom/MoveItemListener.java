@@ -3,7 +3,6 @@ package fr.utc.nf28.moka.ui.custom;
 import android.graphics.PointF;
 import android.view.MotionEvent;
 import android.view.View;
-
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.view.ViewHelper;
 
@@ -129,7 +128,7 @@ public abstract class MoveItemListener implements View.OnTouchListener {
 		final PointF point2 = makePointF(motionEvent, 1);
 		final PointF middle = computeMiddle(point1, point2);
 		point1 = changeOrigin(point1, middle);
-		double angle = computeAngle(point1);
+		final double angle = computeAngle(point1);
 		boolean handle = false;
 
 		//rotation

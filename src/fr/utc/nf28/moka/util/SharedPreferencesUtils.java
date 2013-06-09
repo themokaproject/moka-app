@@ -14,6 +14,10 @@ public final class SharedPreferencesUtils {
 	 */
 	public static final String KEY_PREF_IP = "preference_jade_ip";
 	/**
+	 * real server IP
+	 */
+	public static final String KEY_SERVER_IP = "server_ip_address";
+	/**
 	 * default value for jade main container ip
 	 */
 	public static final String DEFAULT_PREF_IP = "192.168.1.50";

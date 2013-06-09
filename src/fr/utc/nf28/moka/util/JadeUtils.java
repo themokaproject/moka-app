@@ -138,7 +138,6 @@ public final class JadeUtils {
 
 		@Override
 		public void rotateItem(int itemId, int direction) {
-
 		}
 
 		@Override
@@ -151,7 +150,6 @@ public final class JadeUtils {
 
 		@Override
 		public void editItem(int itemId, String field, String content) {
-
 		}
 	};
 

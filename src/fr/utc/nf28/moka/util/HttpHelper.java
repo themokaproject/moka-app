@@ -26,7 +26,8 @@ public final class HttpHelper {
 			sApiUrl = new StringBuilder()
 					.append("http://")
 					.append(PreferenceManager.getDefaultSharedPreferences(context)
-							.getString(SharedPreferencesUtils.KEY_PREF_IP, ""))
+							.getString(SharedPreferencesUtils.KEY_SERVER_IP, "10.0.2.2"))
+							// 10.0.2.2 = default localhost from emulator
 					.append("/api")
 					.toString();
 		}

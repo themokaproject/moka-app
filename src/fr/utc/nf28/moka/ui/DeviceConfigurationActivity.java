@@ -1,24 +1,23 @@
 package fr.utc.nf28.moka.ui;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.*;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ProgressBar;
-
 import fr.utc.nf28.moka.MokaApplication;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.io.agent.AndroidAgent;
 import fr.utc.nf28.moka.util.ConnectionUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
+import fr.utc.nf28.moka.util.SharedPreferencesUtils;
 import jade.android.RuntimeCallback;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
@@ -64,7 +63,7 @@ public class DeviceConfigurationActivity extends Activity {
 				case WifiManager.WIFI_STATE_ENABLED:
 					//wifi Enable
 					Log.i(TAG, "WIFI_STATE_ENABLED");
-					mProgressConnexion.setVisibility(View.GONE);
+					mProgressConnection.setVisibility(View.GONE);
 					mCheckConnexion.setVisibility(View.VISIBLE);
 					mProgressIp.setVisibility(View.VISIBLE);
 					//TODO remove after dev-period.
@@ -126,7 +125,7 @@ public class DeviceConfigurationActivity extends Activity {
 	/**
 	 * layout component
 	 */
-	private ProgressBar mProgressConnexion;
+	private ProgressBar mProgressConnection;
 	private ProgressBar mProgressIp;
 	private ProgressBar mProgressContainer;
 	private ProgressBar mProgressAgent;
@@ -145,11 +144,19 @@ public class DeviceConfigurationActivity extends Activity {
 			mSSID = i.getStringExtra(EXTRA_SSID);
 			mPWD = i.getStringExtra(EXTRA_PWD);
 			mMainContainerIp = i.getStringExtra(EXTRA_IP);
+			// We real the real IP address for later reuse
+			final SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+			editor.putString(SharedPreferencesUtils.KEY_SERVER_IP, mMainContainerIp);
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+				editor.apply();
+			} else {
+				editor.commit();
+			}
 			mMainContainerPort = i.getStringExtra(EXTRA_PORT);
 		}
 
 		//get layout element
-		mProgressConnexion = (ProgressBar) findViewById(R.id.progressConnexion);
+		mProgressConnection = (ProgressBar) findViewById(R.id.progressConnexion);
 		mProgressIp = (ProgressBar) findViewById(R.id.progressOptenirIp);
 		mProgressContainer = (ProgressBar) findViewById(R.id.progressContainer);
 		mProgressAgent = (ProgressBar) findViewById(R.id.progressAgent);
@@ -172,7 +179,8 @@ public class DeviceConfigurationActivity extends Activity {
 						mProgressAgent.setVisibility(View.VISIBLE);
 					}
 				});
-				((MokaApplication) getApplication()).startAgent(JadeUtils.ANDROID_AGENT_NICKNAME, AndroidAgent.class.getName(), new Object[]{getApplicationContext()}, mAgentCallback);
+				((MokaApplication) getApplication()).startAgent(JadeUtils.ANDROID_AGENT_NICKNAME,
+						AndroidAgent.class.getName(), new Object[]{getApplicationContext()}, mAgentCallback);
 			}
 
 			@Override
@@ -221,7 +229,7 @@ public class DeviceConfigurationActivity extends Activity {
 	 */
 	private void enableWifi() {
 		//TODO first progress bar not visible
-		mProgressConnexion.setVisibility(View.VISIBLE);
+		mProgressConnection.setVisibility(View.VISIBLE);
 
 		//enable wifi cause know we can receive broadcast
 		mWifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
@@ -287,6 +295,7 @@ public class DeviceConfigurationActivity extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
+
 		unregisterReceiver(mMokaWifiStateChangedReceiver);
 	}
 

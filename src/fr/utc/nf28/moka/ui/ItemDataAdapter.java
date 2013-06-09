@@ -13,6 +13,7 @@ import fr.utc.nf28.moka.data.ItemData;
 import fr.utc.nf28.moka.data.MediaType;
 import fr.utc.nf28.moka.data.TextType;
 
+import java.util.Collections;
 import java.util.Map;
 
 public class ItemDataAdapter {
@@ -31,7 +32,7 @@ public class ItemDataAdapter {
 	};
 	private final LayoutInflater mLayoutInflater;
 	private final ViewGroup mParent;
-	private Map<String, ItemData> mItemsData;
+	private Map<String, ItemData> mItemsData = Collections.emptyMap();
 	private Callbacks mCallbacks = sDummyCallbacks;
 
 	public ItemDataAdapter(Context context, ViewGroup parent) {

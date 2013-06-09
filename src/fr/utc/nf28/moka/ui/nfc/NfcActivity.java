@@ -31,6 +31,7 @@ import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class NfcActivity extends SherlockActivity {
 	private static final String TAG = makeLogTag(NfcActivity.class);
+	private final IntentFilter mTagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
 	private NfcAdapter mNfcAdapter;
 	private SharedPreferences mPrefs;
 
@@ -53,10 +54,14 @@ public class NfcActivity extends SherlockActivity {
 			public void onClick(View view) {
 				if (checkPreferences()) {
 					final Intent i = new Intent(NfcActivity.this, DeviceConfigurationActivity.class);
-					i.putExtra(DeviceConfigurationActivity.EXTRA_SSID, mPrefs.getString(SharedPreferencesUtils.KEY_PREF_SSID, ""));
-					i.putExtra(DeviceConfigurationActivity.EXTRA_PWD, mPrefs.getString(SharedPreferencesUtils.KEY_PREF_PWD, ""));
-					i.putExtra(DeviceConfigurationActivity.EXTRA_IP, mPrefs.getString(SharedPreferencesUtils.KEY_PREF_IP, ""));
-					i.putExtra(DeviceConfigurationActivity.EXTRA_PORT, mPrefs.getString(SharedPreferencesUtils.KEY_PREF_PORT, ""));
+					i.putExtra(DeviceConfigurationActivity.EXTRA_SSID,
+							mPrefs.getString(SharedPreferencesUtils.KEY_PREF_SSID, ""));
+					i.putExtra(DeviceConfigurationActivity.EXTRA_PWD,
+							mPrefs.getString(SharedPreferencesUtils.KEY_PREF_PWD, ""));
+					i.putExtra(DeviceConfigurationActivity.EXTRA_IP,
+							mPrefs.getString(SharedPreferencesUtils.KEY_PREF_IP, ""));
+					i.putExtra(DeviceConfigurationActivity.EXTRA_PORT,
+							mPrefs.getString(SharedPreferencesUtils.KEY_PREF_PORT, ""));
 					startActivity(i);
 				}
 			}
@@ -65,7 +70,7 @@ public class NfcActivity extends SherlockActivity {
 		mNfcAdapter = Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD_MR1 ?
 				NfcAdapter.getDefaultAdapter(getApplicationContext()) : null;
 		if (mNfcAdapter == null || !mNfcAdapter.isEnabled()) {
-			((TextView) findViewById(R.id.info)).setText(R.string.info_no_nfc_text);
+			((TextView) findViewById(R.id.info)).setText(R.string.info_no_nfc_text); // TODO: use ViewStub instead
 		}
 	}
 
@@ -77,11 +82,13 @@ public class NfcActivity extends SherlockActivity {
 	 */
 	public boolean checkPreferences() {
 		if (!mPrefs.contains(SharedPreferencesUtils.KEY_PREF_SSID)) {
-			Crouton.makeText(this, getResources().getString(R.string.no_ssid), CroutonUtils.INFO_MOKA_STYLE).show();
+			Crouton.makeText(this, getResources().getString(R.string.no_ssid),
+					CroutonUtils.INFO_MOKA_STYLE).show();
 			return false;
 		}
 		if (!mPrefs.contains(SharedPreferencesUtils.KEY_PREF_PWD)) {
-			Crouton.makeText(this, getResources().getString(R.string.no_pwd), CroutonUtils.INFO_MOKA_STYLE).show();
+			Crouton.makeText(this, getResources().getString(R.string.no_pwd),
+					CroutonUtils.INFO_MOKA_STYLE).show();
 			return false;
 		}
 		return true;
@@ -144,8 +151,7 @@ public class NfcActivity extends SherlockActivity {
 		if (mNfcAdapter != null && mNfcAdapter.isEnabled()) {
 			final PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
 					new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-			final IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
-			mNfcAdapter.enableForegroundDispatch(this, pendingIntent, new IntentFilter[]{tagDetected}, null);
+			mNfcAdapter.enableForegroundDispatch(this, pendingIntent, new IntentFilter[]{mTagDetected}, null);
 		}
 	}
 
