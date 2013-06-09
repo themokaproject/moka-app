@@ -56,7 +56,7 @@ public class TutoCollectionActivity extends MokaUpActivity {
 
 		@Override
 		public int getCount() {
-			return 6;
+			return 4;
 		}
 
 		@Override
@@ -71,10 +71,6 @@ public class TutoCollectionActivity extends MokaUpActivity {
 					return "Creation";
 				case 3:
 					return "Détails";
-				case 4:
-					return "Edition";
-				case 5:
-					return "Déplacement";
 				default:
 					return "tuto " + (position + 1);
 			}
