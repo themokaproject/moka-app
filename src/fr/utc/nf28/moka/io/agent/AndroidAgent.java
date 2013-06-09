@@ -56,18 +56,19 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 		}
 	}
 
-    @Override
-    public void logout() {
-        final String json;
-        try {
-            json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction(JadeUtils.TRANSACTION_TYPE_LOGOUT, ""));
-            sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_CONNECTION), json);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+	@Override
+	public void logout() {
+		final String json;
+		try {
+			json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction(JadeUtils.TRANSACTION_TYPE_LOGOUT, ""));
+			sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_CONNECTION), json);
+			this.doDelete();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-    @Override
+	@Override
 	public void createItem(String type) {
 		try {
 			final String json = JSONParserUtils.serializeA2ATransaction(new A2ATransaction(JadeUtils.TRANSACTION_TYPE_ADD_ITEM, type));
