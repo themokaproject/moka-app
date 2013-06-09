@@ -83,7 +83,7 @@ public class HistoryEntryListFragment extends BasePagerFragment implements Refre
 	private void refreshHistory() {
 		mProgressBar.setVisibility(View.VISIBLE);
 		mListView.getEmptyView().setVisibility(View.GONE);
-		mMokaRestService.historyEntries(String.valueOf(System.currentTimeMillis()), this);
+		mMokaRestService.historyEntries(String.valueOf(System.currentTimeMillis()), this); // TODO: remove UTC proxy hack
 	}
 
 	private void resetUi() {
