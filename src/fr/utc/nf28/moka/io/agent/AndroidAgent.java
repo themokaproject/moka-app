@@ -4,15 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
-
-import java.io.IOException;
-import java.util.HashMap;
-
 import fr.utc.nf28.moka.io.receiver.MokaReceiver;
 import fr.utc.nf28.moka.util.JSONParserUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
+
+import java.io.IOException;
+import java.util.HashMap;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
