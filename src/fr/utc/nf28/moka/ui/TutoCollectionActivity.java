@@ -6,42 +6,34 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.ui.base.MokaUpActivity;
 
 public class TutoCollectionActivity extends MokaUpActivity {
-
-	private TutoCollectionPagerAdapter mTutoCollectionPagerAdapter;
-
-	private ViewPager mViewPager;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tuto_activity_collection);
 
-		mTutoCollectionPagerAdapter = new TutoCollectionPagerAdapter(getSupportFragmentManager());
-
-		mViewPager = (ViewPager) findViewById(R.id.tuto_pager);
-		mViewPager.setAdapter(mTutoCollectionPagerAdapter);
+		((ViewPager) findViewById(R.id.tuto_pager)).setAdapter(
+				new TutoCollectionPagerAdapter(getSupportFragmentManager()));
 	}
 
 	/**
 	 * A {@link android.support.v4.app.FragmentStatePagerAdapter} that returns a fragment
 	 * representing an object in the collection.
 	 */
-	public static class TutoCollectionPagerAdapter extends FragmentStatePagerAdapter {
+	private static class TutoCollectionPagerAdapter extends FragmentStatePagerAdapter {
 
 		public TutoCollectionPagerAdapter(FragmentManager fm) {
 			super(fm);
 		}
 
 		@Override
-		public Fragment getItem(int i) {
-			Fragment fragment = new TutoCollectionFragment();
-			Bundle args = new Bundle();
-			switch (i) {
+		public Fragment getItem(int position) {
+			final Fragment fragment = new TutoCollectionFragment();
+			final Bundle args = new Bundle();
+			switch (position) {
 				case 0:
 					args.putInt(TutoCollectionFragment.ARG_DRAWABLE, R.drawable.tuto_connexion);
 					break;
@@ -69,6 +61,7 @@ public class TutoCollectionActivity extends MokaUpActivity {
 
 		@Override
 		public CharSequence getPageTitle(int position) {
+			// TODO: stringify
 			switch (position) {
 				case 0:
 					return "Connexion";
