@@ -16,8 +16,10 @@ public class TutoCollectionActivity extends MokaUpActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tuto_activity_collection);
 
-		((ViewPager) findViewById(R.id.tuto_pager)).setAdapter(
-				new TutoCollectionPagerAdapter(getSupportFragmentManager()));
+		final ViewPager pager = (ViewPager) findViewById(R.id.tuto_pager);
+		final TutoCollectionPagerAdapter adapter = new TutoCollectionPagerAdapter(getSupportFragmentManager());
+		pager.setAdapter(adapter);
+		pager.setOffscreenPageLimit(adapter.getCount());
 	}
 
 	/**
