@@ -1,15 +1,18 @@
 package fr.utc.nf28.moka.util;
 
+import android.annotation.SuppressLint;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NdefFormatable;
-import android.util.Log;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+
+import static fr.utc.nf28.moka.util.LogUtils.LOGE;
+import static fr.utc.nf28.moka.util.LogUtils.LOGI;
 
 /**
  * Utils to write and read NFC tag
@@ -55,6 +58,7 @@ public final class NfcUtils {
 	 * @return uri store int the payload[0]
 	 * @throws UnsupportedEncodingException
 	 */
+	@SuppressLint("NewApi")
 	public static String readTag(Tag tag) {
 		final Ndef ndef = Ndef.get(tag);
 		if (ndef != null) {
@@ -75,6 +79,7 @@ public final class NfcUtils {
 	 * @param makeReadOnly turn your tag in readOnly mode
 	 * @return result code
 	 */
+	@SuppressLint("NewApi")
 	public static int writeMokaTag(Tag tag, String data, boolean makeReadOnly) {
 		final NdefRecord[] records = {createMokaRecord(data)};
 		final NdefMessage message = new NdefMessage(records);
@@ -84,7 +89,7 @@ public final class NfcUtils {
 			if (ndef != null) {
 				ndef.connect();
 				if (!ndef.isWritable()) {
-					Log.e(TAG, "write tag failed : readOnly mode");
+					LOGE(TAG, "write tag failed : readOnly mode");
 					ndef.close();
 					return TAG_READ_ONLY;
 				}
@@ -94,7 +99,7 @@ public final class NfcUtils {
 
 				//check if there is enough place
 				if (ndef.getMaxSize() < size) {
-					Log.e(TAG, "write tag failed : not enough free space");
+					LOGE(TAG, "write tag failed : not enough free space");
 					ndef.close();
 					return TAG_NOT_ENOUGHT_FREE_SPACE;
 				}
@@ -106,7 +111,7 @@ public final class NfcUtils {
 				if (makeReadOnly) {
 					ndef.makeReadOnly();
 				}
-				Log.i(TAG, "write tag succeeded");
+				LOGI(TAG, "write tag succeeded");
 				ndef.close();
 				return TAG_WRITTEN_SUCCESS;
 				//tag isn't NDEF formatted
@@ -117,19 +122,19 @@ public final class NfcUtils {
 					try {
 						format.connect();
 						format.format(message);
-						Log.i(TAG, "tag ndef formatted and write tag succeeded");
+						LOGI(TAG, "tag ndef formatted and write tag succeeded");
 						return TAG_WRITTEN_SUCCESS;
 					} catch (IOException e) {
-						Log.e(TAG, "unable to format tag to NDEF format");
+						LOGE(TAG, "unable to format tag to NDEF format");
 						return TAG_UNABLE_TO_FORMAT_NDEF;
 					}
 				} else {
-					Log.e(TAG, "tag does'nt support NDEF format");
+					LOGE(TAG, "tag does'nt support NDEF format");
 					return TAG_NOT_SUPPORT_FORMAT_NDEF;
 				}
 			}
 		} catch (Exception e) {
-			Log.e(TAG, "write tag failed");
+			LOGE(TAG, "write tag failed");
 		}
 
 		return TAG_WRITTEN_FAIL;
@@ -142,6 +147,7 @@ public final class NfcUtils {
 	 * @return formatted NdefRecord
 	 * @throws UnsupportedEncodingException
 	 */
+	@SuppressLint("NewApi")
 	private static NdefRecord createMokaRecord(String data) {
 		final byte[] uriBytes = data.getBytes(Charset.forName("UTF-8"));
 		final int textLength = uriBytes.length;

@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.res.Resources;
 import android.os.IBinder;
-import android.util.Log;
 
 import java.util.HashMap;
 
@@ -21,6 +20,8 @@ import jade.android.RuntimeCallback;
 import jade.core.Profile;
 import jade.util.leap.Properties;
 
+import static fr.utc.nf28.moka.util.LogUtils.LOGE;
+import static fr.utc.nf28.moka.util.LogUtils.LOGI;
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class MokaApplication extends Application {
@@ -92,7 +93,7 @@ public class MokaApplication extends Application {
 	 * @param containerCallback callback for container connection
 	 */
 	public void startJadePlatform(final String host, final int port, RuntimeCallback<Void> containerCallback) {
-		Log.i(TAG, "start jade platform");
+		LOGI(TAG, "start jade platform");
 		mAgentContainerProperties.setProperty(Profile.MAIN_HOST, host);
 		mAgentContainerProperties.setProperty(Profile.MAIN_PORT, String.valueOf(port));
 		mContainerCallback = containerCallback;
@@ -103,18 +104,18 @@ public class MokaApplication extends Application {
 	 * JadeAndroid good practices for jade runtime
 	 */
 	private void bindMicroRuntimeService() {
-		Log.i(TAG, "bind micro runtime");
+		LOGI(TAG, "bind micro runtime");
 		mServiceConnection = new ServiceConnection() {
 			public void onServiceConnected(ComponentName className, IBinder service) {
 				// Bind successful
-				Log.i(TAG, "bind micro runtime success");
+				LOGI(TAG, "bind micro runtime success");
 				mMicroRuntimeServiceBinder = (MicroRuntimeServiceBinder) service;
 				startAgentContainer();
 			}
 
 			public void onServiceDisconnected(ComponentName className) {
 				// Bind unsuccessful
-				Log.i(TAG, "bind micro runtime fail");
+				LOGE(TAG, "bind micro runtime fail");
 				mMicroRuntimeServiceBinder = null;
 			}
 		};
@@ -128,7 +129,7 @@ public class MokaApplication extends Application {
 	 * start JADE Agent container
 	 */
 	private void startAgentContainer() {
-		Log.i(TAG, "start agent container");
+		LOGI(TAG, "start agent container");
 		mMicroRuntimeServiceBinder.startAgentContainer(mAgentContainerProperties,
 				mContainerCallback);
 	}
@@ -142,7 +143,7 @@ public class MokaApplication extends Application {
 	 * @param agentCallback callback for agent creation
 	 */
 	public void startAgent(final String nickName, final String className, Object[] params, RuntimeCallback<Void> agentCallback) {
-		Log.i(TAG, "start agent " + nickName);
+		LOGI(TAG, "start agent " + nickName);
 		mMicroRuntimeServiceBinder.startAgent(nickName, className, params,
 				agentCallback);
 	}

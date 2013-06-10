@@ -3,15 +3,17 @@ package fr.utc.nf28.moka.io.agent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
-import fr.utc.nf28.moka.io.receiver.MokaReceiver;
-import fr.utc.nf28.moka.util.JSONParserUtils;
-import fr.utc.nf28.moka.util.JadeUtils;
 
 import java.io.IOException;
 import java.util.HashMap;
 
+import fr.utc.nf28.moka.io.receiver.MokaReceiver;
+import fr.utc.nf28.moka.util.JSONParserUtils;
+import fr.utc.nf28.moka.util.JadeUtils;
+
+import static fr.utc.nf28.moka.util.LogUtils.LOGE;
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class AndroidAgent extends BaseAgent implements IAndroidAgent {
@@ -48,7 +50,7 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 					new A2ATransaction(JadeUtils.TRANSACTION_TYPE_CONNECTION, mRequest));
 			sendRequestMessage(getAgentsWithSkill(JadeUtils.JADE_SKILL_NAME_CONNECTION), json);
 		} catch (JsonProcessingException e) {
-			Log.e(TAG, "connectPlatform failed : JsonProcessingException");
+			LOGE(TAG, "connectPlatform failed : JsonProcessingException");
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();

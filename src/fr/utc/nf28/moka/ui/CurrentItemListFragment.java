@@ -5,13 +5,17 @@ import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.MokaItem;
 import fr.utc.nf28.moka.io.MokaRestService;
@@ -25,10 +29,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-
+import static fr.utc.nf28.moka.util.LogUtils.LOGE;
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class CurrentItemListFragment extends BasePagerFragment implements AdapterView.OnItemClickListener,
@@ -156,7 +157,7 @@ public class CurrentItemListFragment extends BasePagerFragment implements Adapte
 
 	@Override
 	public void failure(RetrofitError retrofitError) {
-		Log.d(TAG, "REST call failure === " + retrofitError.toString());
+		LOGE(TAG, "REST call failure === " + retrofitError.toString());
 		resetUi();
 		handleNetworkError();
 	}

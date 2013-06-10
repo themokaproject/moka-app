@@ -4,12 +4,13 @@ package fr.utc.nf28.moka.util;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
-import android.util.Log;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import static fr.utc.nf28.moka.util.LogUtils.LOGE;
 
 public final class ImageUtils {
 	private static final String TEMP_IMAGE_NAME = "moka_upload_temp.jpg";
@@ -85,7 +86,7 @@ public final class ImageUtils {
 
 			// Create the storage directory if it does not exist
 			if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
-				Log.d("Moka", "failed to create directory");
+				LOGE("Moka", "failed to create directory");
 				return new File("/"); // TODO: handle the case better
 			}
 

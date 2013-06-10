@@ -3,12 +3,14 @@ package fr.utc.nf28.moka.ui;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+
+import java.util.List;
+
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.HistoryEntry;
 import fr.utc.nf28.moka.io.MokaRestService;
@@ -21,8 +23,8 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-import java.util.List;
-
+import static fr.utc.nf28.moka.util.LogUtils.LOGE;
+import static fr.utc.nf28.moka.util.LogUtils.LOGI;
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class HistoryEntryListFragment extends BasePagerFragment implements RefreshHistoryReceiver.OnRefreshHistoryListener,
@@ -98,14 +100,14 @@ public class HistoryEntryListFragment extends BasePagerFragment implements Refre
 
 	@Override
 	public void success(List<HistoryEntry> historyEntries, Response response) {
-		Log.d(TAG, "success");
+		LOGI(TAG, "success");
 		resetUi();
 		mAdapter.updateHistoryItems(historyEntries);
 	}
 
 	@Override
 	public void failure(RetrofitError retrofitError) {
-		Log.d(TAG, "REST call failure === " + retrofitError.toString());
+		LOGE(TAG, "REST call failure === " + retrofitError.toString());
 		resetUi();
 		handleNetworkError();
 	}

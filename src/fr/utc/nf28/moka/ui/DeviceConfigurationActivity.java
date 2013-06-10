@@ -1,17 +1,21 @@
 package fr.utc.nf28.moka.ui;
 
 import android.app.Activity;
-import android.content.*;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ProgressBar;
+
 import fr.utc.nf28.moka.MokaApplication;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.io.agent.AndroidAgent;
@@ -20,6 +24,8 @@ import fr.utc.nf28.moka.util.JadeUtils;
 import fr.utc.nf28.moka.util.SharedPreferencesUtils;
 import jade.android.RuntimeCallback;
 
+import static fr.utc.nf28.moka.util.LogUtils.LOGE;
+import static fr.utc.nf28.moka.util.LogUtils.LOGI;
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class DeviceConfigurationActivity extends Activity {
@@ -62,7 +68,7 @@ public class DeviceConfigurationActivity extends Activity {
 					break;
 				case WifiManager.WIFI_STATE_ENABLED:
 					//wifi Enable
-					Log.i(TAG, "WIFI_STATE_ENABLED");
+					LOGI(TAG, "WIFI_STATE_ENABLED");
 					mProgressConnection.setVisibility(View.GONE);
 					mCheckConnexion.setVisibility(View.VISIBLE);
 					mProgressIp.setVisibility(View.VISIBLE);
@@ -78,7 +84,7 @@ public class DeviceConfigurationActivity extends Activity {
 					break;
 				case WifiManager.WIFI_STATE_ENABLING:
 					//wifi Enabling
-					Log.i(TAG, "WIFI_STATE_ENABLING");
+					LOGI(TAG, "WIFI_STATE_ENABLING");
 					break;
 				case WifiManager.WIFI_STATE_UNKNOWN:
 					break;
@@ -92,12 +98,12 @@ public class DeviceConfigurationActivity extends Activity {
 						mProgressIp.setVisibility(View.GONE);
 						mCheckIp.setVisibility(View.VISIBLE);
 						mProgressContainer.setVisibility(View.VISIBLE);
-						Log.i(TAG, "NetworkInfo.State.CONNECTED");
+						LOGI(TAG, "NetworkInfo.State.CONNECTED");
 						((MokaApplication) getApplication()).startJadePlatform(mMainContainerIp,
 								Integer.valueOf(mMainContainerPort),
 								mContainerCallback);
 					} else {
-						Log.i(TAG, info.getState().toString());
+						LOGI(TAG, info.getState().toString());
 					}
 				}
 			}
@@ -169,7 +175,7 @@ public class DeviceConfigurationActivity extends Activity {
 		mContainerCallback = new RuntimeCallback<Void>() {
 			@Override
 			public void onSuccess(Void thisIsNull) {
-				Log.i(TAG, "start agent container success");
+				LOGI(TAG, "start agent container success");
 				// Split container successfully started
 				DeviceConfigurationActivity.this.runOnUiThread(new Runnable() {
 					@Override
@@ -185,7 +191,7 @@ public class DeviceConfigurationActivity extends Activity {
 
 			@Override
 			public void onFailure(Throwable throwable) {
-				Log.i(TAG, "start agent container fail");
+				LOGI(TAG, "start agent container fail");
 				// Split container startup error
 			}
 		};
@@ -197,7 +203,7 @@ public class DeviceConfigurationActivity extends Activity {
 					@Override
 					public void onSuccess(Void aVoid) {
 						//Agent successfully started
-						Log.i(TAG, "start agent " + JadeUtils.ANDROID_AGENT_NICKNAME + " success");
+						LOGI(TAG, "start agent " + JadeUtils.ANDROID_AGENT_NICKNAME + " success");
 						DeviceConfigurationActivity.this.runOnUiThread(new Runnable() {
 							@Override
 							public void run() {
@@ -211,12 +217,12 @@ public class DeviceConfigurationActivity extends Activity {
 					@Override
 					public void onFailure(Throwable throwable) {
 						//Agent startup error
-						Log.e(TAG, "start agent " + JadeUtils.ANDROID_AGENT_NICKNAME + " fail", throwable);
+						LOGE(TAG, "start agent " + JadeUtils.ANDROID_AGENT_NICKNAME + " fail", throwable);
 					}
 				};
 
 
-		Log.i(TAG, "activity start with ssid = " + mSSID + " and pwd = " + mPWD);
+		LOGI(TAG, "activity start with ssid = " + mSSID + " and pwd = " + mPWD);
 
 		mIntentFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
 		mIntentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
@@ -242,7 +248,7 @@ public class DeviceConfigurationActivity extends Activity {
 	 * use to configure wireless WPA2 connection from code
 	 */
 	private void configureWifiWPA2() {
-		Log.i(TAG, "configureWifi");
+		LOGI(TAG, "configureWifi");
 		final WifiConfiguration mWifiConfig = new WifiConfiguration();
 		mWifiConfig.SSID = "\"" + mSSID + "\"";
 		mWifiConfig.priority = 40;
@@ -258,16 +264,16 @@ public class DeviceConfigurationActivity extends Activity {
 		mWifiConfig.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
 		mWifiConfig.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
 		final int netId = mWifiManager.addNetwork(mWifiConfig);
-		Log.i(TAG, "addNetWork return code : " + String.valueOf(netId));
+		LOGI(TAG, "addNetWork return code : " + String.valueOf(netId));
 		final boolean b = mWifiManager.enableNetwork(netId, true);
-		Log.i(TAG, "enableNetwork return code : " + String.valueOf(b));
+		LOGI(TAG, "enableNetwork return code : " + String.valueOf(b));
 	}
 
 	/**
 	 * use to configure wireless WEP connection from code
 	 */
 	private void configureWifiWEP() {
-		Log.i(TAG, "configureWifi");
+		LOGI(TAG, "configureWifi");
 		final WifiConfiguration mWifiConfig = new WifiConfiguration();
 		mWifiConfig.SSID = "\"" + mSSID + "\"";
 		mWifiConfig.priority = 40;
@@ -281,9 +287,9 @@ public class DeviceConfigurationActivity extends Activity {
 		mWifiConfig.wepKeys[0] = "\"" + mPWD + "\"";
 		mWifiConfig.wepTxKeyIndex = 0;
 		final int netId = mWifiManager.addNetwork(mWifiConfig);
-		Log.i(TAG, "addNetWork return code : " + String.valueOf(netId));
+		LOGI(TAG, "addNetWork return code : " + String.valueOf(netId));
 		final boolean b = mWifiManager.enableNetwork(netId, true);
-		Log.i(TAG, "enableNetwork return code : " + String.valueOf(b));
+		LOGI(TAG, "enableNetwork return code : " + String.valueOf(b));
 	}
 
 	private void launchMainActivity() {

@@ -12,12 +12,13 @@ import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.ui.DeviceConfigurationActivity;
@@ -27,6 +28,8 @@ import fr.utc.nf28.moka.util.CroutonUtils;
 import fr.utc.nf28.moka.util.NfcUtils;
 import fr.utc.nf28.moka.util.SharedPreferencesUtils;
 
+import static fr.utc.nf28.moka.util.LogUtils.LOGE;
+import static fr.utc.nf28.moka.util.LogUtils.LOGI;
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
 public class NfcActivity extends SherlockActivity {
@@ -173,7 +176,7 @@ public class NfcActivity extends SherlockActivity {
 	private void processTag(Tag tag) {
 		final String result = NfcUtils.readTag(tag);
 		final String query = Uri.parse(result).getQuery();
-		Log.i(TAG, "query : " + String.valueOf(query));
+		LOGI(TAG, "query : " + String.valueOf(query));
 		if (query != null) {
 			final String[] tagsParams = query.split(",");
 			if (tagsParams.length == 4) {
@@ -185,7 +188,7 @@ public class NfcActivity extends SherlockActivity {
 				startActivity(i);
 				finish();
 			} else {
-				Log.i(TAG, "Wrong tag");
+				LOGE(TAG, "Wrong tag");
 			}
 		}
 	}
