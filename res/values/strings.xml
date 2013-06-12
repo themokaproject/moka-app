@@ -202,7 +202,7 @@
     <string name="change_success_ssid">SSID enregistré.</string>
     <string name="change_success_pwd">Password wifi enregistré.</string>
     <string name="change_success_ip">JADE IP enregistrée.</string>
-    <string name="change_error_ip">Addresse ip non valide.</string>
+    <string name="change_error_ip">Adresse ip non valide.</string>
     <string name="change_success_port">JADE port enregistré.</string>
     <string name="network_error">Serveur déconnecté ou réseau indisponible</string>
     <string name="item_deletion_success">L\'élément a été correctement supprimé</string>
