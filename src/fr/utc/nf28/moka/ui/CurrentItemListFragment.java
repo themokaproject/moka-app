@@ -141,7 +141,7 @@ public class CurrentItemListFragment extends BasePagerFragment implements Adapte
 	private void refreshCurrentList() {
 		mProgressBar.setVisibility(View.VISIBLE);
 		mListView.getEmptyView().setVisibility(View.GONE);
-		mMokaRestService.itemsEntries(String.valueOf(System.currentTimeMillis()), this); // TODO: remove UTC proxy hack
+		mMokaRestService.itemsEntries(this);
 	}
 
 	private void resetUi() {

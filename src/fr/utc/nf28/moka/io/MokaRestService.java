@@ -10,15 +10,14 @@ import retrofit.http.Multipart;
 import retrofit.http.POST;
 import retrofit.http.Part;
 import retrofit.http.Path;
-import retrofit.http.Query;
 import retrofit.mime.TypedFile;
 
 public interface MokaRestService {
 	@GET("/history/list")
-	void historyEntries(@Query("date") String date, Callback<List<HistoryEntry>> cb);
+	void historyEntries(Callback<List<HistoryEntry>> cb);
 
 	@GET("/item/list")
-	void itemsEntries(@Query("date") String date, Callback<Response> cb);
+	void itemsEntries(Callback<Response> cb);
 
 	@POST("/image/{id}")
 	@Multipart
