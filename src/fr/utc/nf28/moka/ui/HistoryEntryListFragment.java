@@ -60,7 +60,6 @@ public class HistoryEntryListFragment extends BasePagerFragment implements Refre
 		mRefreshHistoryReceiver = new RefreshHistoryReceiver(this);
 
 		// Launch the background task to retrieve history entries from the RESTful server
-		// TODO: refact with {@link CurrentItemListFragment}
 		mMokaRestService = MokaRestHelper.getMokaRestService(HttpHelper.getMokaApiUrl(getSherlockActivity()));
 
 		return rootView;

@@ -72,13 +72,11 @@ public class DeviceConfigurationActivity extends Activity {
 					mProgressConnection.setVisibility(View.GONE);
 					mCheckConnexion.setVisibility(View.VISIBLE);
 					mProgressIp.setVisibility(View.VISIBLE);
-					//TODO remove after dev-period.
 					if (ConnectionUtils.isOnline(DeviceConfigurationActivity.this)) {
 						((MokaApplication) getApplication()).startJadePlatform(mMainContainerIp,
 								Integer.valueOf(mMainContainerPort),
 								mContainerCallback);
 					} else {
-						//TODO remove after dev-period. Choose WPA2 or WEP
 						configureWifiWPA2();
 					}
 					break;

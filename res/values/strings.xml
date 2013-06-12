@@ -144,6 +144,7 @@
 
     <!-- NewItemActivity -->
     <string name="new_item_actionbar_title">Nouvel élément</string>
+    <string name="new_item_ready_for_editing">%1$s est prêt pour l\'édition</string>
     <!-- EditItemActivity -->
     <string name="lock_error_retry_btn_title">Réessayer</string>
 

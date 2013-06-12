@@ -147,14 +147,4 @@ public class MokaApplication extends Application {
 		mMicroRuntimeServiceBinder.startAgent(nickName, className, params,
 				agentCallback);
 	}
-
-	private void cleanup() {
-		// TODO: find a way to call cleanup() (normally in the Service#onDestroy())
-		if (mMicroRuntimeServiceBinder != null) {
-			mMicroRuntimeServiceBinder.stopAgentContainer(mContainerCallback);
-		}
-		if (mServiceConnection != null) {
-			unbindService(mServiceConnection);
-		}
-	}
 }

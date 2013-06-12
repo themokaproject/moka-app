@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.utc.nf28.moka.R;
@@ -55,9 +56,8 @@ public class SettingsActivity extends Activity implements SharedPreferences.OnSh
 				@Override
 				public void onClick(View view) {
 					enableNfcDiscovering();
-					Crouton.makeText(SettingsActivity.this
-							, getResources().getString(R.string.touch_a_tag)
-							, CroutonUtils.INFO_MOKA_STYLE).show();
+					Crouton.makeText(SettingsActivity.this, getResources().getString(R.string.touch_a_tag),
+							CroutonUtils.INFO_MOKA_STYLE).show();
 				}
 			});
 		}
@@ -67,6 +67,7 @@ public class SettingsActivity extends Activity implements SharedPreferences.OnSh
 	 * let the activity to claim priority on tag_discover event when
 	 * the activity is displayed
 	 */
+	@SuppressLint("NewApi")
 	private void enableNfcDiscovering() {
 		final PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
 				new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
@@ -77,6 +78,7 @@ public class SettingsActivity extends Activity implements SharedPreferences.OnSh
 	/**
 	 * restore nfc priority
 	 */
+	@SuppressLint("NewApi")
 	private void disableNfcDiscovering() {
 		if (mNfcAdapter != null) {
 			mNfcAdapter.disableForegroundDispatch(this);
@@ -150,9 +152,7 @@ public class SettingsActivity extends Activity implements SharedPreferences.OnSh
 	 * @param content
 	 */
 	public void makeTextError(String content) {
-		Crouton.makeText(SettingsActivity.this
-				, content
-				, Style.ALERT).show();
+		Crouton.makeText(SettingsActivity.this, content, Style.ALERT).show();
 	}
 
 	/**

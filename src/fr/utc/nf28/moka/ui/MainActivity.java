@@ -27,6 +27,8 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
+import org.xml.sax.XMLReader;
+
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import fr.utc.nf28.moka.R;
 import fr.utc.nf28.moka.data.MokaItem;
@@ -38,8 +40,6 @@ import fr.utc.nf28.moka.util.ConnectionUtils;
 import fr.utc.nf28.moka.util.CroutonUtils;
 import fr.utc.nf28.moka.util.JadeUtils;
 import fr.utc.nf28.moka.util.SharedPreferencesUtils;
-
-import org.xml.sax.XMLReader;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
@@ -132,7 +132,6 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 									@Override
 									public void onClick(DialogInterface dialogInterface, int which) {
 										JadeUtils.getAndroidAgentInterface().logout();
-										// TODO: ProgressBar + callback + disconnect Service + finish()
 										startActivity(new Intent(MainActivity.this, NfcActivity.class));
 										finish();
 									}

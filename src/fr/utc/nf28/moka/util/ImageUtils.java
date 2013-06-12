@@ -87,7 +87,7 @@ public final class ImageUtils {
 			// Create the storage directory if it does not exist
 			if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
 				LOGE("Moka", "failed to create directory");
-				return new File("/"); // TODO: handle the case better
+				return new File("/");
 			}
 
 			// Create a temp image file name

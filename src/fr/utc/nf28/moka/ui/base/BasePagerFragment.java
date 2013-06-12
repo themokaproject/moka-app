@@ -1,5 +1,7 @@
 package fr.utc.nf28.moka.ui.base;
 
+import android.os.Bundle;
+
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
@@ -12,6 +14,15 @@ import fr.utc.nf28.moka.util.ConnectionUtils;
 
 public abstract class BasePagerFragment extends SherlockFragment implements LifecycleCallback {
 	private static final AtomicBoolean sIsNetworkCroutonDisplayed = new AtomicBoolean(false);
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		if (savedInstanceState != null) {
+			sIsNetworkCroutonDisplayed.set(false);
+		}
+	}
 
 	protected void handleNetworkError() {
 		if (!sIsNetworkCroutonDisplayed.get()) {
