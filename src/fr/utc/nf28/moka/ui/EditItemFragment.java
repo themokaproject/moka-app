@@ -16,10 +16,15 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+
+import java.io.File;
+import java.lang.ref.WeakReference;
+
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.utc.nf28.moka.R;
@@ -36,9 +41,6 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.mime.TypedFile;
-
-import java.io.File;
-import java.lang.ref.WeakReference;
 
 import static fr.utc.nf28.moka.util.LogUtils.makeLogTag;
 
@@ -228,7 +230,7 @@ public class EditItemFragment extends SherlockFragment implements ItemDataAdapte
 				new UploadImageTask(apiUrl, itemId, new Callback<Response>() {
 					@Override
 					public void success(Response response, Response response2) {
-						final String generatedUri = apiUrl + "/image/" + itemId;
+						final String generatedUri = apiUrl + "/item/" + itemId + "/image/";
 						mSelectedItem.update(MediaType.KEY_URL, generatedUri);
 						mAgent.editItem(itemId, MediaType.KEY_URL, generatedUri);
 						if (mViewToUpdate != null) {
