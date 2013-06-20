@@ -31,7 +31,7 @@ public class AndroidAgent extends BaseAgent implements IAndroidAgent {
 	protected void setup() {
 		super.setup();
 
-		mContext = (Context) getArguments()[0];
+		mContext = ((Context) getArguments()[0]).getApplicationContext();
 
 		registerSkill(JadeUtils.JADE_SKILL_NAME_ANDROID);
 		registerO2AInterface(IAndroidAgent.class, this);
